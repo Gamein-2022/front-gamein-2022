@@ -1,0 +1,32 @@
+.trade-filter {
+  &__tabs {
+    display: flex;
+    padding: 4px;
+    border: 1px solid #8d8d8d;
+    border-radius: 8px;
+    margin: 8px;
+  }
+
+  &__tab {
+    width: 50%;
+    text-align: center;
+  }
+
+  &__tab-buy {
+    color: #009054;
+
+    &--active {
+      background-color: #009054;
+      color: #fff;
+    }
+  }
+
+  &__tab-sell {
+    color: #d63f26;
+
+    &--active {
+      background-color: #d63f26;
+      color: #fff;
+    }
+  }
+}

@@ -1,0 +1,38 @@
+@import "./fonts.scss";
+
+// reset common styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: kalameh, sans-serif;
+  direction: rtl;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Toastify {
+  z-index: 999999;
+  position: relative;
+}
+
+.Toastify__toast {
+  direction: rtl !important;
+  font-family: kalameh !important;
+  text-align: center !important;
+}
