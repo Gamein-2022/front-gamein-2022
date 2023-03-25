@@ -1,4 +1,6 @@
 .trade {
+  height: calc(100% - 95px);
+
   &__header {
     display: flex;
     width: 100%;
