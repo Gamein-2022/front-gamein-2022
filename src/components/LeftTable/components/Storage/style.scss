@@ -1,0 +1,45 @@
+.storage {
+  &__header {
+    display: flex;
+    width: calc(100% - 32px);
+    border: 1px solid #8d8d8d;
+    border-radius: 8px;
+    color: #8d8d8d;
+    margin: 16px auto 0;
+    padding: 6px;
+    position: relative;
+    z-index: 99;
+  }
+
+  &__header-item {
+    width: calc(100% / 3);
+    text-align: center;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+  }
+
+  &__header-item--active {
+    background-color: #51cbc6;
+    color: #fff;
+  }
+}
+
+.storage-items {
+  width: calc(100% - 32px);
+  border: 1px solid #8d8d8d;
+  border-radius: 8px;
+  color: #8d8d8d;
+  margin: 16px auto;
+  padding: 6px;
+}
+
+.storage-status,
+.storage-type {
+  padding: 0 32px 0;
+  margin-top: -16px;
+}
+
+.highcharts-credits {
+  display: none;
+}

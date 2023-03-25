@@ -22,10 +22,10 @@ const ORDERS = [
   },
 ];
 
-function OrdersSell() {
+function OrdersSell({ orders }) {
   return (
-    <div>
-      {ORDERS.map((order) => (
+    <div className="orders-sell">
+      {orders.map((order) => (
         <OrderCard {...order} />
       ))}
     </div>

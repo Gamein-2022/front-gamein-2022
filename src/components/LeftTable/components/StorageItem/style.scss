@@ -1,0 +1,43 @@
+.storage-item {
+  border-bottom: 1px solid #8d8d8d;
+  padding: 4px;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  &__summary {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__name {
+    min-width: 96px;
+    margin-left: 8px;
+  }
+
+  &__count {
+    min-width: 64px;
+  }
+
+  &__percent {
+    min-width: 64px;
+  }
+
+  &__plus {
+    cursor: pointer;
+  }
+
+  &__expansion-item {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__expansion-icon {
+    margin-right: 16px;
+  }
+
+  &__expansion-name {
+    min-width: 128px;
+  }
+}

@@ -7,6 +7,8 @@ import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
 import Guide from "./pages/Guide";
 import Support from "./pages/Support";
+import MapTest from "./pages/MapTest";
+import ChooseRegion from "./pages/ChooseRegion";
 
 const AppRouter = () => {
   return (
@@ -19,6 +21,8 @@ const AppRouter = () => {
         <Route path="/history" element={<History />} />
         <Route path="/guide" element={<Guide />} />
         <Route path="/support" element={<Support />} />
+        <Route path="/map-test" element={<MapTest />} />
+        <Route path="/choose-region" element={<ChooseRegion />} />
       </Routes>
     </BrowserRouter>
   );

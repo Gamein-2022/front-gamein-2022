@@ -1,0 +1,84 @@
+.region {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 8px;
+  width: calc(25% - 16px);
+  font-size: 16px;
+  border: 3px solid transparent;
+  cursor: pointer;
+
+  &__content {
+    padding: 16px;
+  }
+
+  &--chosen {
+    border: 3px solid #2798f2;
+    border-radius: 10px;
+  }
+
+  &:hover {
+    border: 3px solid #2798f2;
+    border-radius: 10px;
+  }
+
+  &__chosen-by-you {
+    background-color: #2798f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 8px;
+
+    svg {
+      margin-left: 8px;
+    }
+  }
+
+  &__chosen-by-you-empty {
+    height: 40px;
+  }
+
+  &__title {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  &__resources-title {
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-left: 8px;
+    }
+  }
+
+  &__resources {
+    margin-bottom: 6px;
+  }
+
+  &__resources-description {
+    direction: ltr;
+  }
+
+  &__population {
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-left: 8px;
+    }
+  }
+
+  &__price {
+    display: flex;
+    align-items: center;
+    color: #ffe28f;
+
+    svg {
+      margin-left: 8px;
+    }
+  }
+}

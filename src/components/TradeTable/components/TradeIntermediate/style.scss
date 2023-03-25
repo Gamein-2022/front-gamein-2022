@@ -4,12 +4,16 @@
     padding: 4px;
     border: 1px solid #8d8d8d;
     border-radius: 8px;
-    margin: 8px;
+    margin: 16px;
   }
 
   &__tab {
     width: 50%;
     text-align: center;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 4px;
   }
 
   &__tab-buy {
@@ -28,5 +32,87 @@
       background-color: #d63f26;
       color: #fff;
     }
+  }
+
+  &__inputs-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 16px;
+  }
+
+  &__select {
+    width: calc(50% - 16px);
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #8d8d8d;
+  }
+
+  &__input-wrapper {
+    width: 50%;
+  }
+
+  &__input {
+    width: 90%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #8d8d8d;
+  }
+
+  &__table-wrapper {
+    border: 1px solid #8d8d8d;
+    border-radius: 8px;
+    width: calc(100% - 32px);
+    margin: 16px auto;
+  }
+
+  &__table {
+    width: 100%;
+    padding: 8px;
+    text-align: center;
+    border-collapse: collapse;
+
+    thead {
+      border-bottom: 1px solid #8d8d8d;
+    }
+
+    tbody {
+      color: #8d8d8d;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #8d8d8d;
+    }
+
+    tr:last-of-type {
+      border-bottom: none;
+    }
+  }
+
+  &__buy-btn {
+    background-color: #009054;
+    color: #fff;
+    border-radius: 8px;
+    padding: 4px 16px;
+    min-width: 64px;
+    margin: 4px 0;
+    border: none;
+    cursor: pointer;
+  }
+
+  &__sell-btn {
+    background-color: #d63f26;
+    color: #fff;
+    border-radius: 8px;
+    padding: 4px 16px;
+    min-width: 64px;
+    margin: 4px 0;
+    border: none;
+    cursor: pointer;
+  }
+
+  &__create-order {
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
 }

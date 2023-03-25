@@ -1,0 +1,77 @@
+.new-map {
+  overflow: scroll;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  .hover {
+    // opacity: 0.8;
+    cursor: pointer;
+  }
+
+  .map {
+    // padding: 16px;
+    width: 100%;
+    // max-width: 1200px;
+    margin: auto;
+
+    &__zoomable-area {
+      position: relative;
+      min-height: calc(100vh - 128px);
+    }
+    svg {
+      width: 100%;
+      //   max-width: 1000px;
+      margin: auto;
+      display: block;
+    }
+
+    a:hover :not(.cls-2) {
+      opacity: 0.5;
+      cursor: pointer;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .map {
+      &__zoomable-area {
+        min-height: 280px;
+      }
+    }
+  }
+}
+
+.hide {
+  display: none;
+}
+
+#sea_waves {
+  animation: floating 3s ease-in-out infinite;
+}
+
+.floating {
+  animation-name: floating;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  margin-left: 30px;
+  margin-top: 5px;
+}
+
+@keyframes floating {
+  0% {
+    transform: translate(0, 0px);
+  }
+  50% {
+    transform: translate(15px, -15px);
+  }
+  100% {
+    transform: translate(0, -0px);
+  }
+}
+
+#dock_boat {
+  animation: floating 3s ease-in-out infinite;
+}

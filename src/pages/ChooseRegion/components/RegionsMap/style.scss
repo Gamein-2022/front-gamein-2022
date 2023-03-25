@@ -1,0 +1,115 @@
+.regions-map {
+  overflow: visible;
+  position: relative;
+  width: 30vw;
+  max-width: 432px;
+  height: 200px;
+
+  & img {
+    transform: rotateZ(25.33deg);
+    position: absolute;
+    cursor: pointer;
+  }
+
+  &__label {
+    border-radius: 50%;
+    border: 2px solid #fff;
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    position: absolute;
+    z-index: 99;
+  }
+
+  &__region1 {
+    top: 2vw;
+    right: 3vw;
+    width: 13vw;
+  }
+
+  &__label-region1 {
+    top: 0vw;
+    right: 6vw;
+  }
+
+  &__region2 {
+    top: 2vw;
+    right: 14vw;
+    width: 10vw;
+  }
+
+  &__label-region2 {
+    top: 1vw;
+    right: 20vw;
+  }
+
+  &__region3 {
+    top: 8.2vw;
+    right: 3vw;
+    width: 12vw;
+  }
+
+  &__label-region3 {
+    top: 11vw;
+    right: 1vw;
+  }
+
+  &__region4 {
+    top: 5.7vw;
+    right: 23.5vw;
+    width: 7vw;
+  }
+
+  &__label-region4 {
+    top: 4.5vw;
+    right: 27.5vw;
+  }
+
+  &__region5 {
+    top: 10vw;
+    right: 15.1vw;
+    width: 8.5vw;
+  }
+
+  &__label-region5 {
+    top: 16.5vw;
+    right: 22vw;
+  }
+
+  &__region6 {
+    top: 14vw;
+    right: 10vw;
+    width: 9vw;
+  }
+
+  &__label-region6 {
+    top: 21vw;
+    right: 16.5vw;
+  }
+
+  &__region7 {
+    top: 15.5vw;
+    right: 2vw;
+    width: 8vw;
+  }
+
+  &__label-region7 {
+    top: 18vw;
+    right: 0.8vw;
+  }
+
+  &__region8 {
+    top: 23.5vw;
+    right: 2vw;
+    width: 11vw;
+  }
+
+  &__label-region8 {
+    top: 27.5vw;
+    right: 8.5vw;
+  }
+}

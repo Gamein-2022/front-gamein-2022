@@ -1,6 +1,43 @@
 import React, { useEffect, useRef, useState } from "react";
 import { getInitialRegion } from "../../apis/region";
+import Region from "./components/Region";
+import RegionsMap from "./components/RegionsMap";
 import "./style.scss";
+
+const REGIONS = [
+  {
+    title: "منطقه یک",
+    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+  },
+  {
+    title: "منطقه دو",
+    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+  },
+  {
+    title: "منطقه سه",
+    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+  },
+  {
+    title: "منطقه چهار",
+    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+  },
+  {
+    title: "منطقه پنج",
+    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+  },
+  {
+    title: "منطقه شش",
+    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+  },
+  {
+    title: "منطقه هفت",
+    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+  },
+  {
+    title: "منطقه هشت",
+    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+  },
+];
 
 function ChooseRegion() {
   const [regionsState, setRegionsState] = useState([
@@ -34,9 +71,7 @@ function ChooseRegion() {
           });
         }
       })
-      .catch((error) => {})
-      .catch((error) => {})
-      .finally(() => {});
+      .catch((error) => {});
 
     ws.current = new WebSocket("wss://192.168.24.12:8080");
 
@@ -100,7 +135,51 @@ function ChooseRegion() {
       );
     }
   };
-  return <div>ChooseRegion</div>;
+  return (
+    <div className="choose-region">
+      <div className="choose-region__container">
+        <h1 className="choose-region__title">
+          سلام، به گیمین ۲۰۲۲ خوش اومدین!
+        </h1>
+        <div className="choose-region__description-time-wrapper">
+          <p className="choose-region__description">
+            اولین قدم در شروع این بازی، انتخاب منطقه‌ایه که می‌خواید کارخونه‌ی
+            خودتون رو توش بسازین. هر کدوم از این منطقه‌ها، مشخصاتی دارن که تو
+            روند بازی موثره پس تو انتخابتون دقت کنین و با استراتژی تصمیم بگیرین
+            :)
+          </p>
+
+          <div className="choose-region__time">
+            <div className="choose-region__time-value">{remainedTime}</div>
+            <div className="choose-region__time-title">
+              تا پایان انتخاب منطقه
+            </div>
+          </div>
+        </div>
+
+        <div className="choose-region__regions-wrapper">
+          <div className="choose-region__regions-description">
+            {REGIONS.map((region, index) => (
+              <Region
+                key={index}
+                title={region.title}
+                resources={region.resources}
+                population={populations[index]}
+                price={prices[index]}
+                chosen={index === selectedRegion}
+                onClick={() => updateRegionsState(index, "selected")}
+              />
+            ))}
+          </div>
+          <RegionsMap
+            regionsState={regionsState}
+            setRegionsState={setRegionsState}
+            updateRegionsState={updateRegionsState}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default ChooseRegion;

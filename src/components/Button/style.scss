@@ -1,0 +1,24 @@
+.button {
+  color: #fff;
+  background-color: #009054;
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 6px 12px;
+  min-width: 128px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+
+  &--success {
+    background-color: #009054;
+  }
+
+  &--error {
+    background-color: #d63f26;
+  }
+
+  &:disabled {
+    background-color: #b9b9b9 !important;
+  }
+}

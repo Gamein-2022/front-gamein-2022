@@ -1,10 +1,42 @@
+import React from "react";
 import classNames from "classnames";
 import CheckIcon from "@mui/icons-material/Check";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import React from "react";
+import sampleImg from "../../../../assets/icons/copper.png";
 import "./style.scss";
+import { cancelOrder } from "../../../../apis/orders";
+import { toast } from "react-toastify";
 
-function OrderCard({ image, state, color, count, unitPrice, name }) {
+function OrderCard({
+  quantity,
+  unitPrice,
+  productName,
+  acceptDate,
+  orderType,
+  id,
+}) {
+  const color = !!acceptDate ? "success" : "warning";
+  const state =
+    orderType === "BUY"
+      ? acceptDate
+        ? "خریداری شده"
+        : "در انتظار فروشنده"
+      : acceptDate
+      ? "فروخته شده"
+      : "در انتظار خریدار";
+
+  const handleDeleteOrder = () => {
+    cancelOrder(id)
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        toast.success("سفارش با موفقیت حذف شد.");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div
       className={classNames("order-card", {
@@ -16,20 +48,28 @@ function OrderCard({ image, state, color, count, unitPrice, name }) {
           <AccessTimeIcon fontSize="small" />
         ) : (
           <CheckIcon fontSize="small" />
-        )}{" "}
+        )}
         {state}
       </div>
       <div className="order-card__body">
         <div className="order-card__right">
-          <img className="order-card__img" src={image} alt="order card" />
-          <div className="order-card__name">{name}</div>
+          <img className="order-card__img" src={sampleImg} alt="order card" />
+          <div className="order-card__name">{productName}</div>
         </div>
         <div className="order-card__left">
-          <div className="order-card__count">{count} واحد</div>
+          <div className="order-card__count">{quantity} واحد</div>
           <div className="order-card__unit-price">قیمت واحد: {unitPrice}</div>
-          <button className="order-card__action-btn">
-            {color === "success" ? "بایگانی" : "حذف"}
-          </button>
+          {color === "warning" && (
+            <button
+              className="order-card__action-btn"
+              onClick={handleDeleteOrder}
+            >
+              حذف
+            </button>
+          )}
+          {color === "success" && (
+            <button className="order-card__action-btn">بایگانی</button>
+          )}
         </div>
       </div>
     </div>
