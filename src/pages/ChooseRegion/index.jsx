@@ -59,10 +59,11 @@ function ChooseRegion() {
 
   useEffect(() => {
     getInitialRegion()
+      .then((res) => res.data)
       .then((data) => {
         console.log("data", data);
-        const currentRegion = +data.currentRegion;
-        setInitialRemainedTimeState(+data.remainingTime);
+        const currentRegion = +data.teamRegionId;
+        setInitialRemainedTimeState(+data.remainingTime || 200000);
         if (currentRegion > 0) {
           setRegionsState(() => {
             const temp = ["", "", "", "", "", "", "", ""];
@@ -73,7 +74,7 @@ function ChooseRegion() {
       })
       .catch((error) => {});
 
-    ws.current = new WebSocket("wss://192.168.24.12:8080");
+    ws.current = new WebSocket("ws://192.168.24.4:8080/websocket/user");
 
     ws.current.onopen = function (event) {
       console.log("connecting to ws....");
@@ -88,6 +89,15 @@ function ChooseRegion() {
       } else if (data.event === "SET_REGION") {
         if (!data.success) {
           // TODO get current region with http req and set it
+        } else {
+          const currentRegion = +data.teamRegionId;
+          if (currentRegion > 0) {
+            setRegionsState(() => {
+              const temp = ["", "", "", "", "", "", "", ""];
+              temp[currentRegion - 1] = "selected";
+              return temp;
+            });
+          }
         }
       }
     };
@@ -129,7 +139,8 @@ function ChooseRegion() {
     if (state === "selected") {
       ws.current?.send(
         JSON.stringify({
-          token: localStorage.getItem("@token"),
+          event: "SET_REGION",
+          token: "Bearer " + localStorage.getItem("token"),
           regionId: region + 1,
         })
       );

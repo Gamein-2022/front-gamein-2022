@@ -21,6 +21,7 @@ const GLOW = [
   "dock",
   "dock_boat",
   "gamein_store",
+  "inventory",
   "transactions_office",
   "ground_3_assembly_facility",
   "ground_2_assembly_facility",
@@ -47,13 +48,12 @@ function hide(id) {
 
 function glow(id) {
   const building = document.getElementById(id);
+  building.classList.add("building");
   console.log(building);
   building.addEventListener("mouseenter", (e) => {
-    e.currentTarget.classList.add("hover");
     e.currentTarget.setAttribute("filter", "url(#softGlow)");
   });
   building.addEventListener("mouseleave", (e) => {
-    e.currentTarget.classList.remove("hover");
     e.currentTarget.removeAttribute("filter", "url(#softGlow)");
   });
 }
