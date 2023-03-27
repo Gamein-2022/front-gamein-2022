@@ -7,6 +7,7 @@ import cargoImg from "../../../../assets/cargo.png";
 import cargoDisableImg from "../../../../assets/cargo-disable.png";
 import airplaneImg from "../../../../assets/airplane.png";
 import airplaneDisableImg from "../../../../assets/airplane-disable.png";
+import gameinShopModalTitle from "../../../../assets/modals/gamein_shop_modal_title.svg";
 import "./style.scss";
 import { toast } from "react-toastify";
 import Modal from "../../../Modal";
@@ -137,7 +138,7 @@ function ShopInitial() {
         onClose={() => {
           setOpen(false);
         }}
-        title="فروشگاه گیمین"
+        title={<img src={gameinShopModalTitle} alt="gamein shop" />}
       >
         <img
           className="shop-modal__img"

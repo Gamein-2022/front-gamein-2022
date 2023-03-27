@@ -43,4 +43,10 @@
       border-bottom: 6px solid #51cbc6;
     }
   }
+
+  &__body {
+    height: 100%;
+    padding: 0 0 32px;
+    overflow-y: scroll;
+  }
 }

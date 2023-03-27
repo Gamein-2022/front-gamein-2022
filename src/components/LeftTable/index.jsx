@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 import Storage from "./components/Storage";
-import Production from "./components/Production";
+import ProductionAndAssembly from "./components/ProductionAndAssembly";
 
 import productionAssemblyLogo from "../../assets/productionAssemblyIcon.svg";
 import storageLogo from "../../assets/storageIcon.svg";
@@ -39,7 +39,7 @@ function LeftTable() {
       </div>
       <div className="left-table__body">
         {activeTab === "storage" && <Storage />}
-        {activeTab === "production" && <Production />}
+        {activeTab === "production" && <ProductionAndAssembly />}
       </div>
     </div>
   );

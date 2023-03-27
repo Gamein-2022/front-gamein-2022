@@ -11,6 +11,7 @@ import {
 import BasicInput from "../../../BasicInput";
 import Button from "../../../Button";
 import Modal from "../../../Modal";
+import tradeModalTitle from "../../../../assets/modals/trade_modal_title.svg";
 import "./style.scss";
 
 function TradeIntermediate() {
@@ -231,7 +232,7 @@ function TradeIntermediate() {
         </div>
       </div>
       <Modal
-        title="تجارت"
+        title={<img src={tradeModalTitle} alt="trade" />}
         open={buyOrderModalOpen}
         onClose={() => setBuyOrderModalOpen(false)}
       >
@@ -252,7 +253,7 @@ function TradeIntermediate() {
         <Button onClick={handleSubmitBuyOrder}>تایید خرید</Button>
       </Modal>
       <Modal
-        title="تجارت"
+        title={<img src={tradeModalTitle} alt="trade" />}
         open={sellOrderModalOpen}
         onClose={() => setSellOrderModalOpen(false)}
       >
@@ -275,7 +276,7 @@ function TradeIntermediate() {
         </Button>
       </Modal>
       <Modal
-        title="تجارت"
+        title={<img src={tradeModalTitle} alt="trade" />}
         open={sellOfferModalOpen}
         onClose={() => setSellOfferModalOpen(false)}
       >

@@ -18,6 +18,15 @@
     background-color: #d63f26;
   }
 
+  &--info {
+    background-color: #51cbc6;
+  }
+
+  &--info-reverse {
+    color: #255957;
+    background-color: #fff;
+  }
+
   &:disabled {
     background-color: #b9b9b9 !important;
   }

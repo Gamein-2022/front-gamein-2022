@@ -1,7 +1,7 @@
 .basic-input {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  // align-items: center;
   width: 100%;
   margin: 8px 0;
 
@@ -11,7 +11,7 @@
 
   &__input {
     border-radius: 8px;
-    padding: 4px;
+    padding: 6px;
     border: 1px solid #8d8d8d;
   }
 }
