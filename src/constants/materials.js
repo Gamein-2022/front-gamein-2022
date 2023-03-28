@@ -61,6 +61,20 @@ import watchInternal from "../assets/materials/level_3/watch_internal.svg";
 import watchSensors from "../assets/materials/level_3/watch_sensors.svg";
 
 // final materials
+import gphone1 from "../assets/materials/level_3/gphone_1.svg";
+import gphone2 from "../assets/materials/level_3/gphone_2.svg";
+import gphone3 from "../assets/materials/level_3/gphone_3.svg";
+import gphone4 from "../assets/materials/level_3/gphone_4.svg";
+import gphone5 from "../assets/materials/level_3/gphone_5.svg";
+import gphone6 from "../assets/materials/level_3/gphone_6.svg";
+import gphone7 from "../assets/materials/level_3/gphone_7.svg";
+import gphone8 from "../assets/materials/level_3/gphone_8.svg";
+import gphone9 from "../assets/materials/level_3/gphone_9.svg";
+import gphoneX from "../assets/materials/level_3/gphone_x.svg";
+import gtab1 from "../assets/materials/level_3/gtab_1.svg";
+import gtab2 from "../assets/materials/level_3/gtab_2.svg";
+import gtab3 from "../assets/materials/level_3/gtab_3.svg";
+import gwatch from "../assets/materials/level_3/gwatch.svg";
 
 export const RAW_MATERIALS = [
   {
@@ -297,7 +311,60 @@ export const INTERMEDIATE_MATERIALS_LEVEL_TWO = [
 
 export const FINAL_MATERIALS = [
   {
-    name: "",
-    icon: "",
+    name: "gphone1",
+    icon: gphone1,
+  },
+  {
+    name: "gphone2",
+    icon: gphone2,
+  },
+  {
+    name: "gphone3",
+    icon: gphone3,
+  },
+  {
+    name: "gphone4",
+    icon: gphone4,
+  },
+  {
+    name: "gphone5",
+    icon: gphone5,
+  },
+  {
+    name: "gphone6",
+    icon: gphone6,
+  },
+  {
+    name: "gphone7",
+    icon: gphone7,
+  },
+  {
+    name: "gphone8",
+    icon: gphone8,
+  },
+  {
+    name: "gphone9",
+    icon: gphone9,
+  },
+  {
+    name: "gphoneX",
+    icon: gphoneX,
+  },
+  {
+    name: "gtab1",
+    icon: gtab1,
+  },
+  {
+    name: "gtab2",
+    icon: gtab2,
+  },
+  {
+    name: "gtab3",
+    icon: gtab3,
+  },
+
+  {
+    name: "gwatch",
+    icon: gwatch,
   },
 ];
