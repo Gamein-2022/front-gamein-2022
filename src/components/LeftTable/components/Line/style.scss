@@ -13,6 +13,7 @@
     left: 0;
     bottom: 0;
     background-color: #51cbc6;
+    transition: width .5s;
   }
 
   &__header {
@@ -33,13 +34,14 @@
   }
 
   &--DONE {
-    background-color: #51cbc6;
-    color: #fff;
+    background-color: #51cbc6 !important;
+    color: #fff !important;
   }
 
   &--NOT_INITIAL,
   &--OFF {
-    background-color: #e6e7e8;
+    background-color: #e6e7e8 !important;
+    color: #8d8d8d !important;
   }
 
   &--IN_PROGRESS {

@@ -1,7 +1,8 @@
 import React from "react";
 import Layout from "../../components/Layout";
 import LeftTable from "../../components/LeftTable";
-import TradeTable from "../../components/TradeTable";
+import RightTable from "../../components/RightTable";
+import Map from "../Map";
 
 import "./style.scss";
 
@@ -9,8 +10,11 @@ function Home() {
   return (
     <Layout>
       <div className="home">
-        <TradeTable />
-        <LeftTable />
+        <Map />
+        <div className="home__bottom-sheet">
+          <RightTable />
+          <LeftTable />
+        </div>
       </div>
     </Layout>
   );

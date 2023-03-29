@@ -1,6 +1,12 @@
 .home {
   width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
+  height: calc(100vh - 64px);
+
+  &__bottom-sheet {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    width: 100%;
+    top: calc(100% - 100px);
+  }
 }

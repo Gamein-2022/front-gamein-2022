@@ -2,11 +2,17 @@
   width: 100%;
   max-width: 480px;
   border-radius: 16px;
-  overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  height: calc(100% - 64px);
-  margin: 32px;
+  height: calc(100vh - 128px);
   background-color: #fff;
+  margin: 0 32px;
+  position: relative;
+  z-index: 9;
+  transition: transform 0.3s;
+
+  &--open {
+    transform: translateY(calc(-100% + 64px));
+  }
 
   &__header {
     background-color: #255957;
@@ -48,5 +54,13 @@
     height: 100%;
     padding: 0 0 32px;
     overflow-y: scroll;
+  }
+
+  &__close-icon {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
   }
 }
