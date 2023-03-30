@@ -44,3 +44,11 @@ export function sendOffer({ orderId, shippingMethod }) {
     shippingMethod,
   });
 }
+
+export function sellToGamein({ productId, quantity, price }) {
+  return AxiosInstance.post("/market/gamein/sell", {
+    productId,
+    quantity,
+    price,
+  });
+}
