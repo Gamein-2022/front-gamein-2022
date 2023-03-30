@@ -8,7 +8,7 @@ import "./style.scss";
 import classNames from "classnames";
 import Trade from "./components/Trade";
 import Shop from "./components/Shop";
-import Orders from "./components/Orders";
+import Deals from "./components/Deals";
 
 function RightTable() {
   const [activeTab, setActiveTab] = useState("trade");
@@ -42,22 +42,22 @@ function RightTable() {
         </div>
         <div
           className={classNames("right-table__header-item", {
-            "right-table__header-item--active": activeTab === "orders",
+            "right-table__header-item--active": activeTab === "deals",
           })}
-          onClick={() => setActiveTab("orders")}
+          onClick={() => setActiveTab("deals")}
         >
           <img
             className="right-table__logo"
             src={transactionsLogo}
             alt="orders"
           />
-          سفارش‌ها
+          معاملات
         </div>
       </div>
       <div className="right-table__body">
         {activeTab === "trade" && <Trade />}
         {activeTab === "shop" && <Shop />}
-        {activeTab === "orders" && <Orders />}
+        {activeTab === "deals" && <Deals />}
       </div>
       <div className="left-table__close-icon" onClick={() => setOpen(false)}>
         <ExpandCircleDownIcon fontSize="large" />

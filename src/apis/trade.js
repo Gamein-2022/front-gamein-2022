@@ -37,3 +37,10 @@ export function submitSellOrder({ productId, quantity, price }) {
 export function getOrders() {
   return AxiosInstance.get("/market/order");
 }
+
+export function sendOffer({ orderId, shippingMethod }) {
+  return AxiosInstance.post("/market/offer", {
+    orderId,
+    shippingMethod,
+  });
+}

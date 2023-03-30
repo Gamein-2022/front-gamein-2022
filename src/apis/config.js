@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const AxiosInstance = axios.create({
-  baseURL: "http://gamein.ghanati.me",
+  // baseURL: "http://gamein.ghanati.me",
+  baseURL: "http://192.168.24.6:9090",
   // baseURL: "https://6d24-178-236-108-56.eu.ngrok.io",
   headers: {
     "Content-Type": "application/json",

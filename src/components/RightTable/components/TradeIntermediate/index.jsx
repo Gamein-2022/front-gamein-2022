@@ -5,6 +5,7 @@ import {
   getIntermediateMaterials,
   getOrders,
   getRawMaterials,
+  sendOffer,
   submitBuyOrder,
   submitSellOrder,
 } from "../../../../apis/trade";
@@ -90,6 +91,20 @@ function TradeIntermediate() {
   }, []);
 
   const currentOrders = activeTab === "buy" ? buyOrders : sellOrders;
+
+  const handleSendSellOffer = (id) => {
+    sendOffer({ orderId: id })
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
 
   return (
     <>
@@ -199,7 +214,7 @@ function TradeIntermediate() {
                     {activeTab === "sell" && (
                       <button
                         className="trade-filter__sell-btn"
-                        onClick={() => setSellOfferModalOpen(true)}
+                        onClick={() => handleSendSellOffer(row.id)}
                       >
                         فروش
                       </button>
