@@ -21,3 +21,7 @@ export function acceptOffer({ id, shippingMethod }) {
 export function archiveOrder({ id }) {
   return AxiosInstance.put(`/market/order/${id}/archive`);
 }
+
+export function getOrderShippingInfo({ id }) {
+  return AxiosInstance.get(`/market/order/${id}/shipping-info`);
+}

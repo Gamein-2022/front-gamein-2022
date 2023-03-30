@@ -29,6 +29,7 @@ function Orders() {
   const [selectedOffer, setSelectedOffer] = useState();
   const [transport, setTransport] = useState("airplane");
   const [balance, setBalance] = useState();
+  const [selectedOrder, setSelectedOrder] = useState();
 
   useEffect(() => {
     getOrdersHistory()
@@ -88,6 +89,7 @@ function Orders() {
 
   const handleTrackOrder = (id) => {
     setOrderTrackingModalOpen(true);
+    setSelectedOrder(orders.find((item) => item.id === id));
     getOrderOffers({ id })
       .then((res) => res.data)
       .then((data) => {
@@ -112,6 +114,25 @@ function Orders() {
       .then((data) => {
         console.log(data);
         toast.success("خرید با موفقیت نهایی شد.");
+        setOrderTrackingModalOpen(false);
+        updateOrders();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
+  const handleAcceptSelltOffer = (id) => {
+    acceptOffer({
+      id,
+    })
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        toast.success("فروش با موفقیت نهایی شد.");
         setOrderTrackingModalOpen(false);
         updateOrders();
       })
@@ -238,11 +259,21 @@ function Orders() {
         title={<img src={tradeModalTitle} alt="trade" />}
       >
         <div className="order-tracking">
-          {!selectedOffer && <div>مشاهده فروشنده‌ها</div>}
+          {!selectedOffer && selectedOrder && (
+            <div>
+              {selectedOrder?.orderType === "BUY"
+                ? "مشاهده فروشنده‌ها"
+                : "مشاهده خریدارها"}
+            </div>
+          )}
           {offers.length === 0 && (
             <div className="order-tracking__no-offers">
               <img src={noOfferImg} alt="no offer found" />
-              <div>هنوز هیچ فروشنده‌ای پیدا نشده!</div>
+              <div>
+                هنوز هیچ{" "}
+                {selectedOrder?.orderType === "BUY" ? "فروشنده‌ای" : "خریداری"}{" "}
+                پیدا نشده!
+              </div>
             </div>
           )}
           {offers.length > 0 &&
@@ -276,10 +307,16 @@ function Orders() {
                       رد کردن
                     </Button>
                     <Button
-                      onClick={() => setSelectedOffer(offer)}
+                      onClick={() => {
+                        if (selectedOrder?.orderType === "BUY") {
+                          setSelectedOffer(offer);
+                        } else {
+                          handleAcceptSelltOffer(offer.id);
+                        }
+                      }}
                       className="order-card__btn-success"
                     >
-                      خرید
+                      {selectedOrder?.orderType === "BUY" ? "خرید" : "فروش"}
                     </Button>
                   </div>
                 </div>

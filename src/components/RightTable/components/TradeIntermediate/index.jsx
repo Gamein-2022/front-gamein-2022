@@ -13,14 +13,20 @@ import BasicInput from "../../../BasicInput";
 import Button from "../../../Button";
 import Modal from "../../../Modal";
 import tradeModalTitle from "../../../../assets/modals/trade_modal_title.svg";
+
+import cargoImg from "../../../../assets/cargo.png";
+import cargoDisableImg from "../../../../assets/cargo-disable.png";
+import airplaneImg from "../../../../assets/airplane.png";
+import airplaneDisableImg from "../../../../assets/airplane-disable.png";
+
 import "./style.scss";
+import { getOrderShippingInfo } from "../../../../apis/orders";
 
 function TradeIntermediate() {
   const [activeTab, setActiveTab] = useState("buy");
   const [buyOrderModalOpen, setBuyOrderModalOpen] = useState(false);
   const [sellOrderModalOpen, setSellOrderModalOpen] = useState(false);
   const [buyOfferModalOpen, setBuyOfferModalOpen] = useState(false);
-  const [sellOfferModalOpen, setSellOfferModalOpen] = useState(false);
   const [intermediateMaterials, setIntermediateMaterials] = useState([]);
   const [selectedMaterial, setSelectedMaterial] = useState();
   const [buyCount, setBuyCount] = useState(0);
@@ -29,6 +35,9 @@ function TradeIntermediate() {
   const [sellPrice, setSellPrice] = useState(0);
   const [buyOrders, setBuyOrders] = useState([]);
   const [sellOrders, setSellOrders] = useState([]);
+  const [transport, setTransport] = useState("airplane");
+  const [shippingInfo, setShippingInfo] = useState();
+  const [selectedOrder, setSelectedOrder] = useState();
 
   const handleSubmitBuyOrder = () => {
     const productId = intermediateMaterials.find(
@@ -49,7 +58,7 @@ function TradeIntermediate() {
     const productId = intermediateMaterials.find(
       (item) => item.name === selectedMaterial
     ).id;
-    submitSellOrder({ productId, price: buyPrice, quantity: buyCount })
+    submitSellOrder({ productId, price: sellPrice, quantity: sellCount })
       .then((res) => res.data)
       .then((data) => {
         toast.success("پیشنهاد فروش با موفقیت ثبت شد.");
@@ -62,14 +71,9 @@ function TradeIntermediate() {
 
   useEffect(() => {
     getIntermediateMaterials()
-      // getRawMaterials()
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        // setIntermediateMaterials([
-        //   ...data.result.myRegion,
-        //   ...data.result.otherRegions,
-        // ]);
         setIntermediateMaterials(data.result);
       })
       .catch((error) => {
@@ -97,7 +101,38 @@ function TradeIntermediate() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("سفارش فروش با موفقیت فرستاده شد.")
+        toast.success("سفارش فروش با موفقیت فرستاده شد.");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
+  const handleBuyOfferModal = (row) => {
+    setSelectedOrder(row);
+    getOrderShippingInfo({ id: row.id })
+      .then((res) => res.data)
+      .then((data) => {
+        setBuyOfferModalOpen(true);
+        console.log(data);
+        setShippingInfo(data.result);
+      });
+  };
+
+  const handleSendBuyOffer = () => {
+    sendOffer({
+      orderId: selectedOrder.id,
+      shippingMethod: transport === "airplane" ? "PLANE" : "SHIP",
+    })
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        toast.success("پیشنهاد خرید با موفقیت ارسال شد.");
+        setBuyOfferModalOpen(false);
+        setSelectedOrder(null);
       })
       .catch((error) => {
         console.log(error);
@@ -207,7 +242,7 @@ function TradeIntermediate() {
                     {activeTab === "buy" && (
                       <button
                         className="trade-filter__buy-btn"
-                        onClick={() => setBuyOfferModalOpen(true)}
+                        onClick={() => handleBuyOfferModal(row)}
                       >
                         خرید
                       </button>
@@ -293,26 +328,93 @@ function TradeIntermediate() {
       </Modal>
       <Modal
         title={<img src={tradeModalTitle} alt="trade" />}
-        open={sellOfferModalOpen}
-        onClose={() => setSellOfferModalOpen(false)}
+        open={buyOfferModalOpen}
+        onClose={() => setBuyOfferModalOpen(false)}
       >
-        <div>ثبت پیشنهاد فروش</div>
-        <BasicInput
-          label={"چند واحد می‌خوای بفروشی؟"}
-          type="number"
-          value={sellCount}
-          onChange={(e) => setSellCount(e.target.value)}
-        />
-        <BasicInput
-          label={"هر واحد رو حداقل با چه قیمتی می‌خوای بفروشی؟"}
-          type="number"
-          value={sellPrice}
-          onChange={(e) => setSellPrice(e.target.value)}
-        />
-        <div>درآمد فروش کالاها: </div>
-        <Button onClick={handleSubmitSellOrder} type={"error"}>
-          تایید فروش
-        </Button>
+        <div>ثبت پیشنهاد خرید</div>
+        {shippingInfo && selectedOrder && (
+          <>
+            <div>
+              خرید {selectedOrder.productName} از تیم{" "}
+              {selectedOrder.submitterTeamName} در منطقه{" "}
+              {selectedOrder.region + 1}
+            </div>
+            <div>تعداد {selectedOrder.quantity} واحد</div>
+            <div className="shop-modal__transport-name">
+              با چه وسیله‌ای ارسال بشه؟
+            </div>
+            <div className="shop-modal__transport-list">
+              <div
+                className={classNames("shop-modal__transport", {
+                  "shop-modal__transport--active": transport === "airplane",
+                })}
+                onClick={() => setTransport("airplane")}
+              >
+                <img
+                  className="shop-modal__transport-img"
+                  src={
+                    transport === "airplane" ? airplaneImg : airplaneDisableImg
+                  }
+                  alt="airplane"
+                />
+                <div className="shop-modal__transport-text">
+                  هواپیما
+                  <br />
+                  در {shippingInfo.planeDuration} روز
+                </div>
+              </div>
+              <div
+                className={classNames("shop-modal__transport", {
+                  "shop-modal__transport--active": transport === "ship",
+                })}
+                onClick={() => setTransport("ship")}
+              >
+                <img
+                  className="shop-modal__transport-img"
+                  src={transport === "ship" ? cargoImg : cargoDisableImg}
+                  alt="airplane"
+                />
+                <div className="shop-modal__transport-text">
+                  کشتی
+                  <br />
+                  در {shippingInfo.shipDuration} روز
+                </div>
+              </div>
+            </div>
+            <div className="shop-modal__summary-text">
+              هزینه خرید کالاها:{" "}
+              {selectedOrder.quantity * selectedOrder.unitPrice}
+            </div>
+            <div className="shop-modal__summary-text">
+              هزینه حمل و نقل:{" "}
+              {transport === "airplane"
+                ? shippingInfo.planePrice
+                : shippingInfo.shipPrice}
+            </div>
+            <div className="shop-modal__summary-text">
+              جمع کل:{" "}
+              {selectedOrder.quantity * selectedOrder.unitPrice +
+                (transport === "airplane"
+                  ? shippingInfo.planePrice
+                  : shippingInfo.shipPrice)}
+            </div>
+            <div className="shop-modal__seperator"></div>
+            <div className="shop-modal__summary-text">
+              دارایی فعلی: {shippingInfo.balance}
+            </div>
+            <div className="shop-modal__summary-text">
+              دارایی پس از خرید:{" "}
+              {shippingInfo.balance -
+                (selectedOrder.quantity * selectedOrder.unitPrice +
+                  (transport === "airplane"
+                    ? shippingInfo.planePrice
+                    : shippingInfo.shipPrice))}
+            </div>
+            <div>
+              <Button onClick={handleSendBuyOffer}>ارسال پیشنهاد خرید</Button>
+            </div>
+          </>
+        )}
       </Modal>
     </>
   );
