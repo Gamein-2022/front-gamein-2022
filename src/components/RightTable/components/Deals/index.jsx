@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, { useState } from "react";
 import OffersSent from "../OffersSent";
-import OffersRecieved from "../Orders";
+import Orders from "../Orders";
 import "./style.scss";
 
 function Deals() {
@@ -28,7 +28,7 @@ function Deals() {
         </div>
       </div>
       {activeTab === "sent" && <OffersSent />}
-      {activeTab === "recieved" && <OffersRecieved />}
+      {activeTab === "recieved" && <Orders />}
     </div>
   );
 }

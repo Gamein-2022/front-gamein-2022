@@ -17,3 +17,7 @@ export function acceptOffer({ id, shippingMethod }) {
     shippingMethod,
   });
 }
+
+export function archiveOrder({ id }) {
+  return AxiosInstance.put(`/market/order/${id}/archive`);
+}

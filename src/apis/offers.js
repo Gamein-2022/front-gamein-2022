@@ -15,3 +15,7 @@ export function cancellOffer({ offerId }) {
 export function declineOffer({ offerId }) {
   return AxiosInstance.put(`/market/offer/${offerId}/decline`);
 }
+
+export function archiveOffer({ id }) {
+  return AxiosInstance.put(`/market/offer/${id}/archive`);
+}

@@ -2,7 +2,11 @@ import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { cancellOffer, getSentOffers } from "../../../../apis/offers";
+import {
+  archiveOffer,
+  cancellOffer,
+  getSentOffers,
+} from "../../../../apis/offers";
 import sampleImg from "../../../../assets/icons/copper.png";
 import OrderCard from "../OrderCard";
 import "./style.scss";
@@ -42,6 +46,22 @@ function OffersSent() {
       });
   };
 
+  const handleArchiveOffer = (id) => {
+    archiveOffer({ id })
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        toast.success("پیشنهاد با موفقیت بایگانی شد.");
+        updateSentOffers();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
   return (
     <div className="offers-sent">
       {sentOffers.map(({ acceptDate, declined, cancelled, order, id }) => {
@@ -63,9 +83,9 @@ function OffersSent() {
               )}
               {isWaiting
                 ? `در انتظار ${
-                    order?.orderType === "BUY" ? "فروشنده" : "خریدار"
+                    order?.orderType === "SELL" ? "فروشنده" : "خریدار"
                   }`
-                : order?.orderType === "BUY"
+                : order?.orderType === "SELL"
                 ? "خریداری شده"
                 : "فروخته‌شده"}
             </div>
@@ -92,7 +112,12 @@ function OffersSent() {
                   </button>
                 )}
                 {!isWaiting && (
-                  <button className="order-card__action-btn">بایگانی</button>
+                  <button
+                    className="order-card__action-btn"
+                    onClick={() => handleArchiveOffer(id)}
+                  >
+                    بایگانی
+                  </button>
                 )}
               </div>
             </div>

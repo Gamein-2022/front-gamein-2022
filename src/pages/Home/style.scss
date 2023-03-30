@@ -3,10 +3,16 @@
   height: calc(100vh - 64px);
 
   &__bottom-sheet {
-    display: flex;
-    justify-content: space-between;
+    // display: flex;
+    // justify-content: space-between;
+    display: grid;
+    padding: 0 16px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 16px 16px;
     position: fixed;
     width: 100%;
     top: calc(100% - 100px);
+    height: calc(100vh - 128px);
   }
 }

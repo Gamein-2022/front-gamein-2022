@@ -52,7 +52,7 @@ function TradeIntermediate() {
     submitSellOrder({ productId, price: buyPrice, quantity: buyCount })
       .then((res) => res.data)
       .then((data) => {
-        toast.success("سفارش فروش با موفقیت ثبت شد.");
+        toast.success("پیشنهاد فروش با موفقیت ثبت شد.");
         setSellOrderModalOpen(false);
       })
       .catch((error) => {
@@ -97,6 +97,7 @@ function TradeIntermediate() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
+        toast.success("سفارش فروش با موفقیت فرستاده شد.")
       })
       .catch((error) => {
         console.log(error);

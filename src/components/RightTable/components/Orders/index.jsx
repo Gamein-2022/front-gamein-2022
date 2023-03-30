@@ -6,6 +6,7 @@ import sampleImg from "../../../../assets/icons/copper.png";
 import { toast } from "react-toastify";
 import {
   acceptOffer,
+  archiveOrder,
   cancelOrder,
   getOrderOffers,
   getOrdersHistory,
@@ -19,6 +20,7 @@ import cargoDisableImg from "../../../../assets/cargo-disable.png";
 import airplaneImg from "../../../../assets/airplane.png";
 import airplaneDisableImg from "../../../../assets/airplane-disable.png";
 import "./style.scss";
+import { declineOffer } from "../../../../apis/offers";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -52,6 +54,22 @@ function Orders() {
       });
   };
 
+  const handleArchiveOrder = (id) => {
+    archiveOrder({ id })
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        toast.success("سفارش با موفقیت بایگانی شد.");
+        updateOrders();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
   const handleDeleteOrder = (id) => {
     cancelOrder({ id })
       .then((res) => res.data)
@@ -59,6 +77,12 @@ function Orders() {
         console.log(data);
         toast.success("سفارش با موفقیت حذف شد.");
         updateOrders();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
       });
   };
 
@@ -73,6 +97,9 @@ function Orders() {
       })
       .catch((error) => {
         console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
       });
   };
 
@@ -85,6 +112,37 @@ function Orders() {
       .then((data) => {
         console.log(data);
         toast.success("خرید با موفقیت نهایی شد.");
+        setOrderTrackingModalOpen(false);
+        updateOrders();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
+  const updateOrderOffers = (offer) => {
+    getOrderOffers({ id: offer.order.id })
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        setOffers(data.result.offers);
+        setBalance(data.result.balance);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleDeclineOffer = (offer) => {
+    declineOffer({ offerId: offer.id })
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        toast.success("پیشنهاد با موفقیت رد شد.");
+        updateOrderOffers(offer);
       })
       .catch((error) => {
         console.log(error);
@@ -160,9 +218,12 @@ function Orders() {
                       </div>
                     )}
                     {!isWaiting && (
-                      <button className="order-card__btn-success">
+                      <Button
+                        className="order-card__btn-success"
+                        onClick={() => handleArchiveOrder(id)}
+                      >
                         بایگانی
-                      </button>
+                      </Button>
                     )}
                   </div>
                 </div>
@@ -207,12 +268,20 @@ function Orders() {
                       {offer.shipPrice}
                     </div>
                   </div>
-                  <Button
-                    onClick={() => setSelectedOffer(offer)}
-                    className="order-card__btn-success"
-                  >
-                    خرید
-                  </Button>
+                  <div className="order-card__btns">
+                    <Button
+                      onClick={() => handleDeclineOffer(offer)}
+                      className="order-card__btn-error"
+                    >
+                      رد کردن
+                    </Button>
+                    <Button
+                      onClick={() => setSelectedOffer(offer)}
+                      className="order-card__btn-success"
+                    >
+                      خرید
+                    </Button>
+                  </div>
                 </div>
               </div>
             ))}
