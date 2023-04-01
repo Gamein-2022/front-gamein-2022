@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getTeamBuildings } from "../../apis/factory";
 import { getTime } from "../../apis/time";
 import Layout from "../../components/Layout";
 import LeftTable from "../../components/LeftTable";
@@ -9,6 +10,7 @@ import "./style.scss";
 
 function Home() {
   const [time, setTime] = useState();
+  const [buildings, setBuildings] = useState([]);
   useEffect(() => {
     getTime()
       .then((res) => res.data)
@@ -40,12 +42,26 @@ function Home() {
     }
   }, [time]);
 
+  useEffect(() => {
+    getTeamBuildings()
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        setBuildings({loaded: true, buildings: data?.result});
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <Layout>
       <div className="home">
-        <Map />
+        <Map buildings={buildings} />
         <div className="home__time-balance">
-          <div className="home__time">{`${time?.year || 0}/${time?.month|| 0}/${time?.day || 0}`}</div>
+          <div className="home__time">{`${time?.year || 0}/${
+            time?.month || 0
+          }/${time?.day || 0}`}</div>
           <div className="home__balance"></div>
         </div>
         <div className="home__bottom-sheet">

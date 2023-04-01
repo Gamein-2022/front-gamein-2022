@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ReactComponent as Map } from "./gamein_map.svg";
 import "./style.scss";
 
-const HIDDEN_ITEMS = [
+let HIDDEN_ITEMS = [
   "recycling_facility_building",
   "ground_3_assembly_facility",
   "ground_2_assembly_facility",
@@ -57,11 +57,62 @@ function glow(id) {
   });
 }
 
-function MapTest() {
+function MapTest({ buildings }) {
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     console.log("loaded", loaded);
-    if (loaded) {
+    if (loaded && buildings?.loaded) {
+      const hasRecycleFactory =
+        buildings.buildings.filter((item) => item.type === "RECYCLE_FACTORY")
+          .length > 0;
+      if (hasRecycleFactory) {
+        HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+          (item) => item !== "recycling_facility_building"
+        );
+        HIDDEN_ITEMS.push("recycling_facility_unfinished_building");
+      }
+      buildings.buildings
+        .filter((item) => item.type !== "RECYCLE_FACTORY")
+        .forEach((building, index) => {
+          if (index === 0) {
+            if (building.type === "PRODUCTION_FACTORY") {
+              HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+                (item) => item !== "ground_1_production_facility"
+              );
+            } else if (building.type === "ASSEMBLY_FACTORY") {
+              HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+                (item) => item !== "ground_1_assembly_facility"
+              );
+            }
+            HIDDEN_ITEMS.push("ground_1_unfinished_building");
+          } else if (index === 1) {
+            if (building.type === "PRODUCTION_FACTORY") {
+              HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+                (item) => item !== "ground_2_production_facility"
+              );
+            } else if (building.type === "ASSEMBLY_FACTORY") {
+              HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+                (item) => item !== "ground_2_assembly_facility"
+              );
+            }
+            HIDDEN_ITEMS.push("ground_2_unfinished_building");
+          } else if (index === 2) {
+            if (building.type === "PRODUCTION_FACTORY") {
+              HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+                (item) => item !== "ground_3_production_facility"
+              );
+            } else if (building.type === "ASSEMBLY_FACTORY") {
+              HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+                (item) => item !== "ground_3_assembly_facility"
+              );
+            }else {
+              HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+                (item) => item !== "ground_3_inventory"
+              );
+            }
+            HIDDEN_ITEMS.push("ground_3_unfinished_building");
+          }
+        });
       HIDDEN_ITEMS.forEach((item) => {
         hide(item);
       });
@@ -69,7 +120,7 @@ function MapTest() {
         glow(item);
       });
     }
-  }, [loaded]);
+  }, [loaded, buildings]);
 
   useEffect(() => {
     setLoaded(true);
