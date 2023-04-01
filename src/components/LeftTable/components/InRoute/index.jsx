@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getStorageInRoute } from "../../../../apis/storage";
 
-import sampleImg from "../../../../assets/icons/copper.png";
+import InRouteItem from "../InRouteItem";
 
 import "./style.scss";
 
@@ -22,20 +22,7 @@ function InRoute() {
   return (
     <div className="in-route">
       {inRouteProducts.map((item) => (
-        <div className="in-route-item">
-          <div className="in-route-item__header">
-            <img className="in-route-item__img" src={sampleImg} alt="product" />
-            <div className="in-route-item__header-left">
-              <div>{item?.product?.name}</div>
-              <div>تعداد: {item?.amount}</div>
-            </div>
-          </div>
-          <div className="in-route-item__footer">
-            <div className="in-route-item__time">
-              زمان باقیمانده: {43} ثانیه
-            </div>
-          </div>
-        </div>
+        <InRouteItem item={item} />
       ))}
     </div>
   );
