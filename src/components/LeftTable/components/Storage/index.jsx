@@ -8,19 +8,6 @@ import InRoute from "../InRoute";
 
 function Storage() {
   const [activeTab, setActiveTab] = useState("in-storage");
-  const [storageInfo, setStorageInfo] = useState([]);
-
-  useEffect(() => {
-    getStorageInfo()
-      .then((res) => res.data)
-      .then((data) => {
-        console.log(data);
-        setStorageInfo(data?.result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   return (
     <div className="storage">

@@ -45,7 +45,7 @@ function Home() {
       <div className="home">
         <Map />
         <div className="home__time-balance">
-          <div className="home__time">{`${time?.year}/${time?.month}/${time?.day}`}</div>
+          <div className="home__time">{`${time?.year || 0}/${time?.month|| 0}/${time?.day || 0}`}</div>
           <div className="home__balance"></div>
         </div>
         <div className="home__bottom-sheet">

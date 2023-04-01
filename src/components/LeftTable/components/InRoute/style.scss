@@ -1,0 +1,44 @@
+.in-route {
+  padding-bottom: 32px;
+}
+
+.in-route-item {
+  padding: 16px;
+  margin: 16px;
+  background-color: #f1f2f2;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
+
+  &__header {
+    display: flex;
+    margin-bottom: 4px;
+  }
+
+  &__img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin-left: 8px;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__actions {
+    display: flex;
+  }
+
+  &__enter-storage {
+    background-color: #255957 !important;
+    min-width: auto !important;
+    margin-left: 8px !important;
+  }
+
+  &__delete {
+    background-color: #c72f21 !important;
+    min-width: auto !important;
+  }
+}
