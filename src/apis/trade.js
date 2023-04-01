@@ -8,6 +8,10 @@ export function getIntermediateMaterials() {
   return AxiosInstance.get("/market/product/intermediate-products");
 }
 
+export function getFinalProducts() {
+  return AxiosInstance.get("/market/product/final-products");
+}
+
 export function buyFromGamein({ productId, quantity, shippingMethod }) {
   return AxiosInstance.post("/market/gamein/buy", {
     productId,
@@ -42,5 +46,13 @@ export function sendOffer({ orderId, shippingMethod }) {
   return AxiosInstance.post("/market/offer", {
     orderId,
     shippingMethod,
+  });
+}
+
+export function sellToGamein({ productId, quantity, price }) {
+  return AxiosInstance.post("/market/gamein/sell", {
+    productId,
+    quantity,
+    price,
   });
 }

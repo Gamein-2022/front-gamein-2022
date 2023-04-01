@@ -1,0 +1,79 @@
+.in-storage-chart {
+  padding: 16px 32px;
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+  text-align: center;
+
+  &__in-storage {
+    color: #255957;
+    .in-storage-chart__value {
+      background-color: #255957;
+    }
+  }
+
+  &__in-manifacture {
+    color: #51cbc6;
+    .in-storage-chart__value {
+      background-color: #51cbc6;
+    }
+  }
+
+  &__empty {
+    color: #d9d9d9;
+    .in-storage-chart__value {
+      background-color: #d9d9d9;
+    }
+  }
+
+  &__value {
+    height: 32px;
+  }
+}
+
+.in-storage-chart-guide {
+  display: flex;
+  padding: 0 16px;
+  justify-content: center;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+  }
+
+  &__bullet {
+    width: 16px;
+    height: 16px;
+    margin-left: 4px;
+  }
+
+  &__in-storage {
+    color: #255957;
+    .in-storage-chart-guide__bullet {
+      background-color: #255957;
+    }
+  }
+
+  &__in-manifacture {
+    color: #51cbc6;
+    .in-storage-chart-guide__bullet {
+      background-color: #51cbc6;
+    }
+  }
+
+  &__empty {
+    color: #d9d9d9;
+    .in-storage-chart-guide__bullet {
+      background-color: #d9d9d9;
+    }
+  }
+}
+
+.storage-items {
+  color: #8d8d8d;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid #8d8d8d;
+  margin: 16px;
+}

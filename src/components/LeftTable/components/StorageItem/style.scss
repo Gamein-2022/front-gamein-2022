@@ -24,8 +24,23 @@
     min-width: 64px;
   }
 
+  &__btns {
+    display: flex;
+    align-items: center;
+  }
+
   &__plus {
     cursor: pointer;
+    display: flex;
+    margin-left: 4px;
+    color: #9c9c9c;
+  }
+
+  &__delete {
+    background-color: #c72f21 !important;
+    min-width: auto !important;
+    padding: 4px !important;
+    margin: 0 !important;
   }
 
   &__expansion-item {
@@ -39,5 +54,13 @@
 
   &__expansion-name {
     min-width: 128px;
+  }
+
+  &__modal-btns {
+    display: flex;
+  }
+
+  &__modal-delete {
+    margin-left: 12px !important;
   }
 }

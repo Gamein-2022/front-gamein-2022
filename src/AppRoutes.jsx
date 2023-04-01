@@ -9,8 +9,34 @@ import Guide from "./pages/Guide";
 import Support from "./pages/Support";
 import Map from "./pages/Map";
 import ChooseRegion from "./pages/ChooseRegion";
+import { useEffect, useRef } from "react";
+import { toast } from "react-toastify";
 
 const AppRouter = () => {
+  const ws = useRef();
+
+  useEffect(() => {
+    ws.current = new WebSocket("ws://192.168.24.11:8080/websocket/notify");
+
+    ws.current.onopen = function (event) {
+      console.log("connecting to ws....");
+    };
+
+    ws.current.onmessage = function (event) {
+      const data = JSON.parse(event.data);
+      console.log("recieved: ", data);
+      if (data.type === "SUCCESS") {
+        toast.success(data.message, {position: "bottom-center"});
+      }
+      if (data.type === "WARNING") {
+        toast.warning(data.message, {position: "bottom-center"});
+      }
+      if (data.type === "ERROR") {
+        toast.error(data.message, {position: "bottom-center"});
+      }
+    };
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
