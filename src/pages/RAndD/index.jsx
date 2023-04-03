@@ -5,36 +5,43 @@ import ResearchAndDevelopPanel from "../../components/ResearchAndDevelopPanel";
 import { getResearches } from "../../apis/research";
 import { useRecoilValue } from "recoil";
 import { yearState } from "../../store/time";
+import { toast } from "react-toastify";
 
 import styles from "./style.module.scss";
 
 const ResearchAndDevelopPage = () => {
+  const [refresh, setRefresh] = useState(true);
   const [researches, setResearches] = useState({});
-  const [selected, setSelected] = useState(null);
   const year = useRecoilValue(yearState);
 
   useEffect(() => {
-    getResearches().then((res) => {
-      setResearches(
-        res.data.result.reduce((acc, item) => {
-          acc[item.subject.name] = item.status;
-          return acc;
-        }, {})
-      );
-    });
-  }, []);
-  console.log("r&d year", year);
+    if (refresh) {
+      getResearches()
+        .then((res) => {
+          setResearches(
+            res.data.result.reduce((acc, item) => {
+              acc[item.subject.name] = item.status;
+              return acc;
+            }, {})
+          );
+        })
+        .catch((err) => {
+          toast.error(
+            err?.response?.data?.message || "خطایی در دریافت اطلاعات روی داد!"
+          );
+        })
+        .finally(() => {
+          setRefresh(false);
+        });
+    }
+  }, [refresh]);
 
   return (
     <Layout>
       <div className={styles["research-and-develop-main-container"]} dir="ltr">
-        <ResearchAndDevelopTree
-          year={year}
-          technologies={researches}
-          setSelected={setSelected}
-        />
+        <ResearchAndDevelopTree year={year} technologies={researches} />
 
-        <ResearchAndDevelopPanel selected={selected} current={null} />
+        <ResearchAndDevelopPanel refresh={() => setRefresh(true)} />
       </div>
     </Layout>
   );

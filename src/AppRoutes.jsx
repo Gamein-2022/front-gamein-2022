@@ -11,7 +11,6 @@ import Map from "./pages/Map";
 import ChooseRegion from "./pages/ChooseRegion";
 import { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
-import { RecoilRoot } from "recoil";
 
 const AppRouter = () => {
   const ws = useRef();
@@ -39,21 +38,19 @@ const AppRouter = () => {
   }, []);
 
   return (
-    <RecoilRoot>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/r-and-d" element={<RAndD />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/guide" element={<Guide />} />
-          <Route path="/support" element={<Support />} />
-          <Route path="/map-test" element={<Map />} />
-          <Route path="/choose-region" element={<ChooseRegion />} />
-        </Routes>
-      </BrowserRouter>
-    </RecoilRoot>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/r-and-d" element={<RAndD />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/guide" element={<Guide />} />
+        <Route path="/support" element={<Support />} />
+        <Route path="/map-test" element={<Map />} />
+        <Route path="/choose-region" element={<ChooseRegion />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

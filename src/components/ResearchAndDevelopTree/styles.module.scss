@@ -85,9 +85,10 @@
       }
 
       .unlockable:hover,
-      .unlocked:hover {
+      .unlocked:hover,
+      .selected {
         border-width: 4px;
-        border-color: #7e95e0;
+        border-color: #7e95e0 !important;
 
         .absolute-icon {
           bottom: -2px;

@@ -5,16 +5,17 @@ import AppRouter from "./AppRoutes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/main.scss";
+import { RecoilRoot } from "recoil";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   // <React.StrictMode>
-    <div>
-      <AppRouter />
-      <ToastContainer theme="dark" position="top-center" />
-    </div>
+  <RecoilRoot>
+    <AppRouter />
+    <ToastContainer theme="dark" position="top-center" />
+  </RecoilRoot>
   // </React.StrictMode>
 );
 

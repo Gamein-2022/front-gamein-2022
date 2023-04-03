@@ -18,11 +18,14 @@ import Assembly4Icon from "./icons/Assembly4Icon";
 import OkIcon from "./icons/OkIcon";
 import ClockIcon from "./icons/ClockIcon";
 import { Tooltip } from "@mui/material";
+import { useRecoilState } from "recoil";
+import { dataState } from "../../store/research-and-develop";
 
 import styles from "./styles.module.scss";
 
 const ResearchAndDevelopTree = ({ year, technologies }) => {
-  const [size, setSize] = useState([0, 0]);
+  const [data, setData] = useRecoilState(dataState);
+  const [_, setSize] = useState([0, 0]);
 
   useLayoutEffect(() => {
     function eventHandle() {
@@ -93,14 +96,20 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({ value: "touch-screen", title: "Touch Screen" });
+            }}
           >
             <div
               className={
-                year < 2007
+                (data?.value === "touch-screen"
+                  ? styles["selected"] + " "
+                  : "") +
+                (year < 2007
                   ? ""
                   : technologies["touch-screen"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setBody1}
             >
@@ -148,14 +157,20 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({ value: "foldable-screen", title: "Foldable Screen" });
+            }}
           >
             <div
               className={
-                year < 2016
+                (data?.value === "foldable-screen"
+                  ? styles["selected"] + " "
+                  : "") +
+                (year < 2016
                   ? ""
                   : technologies["foldable-screen"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setBody2}
             >
@@ -200,14 +215,20 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({ value: "advanced-display", title: "Advanced Display" });
+            }}
           >
             <div
               className={
-                year < 2023
+                (data?.value === "advanced-display"
+                  ? styles["selected"] + " "
+                  : "") +
+                (year < 2023
                   ? ""
                   : technologies["advanced-display"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setBody3}
             >
@@ -254,14 +275,18 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({ value: "3G", title: "3G" });
+            }}
           >
             <div
               className={
-                year < 2007
+                (data?.value === "3G" ? styles["selected"] + " " : "") +
+                (year < 2007
                   ? ""
                   : technologies["3G"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setComms1}
             >
@@ -306,14 +331,18 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({ value: "4G", title: "4G" });
+            }}
           >
             <div
               className={
-                year < 2011
+                (data?.value === "4G" ? styles["selected"] + " " : "") +
+                (year < 2011
                   ? ""
                   : technologies["4G"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setComms2}
             >
@@ -358,14 +387,18 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({ value: "5G", title: "5G" });
+            }}
           >
             <div
               className={
-                year < 2016
+                (data?.value === "5G" ? styles["selected"] + " " : "") +
+                (year < 2016
                   ? ""
                   : technologies["5G"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setComms3}
             >
@@ -416,14 +449,23 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({
+                value: "basic-soc-memory",
+                title: "Basic SoC & Memory",
+              });
+            }}
           >
             <div
               className={
-                year < 2011
+                (data?.value === "basic-soc-memory"
+                  ? styles["selected"] + " "
+                  : "") +
+                (year < 2011
                   ? ""
-                  : technologies["Basic-SoC"] === "done"
+                  : technologies["basic-soc-memory"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setMemory1}
             >
@@ -433,16 +475,16 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                   className={styles["absolute-icon"]}
                   style={{
                     backgroundColor:
-                      technologies["BasicSoc"] === "done"
+                      technologies["basic-soc-memory"] === "done"
                         ? "#009054"
-                        : technologies["BasicSoc"] === "doing"
+                        : technologies["basic-soc-memory"] === "doing"
                         ? "#ffd73b"
                         : "#8d8d8d",
                   }}
                 >
-                  {technologies["BasicSoc"] === "done" ? (
+                  {technologies["basic-soc-memory"] === "done" ? (
                     <OkIcon />
-                  ) : technologies["BasicSoc"] === "doing" ? (
+                  ) : technologies["basic-soc-memory"] === "doing" ? (
                     <ClockIcon />
                   ) : (
                     <LockIcon />
@@ -470,14 +512,23 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({
+                value: "quantum-computation",
+                title: "Quantum Computing",
+              });
+            }}
           >
             <div
               className={
-                year < 2023
+                (data?.value === "quantum-computation"
+                  ? styles["selected"] + " "
+                  : "") +
+                (year < 2023
                   ? ""
                   : technologies["quantum-computation"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setMemory2}
             >
@@ -525,14 +576,18 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({ value: "camera", title: "Camera" });
+            }}
           >
             <div
               className={
-                year < 2007
+                (data?.value === "camera" ? styles["selected"] + " " : "") +
+                (year < 2007
                   ? ""
                   : technologies["camera"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setMedia1}
             >
@@ -579,14 +634,20 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({ value: "multi-camera", title: "Multi Camera" });
+            }}
           >
             <div
               className={
-                year < 2016
+                (data?.value === "multi-camera"
+                  ? styles["selected"] + " "
+                  : "") +
+                (year < 2016
                   ? ""
                   : technologies["multi-camera"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setMedia2}
             >
@@ -638,14 +699,18 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({ value: "assembly-1", title: "Era 2 Assembly" });
+            }}
           >
             <div
               className={
-                year < 2007
+                (data?.value === "assembly-1" ? styles["selected"] + " " : "") +
+                (year < 2007
                   ? ""
                   : technologies["assembly-1"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setAssembly1}
             >
@@ -690,14 +755,18 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({ value: "assembly-2", title: "Era 3 Assembly" });
+            }}
           >
             <div
               className={
-                year < 2011
+                (data?.value === "assembly-2" ? styles["selected"] + " " : "") +
+                (year < 2011
                   ? ""
                   : technologies["assembly-2"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setAssembly2}
             >
@@ -742,14 +811,18 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({ value: "assembly-3", title: "Era 4 Assembly" });
+            }}
           >
             <div
               className={
-                year < 2016
+                (data?.value === "assembly-3" ? styles["selected"] + " " : "") +
+                (year < 2016
                   ? ""
                   : technologies["assembly-3"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setAssembly3}
             >
@@ -794,14 +867,18 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 },
               },
             }}
+            onClick={() => {
+              setData({ value: "assembly-4", title: "Era 5 Assembly" });
+            }}
           >
             <div
               className={
-                year < 2023
+                (data?.value === "assembly-4" ? styles["selected"] + " " : "") +
+                (year < 2023
                   ? ""
                   : technologies["assembly-4"] === "done"
                   ? styles["unlocked"]
-                  : styles["unlockable"]
+                  : styles["unlockable"])
               }
               ref={setAssembly4}
             >
