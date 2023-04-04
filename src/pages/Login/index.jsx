@@ -51,7 +51,7 @@ function Login() {
       .then((res) => {
         toast.success("با موفقیت وارد شدید.");
         localStorage.setItem("token", res.data.token);
-        navigate("/home", { replace: true });
+        navigate("/", { replace: true });
       })
       .catch((error) => {
         if (error.response?.status === 404) {
