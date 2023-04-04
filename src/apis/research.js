@@ -11,3 +11,7 @@ export function getSubjectInfo(name) {
 export function startResearch(name) {
   return AxiosInstance.post(`/factory/research`, { name });
 }
+
+export function putOffResearch(name) {
+  return AxiosInstance.delete(`/factory/research/subjects/${name}`);
+}

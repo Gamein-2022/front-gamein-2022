@@ -39,9 +39,55 @@
       font-size: 1.5rem;
       font-weight: 700;
     }
+
+    .percentage {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 85%;
+      margin: auto;
+    }
+
+    .bar {
+      background-color: #d9d9d9;
+      min-height: 20px;
+      height: 20px;
+      width: 90%;
+      margin: auto;
+      margin-top: 12px;
+      direction: ltr;
+
+      .progress {
+        height: 100%;
+        background-color: #7e95e0;
+      }
+    }
   }
 
-  .invest-button {
+  .done {
+    margin-top: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    .icon-container {
+      background-color: #009054;
+      border-radius: 50%;
+      min-width: 32px;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        width: 16px;
+      }
+    }
+  }
+
+  .r-and-d-button {
     border-radius: 10px;
     max-width: 220px;
     width: 100%;
@@ -51,5 +97,10 @@
     font-size: 1.25rem;
     padding: 8px 0;
     cursor: pointer;
+  }
+
+  .r-and-d-button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
   }
 }
