@@ -37,13 +37,10 @@ const ResearchAndDevelopPage = () => {
   }, [refresh]);
 
   return (
-    <Layout>
-      <div className={styles["research-and-develop-main-container"]} dir="ltr">
-        <ResearchAndDevelopTree year={year} technologies={researches} />
-
-        <ResearchAndDevelopPanel refresh={() => setRefresh(true)} />
-      </div>
-    </Layout>
+    <div className={styles["research-and-develop-main-container"]} dir="ltr">
+      <ResearchAndDevelopTree year={year} technologies={researches} />
+      <ResearchAndDevelopPanel refresh={() => setRefresh(true)} />
+    </div>
   );
 };
 

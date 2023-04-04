@@ -74,7 +74,7 @@ function ChooseRegion() {
       })
       .catch((error) => {});
 
-    ws.current = new WebSocket("ws://localhost:8084/websocket/region");
+    ws.current = new WebSocket("ws://185.97.117.47/region");
 
     ws.current.onopen = function (event) {
       console.log("connecting to ws....");

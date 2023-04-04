@@ -53,10 +53,13 @@ function ShopInitial() {
       .then((res) => res.data)
       .then((data) => {
         toast.success("ماده اولیه با موفقیت خریداری شد.");
+        setOpen(false);
         console.log(data);
       })
       .catch((error) => {
-        toast.error("مشکلی در سامانه رخ داده است.");
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
+        );
         console.log(error);
       });
   };

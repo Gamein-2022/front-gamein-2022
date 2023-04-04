@@ -1,5 +1,10 @@
 .in-route {
   padding-bottom: 32px;
+
+  &__empty {
+    padding: 16px;
+    text-align: center;
+  }
 }
 
 .in-route-item {

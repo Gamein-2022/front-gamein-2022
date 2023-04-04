@@ -24,6 +24,9 @@ function InRoute() {
       {inRouteProducts.map((item) => (
         <InRouteItem item={item} />
       ))}
+      {inRouteProducts.length <= 0 && (
+        <div className="in-route__empty">هیچ کالایی در مسیر نیست.</div>
+      )}
     </div>
   );
 }

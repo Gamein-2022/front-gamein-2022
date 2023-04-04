@@ -1,4 +1,6 @@
+import React, { useEffect, useRef } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -7,16 +9,15 @@ import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
 import Guide from "./pages/Guide";
 import Support from "./pages/Support";
-import Map from "./pages/Map";
 import ChooseRegion from "./pages/ChooseRegion";
-import { useEffect, useRef } from "react";
-import { toast } from "react-toastify";
+import NotFound from "./pages/NotFound";
+import Layout from "./components/Layout";
 
 const AppRouter = () => {
   const ws = useRef();
 
   useEffect(() => {
-    ws.current = new WebSocket("ws://localhost:8084/websocket/notify");
+    ws.current = new WebSocket("ws://185.97.117.47/notify");
 
     ws.current.onopen = function (event) {
       console.log("connecting to ws....");
@@ -41,14 +42,16 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/r-and-d" element={<RAndD />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/guide" element={<Guide />} />
-        <Route path="/support" element={<Support />} />
-        <Route path="/map-test" element={<Map />} />
         <Route path="/choose-region" element={<ChooseRegion />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="r-and-d" element={<RAndD />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="history" element={<History />} />
+          <Route path="guide" element={<Guide />} />
+          <Route path="support" element={<Support />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

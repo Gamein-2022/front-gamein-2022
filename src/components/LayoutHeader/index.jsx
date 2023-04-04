@@ -11,7 +11,7 @@ function LayoutHeader() {
     <header className="layout-header">
       <div className="layout-header__right">
         <NavLink
-          to="/home"
+          to="/"
           className={({ isActive }) =>
             classnames("layout-header__item", {
               " layout-header__item-active": isActive,

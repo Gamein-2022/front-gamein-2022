@@ -33,8 +33,14 @@ function InQueue() {
   return (
     <div className="in-queue">
       {inQueueProducts.map((item) => (
-        <InQueueItem updateInQueueProducts={updateInQueueProducts} item={item} />
+        <InQueueItem
+          updateInQueueProducts={updateInQueueProducts}
+          item={item}
+        />
       ))}
+      {inQueueProducts.length <= 0 && (
+        <div className="in-queue__empty">صف انبار خالی می‌باشد.</div>
+      )}
     </div>
   );
 }

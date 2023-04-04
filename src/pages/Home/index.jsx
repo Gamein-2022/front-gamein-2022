@@ -54,15 +54,13 @@ function Home() {
   }, []);
 
   return (
-    <Layout>
-      <div className="home">
-        <Map buildings={buildings} />
-        <div className="home__bottom-sheet">
-          <RightTable />
-          <LeftTable />
-        </div>
+    <div className="home">
+      <Map buildings={buildings} />
+      <div className="home__bottom-sheet">
+        <RightTable />
+        <LeftTable />
       </div>
-    </Layout>
+    </div>
   );
 }
 

@@ -85,11 +85,17 @@ function InStorage() {
           <div className="in-storage-chart-guide__text">کالای موجود</div>
         </div>
       </div>
-      <div className="storage-items">
-        {storageInfo?.products?.map((item) => (
-          <StorageItem updateStorageInfo={updateStorageInfo} item={item} storageSpace={storageInfo?.storageSpace} />
-        ))}
-      </div>
+      {storageInfo?.products?.length > 0 && (
+        <div className="storage-items">
+          {storageInfo?.products?.map((item) => (
+            <StorageItem
+              updateStorageInfo={updateStorageInfo}
+              item={item}
+              storageSpace={storageInfo?.storageSpace}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
