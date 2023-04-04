@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Helmet from "react-helmet";
 import gamein2022Img from "../../assets/gamein-2022.svg";
 import dariaLogoImg from "../../assets/daria-logo.png";
 import { useNavigate } from "react-router-dom";
@@ -70,6 +71,9 @@ function Login() {
 
   return (
     <>
+      <Helmet>
+        <title>ورود</title>
+      </Helmet>
       {pageLoading && (
         <div className="layout-loader">
           <ScaleLoader color="#000" />

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import Helmet from "react-helmet";
 import { getInitialRegion } from "../../apis/region";
 import Region from "./components/Region";
 import RegionsMap from "./components/RegionsMap";
@@ -148,6 +149,9 @@ function ChooseRegion() {
   };
   return (
     <div className="choose-region">
+      <Helmet>
+        <title>انتخاب منطقه</title>
+      </Helmet>
       <div className="choose-region__container">
         <h1 className="choose-region__title">
           سلام، به گیمین ۲۰۲۲ خوش اومدین!

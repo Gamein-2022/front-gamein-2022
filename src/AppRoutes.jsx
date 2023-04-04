@@ -17,7 +17,7 @@ const AppRouter = () => {
   const ws = useRef();
 
   useEffect(() => {
-    ws.current = new WebSocket("ws://185.97.117.47/notify");
+    ws.current = new WebSocket("ws://185.97.117.47/websocket/notify");
 
     ws.current.onopen = function (event) {
       console.log("connecting to ws....");

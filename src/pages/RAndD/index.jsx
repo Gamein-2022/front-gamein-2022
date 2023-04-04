@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Helmet from "react-helmet";
 import Layout from "../../components/Layout";
 import ResearchAndDevelopTree from "../../components/ResearchAndDevelopTree";
 import ResearchAndDevelopPanel from "../../components/ResearchAndDevelopPanel";
@@ -38,6 +39,9 @@ const ResearchAndDevelopPage = () => {
 
   return (
     <div className={styles["research-and-develop-main-container"]} dir="ltr">
+      <Helmet>
+        <title>تحقیق و توسعه</title>
+      </Helmet>
       <ResearchAndDevelopTree year={year} technologies={researches} />
       <ResearchAndDevelopPanel refresh={() => setRefresh(true)} />
     </div>
