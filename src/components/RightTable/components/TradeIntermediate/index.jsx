@@ -192,7 +192,7 @@ function TradeIntermediate() {
             <option>منطقه ۸</option>
           </select>
         </div>
-        <div>محدوده قیمت:</div>
+        <div className="trade-filter__inputs-label">محدوده قیمت:</div>
         <div className="trade-filter__inputs-wrapper">
           <div className="trade-filter__input-wrapper">
             <label>
@@ -207,7 +207,7 @@ function TradeIntermediate() {
             </label>
           </div>
         </div>
-        <div>محدوده تعداد:</div>
+        <div className="trade-filter__inputs-label">محدوده تعداد:</div>
         <div className="trade-filter__inputs-wrapper">
           <div className="trade-filter__input-wrapper">
             <label>

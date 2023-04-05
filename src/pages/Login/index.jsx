@@ -23,7 +23,7 @@ function Login() {
     getInfo()
       .then((res) => res.data)
       .then((data) => {
-        navigate("/");
+        navigate("/choose-region");
       })
       .catch((error) => {
         if (error?.response?.status !== 401) {
@@ -52,7 +52,7 @@ function Login() {
       .then((res) => {
         toast.success("با موفقیت وارد شدید.");
         localStorage.setItem("token", res.data.token);
-        navigate("/", { replace: true });
+        navigate("/choose-region", { replace: true });
       })
       .catch((error) => {
         if (error.response?.status === 404) {

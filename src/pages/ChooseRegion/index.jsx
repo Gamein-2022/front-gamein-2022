@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Helmet from "react-helmet";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { getInitialRegion } from "../../apis/region";
 import Region from "./components/Region";
 import RegionsMap from "./components/RegionsMap";
@@ -57,6 +59,7 @@ function ChooseRegion() {
   const selectedRegion = regionsState.findIndex((item) => item === "selected");
   const [remainedTime, setRemainedTime] = useState("00:00");
   const [initialRemainedTimeState, setInitialRemainedTimeState] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getInitialRegion()
@@ -64,7 +67,9 @@ function ChooseRegion() {
       .then((data) => {
         console.log("data", data);
         const currentRegion = +data.teamRegionId;
-        setInitialRemainedTimeState(+data.remainingTime || 200000);
+        if (+data?.remainedTime) {
+        }
+        setInitialRemainedTimeState(+data?.remainingTime || 30);
         if (currentRegion > 0) {
           setRegionsState(() => {
             const temp = ["", "", "", "", "", "", "", ""];
@@ -75,7 +80,7 @@ function ChooseRegion() {
       })
       .catch((error) => {});
 
-    ws.current = new WebSocket("ws://185.97.117.47/region");
+    ws.current = new WebSocket("ws://185.97.117.47/websocket/region");
 
     ws.current.onopen = function (event) {
       console.log("connecting to ws....");
@@ -122,6 +127,8 @@ function ChooseRegion() {
         // If the count down is finished, write some text
         if (initialRemainedTime < 0) {
           clearInterval(x);
+          toast.success("مرحله انتخاب زمین پایان یافت.");
+          navigate("/");
         }
         initialRemainedTime -= 1000;
       }, 1000);
