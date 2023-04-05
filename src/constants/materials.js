@@ -26,10 +26,10 @@ import modem2g from "../assets/materials/level_2/modem_2g.svg";
 import modem3g from "../assets/materials/level_2/modem_3g.svg";
 import modem4g from "../assets/materials/level_2/modem_4g.svg";
 import modem5g from "../assets/materials/level_2/modem_5g.svg";
-import multyCamera from "../assets/materials/level_2/multy_camera.svg";
+import multiCamera from "../assets/materials/level_2/multi_camera.svg";
 import phoneBattery from "../assets/materials/level_2/phone_battery.svg";
-import phonePhrame from "../assets/materials/level_2/phone_phrame.svg";
-import phonePhrameKeypad from "../assets/materials/level_2/phone_frame_keypad.svg";
+import phoneFrame from "../assets/materials/level_2/phone_frame.svg";
+import phoneFrameKeypad from "../assets/materials/level_2/phone_frame_keypad.svg";
 import ramAndStorage from "../assets/materials/level_2/ram_and_storage.svg";
 import storage from "../assets/materials/level_2/storage.svg";
 import tabletBattery from "../assets/materials/level_2/tablet_battery.svg";
@@ -45,7 +45,7 @@ import communication2g from "../assets/materials/level_3/communication_2g.svg";
 import communication3g from "../assets/materials/level_3/communication_3g.svg";
 import communication4g from "../assets/materials/level_3/communication_4g.svg";
 import communication5g from "../assets/materials/level_3/communication_5g.svg";
-import mediaMultyCamera from "../assets/materials/level_3/media_multy_camera.svg";
+import mediaMultiCamera from "../assets/materials/level_3/media_multi_camera.svg";
 import mediaNoCamera from "../assets/materials/level_3/media_no_camera.svg";
 import mediaSingleCamera from "../assets/materials/level_3/media_single_camera.svg";
 import phoneBody1 from "../assets/materials/level_3/phone_body_1.svg";
@@ -61,75 +61,75 @@ import watchInternal from "../assets/materials/level_3/watch_internal.svg";
 import watchSensors from "../assets/materials/level_3/watch_sensors.svg";
 
 // final materials
-import gphone1 from "../assets/materials/level_3/gphone_1.svg";
-import gphone2 from "../assets/materials/level_3/gphone_2.svg";
-import gphone3 from "../assets/materials/level_3/gphone_3.svg";
-import gphone4 from "../assets/materials/level_3/gphone_4.svg";
-import gphone5 from "../assets/materials/level_3/gphone_5.svg";
-import gphone6 from "../assets/materials/level_3/gphone_6.svg";
-import gphone7 from "../assets/materials/level_3/gphone_7.svg";
-import gphone8 from "../assets/materials/level_3/gphone_8.svg";
-import gphone9 from "../assets/materials/level_3/gphone_9.svg";
-import gphoneX from "../assets/materials/level_3/gphone_x.svg";
-import gtab1 from "../assets/materials/level_3/gtab_1.svg";
-import gtab2 from "../assets/materials/level_3/gtab_2.svg";
-import gtab3 from "../assets/materials/level_3/gtab_3.svg";
-import gwatch from "../assets/materials/level_3/gwatch.svg";
+import gphone1 from "../assets/materials/level_4/gphone_1.svg";
+import gphone2 from "../assets/materials/level_4/gphone_2.svg";
+import gphone3 from "../assets/materials/level_4/gphone_3.svg";
+import gphone4 from "../assets/materials/level_4/gphone_4.svg";
+import gphone5 from "../assets/materials/level_4/gphone_5.svg";
+import gphone6 from "../assets/materials/level_4/gphone_6.svg";
+import gphone7 from "../assets/materials/level_4/gphone_7.svg";
+import gphone8 from "../assets/materials/level_4/gphone_8.svg";
+import gphone9 from "../assets/materials/level_4/gphone_9.svg";
+import gphoneX from "../assets/materials/level_4/gphone_x.svg";
+import gtab1 from "../assets/materials/level_4/gtab_1.svg";
+import gtab2 from "../assets/materials/level_4/gtab_2.svg";
+import gtab3 from "../assets/materials/level_4/gtab_3.svg";
+import gwatch from "../assets/materials/level_4/gwatch.svg";
 
-export const RAW_MATERIALS = [
-  {
+export const RAW_MATERIALS = {
+  "aluminium": {
     name: "aluminium",
     icon: aluminium,
   },
-  {
+  "chips": {
     name: "chips",
     icon: chips,
   },
-  {
+  "cobalt": {
     name: "cobalt",
     icon: cobalt,
   },
-  {
+  "copper": {
     name: "copper",
     icon: copper,
   },
-  {
+  "glass": {
     name: "glass",
     icon: glass,
   },
-  {
+  "lithium": {
     name: "lithium",
     icon: lithium,
   },
-  {
+  "microphone": {
     name: "microphone",
     icon: microphone,
   },
-  {
+  "plastic": {
     name: "plastic",
     icon: plastic,
   },
-  {
+  "ports": {
     name: "ports",
     icon: ports,
   },
-  {
+  "processors": {
     name: "processors",
     icon: processors,
   },
-  {
+  "silicon": {
     name: "silicon",
     icon: silicon,
   },
-  {
+  "speaker": {
     name: "speaker",
     icon: speaker,
   },
-  {
+  "vibrationMotor": {
     name: "vibrationMotor",
     icon: vibrationMotor,
   },
-];
+};
 
 export const INTERMEDIATE_MATERIALS_LEVEL_ONE = [
   {
@@ -181,20 +181,20 @@ export const INTERMEDIATE_MATERIALS_LEVEL_ONE = [
     icon: modem5g,
   },
   {
-    name: "multyCamera",
-    icon: multyCamera,
+    name: "multiCamera",
+    icon: multiCamera,
   },
   {
     name: "phoneBattery",
     icon: phoneBattery,
   },
   {
-    name: "phonePhrame",
-    icon: phonePhrame,
+    name: "phoneFrame",
+    icon: phoneFrame,
   },
   {
-    name: "phonePhrameKeypad",
-    icon: phonePhrameKeypad,
+    name: "phoneFrameKeypad",
+    icon: phoneFrameKeypad,
   },
   {
     name: "ramAndStorage",
@@ -252,8 +252,8 @@ export const INTERMEDIATE_MATERIALS_LEVEL_TWO = [
     icon: communication5g,
   },
   {
-    name: "mediaMultyCamera",
-    icon: mediaMultyCamera,
+    name: "mediaMultiCamera",
+    icon: mediaMultiCamera,
   },
   {
     name: "mediaNoCamera",

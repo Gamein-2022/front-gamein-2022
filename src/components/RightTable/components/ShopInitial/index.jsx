@@ -11,6 +11,7 @@ import gameinShopModalTitle from "../../../../assets/modals/gamein_shop_modal_ti
 import "./style.scss";
 import { toast } from "react-toastify";
 import Modal from "../../../Modal";
+import { RAW_MATERIALS } from "../../../../constants/materials";
 
 function ShopInitial() {
   const [data, setData] = useState(null);
@@ -68,58 +69,62 @@ function ShopInitial() {
     <>
       <div className="shop-initial">
         <div className="shop-initial__materials-list">
-          <div>موجود در منطقه من</div>
-          <div className="shop-initial__list">
-            {data?.myRegion?.map((material) => (
-              <div
-                onClick={() => setSelectedMaterial(material)}
-                className={classNames("shop-initial__material", {
-                  "shop-initial__material--active":
-                    material.name === selectedMaterial?.name,
-                })}
-              >
-                <div className="shop-initial__material-img-wrapper">
-                  <img
-                    className="shop-initial__material-img"
-                    src={material.img || sampleImg}
-                    alt={material.name}
-                  />
-                </div>
-                <div className="shop-initial__material-name">
-                  {material.name}
-                </div>
+          {data?.myRegion?.length > 0 && (
+            <>
+              <div>موجود در منطقه من</div>
+              <div className="shop-initial__list">
+                {data?.myRegion?.map((material) => (
+                  <div
+                    onClick={() => setSelectedMaterial(material)}
+                    className={classNames("shop-initial__material", {
+                      "shop-initial__material--active":
+                        material.name === selectedMaterial?.name,
+                    })}
+                  >
+                    <img
+                      className="shop-initial__material-img"
+                      src={RAW_MATERIALS[material.name]?.icon || sampleImg}
+                      alt={material.name}
+                    />
+                    <div className="shop-initial__material-name">
+                      {material.name}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div>موجود در سایر مناطق</div>
-          <div className="shop-initial__list">
-            {data?.otherRegions?.map((material) => (
-              <div
-                onClick={() => setSelectedMaterial(material)}
-                className={classNames("shop-initial__material", {
-                  "shop-initial__material--active":
-                    material.name === selectedMaterial?.name,
-                })}
-              >
-                <div className="shop-initial__material-img-wrapper">
-                  <img
-                    className="shop-initial__material-img"
-                    src={material.img || sampleImg}
-                    alt={material.name}
-                  />
-                </div>
-                <div className="shop-initial__material-name">
-                  {material.name}
-                </div>
+            </>
+          )}
+          {data?.otherRegions?.length > 0 && (
+            <>
+              <div>موجود در سایر مناطق</div>
+              <div className="shop-initial__list">
+                {data?.otherRegions?.map((material) => (
+                  <div
+                    onClick={() => setSelectedMaterial(material)}
+                    className={classNames("shop-initial__material", {
+                      "shop-initial__material--active":
+                        material.name === selectedMaterial?.name,
+                    })}
+                  >
+                    <img
+                      className="shop-initial__material-img"
+                      src={RAW_MATERIALS[material.name]?.icon || sampleImg}
+                      alt={material.name}
+                    />
+                    <div className="shop-initial__material-name">
+                      {material.name}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
         </div>
-        {(selectedMaterial || true) && (
+        {selectedMaterial && (
           <div className="shop-initial__preview">
             <img
               className="shop-initial__preview-img"
-              src={selectedMaterial?.img || sampleImg}
+              src={RAW_MATERIALS[selectedMaterial?.name]?.icon || sampleImg}
               alt="selected material"
             />
             <div className="shop-initial__preview-price">
@@ -140,12 +145,13 @@ function ShopInitial() {
         open={open}
         onClose={() => {
           setOpen(false);
+          setCount(null);
         }}
         title={<img src={gameinShopModalTitle} alt="gamein shop" />}
       >
         <img
           className="shop-modal__img"
-          src={selectedMaterial?.img || sampleImg}
+          src={RAW_MATERIALS[selectedMaterial?.name]?.icon || sampleImg}
           alt="selected material"
         />
         <div className="shop-modal__name">
@@ -160,12 +166,10 @@ function ShopInitial() {
           onChange={(e) => setCount(e.target.value)}
           type="number"
           step={100}
+          min={0}
           className="shop-modal__input"
           placeholder="مثلا ۵۰۰"
         />
-        <div className="shop-modal__empty-storage">
-          ظرفیت خالی انبار:‌۱۰۰۰ عدد
-        </div>
         <div className="shop-modal__transport-name">
           با چه وسیله‌ای ارسال بشه؟
         </div>
@@ -184,7 +188,7 @@ function ShopInitial() {
             <div className="shop-modal__transport-text">
               هواپیما
               <br />
-              در {selectedMaterial?.planeDistanceFactor / 10} روز
+              در {selectedMaterial?.planeDuration} روز
             </div>
           </div>
           <div
@@ -201,7 +205,7 @@ function ShopInitial() {
             <div className="shop-modal__transport-text">
               کشتی
               <br />
-              در {selectedMaterial?.shipDistanceFactor / 10} روز
+              در {selectedMaterial?.shipDuration} روز
             </div>
           </div>
         </div>
@@ -218,6 +222,7 @@ function ShopInitial() {
         <button
           onClick={handleBuyRawMaterial}
           className="shop-modal__confirm-buy-btn"
+          disabled={!count || count === "0"}
         >
           تایید خرید
         </button>
