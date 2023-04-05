@@ -64,6 +64,11 @@ function OffersSent() {
 
   return (
     <div className="offers-sent">
+      {sentOffers?.length <= 0 && (
+        <div className="offers-sent__empty">
+          شما هیچ پیشنهاد فرستاده‌شده‌ای ندارید.
+        </div>
+      )}
       {sentOffers.map(({ acceptDate, declined, cancelled, order, id }) => {
         if (cancelled || declined) {
           return null;

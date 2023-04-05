@@ -36,6 +36,9 @@ function InStorage() {
 
   return (
     <div>
+      <div className="in-storage__space">
+        فضای کل انبار: {storageInfo?.storageSpace}
+      </div>
       <div className="in-storage-chart">
         {storageInfo?.inStoragePercent > 0 && (
           <div

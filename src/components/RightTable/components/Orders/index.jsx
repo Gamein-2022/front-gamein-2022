@@ -176,6 +176,9 @@ function Orders() {
   return (
     <>
       <div className="offers-sent">
+        {orders?.length <= 0 && (
+          <div className="offers-sent__empty">شما هیچ سفارش فعالی ندارید.</div>
+        )}
         {orders.map(
           ({
             acceptDate,
