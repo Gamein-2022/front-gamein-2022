@@ -4,15 +4,17 @@ import Modal from "../../../Modal";
 
 import setupProductionLineModalTitle from "../../../../assets/modals/setup_production_line_modal_title.svg";
 import setupAssemblyLineModalTitle from "../../../../assets/modals/setup_assembly_line_modal_title.svg";
-import { getAvailableProducts, initLine } from "../../../../apis/production";
+import { getLineGroups, initLine } from "../../../../apis/production";
 import { toast } from "react-toastify";
 
 function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
   const [availableProducts, setAvailableProducts] = useState([]);
   const [selectedProduct, setselectedProduct] = useState();
 
+  const stringType = modalType === "PRODUCTION" ? "تولید" : "مونتاژ";
+
   useEffect(() => {
-    getAvailableProducts()
+    getLineGroups({ t: modalType === "PRODUCTION" ? 0 : 1 })
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
@@ -24,11 +26,11 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
   }, []);
 
   const handleSubmit = () => {
-    initLine({ productId: selectedProduct, lineId })
+    initLine({ group: selectedProduct?.name, lineId })
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("خط تولید با موفقیت راه‌اندازی شد.");
+        toast.success(`خط ${stringType} با موفقیت راه‌اندازی شد.`);
         updateLines();
         onClose();
       })
@@ -50,7 +52,7 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
         title={
           <img
             src={
-              modalType === "production"
+              modalType === "PRODUCTION"
                 ? setupProductionLineModalTitle
                 : setupAssemblyLineModalTitle
             }
@@ -61,33 +63,40 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
         <div className="init-line-modal">
           <div className="init-line-modal__img"></div>
           <p className="init-line-modal__description">
-            می‌خوای این خط تولید، برای تولید کدوم دسته از محصولات میانی سطح یک
-            استفاده بشه؟
+            می‌خوای این خط {stringType}، برای {stringType} کدوم دسته از محصولات
+            میانی سطح یک استفاده بشه؟
             <br />
             (این تنظیمات فقط یک بار انجام میشه و غیر قابل تغییره)
           </p>
           <select
             onChange={(e) => {
-              setselectedProduct(e.target.value);
+              setselectedProduct(
+                availableProducts.find((item) => item?.name === e.target.value)
+              );
             }}
-            value={selectedProduct}
+            value={selectedProduct?.id}
             className="trade-filter__select"
           >
             <option disabled selected>
               انتخاب
             </option>
             {availableProducts.map((product) => (
-              <option value={product.id}>{product.name}</option>
+              <option value={product.name}>{product.name}</option>
             ))}
           </select>
-          <div className="init-line-modal__available-products">
-            <div className="init-line-modal__available-products-title">
-              محصولات قابل تولید در این دسته:
+          {selectedProduct && (
+            <div className="init-line-modal__available-products">
+              <div className="init-line-modal__available-products-title">
+                محصولات قابل {stringType} در این دسته:
+              </div>
+              {selectedProduct?.products?.map((product) => (
+                <div className="init-line-modal__product">
+                  <div className="init-line-modal__product-bullet"></div>
+                  {product?.name}
+                </div>
+              ))}
             </div>
-            <div className="init-line-modal__product">نام محصول</div>
-            <div className="init-line-modal__product">نام محصول</div>
-            <div className="init-line-modal__product">نام محصول</div>
-          </div>
+          )}
           <Button disabled={!selectedProduct} onClick={handleSubmit}>
             تایید
           </Button>

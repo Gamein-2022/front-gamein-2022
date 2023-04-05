@@ -1,33 +1,39 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import gameinGearLogo from "../../../../assets/gamein_gear_gray.svg";
 import Button from "../../../Button";
 
-import { getProductRequirements } from "../../../../apis/production";
+// import { getProductRequirements } from "../../../../apis/production";
 
 import "./style.scss";
 import NotInitialed from "./NotInitialed";
 import Off from "./Off";
 import InProgress from "./InProgress";
 
-// const modalType = "assembly";
-const modalType = "production";
-
-function Line({ status, id, product, updateLines, ...otherProps }) {
+function Line({
+  status,
+  id,
+  type,
+  product,
+  updateLines,
+  group,
+  ...otherProps
+}) {
   const [setupLineModelOpen, setSetupLineModelOpen] = useState(false);
   const [initialLineModelOpen, setInitialLineModelOpen] = useState(false);
 
-  const lineTypeString = modalType === "production" ? "تولید" : "مونتاژ";
+  const lineTypeString = type === "PRODUCTION" ? "تولید" : "مونتاژ";
+  console.log("group: ", group);
 
-  useEffect(() => {
-    getProductRequirements({ productId: 6 })
-      .then((res) => res.data)
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   getProductRequirements({ productId: 6 })
+  //     .then((res) => res.data)
+  //     .then((data) => {
+  //       console.log(data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   return (
     <>
@@ -57,7 +63,9 @@ function Line({ status, id, product, updateLines, ...otherProps }) {
               onClose={() => setInitialLineModelOpen(false)}
               updateLines={updateLines}
               lineId={id}
-              {...{ lineTypeString, modalType }}
+              modalType={type}
+              group={group}
+              {...{ lineTypeString }}
             />
           )}
         </div>
@@ -66,7 +74,7 @@ function Line({ status, id, product, updateLines, ...otherProps }) {
         <div className={`line line--${status}`}>
           <div className="line__header">
             <div>
-              خط {lineTypeString} {product?.name}
+              خط {lineTypeString} {group}
             </div>
             <img src={gameinGearLogo} alt="gamein gear logo" />
           </div>
@@ -90,7 +98,9 @@ function Line({ status, id, product, updateLines, ...otherProps }) {
               open={setupLineModelOpen}
               onClose={() => setSetupLineModelOpen(false)}
               lineId={id}
-              {...{ lineTypeString, modalType }}
+              modalType={type}
+              group={group}
+              {...{ lineTypeString }}
             />
           )}
         </div>

@@ -13,6 +13,7 @@ function InProgress({
   updateLines,
   count,
   product,
+  group,
 }) {
   const [currentTimeInSec, setCurrentTimeInSec] = useState(
     new Date(currentTime).getTime()
@@ -35,7 +36,7 @@ function InProgress({
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error?.response?.data?.message)
+        toast.error(error?.response?.data?.message);
         updateLines();
       });
   };
@@ -64,7 +65,7 @@ function InProgress({
       >
         <div className="line__header">
           <div>
-            خط {lineTypeString} {product?.name}
+            خط {lineTypeString} {group}
           </div>
           <img src={gameinGearLogo} alt="gamein gear logo" />
         </div>

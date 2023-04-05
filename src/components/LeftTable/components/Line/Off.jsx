@@ -14,7 +14,15 @@ import { getSetupLineInfo, startLine } from "../../../../apis/production";
 import { formatPrice } from "../../../../utils/formatters";
 import { toast } from "react-toastify";
 
-function Off({ open, updateLines, onClose, modalType, lineTypeString, lineId }) {
+function Off({
+  open,
+  updateLines,
+  onClose,
+  modalType,
+  lineTypeString,
+  lineId,
+  group
+}) {
   const [product, setProduct] = useState();
   const [quantity, setQuantity] = useState(0);
   const [info, setInfo] = useState();
@@ -37,7 +45,7 @@ function Off({ open, updateLines, onClose, modalType, lineTypeString, lineId }) 
       .then((data) => {
         console.log(data);
         updateLines();
-        onClose()
+        onClose();
       })
       .catch((error) => {
         console.log(error);
@@ -62,7 +70,7 @@ function Off({ open, updateLines, onClose, modalType, lineTypeString, lineId }) 
       title={
         <img
           src={
-            modalType === "production"
+            modalType === "PRODUCTION"
               ? setupProductionLineModalTitle
               : setupAssemblyLineModalTitle
           }
@@ -103,7 +111,7 @@ function Off({ open, updateLines, onClose, modalType, lineTypeString, lineId }) 
               onChange={(e) => setQuantity(e.target.value)}
             />
             <div className="setup-line-modal__storage-description">
-              برای {modalType === "production" ? "تولید" : "مونتاژ"} {quantity}{" "}
+              برای {modalType === "PRODUCTION" ? "تولید" : "مونتاژ"} {quantity}{" "}
               عدد {product} به مواد اولیه‌ی زیر نیاز دارید:
             </div>
             <div className="setup-line-modal__storage-table">
@@ -178,12 +186,12 @@ function Off({ open, updateLines, onClose, modalType, lineTypeString, lineId }) 
             <div className="setup-line-modal__storage-warning">
               <div className="setup-line-modal__storage-warning-top">
                 <ErrorOutlineOutlinedIcon />
-                {modalType === "production"
+                {modalType === "PRODUCTION"
                   ? "موجودی برخی مواد اولیه در انبار شما کافی نیست. برای تامین آنها، به فروشگاه گیمین بروید."
                   : "موجودی برخی کالاها در انبار شما کافی نیست. برای تامین آنها، به بخش تجارت رفته و از تیم‌های دیگر بخرید."}
               </div>
               <Button className="setup-line-modal__storage-warning-btn">
-                {modalType === "production"
+                {modalType === "PRODUCTION"
                   ? "خرید از فروشگاه گیمین"
                   : "تجارت با تیم‌های دیگر"}
               </Button>
@@ -196,8 +204,10 @@ function Off({ open, updateLines, onClose, modalType, lineTypeString, lineId }) 
               </div>
               <div>
                 دارایی پس از {lineTypeString}:{" "}
-                {formatPrice(info?.balance -
-                  (info?.basePrice + info?.productDTO?.price * quantity))}{" "}
+                {formatPrice(
+                  info?.balance -
+                    (info?.basePrice + info?.productDTO?.price * quantity)
+                )}{" "}
                 {"جی‌کوین"}
               </div>
               <Button

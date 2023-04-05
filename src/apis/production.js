@@ -4,21 +4,24 @@ export function getLines() {
   return AxiosInstance.get("/factory/line");
 }
 
-export function getProductRequirements({ productId }) {
-  return AxiosInstance.post("/factory/storage/req/", {
-    productId,
-  });
-}
+// export function getProductRequirements({ productId }) {
+//   return AxiosInstance.post("/factory/storage/req/", {
+//     productId,
+//   });
+// }
 
 export function getAvailableProducts() {
   return AxiosInstance.get("/factory/research/available");
 }
 
-export function initLine({ lineId, productId }) {
+export function getLineGroups({ t }) {
+  return AxiosInstance.get(`/factory/line/groups?t=${t}`);
+}
+
+export function initLine({ lineId, group }) {
   return AxiosInstance.post("/factory/line/init/", {
     lineId,
-    productId,
-    type: "PRODUCTION",
+    group,
   });
 }
 
