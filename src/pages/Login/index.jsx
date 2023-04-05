@@ -56,9 +56,9 @@ function Login() {
       })
       .catch((error) => {
         if (error.response?.status === 404) {
-          toast.error("اطلاعات به درستی وارد نشده است.");
-        } else if (error.response?.status === 400) {
           toast.error("شماره موبایل یا ایمیل به درستی وارد نشده است.");
+        } else if (error.response?.status === 400) {
+          toast.error("اطلاعات به درستی وارد نشده است.");
         } else {
           toast.error("مشکلی در سامانه رخ داده است.");
         }
