@@ -22,10 +22,8 @@ function ShopInitial() {
 
   const transportCost =
     transport === "ship"
-      ? selectedMaterial?.shipBasePrice +
-          selectedMaterial?.shipDistanceFactor * count || 0
-      : selectedMaterial?.planeBasePrice +
-          selectedMaterial?.planeDistanceFactor * count || 0;
+      ? selectedMaterial?.shipPrice * count || 0
+      : selectedMaterial?.planePrice * count;
 
   const productCost = count * selectedMaterial?.price || 0;
 
@@ -217,8 +215,12 @@ function ShopInitial() {
         </div>
         <div className="shop-modal__summary-text">جمع کل: {totalCost}</div>
         <div className="shop-modal__seperator"></div>
-        <div className="shop-modal__summary-text">دارایی فعلی: </div>
-        <div className="shop-modal__summary-text">دارایی پس از خرید:</div>
+        <div className="shop-modal__summary-text">
+          دارایی فعلی: {data?.balance}{" "}
+        </div>
+        <div className="shop-modal__summary-text">
+          دارایی پس از خرید: {data?.balance - totalCost}
+        </div>
         <button
           onClick={handleBuyRawMaterial}
           className="shop-modal__confirm-buy-btn"
