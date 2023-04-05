@@ -78,7 +78,11 @@ function ChooseRegion() {
           });
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        if (error?.response?.status === 401) {
+          navigate("/login");
+        }
+      });
 
     ws.current = new WebSocket("ws://185.97.117.47/websocket/region");
 
