@@ -35,10 +35,11 @@ function ProductionAndAssembly() {
       {lines.map((line) => (
         <Line {...line} updateLines={updateLines} />
       ))}
-      {/* <Line status={"NOT_INITIAL"} />
-      <Line status={"OFF"} />
-      <Line status={"IN_PROGRESS"} />
-      <Line status={"DONE"} /> */}
+      {lines?.length <= 0 && (
+        <div className="production-and-assembly__empty">
+          شما هیچ خط تولید یا مونتاژی ندارید.
+        </div>
+      )}
     </div>
   );
 }
