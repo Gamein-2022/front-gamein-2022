@@ -131,108 +131,108 @@ export const RAW_MATERIALS = {
   },
 };
 
-export const INTERMEDIATE_MATERIALS_LEVEL_ONE = [
-  {
+export const INTERMEDIATE_MATERIALS_LEVEL_ONE = {
+  "advancedDisplay": {
     name: "advancedDisplay",
     icon: advancedDisplay,
   },
-  {
+  "camera": {
     name: "camera",
     icon: camera,
   },
-  {
+  "cpu": {
     name: "cpu",
     icon: cpu,
   },
-  {
+  "displayWithKeypad": {
     name: "displayWithKeypad",
     icon: displayWithKeypad,
   },
-  {
+  "fitnessTrackers": {
     name: "fitnessTrackers",
     icon: fitnessTrackers,
   },
-  {
+  "foldableDisplay": {
     name: "foldableDisplay",
     icon: foldableDisplay,
   },
-  {
+  "gpu": {
     name: "gpu",
     icon: gpu,
   },
-  {
+  "healthMonitors": {
     name: "healthMonitors",
     icon: healthMonitors,
   },
-  {
+  "modem2g": {
     name: "modem2g",
     icon: modem2g,
   },
-  {
+  "modem3g": {
     name: "modem3g",
     icon: modem3g,
   },
-  {
+  "modem4g": {
     name: "modem4g",
     icon: modem4g,
   },
-  {
+  "modem5g": {
     name: "modem5g",
     icon: modem5g,
   },
-  {
+  "multiCamera": {
     name: "multiCamera",
     icon: multiCamera,
   },
-  {
+  "phoneBattery": {
     name: "phoneBattery",
     icon: phoneBattery,
   },
-  {
+  "phoneFrame": {
     name: "phoneFrame",
     icon: phoneFrame,
   },
-  {
+  "phoneFrameKeypad": {
     name: "phoneFrameKeypad",
     icon: phoneFrameKeypad,
   },
-  {
+  "ramAndStorage": {
     name: "ramAndStorage",
     icon: ramAndStorage,
   },
-  {
+  "storage": {
     name: "storage",
     icon: storage,
   },
-  {
+  "tabletBattery": {
     name: "tabletBattery",
     icon: tabletBattery,
   },
-  {
+  "tabletFrame": {
     name: "tabletFrame",
     icon: tabletFrame,
   },
-  {
+  "touchDisplay": {
     name: "touchDisplay",
     icon: touchDisplay,
   },
-  {
+  "watchBand": {
     name: "watchBand",
     icon: watchBand,
   },
-  {
+  "watchBattery": {
     name: "watchBattery",
     icon: watchBattery,
   },
-  {
+  "watchDisplay": {
     name: "watchDisplay",
     icon: watchDisplay,
   },
-  {
+  "watchFrame": {
     name: "watchFrame",
     icon: watchFrame,
   },
-];
+};
 
 export const INTERMEDIATE_MATERIALS_LEVEL_TWO = [
   {

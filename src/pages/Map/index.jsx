@@ -63,16 +63,17 @@ function MapTest({ buildings }) {
     console.log("loaded", loaded);
     if (loaded && buildings?.loaded) {
       const hasRecycleFactory =
-        buildings.buildings.filter((item) => item.type === "RECYCLE_FACTORY")
-          .length > 0;
+        buildings?.buildings?.buildings?.filter(
+          (item) => item.type === "RECYCLE_FACTORY"
+        ).length > 0;
       if (hasRecycleFactory) {
         HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
           (item) => item !== "recycling_facility_building"
         );
         HIDDEN_ITEMS.push("recycling_facility_unfinished_building");
       }
-      buildings.buildings
-        .filter((item) => item.type !== "RECYCLE_FACTORY")
+      buildings?.buildings?.buildings
+        ?.filter((item) => item.type !== "RECYCLE_FACTORY")
         .forEach((building, index) => {
           if (index === 0) {
             if (building.type === "PRODUCTION_FACTORY") {
@@ -105,7 +106,7 @@ function MapTest({ buildings }) {
               HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
                 (item) => item !== "ground_3_assembly_facility"
               );
-            }else {
+            } else {
               HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
                 (item) => item !== "ground_3_inventory"
               );
