@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import sampleImg from "../../../../assets/icons/copper.png";
-import { RAW_MATERIALS } from "../../../../constants/materials";
+import {
+  INTERMEDIATE_MATERIALS_LEVEL_ONE,
+  INTERMEDIATE_MATERIALS_LEVEL_TWO,
+  RAW_MATERIALS,
+} from "../../../../constants/materials";
 import "./style.scss";
 
 function InRouteItem({ item }) {
@@ -19,7 +23,16 @@ function InRouteItem({ item }) {
   return (
     <div className="in-route-item">
       <div className="in-route-item__header">
-        <img className="in-route-item__img" src={RAW_MATERIALS[item?.product?.name]?.icon || sampleImg} alt="product" />
+        <img
+          className="in-route-item__img"
+          src={
+            RAW_MATERIALS[item?.product?.name]?.icon ||
+            INTERMEDIATE_MATERIALS_LEVEL_ONE[item?.product?.name]?.icon ||
+            INTERMEDIATE_MATERIALS_LEVEL_TWO[item?.product?.name]?.icon ||
+            sampleImg
+          }
+          alt="product"
+        />
         <div className="in-route-item__header-left">
           <div>{item?.product?.name}</div>
           <div>تعداد: {item?.amount}</div>
