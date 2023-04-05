@@ -10,6 +10,7 @@ import { collectShipping, removeInQueueItem } from "../../../../apis/storage";
 import { toast } from "react-toastify";
 
 import "./style.scss";
+import { RAW_MATERIALS } from "../../../../constants/materials";
 
 function InQueueItem({ item, updateInQueueProducts }) {
   const [remainedTime, setRemainedTime] = useState(0);
@@ -61,7 +62,11 @@ function InQueueItem({ item, updateInQueueProducts }) {
   return (
     <div className="in-queue-item">
       <div className="in-queue-item__header">
-        <img className="in-queue-item__img" src={sampleImg} alt="product" />
+        <img
+          className="in-queue-item__img"
+          src={RAW_MATERIALS[item?.product?.name]?.icon || sampleImg}
+          alt="product"
+        />
         <div className="in-queue-item__header-left">
           <div>{item?.product?.name}</div>
           <div>تعداد: {item?.amount}</div>
