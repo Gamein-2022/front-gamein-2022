@@ -6,13 +6,23 @@ import Button from "../../../Button";
 
 import sampleImg from "../../../../assets/icons/copper.png";
 
-import { collectShipping } from "../../../../apis/storage";
+import { collectShipping, removeInQueueItem } from "../../../../apis/storage";
 import { toast } from "react-toastify";
 
 import "./style.scss";
 
 function InQueueItem({ item, updateInQueueProducts }) {
   const [remainedTime, setRemainedTime] = useState(0);
+
+  useEffect(() => {
+    const ariveTime = new Date(item.arrivalTime).getTime();
+    const currentTime = new Date(item.currentTime).getTime();
+    const newTime = 60 - Math.round((currentTime - ariveTime) / 1000);
+    setRemainedTime(newTime > 0 ? newTime : 0);
+    setInterval(() => {
+      setRemainedTime((old) => (old - 1 > 0 ? old - 1 : 0));
+    }, 1000);
+  }, []);
 
   const handleCollect = (item) => {
     collectShipping({ id: item.id })
@@ -31,12 +41,22 @@ function InQueueItem({ item, updateInQueueProducts }) {
       });
   };
 
-  useEffect(() => {
-    const ariveTime = new Date(item.arrivalTime).getTime();
-    const currentTime = new Date(item.currentTime).getTime();
-    const newTime = 60000 - (currentTime - ariveTime);
-    setRemainedTime(newTime > 0 ? newTime : 0);
-  }, []);
+  const handleDelete = () => {
+    removeInQueueItem({ id: item.id })
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        toast.success(
+          `${item?.amount} عدد ${item?.product?.name} از صف انبار حذف شد.`
+        );
+        updateInQueueProducts();
+      })
+      .catch((error) => {
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
 
   return (
     <div className="in-queue-item">
@@ -59,7 +79,9 @@ function InQueueItem({ item, updateInQueueProducts }) {
         </div>
       )}
       <div className="in-queue-item__footer">
-        <div className="in-queue-item__time">زمان باقیمانده: {remainedTime} ثانیه</div>
+        <div className="in-queue-item__time">
+          زمان باقیمانده: {remainedTime} ثانیه
+        </div>
         <div className="in-queue-item__actions">
           <Button
             onClick={() => handleCollect(item)}
@@ -68,7 +90,7 @@ function InQueueItem({ item, updateInQueueProducts }) {
           >
             ورود به انبار
           </Button>
-          <Button className="in-queue-item__delete">
+          <Button className="in-queue-item__delete" onClick={handleDelete}>
             <DeleteForeverOutlinedIcon />
           </Button>
         </div>

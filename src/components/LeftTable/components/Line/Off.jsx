@@ -10,7 +10,10 @@ import BasicInput from "../../../BasicInput";
 import sampleImg from "../../../../assets/sample_bom.png";
 import setupProductionLineModalTitle from "../../../../assets/modals/setup_production_line_modal_title.svg";
 import setupAssemblyLineModalTitle from "../../../../assets/modals/setup_assembly_line_modal_title.svg";
-import { getSetupLineInfo, startLine } from "../../../../apis/production";
+import {
+  getLineAvailableProducts,
+  startLine,
+} from "../../../../apis/production";
 import { formatPrice } from "../../../../utils/formatters";
 import { toast } from "react-toastify";
 
@@ -21,14 +24,14 @@ function Off({
   modalType,
   lineTypeString,
   lineId,
-  group
+  group,
 }) {
   const [product, setProduct] = useState();
   const [quantity, setQuantity] = useState(0);
   const [info, setInfo] = useState();
 
   useEffect(() => {
-    getSetupLineInfo({ lineId })
+    getLineAvailableProducts({ id: lineId })
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
@@ -84,12 +87,16 @@ function Off({
             <div className="setup-line-modal__column-title">انتخاب کالا</div>
             <select
               className="trade-filter__select setup-line-modal__choose-product"
-              onChange={(e) => setProduct(e.target.value)}
+              onChange={(e) =>
+                setProduct(info.find((item) => item.name === e.target.value))
+              }
             >
               <option disabled selected>
                 انتخاب کالا
               </option>
-              <option>{info?.productDTO?.name}</option>
+              {info?.map((item) => (
+                <option>{item?.name}</option>
+              ))}
             </select>
             <img
               className="setup-line-modal__img"
@@ -112,7 +119,7 @@ function Off({
             />
             <div className="setup-line-modal__storage-description">
               برای {modalType === "PRODUCTION" ? "تولید" : "مونتاژ"} {quantity}{" "}
-              عدد {product} به مواد اولیه‌ی زیر نیاز دارید:
+              عدد {product?.name} به مواد اولیه‌ی زیر نیاز دارید:
             </div>
             <div className="setup-line-modal__storage-table">
               <table>
@@ -124,7 +131,7 @@ function Off({
                   </tr>
                 </thead>
                 <tbody>
-                  {info?.requirements.map((req) => (
+                  {/* {info?.requirements.map((req) => (
                     <tr>
                       <td>{req.product.name}</td>
                       <td>{req.numberPerOne * quantity}</td>
@@ -137,7 +144,7 @@ function Off({
                         )}
                       </td>
                     </tr>
-                  ))}
+                  ))} */}
                 </tbody>
               </table>
             </div>

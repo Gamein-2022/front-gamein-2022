@@ -2,8 +2,6 @@ import { useState } from "react";
 import gameinGearLogo from "../../../../assets/gamein_gear_gray.svg";
 import Button from "../../../Button";
 
-// import { getProductRequirements } from "../../../../apis/production";
-
 import "./style.scss";
 import NotInitialed from "./NotInitialed";
 import Off from "./Off";
@@ -23,17 +21,6 @@ function Line({
 
   const lineTypeString = type === "PRODUCTION" ? "تولید" : "مونتاژ";
   console.log("group: ", group);
-
-  // useEffect(() => {
-  //   getProductRequirements({ productId: 6 })
-  //     .then((res) => res.data)
-  //     .then((data) => {
-  //       console.log(data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
 
   return (
     <>

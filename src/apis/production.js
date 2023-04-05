@@ -10,8 +10,8 @@ export function getLines() {
 //   });
 // }
 
-export function getAvailableProducts() {
-  return AxiosInstance.get("/factory/research/available");
+export function getLineAvailableProducts({ id }) {
+  return AxiosInstance.get(`/factory/line/${id}/available`);
 }
 
 export function getLineGroups({ t }) {
