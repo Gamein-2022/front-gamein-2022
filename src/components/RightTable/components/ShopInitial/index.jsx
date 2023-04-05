@@ -23,7 +23,7 @@ function ShopInitial() {
   const transportCost =
     transport === "ship"
       ? selectedMaterial?.shipPrice * count || 0
-      : selectedMaterial?.planePrice * count;
+      : selectedMaterial?.planePrice * count || 0;
 
   const productCost = count * selectedMaterial?.price || 0;
 
