@@ -30,7 +30,7 @@ function TradeFinal() {
   }, []);
 
   const handleSellFinalProduct = () => {
-    sellToGamein({ productId: 5, quantity, price })
+    sellToGamein({ productId: selectedProductId, quantity, price })
       .then((res) => res.data)
       .then((data) => {
         toast.success("سفارش فروش به گیمین با موفقیت ثبت شد.");
