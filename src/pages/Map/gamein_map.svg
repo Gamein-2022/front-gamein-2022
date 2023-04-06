@@ -2,6 +2,30 @@
 <!-- Generator: Adobe Illustrator 27.3.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 1920 1080" style="enable-background:new 0 0 1920 1080;" xml:space="preserve">
+  <filter id="softGlow" height="300%" width="300%" x="-75%" y="-75%">
+          <feMorphology
+            operator="dilate"
+            radius="6"
+            in="SourceAlpha"
+            result="thicken"
+          />
+
+          <feGaussianBlur in="thicken" stdDeviation="10" result="blurred" />
+
+          <feFlood flood-color="#ffbb00" result="glowColor" />
+
+          <feComposite
+            in="glowColor"
+            in2="blurred"
+            operator="in"
+            result="softGlow_colored"
+          />
+
+          <feMerge>
+            <feMergeNode in="softGlow_colored" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
 <style type="text/css">
 	.st0{fill:none;}
 	.st1{fill:#8EC200;}
