@@ -321,7 +321,7 @@ function TradeIntermediate() {
           value={sellPrice}
           onChange={(e) => setSellPrice(e.target.value)}
         />
-        <div>درآمد فروش کالاها: </div>
+        <div>درآمد فروش کالاها: {sellCount * sellPrice || 0}</div>
         <Button onClick={handleSubmitSellOrder} type={"error"}>
           تایید فروش
         </Button>
