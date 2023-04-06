@@ -11,6 +11,7 @@ let HIDDEN_ITEMS = [
   "ground_2_production_facility",
   "ground_1_production_facility",
   "ground_3_inventory",
+  "ground_3_unfinished_building",
   "ground_3_tree",
 ];
 
@@ -90,6 +91,8 @@ function MapTest({ buildings }) {
             }
             HIDDEN_ITEMS.push("ground_2_unfinished_building");
           } else if (index === 2) {
+            HIDDEN_ITEMS.push("fences_extra");
+            HIDDEN_ITEMS.push("ground_3_locked");
             if (building.type === "PRODUCTION_FACTORY") {
               HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
                 (item) => item !== "ground_3_production_facility"
@@ -103,7 +106,7 @@ function MapTest({ buildings }) {
                 (item) => item !== "ground_3_inventory"
               );
             }
-            HIDDEN_ITEMS.push("ground_3_unfinished_building");
+           
           }
         });
       HIDDEN_ITEMS.forEach((item) => {
