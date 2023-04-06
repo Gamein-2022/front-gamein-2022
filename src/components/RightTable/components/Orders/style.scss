@@ -133,3 +133,38 @@
     justify-content: space-between;
   }
 }
+
+.order-offer-final {
+  &__title {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  &__description {
+    text-align: center;
+    color: #8d8d8d;
+  }
+
+  &__region-info {
+    text-align: center;
+  }
+
+  &__count {
+    text-align: center;
+  }
+
+  &__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__action-btns {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__finalize-btn {
+    margin-left: 12px;
+  }
+}

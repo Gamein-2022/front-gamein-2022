@@ -29,10 +29,11 @@ export function getSetupLineInfo({ lineId }) {
   return AxiosInstance.get(`/factory/line/req?id=${lineId}&c=10`);
 }
 
-export function startLine({ lineId, count }) {
+export function startLine({ lineId, count, productId }) {
   return AxiosInstance.post("/factory/line/start", {
     lineId,
     count,
+    productId,
   });
 }
 

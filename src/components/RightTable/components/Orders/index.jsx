@@ -327,57 +327,61 @@ function Orders() {
             ))}
           {selectedOffer && (
             <div className="order-offer-final">
-              <div className="order-offer-final__title">تکمیل خرید</div>
-              <div className="order-offer-final__description">
-                اینجا می‌تونی با تعیین نوع حمل و نقل و بعد از حساب کردن هزینه
-                کل، خریدت رو کامل کنی!
-              </div>
-              <div>
-                خرید {selectedOffer.order.productName} از تیم{" "}
-                {selectedOffer.order.submitterTeamName} در منطقه{" "}
-                {selectedOffer.region + 1}
-              </div>
-              <div>تعداد {selectedOffer.order.quantity} واحد</div>
-              <div className="shop-modal__transport-name">
-                با چه وسیله‌ای ارسال بشه؟
-              </div>
-              <div className="shop-modal__transport-list">
-                <div
-                  className={classNames("shop-modal__transport", {
-                    "shop-modal__transport--active": transport === "airplane",
-                  })}
-                  onClick={() => setTransport("airplane")}
-                >
-                  <img
-                    className="shop-modal__transport-img"
-                    src={
-                      transport === "airplane"
-                        ? airplaneImg
-                        : airplaneDisableImg
-                    }
-                    alt="airplane"
-                  />
-                  <div className="shop-modal__transport-text">
-                    هواپیما
-                    <br />
-                    در {selectedOffer.planeDuration} روز
-                  </div>
+              <div className="order-offer-final__top">
+                <div className="order-offer-final__title">تکمیل خرید</div>
+                <div className="order-offer-final__description">
+                  اینجا می‌تونی با تعیین نوع حمل و نقل و بعد از حساب کردن هزینه
+                  کل، خریدت رو کامل کنی!
                 </div>
-                <div
-                  className={classNames("shop-modal__transport", {
-                    "shop-modal__transport--active": transport === "ship",
-                  })}
-                  onClick={() => setTransport("ship")}
-                >
-                  <img
-                    className="shop-modal__transport-img"
-                    src={transport === "ship" ? cargoImg : cargoDisableImg}
-                    alt="airplane"
-                  />
-                  <div className="shop-modal__transport-text">
-                    کشتی
-                    <br />
-                    در {selectedOffer.shipDuration} روز
+                <div className="order-offer-final__region-info">
+                  خرید {selectedOffer.order.productName} از تیم{" "}
+                  {selectedOffer.order.submitterTeamName} در منطقه{" "}
+                  {selectedOffer.region + 1}
+                </div>
+                <div className="order-offer-final__count">
+                  تعداد {selectedOffer.order.quantity} واحد
+                </div>
+                <div className="shop-modal__transport-name">
+                  با چه وسیله‌ای ارسال بشه؟
+                </div>
+                <div className="shop-modal__transport-list">
+                  <div
+                    className={classNames("shop-modal__transport", {
+                      "shop-modal__transport--active": transport === "airplane",
+                    })}
+                    onClick={() => setTransport("airplane")}
+                  >
+                    <img
+                      className="shop-modal__transport-img"
+                      src={
+                        transport === "airplane"
+                          ? airplaneImg
+                          : airplaneDisableImg
+                      }
+                      alt="airplane"
+                    />
+                    <div className="shop-modal__transport-text">
+                      هواپیما
+                      <br />
+                      در {selectedOffer.planeDuration} روز
+                    </div>
+                  </div>
+                  <div
+                    className={classNames("shop-modal__transport", {
+                      "shop-modal__transport--active": transport === "ship",
+                    })}
+                    onClick={() => setTransport("ship")}
+                  >
+                    <img
+                      className="shop-modal__transport-img"
+                      src={transport === "ship" ? cargoImg : cargoDisableImg}
+                      alt="airplane"
+                    />
+                    <div className="shop-modal__transport-text">
+                      کشتی
+                      <br />
+                      در {selectedOffer.shipDuration} روز
+                    </div>
                   </div>
                 </div>
               </div>
@@ -411,8 +415,8 @@ function Orders() {
                       ? selectedOffer.planePrice
                       : selectedOffer.shipPrice))}
               </div>
-              <div>
-                <Button onClick={handleAcceptOffer}>تکمیل خرید</Button>
+              <div className="order-offer-final__action-btns">
+                <Button className="order-offer-final__finalize-btn" onClick={handleAcceptOffer}>تکمیل خرید</Button>
                 <Button onClick={() => setSelectedOffer(null)} type="secondary">
                   بازگشت
                 </Button>

@@ -43,10 +43,11 @@ function Off({
   }, []);
 
   const handleSubmit = () => {
-    startLine({ lineId, count: quantity })
+    startLine({ lineId, count: quantity, productId: product?.product?.id })
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
+        toast.success(`خط ${lineTypeString} با موفقیت راه‌اندازی شد.`);
         updateLines();
         onClose();
       })
@@ -54,7 +55,6 @@ function Off({
         console.log(error);
         if (error?.response?.status === 400) {
           toast.error(error?.response?.data?.message);
-          onClose();
           updateLines();
         }
         if (error?.response?.status === 404) {
@@ -87,14 +87,16 @@ function Off({
             <select
               className="trade-filter__select setup-line-modal__choose-product"
               onChange={(e) =>
-                setProduct(info.find((item) => item.name === e.target.value))
+                setProduct(
+                  info.find((item) => item.product.name === e.target.value)
+                )
               }
             >
               <option disabled selected>
                 انتخاب کالا
               </option>
               {info?.map((item) => (
-                <option>{item?.name}</option>
+                <option>{item?.product?.name}</option>
               ))}
             </select>
             <img
@@ -130,7 +132,7 @@ function Off({
                   </tr>
                 </thead>
                 <tbody>
-                  {/* {info?.requirements.map((req) => (
+                  {product?.requirements.map((req) => (
                     <tr>
                       <td>{req.product.name}</td>
                       <td>{req.numberPerOne * quantity}</td>
@@ -143,7 +145,7 @@ function Off({
                         )}
                       </td>
                     </tr>
-                  ))} */}
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -157,19 +159,21 @@ function Off({
                 نرخ {lineTypeString}:{" "}
               </div>
               <div className="setup-line-modal__confirm-value">
-                {info?.productDTO?.productionRate} کالا در روز
+                {product?.product?.productionRate} کالا در روز
               </div>
               <div className="setup-line-modal__confirm-title">
                 مدت زمان مورد نیاز:{" "}
               </div>
               <div className="setup-line-modal__confirm-value">
-                {quantity / info?.productDTO?.productionRate} روز
+                {quantity / product?.product?.productionRate || 0} روز
               </div>
               <div className="setup-line-modal__confirm-title">
                 هزینه {lineTypeString}:
               </div>
               <div className="setup-line-modal__confirm-value">
-                {info?.basePrice + info?.productDTO?.price * quantity}{" "}
+                {formatPrice(
+                  product?.basePrice + product?.product?.price * quantity || 0
+                )}{" "}
                 {"جی‌کوین"}
               </div>
             </div>
@@ -206,13 +210,16 @@ function Off({
           <div className="setup-line-modal__column">
             <div className="setup-line-modal__confirm-footer">
               <div>
-                دارایی فعلی: {formatPrice(info?.balance)} {"جی‌کوین"}
+                دارایی فعلی:{" "}
+                {formatPrice(product?.balance || info?.[0]?.balance || 0)}{" "}
+                {"جی‌کوین"}
               </div>
               <div>
                 دارایی پس از {lineTypeString}:{" "}
                 {formatPrice(
-                  info?.balance -
-                    (info?.basePrice + info?.productDTO?.price * quantity)
+                  product?.balance -
+                    (product?.basePrice + product?.product?.price * quantity) ||
+                    0
                 )}{" "}
                 {"جی‌کوین"}
               </div>

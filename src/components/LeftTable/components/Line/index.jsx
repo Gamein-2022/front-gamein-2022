@@ -97,6 +97,7 @@ function Line({
           updateLines={updateLines}
           lineId={id}
           product={product}
+          group={group}
           {...{ lineTypeString, ...otherProps }}
         />
       )}
