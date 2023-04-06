@@ -86,6 +86,13 @@ function MapTest({ buildings }) {
         setLeftTableOpen(true);
       });
 
+      document
+        .getElementById("ground_3_inventory")
+        .addEventListener("click", () => {
+          setLeftTableActiveTab(LEFT_TABLE_TABS.storage);
+          setLeftTableOpen(true);
+        });
+
       const hasRecycleFactory =
         buildings?.buildings?.buildings?.filter(
           (item) => item.type === "RECYCLE_FACTORY"
@@ -99,6 +106,7 @@ function MapTest({ buildings }) {
       buildings?.buildings?.buildings
         ?.filter((item) => item.type !== "RECYCLE_FACTORY")
         .forEach((building, index) => {
+          console.log("running.....");
           if (index === 0) {
             if (building.type === "PRODUCTION_FACTORY") {
               HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
