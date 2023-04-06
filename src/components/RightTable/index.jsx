@@ -9,10 +9,24 @@ import classNames from "classnames";
 import Trade from "./components/Trade";
 import Shop from "./components/Shop";
 import Deals from "./components/Deals";
+import { useRecoilState } from "recoil";
+import { rightTableOpen, rightTableTab } from "../../store/tabs";
+import { RIGHT_TABLE_TABS } from "../../constants/tabs";
 
 function RightTable() {
-  const [activeTab, setActiveTab] = useState("trade");
-  const [open, setOpen] = useState(false);
+  const [tab, setTab] = useRecoilState(rightTableTab);
+  const [open, setOpen] = useRecoilState(rightTableOpen);
+
+  console.log(tab)
+  console.log(open)
+
+  const closeRightTable = () => {
+    setOpen(false);
+  };
+
+  const openRightTable = () => {
+    setOpen(true);
+  };
 
   return (
     <div
@@ -21,30 +35,30 @@ function RightTable() {
         open ? "right-table--open" : undefined
       )}
     >
-      <div className="right-table__header" onClick={() => setOpen(true)}>
+      <div className="right-table__header" onClick={openRightTable}>
         <div
           className={classNames("right-table__header-item", {
-            "right-table__header-item--active": activeTab === "trade",
+            "right-table__header-item--active": tab === RIGHT_TABLE_TABS.trade,
           })}
-          onClick={() => setActiveTab("trade")}
+          onClick={() => setTab(RIGHT_TABLE_TABS.trade)}
         >
           <img className="right-table__logo" src={tradeLogo} alt="trade" />
           تجارت
         </div>
         <div
           className={classNames("right-table__header-item", {
-            "right-table__header-item--active": activeTab === "shop",
+            "right-table__header-item--active": tab === RIGHT_TABLE_TABS.shop,
           })}
-          onClick={() => setActiveTab("shop")}
+          onClick={() => setTab(RIGHT_TABLE_TABS.shop)}
         >
           <img className="right-table__logo" src={shopLogo} alt="shop" />
           فروشگاه گیمین
         </div>
         <div
           className={classNames("right-table__header-item", {
-            "right-table__header-item--active": activeTab === "deals",
+            "right-table__header-item--active": tab === RIGHT_TABLE_TABS.deals,
           })}
-          onClick={() => setActiveTab("deals")}
+          onClick={() => setTab(RIGHT_TABLE_TABS.deals)}
         >
           <img
             className="right-table__logo"
@@ -55,11 +69,11 @@ function RightTable() {
         </div>
       </div>
       <div className="right-table__body">
-        {activeTab === "trade" && <Trade />}
-        {activeTab === "shop" && <Shop />}
-        {activeTab === "deals" && <Deals />}
+        {tab === RIGHT_TABLE_TABS.trade && <Trade />}
+        {tab === RIGHT_TABLE_TABS.shop && <Shop />}
+        {tab === RIGHT_TABLE_TABS.deals && <Deals />}
       </div>
-      <div className="left-table__close-icon" onClick={() => setOpen(false)}>
+      <div className="left-table__close-icon" onClick={closeRightTable}>
         <ExpandCircleDownIcon fontSize="large" />
       </div>
     </div>

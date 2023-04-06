@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Helmet from "react-helmet";
 import { getTeamBuildings } from "../../apis/factory";
 import LeftTable from "../../components/LeftTable";
+import MiddleTable from "../../components/MiddleTable";
 import RightTable from "../../components/RightTable";
 import Map from "../Map";
 
@@ -30,6 +31,7 @@ function Home() {
       <Map buildings={buildings} />
       <div className="home__bottom-sheet">
         <RightTable />
+        <MiddleTable />
         <LeftTable />
       </div>
     </div>

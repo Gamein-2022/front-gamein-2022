@@ -1,172 +1,200 @@
-$color:$color;
-#parent{
+$color: #c83928;
+
+#parent {
   display: flex;
- justify-content: center;
- align-items: center;
- width: 100vw;
- height: 100vh;
- overflow: hidden;
- position: relative;
- margin: 0;
- padding: 0;
-  
-
-
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  margin: 0;
+  padding: 0;
 }
-#loader{
+#loader {
   aspect-ratio: 3/3;
-  width:10%;
-  
-
-
+  width: 10%;
 }
-  #gamein_container {
-    animation: loader 5s cubic-bezier(.8,0,.2,1) infinite;
-    min-width: 100%;
-    min-height: 100%;
-    transform-origin: 50% 50%;
-
+#gamein_container {
+  animation: loader 5s cubic-bezier(0.8, 0, 0.2, 1) infinite;
+  min-width: 100%;
+  min-height: 100%;
+  transform-origin: 50% 50%;
+}
+#line_container {
+}
+@keyframes loader {
+  40% {
+    transform: rotateX(0deg);
   }
-  #line_container {
-
-
+  50% {
+    transform: rotateX(180deg);
   }
-  @keyframes loader {
-    40% { transform: rotateX(0deg); }
-    50% { transform: rotateX(180deg); }
-    90% { transform: rotateX(180deg); }
-    100% { transform: rotateX(0deg); }
+  90% {
+    transform: rotateX(180deg);
   }
-  #svg_up {
-  position:static;
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+#svg_up {
+  position: static;
   width: 0;
   height: 0;
   /* display: none; */
 }
 #svg_down {
-  position:static;
+  position: static;
   width: 0;
   height: 0;
   /* display: none; */
 }
-  #top {
+#top {
   background: $color;
   background-size: cover;
   -webkit-clip-path: url(#logo_up);
   clip-path: url(#logo_up);
-    animation: top 5s linear infinite;
-    /* border-top: 20px solid #912b2b;
+  animation: top 5s linear infinite;
+  /* border-top: 20px solid #912b2b;
     border-right: 20px solid transparent;
     border-left: 20px solid transparent;
   */
   min-width: 100%;
- min-height: 60%;
+  min-height: 60%;
   transform-origin: 50% 100%;
-  }
- 
-  @keyframes top {
-    10% { transform: scale(1);
-        transform-origin: 45% 100%; 
-       }
-    40% { transform: scale(0);
-        transform-origin: 45% 100%; 
-       }
-    50% { transform: scale(0);
-        transform-origin: 45% 0%; 
-      }
-    60% { transform: scale(0);
-        transform-origin: 45% 0%;
-       }
-    90% { transform: scale(1);
-        transform-origin: 45% 0%; 
-    }
-    100% { transform: scale(1);
-        transform-origin: 45% 100%; }
-  }
-  #top_s {
-    background: #7b26d6;
-    background-size: cover;
-    -webkit-clip-path: url(#logo_up);
-    clip-path: url(#logo_up);
+}
 
-    min-width: 100%;
-   min-height: 60%;
-    transform-origin: 50% 100%;
-    }
-    #bottom_s {
-      background: #7b26d6;
-    background-size: cover;
-    -webkit-clip-path: url(#logo_down);
-    clip-path: url(#logo_down);
-  
-    min-width: 100%;
-   min-height: 60%;
-    /* left:10px; */
-      
-      transform-origin: 50% 100%;
-    }
-  #bottom {
-    background: $color;
+@keyframes top {
+  10% {
+    transform: scale(1);
+    transform-origin: 45% 100%;
+  }
+  40% {
+    transform: scale(0);
+    transform-origin: 45% 100%;
+  }
+  50% {
+    transform: scale(0);
+    transform-origin: 45% 0%;
+  }
+  60% {
+    transform: scale(0);
+    transform-origin: 45% 0%;
+  }
+  90% {
+    transform: scale(1);
+    transform-origin: 45% 0%;
+  }
+  100% {
+    transform: scale(1);
+    transform-origin: 45% 100%;
+  }
+}
+#top_s {
+  background: #7b26d6;
+  background-size: cover;
+  -webkit-clip-path: url(#logo_up);
+  clip-path: url(#logo_up);
+
+  min-width: 100%;
+  min-height: 60%;
+  transform-origin: 50% 100%;
+}
+#bottom_s {
+  background: #7b26d6;
   background-size: cover;
   -webkit-clip-path: url(#logo_down);
   clip-path: url(#logo_down);
-    animation: bottom 5s linear infinite;
 
   min-width: 100%;
- min-height: 60%;
+  min-height: 60%;
   /* left:10px; */
-    transform: scale(0);
-    transform-origin: 50% 100%;
-  }
-  @keyframes bottom {
-    10% { transform: scale(0); 
-        transform-origin: 45% 100%;}
-    40% { transform: scale(1);
-        transform-origin: 45% 100%; }
-    50% { transform: scale(1);
-          transform-origin: 45% 0%;
-    }
-    60% { transform: scale(1); 
-        transform-origin: 45% 0%;}
-    90% { transform: scale(0);
-        transform-origin: 45% 0%; }
-    100% { transform: scale(0);
-        transform-origin: 45% 100%; }
-  }
-  #line {
-    animation: line 5s linear infinite;
-    border-left: 10% dotted $color;
 
-    position: absolute;
-    top: 70%;
-    left: 43%;
+  transform-origin: 50% 100%;
+}
+#bottom {
+  background: $color;
+  background-size: cover;
+  -webkit-clip-path: url(#logo_down);
+  clip-path: url(#logo_down);
+  animation: bottom 5s linear infinite;
+
+  min-width: 100%;
+  min-height: 60%;
+  /* left:10px; */
+  transform: scale(0);
+  transform-origin: 50% 100%;
+}
+@keyframes bottom {
+  10% {
+    transform: scale(0);
+    transform-origin: 45% 100%;
   }
-  @keyframes line {
-    0% { height: 0%; }
-    10% { height: 40%; }
-    40% { height: 40%;
-        /* transform: rotateX(0deg);  */
-        /* transform-origin: 50% 0%;   */
-    }
-    50% { height: 0px; 
-        /* transform: rotateX(180deg); */
-        /* transform-origin: 50% 100%;  */
-    }
-    60% { height: 40%;
-        /* transform-origin: 50% 100%;  */
-    }
-    90% { height: 40%;
-        /* transform: rotateX(180deg); */
-    
-        /* transform-origin: 50% 100%;  */
-     }
-     90% { height: 0px;
-        /* transform: rotateX(180deg); */
-    
-        /* transform-origin: 50% 100%;  */
-     }
-    100% { height: 0px;
-        /* transform: rotateX(0deg); */
-        /* transform-origin: 50% 0%;  */
-    }
+  40% {
+    transform: scale(1);
+    transform-origin: 45% 100%;
   }
+  50% {
+    transform: scale(1);
+    transform-origin: 45% 0%;
+  }
+  60% {
+    transform: scale(1);
+    transform-origin: 45% 0%;
+  }
+  90% {
+    transform: scale(0);
+    transform-origin: 45% 0%;
+  }
+  100% {
+    transform: scale(0);
+    transform-origin: 45% 100%;
+  }
+}
+#line {
+  animation: line 5s linear infinite;
+  border-left: 10% dotted $color;
+
+  position: absolute;
+  top: 70%;
+  left: 43%;
+}
+@keyframes line {
+  0% {
+    height: 0%;
+  }
+  10% {
+    height: 40%;
+  }
+  40% {
+    height: 40%;
+    /* transform: rotateX(0deg);  */
+    /* transform-origin: 50% 0%;   */
+  }
+  50% {
+    height: 0px;
+    /* transform: rotateX(180deg); */
+    /* transform-origin: 50% 100%;  */
+  }
+  60% {
+    height: 40%;
+    /* transform-origin: 50% 100%;  */
+  }
+  90% {
+    height: 40%;
+    /* transform: rotateX(180deg); */
+
+    /* transform-origin: 50% 100%;  */
+  }
+  90% {
+    height: 0px;
+    /* transform: rotateX(180deg); */
+
+    /* transform-origin: 50% 100%;  */
+  }
+  100% {
+    height: 0px;
+    /* transform: rotateX(0deg); */
+    /* transform-origin: 50% 0%;  */
+  }
+}

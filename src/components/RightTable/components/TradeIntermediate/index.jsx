@@ -66,6 +66,9 @@ function TradeIntermediate() {
       })
       .catch((error) => {
         console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
+        );
       });
   };
 

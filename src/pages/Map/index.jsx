@@ -1,4 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { LEFT_TABLE_TABS, RIGHT_TABLE_TABS } from "../../constants/tabs";
+import {
+  leftTableOpen,
+  leftTableTab,
+  rightTableOpen,
+  rightTableTab,
+} from "../../store/tabs";
 import { ReactComponent as Map } from "./gamein_map.svg";
 import "./style.scss";
 
@@ -25,7 +33,7 @@ const GLOW = [
   "ground_1",
   "ground_2",
   "ground_3",
-  "ali_heidari"
+  "ali_heidari",
 ];
 
 function hide(id) {
@@ -52,9 +60,32 @@ function glow(id) {
 
 function MapTest({ buildings }) {
   const [loaded, setLoaded] = useState(false);
+  const setRightTableActiveTab = useSetRecoilState(rightTableTab);
+  const setRightTableOpen = useSetRecoilState(rightTableOpen);
+
+  const setLeftTableActiveTab = useSetRecoilState(leftTableTab);
+  const setLeftTableOpen = useSetRecoilState(leftTableOpen);
   useEffect(() => {
     console.log("loaded", loaded);
     if (loaded && buildings?.loaded) {
+      // add functionality
+      document.getElementById("gamein_store").addEventListener("click", () => {
+        setRightTableActiveTab(RIGHT_TABLE_TABS.shop);
+        setRightTableOpen(true);
+      });
+
+      document
+        .getElementById("transactions_office")
+        .addEventListener("click", () => {
+          setRightTableActiveTab(RIGHT_TABLE_TABS.deals);
+          setRightTableOpen(true);
+        });
+
+      document.getElementById("inventory").addEventListener("click", () => {
+        setLeftTableActiveTab(LEFT_TABLE_TABS.storage);
+        setLeftTableOpen(true);
+      });
+
       const hasRecycleFactory =
         buildings?.buildings?.buildings?.filter(
           (item) => item.type === "RECYCLE_FACTORY"
@@ -106,7 +137,6 @@ function MapTest({ buildings }) {
                 (item) => item !== "ground_3_inventory"
               );
             }
-           
           }
         });
       HIDDEN_ITEMS.forEach((item) => {

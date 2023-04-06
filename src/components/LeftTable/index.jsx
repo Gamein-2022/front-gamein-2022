@@ -8,10 +8,13 @@ import productionAssemblyLogo from "../../assets/productionAssemblyIcon.svg";
 import storageLogo from "../../assets/storageIcon.svg";
 
 import "./style.scss";
+import { useRecoilState } from "recoil";
+import { leftTableOpen, leftTableTab } from "../../store/tabs";
+import { LEFT_TABLE_TABS } from "../../constants/tabs";
 
 function LeftTable() {
-  const [activeTab, setActiveTab] = useState("storage");
-  const [open, setOpen] = useState(false);
+  const [tab, setTab] = useRecoilState(leftTableTab);
+  const [open, setOpen] = useRecoilState(leftTableOpen);
 
   return (
     <div
@@ -23,9 +26,10 @@ function LeftTable() {
       <div className="left-table__header" onClick={() => setOpen(true)}>
         <div
           className={classNames("left-table__header-item", {
-            "left-table__header-item--active": activeTab === "production",
+            "left-table__header-item--active":
+              tab === LEFT_TABLE_TABS.productionAndAssembly,
           })}
-          onClick={() => setActiveTab("production")}
+          onClick={() => setTab(LEFT_TABLE_TABS.productionAndAssembly)}
         >
           <img
             className="left-table__logo"
@@ -36,17 +40,19 @@ function LeftTable() {
         </div>
         <div
           className={classNames("left-table__header-item", {
-            "left-table__header-item--active": activeTab === "storage",
+            "left-table__header-item--active": tab === LEFT_TABLE_TABS.storage,
           })}
-          onClick={() => setActiveTab("storage")}
+          onClick={() => setTab(LEFT_TABLE_TABS.storage)}
         >
           <img className="left-table__logo" src={storageLogo} alt="storage" />
           مدیریت انبار
         </div>
       </div>
       <div className="left-table__body">
-        {activeTab === "storage" && <Storage />}
-        {activeTab === "production" && <ProductionAndAssembly />}
+        {tab === LEFT_TABLE_TABS.storage && <Storage />}
+        {tab === LEFT_TABLE_TABS.productionAndAssembly && (
+          <ProductionAndAssembly />
+        )}
       </div>
       <div className="left-table__close-icon" onClick={() => setOpen(false)}>
         <ExpandCircleDownIcon fontSize="large" />
