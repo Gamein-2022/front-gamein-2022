@@ -15,24 +15,16 @@ let HIDDEN_ITEMS = [
 ];
 
 const GLOW = [
-  "recycling_facility_building",
-  "recycling_facility_unfinished_building",
+  "recycling_facility",
   "dock",
   "dock_boat",
   "gamein_store",
   "inventory",
   "transactions_office",
-  "ground_3_assembly_facility",
-  "ground_2_assembly_facility",
-  "ground_1_assembly_facility",
-  "ground_3_production_facility",
-  "ground_2_production_facility",
-  "ground_1_production_facility",
-  "ground_3_inventory",
-  "ground_3_tree",
-  "ground_3_unfinished_building",
-  "ground_2_unfinished_building",
-  "ground_1_unfinished_building",
+  "ground_1",
+  "ground_2",
+  "ground_3",
+  "ali_heidari"
 ];
 
 function hide(id) {
