@@ -1,12 +1,18 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import classnames from "classnames";
 
 import gameinHeaderLogo from "../../assets/headerLogo.svg";
+import gcoinLogo from "../../assets/gcoin.svg";
+import calendarLogo from "../../assets/calendar.svg";
+import helpLogo from "../../assets/help.svg";
+import logoutLogo from "../../assets/logout.svg";
 
 import "./style.scss";
+import { formatPrice } from "../../utils/formatters";
 
 function LayoutHeader() {
+  const navigate = useNavigate();
   return (
     <header className="layout-header">
       <div className="layout-header__right">
@@ -55,41 +61,53 @@ function LayoutHeader() {
       </div>
 
       <div className="layout-header__left">
-        <NavLink
-          to="/history"
-          className={({ isActive }) =>
-            classnames("layout-header__item", {
-              " layout-header__item-active": isActive,
-            })
-          }
+        <div
+          className={classnames("layout-header__item  layout-header__gcoin")}
           style={{ zIndex: 3 }}
         >
-          <div className="layout-header__item-text">تاریخچه</div>
-        </NavLink>
+          <div className="layout-header__item-text">
+            <img src={gcoinLogo} alt="gcoin" />
+            {formatPrice(123456678)}
+          </div>
+        </div>
 
-        <NavLink
+        <div
           to="/guide"
-          className={({ isActive }) =>
-            classnames("layout-header__item", {
-              " layout-header__item-active": isActive,
-            })
-          }
+          className={classnames("layout-header__item layout-header__calendar")}
           style={{ zIndex: 2 }}
         >
-          <div className="layout-header__item-text">راهنما</div>
-        </NavLink>
+          <div className="layout-header__item-text">
+            <img src={calendarLogo} alt="calendar" />
+            2023/12/23
+          </div>
+        </div>
 
         <NavLink
           to="/support"
-          className={({ isActive }) =>
-            classnames("layout-header__item", {
-              " layout-header__item-active": isActive,
-            })
-          }
+          className={classnames(
+            "layout-header__icon-item layout-header__icon-item-help"
+          )}
           style={{ zIndex: 1 }}
         >
-          <div className="layout-header__item-text">پشتیبانی</div>
+          <div className="layout-header__item-text">
+            <img src={helpLogo} alt="help" />
+          </div>
         </NavLink>
+
+        <div
+          onClick={() => {
+            localStorage.removeItem("token");
+            navigate("/login");
+          }}
+          className={classnames(
+            "layout-header__icon-item layout-header__icon-item-logout"
+          )}
+          style={{ zIndex: 2 }}
+        >
+          <div className="layout-header__item-text">
+            <img src={logoutLogo} alt="logout" />
+          </div>
+        </div>
       </div>
     </header>
   );
