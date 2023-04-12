@@ -6,11 +6,13 @@ import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 
 import productionAssemblyLogo from "../../assets/productionAssemblyIcon.svg";
 import storageLogo from "../../assets/storageIcon.svg";
+import recycleLogo from "../../assets/recycleIcon.svg";
 
 import "./style.scss";
 import { useRecoilState } from "recoil";
 import { leftTableOpen, leftTableTab } from "../../store/tabs";
 import { LEFT_TABLE_TABS } from "../../constants/tabs";
+import Recycle from "./components/Recycle";
 
 function LeftTable() {
   const [tab, setTab] = useRecoilState(leftTableTab);
@@ -47,11 +49,23 @@ function LeftTable() {
           <img className="left-table__logo" src={storageLogo} alt="storage" />
           مدیریت انبار
         </div>
+        <div
+          className={classNames("left-table__header-item", {
+            "left-table__header-item--active": tab === LEFT_TABLE_TABS.recycle,
+          })}
+          onClick={() => setTab(LEFT_TABLE_TABS.recycle)}
+        >
+          <img className="left-table__logo" src={recycleLogo} alt="recycle" />
+          بازیافت
+        </div>
       </div>
       <div className="left-table__body">
         {tab === LEFT_TABLE_TABS.storage && <Storage />}
         {tab === LEFT_TABLE_TABS.productionAndAssembly && (
           <ProductionAndAssembly />
+        )}
+        {tab === LEFT_TABLE_TABS.recycle && (
+          <Recycle />
         )}
       </div>
       <div className="left-table__close-icon" onClick={() => setOpen(false)}>

@@ -12,4 +12,5 @@ export const MIDDLE_TABLE_TABS = {
 export const LEFT_TABLE_TABS = {
   productionAndAssembly: "PRODUCTION_AND_ASSEMBLY",
   storage: "STORAGE",
+  recycle: "RECYCLE",
 };

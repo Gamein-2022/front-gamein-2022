@@ -16,6 +16,15 @@ import {
 } from "../../../../apis/production";
 import { formatPrice } from "../../../../utils/formatters";
 import { toast } from "react-toastify";
+import {
+  FINAL_MATERIALS_TREES,
+  INTERMEDIATE_MATERIALS_LEVEL_ONE_TREES,
+  INTERMEDIATE_MATERIALS_LEVEL_TWO_TREES,
+} from "../../../../constants/trees";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { rightTableOpen, rightTableTab } from "../../../../store/tabs";
+import { RIGHT_TABLE_TABS } from "../../../../constants/tabs";
 
 function Off({
   open,
@@ -29,6 +38,11 @@ function Off({
   const [product, setProduct] = useState();
   const [quantity, setQuantity] = useState(0);
   const [info, setInfo] = useState();
+
+  const navigate = useNavigate();
+
+  const [rightTab, setRightTab] = useRecoilState(rightTableTab);
+  const [rightOpen, setRightOpen] = useRecoilState(rightTableOpen);
 
   useEffect(() => {
     getLineAvailableProducts({ id: lineId })
@@ -99,11 +113,20 @@ function Off({
                 <option>{item?.product?.name}</option>
               ))}
             </select>
-            <img
-              className="setup-line-modal__img"
-              src={sampleImg}
-              alt="sample"
-            />
+            {product?.product?.name && (
+              <img
+                className="setup-line-modal__img"
+                src={
+                  INTERMEDIATE_MATERIALS_LEVEL_ONE_TREES[product?.product?.name]
+                    ?.icon ||
+                  INTERMEDIATE_MATERIALS_LEVEL_TWO_TREES[product?.product?.name]
+                    ?.icon ||
+                  FINAL_MATERIALS_TREES[product?.product?.name]?.icon ||
+                  sampleImg
+                }
+                alt="sample"
+              />
+            )}
           </div>
           <div className="setup-line-modal__column">
             <div className="setup-line-modal__column-title">
@@ -181,17 +204,23 @@ function Off({
         </div>
         <div className="setup-line-modal__footer">
           <div className="setup-line-modal__column">
-            <div className="setup-line-modal__r-and-d-warning">
-              <div className="setup-line-modal__r-and-d-warning-top">
-                <ErrorOutlineOutlinedIcon />
-                کارخانه‌ی شما فناوری لازم را برای {lineTypeString} این کالا
-                ندارد. برای اضافه کردن این فناوری، به بخش تحقیق و توسعه بروید.
+            {product && !product.hasRAndDRequirement && (
+              <div className="setup-line-modal__r-and-d-warning">
+                <div className="setup-line-modal__r-and-d-warning-top">
+                  <ErrorOutlineOutlinedIcon />
+                  کارخانه‌ی شما فناوری لازم را برای {lineTypeString} این کالا
+                  ندارد. برای اضافه کردن این فناوری، به بخش تحقیق و توسعه بروید.
+                </div>
+                <Button
+                  onClick={() => navigate("/r-and-d")}
+                  className="setup-line-modal__r-and-d-warning-btn"
+                >
+                  تحقیق و توسعه
+                </Button>
               </div>
-              <Button className="setup-line-modal__r-and-d-warning-btn">
-                تحقیق و توسعه
-              </Button>
-            </div>
+            )}
           </div>
+
           <div className="setup-line-modal__column">
             <div className="setup-line-modal__storage-warning">
               <div className="setup-line-modal__storage-warning-top">
@@ -200,7 +229,18 @@ function Off({
                   ? "موجودی برخی مواد اولیه در انبار شما کافی نیست. برای تامین آنها، به فروشگاه گیمین بروید."
                   : "موجودی برخی کالاها در انبار شما کافی نیست. برای تامین آنها، به بخش تجارت رفته و از تیم‌های دیگر بخرید."}
               </div>
-              <Button className="setup-line-modal__storage-warning-btn">
+              <Button
+                onClick={() => {
+                  onClose();
+                  setRightOpen(true);
+                  if (modalType === "PRODUCTION") {
+                    setRightTab(RIGHT_TABLE_TABS.shop);
+                  } else {
+                    setRightTab(RIGHT_TABLE_TABS.deals);
+                  }
+                }}
+                className="setup-line-modal__storage-warning-btn"
+              >
                 {modalType === "PRODUCTION"
                   ? "خرید از فروشگاه گیمین"
                   : "تجارت با تیم‌های دیگر"}

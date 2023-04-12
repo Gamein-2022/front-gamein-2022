@@ -12,6 +12,7 @@ import "./style.scss";
 import { toast } from "react-toastify";
 import Modal from "../../../Modal";
 import { RAW_MATERIALS } from "../../../../constants/materials";
+import { RAW_MATERIALS_TREES } from "../../../../constants/trees";
 
 function ShopInitial() {
   const [data, setData] = useState(null);
@@ -122,7 +123,7 @@ function ShopInitial() {
           <div className="shop-initial__preview">
             <img
               className="shop-initial__preview-img"
-              src={RAW_MATERIALS[selectedMaterial?.name]?.icon || sampleImg}
+              src={RAW_MATERIALS_TREES[selectedMaterial?.name]?.icon || sampleImg}
               alt="selected material"
             />
             <div className="shop-initial__preview-price">
