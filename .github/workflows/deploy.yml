@@ -11,6 +11,7 @@ jobs:
       - uses: actions/checkout@master
       - run: |
               ls -la
+              docker build -t front .
               docker rm -f front      
               docker-compose up  -d
               docker-compose ps
