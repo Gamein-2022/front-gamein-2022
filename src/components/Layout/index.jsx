@@ -22,7 +22,7 @@ const Layout = () => {
         if (error?.response?.status === 401) {
           navigate("/login");
         } else {
-          setHasError(true);
+          // setHasError(true);
         }
       })
       .finally(() => {
@@ -46,10 +46,6 @@ const Layout = () => {
       {!loading && !hasError && (
         <div className="layout">
           <LayoutHeader />
-          <div className="layout__time-balance">
-            <Time />
-            <div className="layout__balance"></div>
-          </div>
           <div className="layout-body">
             <Outlet />
           </div>
