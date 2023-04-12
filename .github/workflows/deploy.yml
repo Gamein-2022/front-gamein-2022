@@ -1,0 +1,16 @@
+name: deploy front
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build-front:
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@master
+      - run: |
+              ls -la
+              docker rm -f front      
+              docker-compose up  -d
+              docker-compose ps
