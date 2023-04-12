@@ -17,16 +17,18 @@
 
   &__header {
     background-color: #255957;
+    background: linear-gradient(1.3deg, #205250 1.04%, #368683 98.82%);
     color: #fff;
     display: flex;
     justify-content: space-around;
     align-items: center;
     border-radius: 16px 16px 0 0;
+    cursor: pointer;
   }
 
   &__logo {
-    width: 50px;
-    height: 50px;
+    width: 36px;
+    height: 36px;
   }
 
   &__header-item {
