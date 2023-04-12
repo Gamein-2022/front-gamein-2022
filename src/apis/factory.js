@@ -11,3 +11,7 @@ export function getTeamBuildings() {
 export function getBuildingsInfo() {
   return AxiosInstance.get("/factory/building/info");
 }
+
+export function upgradeRegion() {
+  return AxiosInstance.put("/factory/building/upgrade-region");
+}

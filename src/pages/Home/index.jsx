@@ -23,12 +23,24 @@ function Home() {
       });
   }, []);
 
+  const updateBuildings = () => {
+    getTeamBuildings()
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        setBuildings({ loaded: true, buildings: data?.result });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="home">
       <Helmet>
         <title>کارخانه من</title>
       </Helmet>
-      <Map buildings={buildings} />
+      <Map buildings={buildings} updateBuildings={updateBuildings} />
       <div className="home__bottom-sheet">
         <RightTable />
         <MiddleTable />

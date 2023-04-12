@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
+import { toast } from "react-toastify";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { upgradeRegion } from "../../apis/factory";
+import Button from "../../components/Button";
+import Modal from "../../components/Modal";
 import { LEFT_TABLE_TABS, RIGHT_TABLE_TABS } from "../../constants/tabs";
+import { updateRegionModalOpen } from "../../store/modals";
 import {
   leftTableOpen,
   leftTableTab,
@@ -21,6 +26,7 @@ let HIDDEN_ITEMS = [
   "ground_3_inventory",
   "ground_3_unfinished_building",
   "ground_3_tree",
+  "ground_3_asphalt",
 ];
 
 const GLOW = [
@@ -46,6 +52,16 @@ function hide(id) {
   }
 }
 
+function show(id) {
+  try {
+    const building = document.getElementById(id);
+    console.log(building);
+    building.classList.remove("hide");
+  } catch (error) {
+    return;
+  }
+}
+
 function glow(id) {
   const building = document.getElementById(id);
   building.classList.add("building");
@@ -58,13 +74,17 @@ function glow(id) {
   });
 }
 
-function MapTest({ buildings }) {
+function MapTest({ buildings, updateBuildings }) {
   const [loaded, setLoaded] = useState(false);
   const setRightTableActiveTab = useSetRecoilState(rightTableTab);
   const setRightTableOpen = useSetRecoilState(rightTableOpen);
 
   const setLeftTableActiveTab = useSetRecoilState(leftTableTab);
   const setLeftTableOpen = useSetRecoilState(leftTableOpen);
+
+  const [updateRegionModalOpenState, setUpdateRegionModalOpenState] =
+    useRecoilState(updateRegionModalOpen);
+
   useEffect(() => {
     console.log("loaded", loaded);
     if (loaded && buildings?.loaded) {
@@ -92,6 +112,20 @@ function MapTest({ buildings }) {
           setLeftTableActiveTab(LEFT_TABLE_TABS.storage);
           setLeftTableOpen(true);
         });
+
+      document
+        .getElementById("ground_3_locked")
+        .addEventListener("click", () => {
+          setUpdateRegionModalOpenState(true);
+        });
+
+      if (buildings?.buildings?.regionUpgraded) {
+        HIDDEN_ITEMS.push("ground_3_locked");
+        show("ground_3_unfinished_building");
+        HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+          (item) => item !== "ground_3_unfinished_building"
+        );
+      }
 
       const hasRecycleFactory =
         buildings?.buildings?.buildings?.filter(
@@ -132,6 +166,9 @@ function MapTest({ buildings }) {
           } else if (index === 2) {
             HIDDEN_ITEMS.push("fences_extra");
             HIDDEN_ITEMS.push("ground_3_locked");
+            HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+              (item) => item !== "ground_3_asphalt"
+            );
             if (building.type === "PRODUCTION_FACTORY") {
               HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
                 (item) => item !== "ground_3_production_facility"
@@ -160,10 +197,40 @@ function MapTest({ buildings }) {
     setLoaded(true);
   }, []);
 
+  const handleUpgradeRegion = () => {
+    upgradeRegion()
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        setUpdateRegionModalOpenState(false);
+        toast.success("زمین گسترش یافت.");
+        updateBuildings();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
   return (
     <div className="map">
       {!loaded && "loading..."}
       {loaded && <Map />}
+      <Modal
+        open={updateRegionModalOpenState}
+        onClose={() => setUpdateRegionModalOpenState(false)}
+      >
+        <div>آیا مطمئن هستید می‌خواهید زمین را گسترش دهید؟</div>
+        <Button onClick={handleUpgradeRegion}>بله</Button>
+        <Button
+          onClick={() => setUpdateRegionModalOpenState(false)}
+          type="error"
+        >
+          بازگشت
+        </Button>
+      </Modal>
     </div>
   );
 }
