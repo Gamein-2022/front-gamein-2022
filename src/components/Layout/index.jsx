@@ -6,18 +6,25 @@ import Time from "./Time";
 import LayoutHeader from "../LayoutHeader";
 import { getInfo } from "../../apis/profile";
 
+import { useSetRecoilState } from "recoil";
+import { balanceState } from "../../store/team-info";
+
 import "./style.scss";
 
 const Layout = () => {
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
+  const setBalance = useSetRecoilState(balanceState);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     getInfo()
       .then((res) => res.data)
-      .then((data) => {})
+      .then((data) => {
+        setBalance(data.balance);
+      })
       .catch((error) => {
         if (error?.response?.status === 401) {
           navigate("/login");

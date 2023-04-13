@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import classnames from "classnames";
+
+import { yearState, monthState, dayState } from "../../store/time";
+import { balanceState } from "../../store/team-info";
+import { getTime } from "../../apis/time";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import gameinHeaderLogo from "../../assets/headerLogo.svg";
 import gcoinLogo from "../../assets/gcoin.svg";
@@ -13,6 +18,50 @@ import { formatPrice } from "../../utils/formatters";
 
 function LayoutHeader() {
   const navigate = useNavigate();
+
+  const [year, setYear] = useRecoilState(yearState);
+  const [month, setMonth] = useRecoilState(monthState);
+  const [day, setDay] = useRecoilState(dayState);
+  const balance = useRecoilValue(balanceState);
+
+  useEffect(() => {
+    getTime()
+      .then((res) => res.data)
+      .then((data) => {
+        console.log("************************");
+        console.log(data);
+        setYear(data.year);
+        setMonth(data.month);
+        setDay(data.day);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (year && month && day) {
+      const id = setInterval(() => {
+        let newDay = day;
+        let newMonth = month;
+        let newYear = year;
+        newDay += 1;
+        if (newDay > 30) {
+          newDay = 1;
+          newMonth += 1;
+          if (newMonth > 12) {
+            newMonth = 1;
+            newYear += 1;
+          }
+        }
+        setYear(newYear);
+        setMonth(newMonth);
+        setDay(newDay);
+      }, 6000);
+
+      return () => {
+        clearInterval(id);
+      };
+    }
+  }, [year, month, day]);
+
   return (
     <header className="layout-header">
       <div className="layout-header__right">
@@ -67,7 +116,7 @@ function LayoutHeader() {
         >
           <div className="layout-header__item-text">
             <img src={gcoinLogo} alt="gcoin" />
-            {formatPrice(123456678)}
+            {formatPrice(balance)}
           </div>
         </div>
 
@@ -78,7 +127,7 @@ function LayoutHeader() {
         >
           <div className="layout-header__item-text">
             <img src={calendarLogo} alt="calendar" />
-            2023/12/23
+            {year}/{month}/{day}
           </div>
         </div>
 
