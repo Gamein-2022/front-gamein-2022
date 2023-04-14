@@ -11,6 +11,7 @@ import sampleImg from "../../../../assets/icons/copper.png";
 import OrderCard from "../OrderCard";
 import "./style.scss";
 import { toast } from "react-toastify";
+import { INTERMEDIATE_MATERIALS_LEVEL_ONE, INTERMEDIATE_MATERIALS_LEVEL_TWO, RAW_MATERIALS } from "../../../../constants/materials";
 
 function OffersSent() {
   const [sentOffers, setSentOffers] = useState([]);
@@ -98,7 +99,10 @@ function OffersSent() {
               <div className="order-card__right">
                 <img
                   className="order-card__img"
-                  src={sampleImg}
+                  src={RAW_MATERIALS[order?.productName]?.icon ||
+                    INTERMEDIATE_MATERIALS_LEVEL_ONE[order?.productName]?.icon ||
+                    INTERMEDIATE_MATERIALS_LEVEL_TWO[order?.productName]?.icon ||
+                    sampleImg}
                   alt="order card"
                 />
                 <div className="order-card__name">{order?.productName}</div>

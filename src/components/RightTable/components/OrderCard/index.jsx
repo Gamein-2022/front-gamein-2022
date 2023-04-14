@@ -6,6 +6,11 @@ import sampleImg from "../../../../assets/icons/copper.png";
 import "./style.scss";
 import { cancelOrder } from "../../../../apis/orders";
 import { toast } from "react-toastify";
+import {
+  INTERMEDIATE_MATERIALS_LEVEL_ONE,
+  INTERMEDIATE_MATERIALS_LEVEL_TWO,
+  RAW_MATERIALS,
+} from "../../../../constants/materials";
 
 function OrderCard({
   quantity,
@@ -53,7 +58,16 @@ function OrderCard({
       </div>
       <div className="order-card__body">
         <div className="order-card__right">
-          <img className="order-card__img" src={sampleImg} alt="order card" />
+          <img
+            className="order-card__img"
+            src={
+              RAW_MATERIALS[productName]?.icon ||
+              INTERMEDIATE_MATERIALS_LEVEL_ONE[productName]?.icon ||
+              INTERMEDIATE_MATERIALS_LEVEL_TWO[productName]?.icon ||
+              sampleImg
+            }
+            alt="order card"
+          />
           <div className="order-card__name">{productName}</div>
         </div>
         <div className="order-card__left">

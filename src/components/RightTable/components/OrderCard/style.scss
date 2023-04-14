@@ -26,6 +26,12 @@
     align-items: center;
     text-align: center;
     margin-left: 12px;
+    width: 80px;
+  }
+
+  &__name {
+    max-width: 80px;
+    overflow-wrap: break-word;
   }
 
   &__img {

@@ -21,6 +21,11 @@ import airplaneImg from "../../../../assets/airplane.png";
 import airplaneDisableImg from "../../../../assets/airplane-disable.png";
 import "./style.scss";
 import { declineOffer } from "../../../../apis/offers";
+import {
+  INTERMEDIATE_MATERIALS_LEVEL_ONE,
+  INTERMEDIATE_MATERIALS_LEVEL_TWO,
+  RAW_MATERIALS,
+} from "../../../../constants/materials";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -215,7 +220,12 @@ function Orders() {
                   <div className="order-card__right">
                     <img
                       className="order-card__img"
-                      src={sampleImg}
+                      src={
+                        RAW_MATERIALS[productName]?.icon ||
+                        INTERMEDIATE_MATERIALS_LEVEL_ONE[productName]?.icon ||
+                        INTERMEDIATE_MATERIALS_LEVEL_TWO[productName]?.icon ||
+                        sampleImg
+                      }
                       alt="order card"
                     />
                     <div className="order-card__name">{productName}</div>
@@ -416,7 +426,12 @@ function Orders() {
                       : selectedOffer.shipPrice))}
               </div>
               <div className="order-offer-final__action-btns">
-                <Button className="order-offer-final__finalize-btn" onClick={handleAcceptOffer}>تکمیل خرید</Button>
+                <Button
+                  className="order-offer-final__finalize-btn"
+                  onClick={handleAcceptOffer}
+                >
+                  تکمیل خرید
+                </Button>
                 <Button onClick={() => setSelectedOffer(null)} type="secondary">
                   بازگشت
                 </Button>
