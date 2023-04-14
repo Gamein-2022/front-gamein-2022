@@ -41,7 +41,6 @@ function InStorage() {
     <div>
       {storageInfo?.products?.length > 0 ? (
         <>
-          (
           <div className="in-storage__space">
             فضای کل انبار: {storageInfo?.storageSpace}
           </div>
@@ -109,7 +108,6 @@ function InStorage() {
               ))}
             </div>
           )}
-          )
         </>
       ) : (
         <div className="in-storage__empty">
