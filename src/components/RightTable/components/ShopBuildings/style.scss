@@ -1,9 +1,13 @@
 .shop-buildings {
   color: #8d8d8d;
-  padding-bottom: 32px;
+  position: relative;
+  top: 42px;
+  height: calc(100% - 42px);
 
   &__list {
     padding: 16px;
+    height: calc(100% - 128px);
+    overflow-y: scroll;
   }
 
   &__building {
@@ -58,11 +62,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    position: absolute;
+    height: 128px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #8d8d8d;
+    padding: 8px 0 16px;
+    background-color: #fff;
+    z-index: 2;
   }
 
   &__buy-img {
-    width: 74px;
-    height: 74px;
+    width: 64px;
+    height: 64px;
   }
 
   &__buy-summary,

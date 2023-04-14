@@ -84,7 +84,7 @@ function ChooseRegion() {
         }
       });
 
-    ws.current = new WebSocket("ws://185.97.117.47/websocket/region");
+    ws.current = new WebSocket("ws://api-gamein.dariahamrah.ir/websocket/region");
 
     ws.current.onopen = function (event) {
       console.log("connecting to ws....");

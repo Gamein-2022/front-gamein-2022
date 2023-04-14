@@ -141,13 +141,15 @@ function ShopBuildings() {
             <div>یک ساختمان انتخاب کنید.</div>
           </div>
         )}
-        <button
-          disabled={!selectedBuilding}
-          className="shop-buildings__buy-btn"
-          onClick={handleBuyBuilding}
-        >
-          خرید
-        </button>
+        {selectedBuilding && (
+          <button
+            disabled={!selectedBuilding}
+            className="shop-buildings__buy-btn"
+            onClick={handleBuyBuilding}
+          >
+            خرید
+          </button>
+        )}
       </div>
     </div>
   );

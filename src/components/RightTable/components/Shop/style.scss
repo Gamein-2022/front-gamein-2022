@@ -1,9 +1,16 @@
 .shop {
+  height: 100%;
+  position: relative;
+
   &__header {
     display: flex;
     width: 100%;
     border-bottom: 1px solid #8d8d8d;
     color: #8d8d8d;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    background-color: #fff;
   }
 
   &__header-item {
@@ -11,6 +18,7 @@
     text-align: center;
     cursor: pointer;
     padding: 8px;
+    border-bottom: 4px solid #fff;
   }
 
   &__header-item--active {
