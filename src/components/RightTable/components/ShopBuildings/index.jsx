@@ -94,6 +94,7 @@ function ShopBuildings() {
             className={classNames("shop-buildings__building", {
               "shop-buildings__building--active":
                 building.name === selectedBuilding?.name,
+                "shop-buildings__building-lock": building?.showLock,
             })}
           >
             <img

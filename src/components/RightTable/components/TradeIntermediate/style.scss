@@ -10,7 +10,7 @@
     align-items: center;
     width: 100%;
     padding: 0 12px;
-    margin-top: 8px;
+    margin-top: 16px;
   }
 
   &__filter-title {
@@ -127,5 +127,9 @@
     display: flex;
     justify-content: center;
     width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding: 16px;
+    border-top: 1px solid #8d8d8d;
   }
 }

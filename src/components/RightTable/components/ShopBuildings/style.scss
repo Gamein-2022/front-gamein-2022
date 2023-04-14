@@ -27,6 +27,11 @@
     }
   }
 
+  &__building-lock {
+    background-color: #eee;
+    pointer-events: none;
+  }
+
   &__building-img {
     width: 64px;
     height: 64px;
