@@ -4,12 +4,28 @@
   height: calc(100% - 48px);
   overflow-y: scroll;
 
+  &__filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0 12px;
+    margin-top: 8px;
+  }
+
+  &__filter-title {
+    font-size: 14px;
+    margin-left: 4px;
+    text-align: center;
+  }
+
   &__tabs {
     display: flex;
-    padding: 4px;
+    padding: 2px;
     border: 1px solid #8d8d8d;
     border-radius: 8px;
-    margin: 16px;
+    width: 160px;
+    margin-left: 8px;
   }
 
   &__tab {
@@ -17,7 +33,8 @@
     text-align: center;
     cursor: pointer;
     border-radius: 8px;
-    font-size: 20px;
+    font-size: 16px;
+    font-weight: 500;
     padding: 4px;
   }
 
@@ -39,32 +56,19 @@
     }
   }
 
-  &__inputs-wrapper {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 16px;
-  }
-
   &__select {
-    width: calc(50% - 16px);
     padding: 6px;
     border-radius: 8px;
     border: 1px solid #8d8d8d;
+    flex-grow: 1;
+    width: 192px;
+    margin-left: 8px;
   }
 
-  &__input-wrapper {
-    width: 50%;
-  }
-
-  &__inputs-label {
-    padding: 0 16px;
-  }
-
-  &__input {
-    width: 90%;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #8d8d8d;
+  &__search-btn {
+    width: auto !important;
+    min-width: auto !important;
+    background-color: #a52880;
   }
 
   &__table-wrapper {
@@ -103,7 +107,7 @@
     border-radius: 8px;
     padding: 4px 16px;
     min-width: 64px;
-    margin: 4px 0;
+    margin: 8px 0;
     border: none;
     cursor: pointer;
   }
@@ -114,7 +118,7 @@
     border-radius: 8px;
     padding: 4px 16px;
     min-width: 64px;
-    margin: 4px 0;
+    margin: 8px 0;
     border: none;
     cursor: pointer;
   }

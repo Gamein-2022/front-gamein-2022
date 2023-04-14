@@ -148,25 +148,9 @@ function TradeIntermediate() {
   return (
     <>
       <div className="trade-filter">
-        <div className="trade-filter__tabs">
-          <div
-            onClick={() => setActiveTab("buy")}
-            className={classNames("trade-filter__tab trade-filter__tab-buy", {
-              "trade-filter__tab-buy--active": activeTab === "buy",
-            })}
-          >
-            خرید
-          </div>
-          <div
-            onClick={() => setActiveTab("sell")}
-            className={classNames("trade-filter__tab trade-filter__tab-sell", {
-              "trade-filter__tab-sell--active": activeTab === "sell",
-            })}
-          >
-            فروش
-          </div>
-        </div>
-        <div className="trade-filter__inputs-wrapper">
+        <div className="trade-filter__filters">
+          <div className="trade-filter__filter-title">انتخاب کالا: </div>
+
           <select
             onChange={(e) => {
               setSelectedMaterial(e.target.value);
@@ -181,89 +165,70 @@ function TradeIntermediate() {
               <option value={material.name}>{material.name}</option>
             ))}
           </select>
-          <select className="trade-filter__select">
-            <option disabled selected>
-              انتخاب منطقه
-            </option>
-            <option>منطقه ۱</option>
-            <option>منطقه ۲</option>
-            <option>منطقه ۳</option>
-            <option>منطقه ۴</option>
-            <option>منطقه ۵</option>
-            <option>منطقه ۶</option>
-            <option>منطقه ۷</option>
-            <option>منطقه ۸</option>
-          </select>
+          <div className="trade-filter__tabs">
+            <div
+              onClick={() => setActiveTab("buy")}
+              className={classNames("trade-filter__tab trade-filter__tab-buy", {
+                "trade-filter__tab-buy--active": activeTab === "buy",
+              })}
+            >
+              خرید
+            </div>
+            <div
+              onClick={() => setActiveTab("sell")}
+              className={classNames(
+                "trade-filter__tab trade-filter__tab-sell",
+                {
+                  "trade-filter__tab-sell--active": activeTab === "sell",
+                }
+              )}
+            >
+              فروش
+            </div>
+          </div>
+          <Button className="trade-filter__search-btn">جستجو</Button>
         </div>
-        <div className="trade-filter__inputs-label">محدوده قیمت:</div>
-        <div className="trade-filter__inputs-wrapper">
-          <div className="trade-filter__input-wrapper">
-            <label>
-              از:
-              <input type="number" className="trade-filter__input" />
-            </label>
-          </div>
-          <div className="trade-filter__input-wrapper">
-            <label>
-              تا:
-              <input type="number" className="trade-filter__input" />
-            </label>
-          </div>
-        </div>
-        <div className="trade-filter__inputs-label">محدوده تعداد:</div>
-        <div className="trade-filter__inputs-wrapper">
-          <div className="trade-filter__input-wrapper">
-            <label>
-              از:
-              <input type="number" className="trade-filter__input" />
-            </label>
-          </div>
-          <div className="trade-filter__input-wrapper">
-            <label>
-              تا:
-              <input type="number" className="trade-filter__input" />
-            </label>
-          </div>
-        </div>
-        <div className="trade-filter__table-wrapper">
-          <table className="trade-filter__table">
-            <thead>
-              <tr>
-                <td>تعداد</td>
-                <td>قیمت</td>
-                <td>منطقه</td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              {currentOrders.map((row) => (
+        {currentOrders.length > 0 && (
+          <div className="trade-filter__table-wrapper">
+            <table className="trade-filter__table">
+              <thead>
                 <tr>
-                  <td>{row.quantity}</td>
-                  <td>{row.unitPrice}</td>
-                  <td>1</td>
-                  <td>
-                    {activeTab === "buy" && (
-                      <button
-                        className="trade-filter__buy-btn"
-                        onClick={() => handleBuyOfferModal(row)}
-                      >
-                        خرید
-                      </button>
-                    )}
-                    {activeTab === "sell" && (
-                      <button
-                        className="trade-filter__sell-btn"
-                        onClick={() => handleSendSellOffer(row.id)}
-                      >
-                        فروش
-                      </button>
-                    )}
-                  </td>
+                  <td>تعداد</td>
+                  <td>قیمت</td>
+                  <td>منطقه</td>
+                  <td></td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {currentOrders.map((row) => (
+                  <tr>
+                    <td>{row.quantity}</td>
+                    <td>{row.unitPrice}</td>
+                    <td>1</td>
+                    <td>
+                      {activeTab === "buy" && (
+                        <button
+                          className="trade-filter__buy-btn"
+                          onClick={() => handleBuyOfferModal(row)}
+                        >
+                          خرید
+                        </button>
+                      )}
+                      {activeTab === "sell" && (
+                        <button
+                          className="trade-filter__sell-btn"
+                          onClick={() => handleSendSellOffer(row.id)}
+                        >
+                          فروش
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
         <div className="trade-filter__create-order">
           {activeTab === "buy" && (
             <Button
