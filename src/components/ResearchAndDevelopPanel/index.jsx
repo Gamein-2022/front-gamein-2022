@@ -9,6 +9,8 @@ import {
 import { toast } from "react-toastify";
 import OkIcon from "../ResearchAndDevelopTree/icons/OkIcon";
 
+import rAndDEmpty from "../../assets/r-and-d-empty.svg";
+
 import styles from "./style.module.scss";
 
 const ResearchAndDevelopPanel = ({ refresh }) => {
@@ -178,6 +180,14 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
             </>
           )}
         </>
+      )}
+      {!data && (
+        <div className={styles["empty"]}>
+          <img src={rAndDEmpty} alt="r and d" />
+          <p>
+            برای مشاهده‌ی توضیحات هر کدام از فناوری‌ها، روی شکل آن کلیک کنید.
+          </p>
+        </div>
       )}
     </div>
   );

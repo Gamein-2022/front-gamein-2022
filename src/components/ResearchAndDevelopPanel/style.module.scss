@@ -10,6 +10,23 @@
   flex-direction: column;
   align-items: center;
 
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    img {
+      margin: 64px 0;
+      width: calc(100% - 128px);
+      max-width: 240px;
+    }
+
+    p {
+      margin: 0 16px;
+    }
+  }
+
   .subject-image {
     max-width: 100%;
   }
