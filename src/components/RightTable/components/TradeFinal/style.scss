@@ -1,9 +1,10 @@
 .trade-final {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: 100%;
-  // height: 100%;
-  // overflow-y: auto;
   padding: 24px;
+  position: relative;
+  top: 48px;
+  height: calc(100% - 48px);
+  overflow-y: scroll;
 }

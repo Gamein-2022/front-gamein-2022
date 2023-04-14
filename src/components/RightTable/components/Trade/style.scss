@@ -1,11 +1,16 @@
 .trade {
   height: 100%;
+  position: relative;
 
   &__header {
     display: flex;
     width: 100%;
     border-bottom: 1px solid #8d8d8d;
     color: #8d8d8d;
+    position: absolute;
+    top: 0;
+    background-color: #fff;
+    z-index: 2;
   }
 
   &__header-item {

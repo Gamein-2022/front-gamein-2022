@@ -1,4 +1,9 @@
 .trade-filter {
+  position: relative;
+  top: 48px;
+  height: calc(100% - 48px);
+  overflow-y: scroll;
+
   &__tabs {
     display: flex;
     padding: 4px;
