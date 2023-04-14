@@ -8,7 +8,7 @@ import { useRecoilValue } from "recoil";
 import { yearState } from "../../store/time";
 import { toast } from "react-toastify";
 
-import styles from "./style.module.scss";
+import "./style.scss";
 
 const ResearchAndDevelopPage = () => {
   const [refresh, setRefresh] = useState(true);
@@ -38,12 +38,12 @@ const ResearchAndDevelopPage = () => {
   }, [refresh]);
 
   return (
-    <div className={styles["research-and-develop-main-container"]} dir="ltr">
+    <div className="research-and-develop-main-container">
       <Helmet>
         <title>تحقیق و توسعه</title>
       </Helmet>
-      <ResearchAndDevelopTree year={year} technologies={researches} />
       <ResearchAndDevelopPanel refresh={() => setRefresh(true)} />
+      <ResearchAndDevelopTree year={year} technologies={researches} />
     </div>
   );
 };

@@ -55,7 +55,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
   const [assembly4, setAssembly4] = useState(null);
 
   return (
-    <div className={styles["container"]}>
+    <div className={styles["container"]} style={{ direction: "ltr" }}>
       <Arrow from={body1} to={body2} />
       <Arrow from={body2} to={body3} />
 
@@ -73,7 +73,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
       <div className={styles["chart-container"]}>
         <div className={styles["column"]}>
           <div></div>
-          <div className={styles["year-item"]}>2007 - 2010</div>
+          <div className={styles["year-item"]}>2008 - 2010</div>
           <div className={styles["year-item"]}>2011 - 2015</div>
           <div className={styles["year-item"]}>2016 - 2022</div>
           <div className={styles["year-item"]}>2023 - 2030</div>
@@ -105,7 +105,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 (data?.value === "touch-screen"
                   ? styles["selected"] + " "
                   : "") +
-                (year < 2007
+                (year < 2008
                   ? ""
                   : technologies["touch-screen"] === "done"
                   ? styles["unlocked"]
@@ -113,8 +113,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setBody1}
             >
-              {year < 2007 ? <LockIcon /> : <TouchScreenIcon />}
-              {year >= 2007 && (
+              {year < 2008 ? <LockIcon /> : <TouchScreenIcon />}
+              {year >= 2008 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -126,7 +126,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                         : "#8d8d8d",
                   }}
                 >
-                  {year >= 2007 &&
+                  {year >= 2008 &&
                     (technologies["touch-screen"] === "done" ? (
                       <OkIcon />
                     ) : technologies["touch-screen"] === "doing" ? (
@@ -258,7 +258,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
           </Tooltip>
         </div>
         <div className={styles["column"]}>
-          <div>Comms.</div>
+          <div>Network</div>
           <Tooltip
             title="3G"
             arrow
@@ -282,7 +282,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
             <div
               className={
                 (data?.value === "3G" ? styles["selected"] + " " : "") +
-                (year < 2007
+                (year < 2008
                   ? ""
                   : technologies["3G"] === "done"
                   ? styles["unlocked"]
@@ -290,8 +290,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setComms1}
             >
-              {year < 2007 ? <LockIcon /> : <ThreeGIcon />}
-              {year >= 2007 && (
+              {year < 2008 ? <LockIcon /> : <ThreeGIcon />}
+              {year >= 2008 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -430,7 +430,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
           <div className={styles["spacer"]}></div>
         </div>
         <div className={styles["column"]}>
-          <div>SoC & Memory</div>
+          <div className={styles["column-title"]}>SoC & Memory</div>
           <div className={styles["spacer"]}></div>
 
           <Tooltip
@@ -583,7 +583,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
             <div
               className={
                 (data?.value === "camera" ? styles["selected"] + " " : "") +
-                (year < 2007
+                (year < 2008
                   ? ""
                   : technologies["camera"] === "done"
                   ? styles["unlocked"]
@@ -591,8 +591,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setMedia1}
             >
-              {year < 2007 ? <LockIcon /> : <CameraIcon />}
-              {year >= 2007 && (
+              {year < 2008 ? <LockIcon /> : <CameraIcon />}
+              {year >= 2008 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -706,7 +706,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
             <div
               className={
                 (data?.value === "assembly-1" ? styles["selected"] + " " : "") +
-                (year < 2007
+                (year < 2008
                   ? ""
                   : technologies["assembly-1"] === "done"
                   ? styles["unlocked"]
@@ -714,8 +714,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setAssembly1}
             >
-              {year < 2007 ? <LockIcon /> : <Assembly1Icon />}
-              {year >= 2007 && (
+              {year < 2008 ? <LockIcon /> : <Assembly1Icon />}
+              {year >= 2008 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{

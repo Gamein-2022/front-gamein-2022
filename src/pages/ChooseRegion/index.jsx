@@ -10,35 +10,35 @@ import "./style.scss";
 const REGIONS = [
   {
     title: "منطقه یک",
-    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+    resources: "Glass, Copper, Cobalt, Chips, Processors",
   },
   {
     title: "منطقه دو",
-    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+    resources: "Copper, Aluminum, Cobalt, Chips, Processors",
   },
   {
     title: "منطقه سه",
-    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+    resources: "Lithium, Copper, Cobalt, Silicon, Speaker, Vibration Motor",
   },
   {
     title: "منطقه چهار",
-    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+    resources: "Plastic, Glass, Lithium, Aluminum, Chips, Ports",
   },
   {
     title: "منطقه پنج",
-    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+    resources: "Plastic, Lithium, Copper, Microphone, Vibration Motor",
   },
   {
     title: "منطقه شش",
-    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+    resources: "Plastic, Glass, Silicon, Microphone, Chips, Speaker, Vibration Motor",
   },
   {
     title: "منطقه هفت",
-    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+    resources: "Plastic, Lithium, Cobalt, Silicon, Ports, Processors",
   },
   {
     title: "منطقه هشت",
-    resources: "Sillicon, Glass, Copper, Speaker, Processors",
+    resources: "Plastic, Aluminum, Cobalt, Microphone, Chips, Ports, Vibration Motor",
   },
 ];
 

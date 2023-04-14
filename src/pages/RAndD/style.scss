@@ -1,11 +1,12 @@
 .research-and-develop-main-container {
   display: flex;
   flex-direction: row;
-  gap: 28px;
-  padding: 24px 28px;
+  gap: 32px;
+  padding: 32px;
   height: 100%;
   z-index: 2;
   position: relative;
+  background-color: #f2f2f2;
 
   .right-panel {
     width: 33%;

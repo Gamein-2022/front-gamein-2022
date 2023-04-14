@@ -16,7 +16,7 @@ button,
 input,
 select,
 textarea {
-  font-family: kalameh, sans-serif;
+  font-family: kalameh, gilroy !important;
   direction: rtl;
 }
 
@@ -33,7 +33,7 @@ textarea {
 
 .Toastify__toast {
   direction: rtl !important;
-  font-family: kalameh !important;
+  font-family: kalameh, gilroy !important;
   text-align: center !important;
 }
 

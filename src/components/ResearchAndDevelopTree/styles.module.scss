@@ -3,7 +3,8 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   background-color: #fff;
   height: 100%;
-  width: 66%;
+  width: calc(75% - 32px);
+  padding: 32px;
 
   .chart-container {
     width: 100%;
@@ -14,7 +15,7 @@
     padding: 36px 32px;
 
     .column:first-child {
-      font-family: "Source Sans Pro";
+      // font-family: "Source Sans Pro";
       color: #fff;
       font-weight: 600;
 
@@ -42,8 +43,8 @@
       justify-content: space-between;
       align-items: center;
       text-align: center;
-      font-weight: 500;
-      font-size: 1.5rem;
+      font-weight: 600;
+      font-size: 18px;
 
       .divider {
         height: 100%;
@@ -127,6 +128,12 @@
           background-color: transparent;
         }
       }
+    }
+
+    .column-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
