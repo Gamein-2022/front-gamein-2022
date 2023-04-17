@@ -267,10 +267,16 @@
     align-items: center;
   }
 
-  &__product-bullet {
-    width: 16px;
-    height: 16px;
-    margin-left: 8px;
-    background-color: #d9d9d9;
+  &__product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  &__product-img {
+    width: 64px;
+    height: 64px;
+    margin: 0 8px;
   }
 }

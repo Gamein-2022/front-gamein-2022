@@ -6,6 +6,14 @@ import setupProductionLineModalTitle from "../../../../assets/modals/setup_produ
 import setupAssemblyLineModalTitle from "../../../../assets/modals/setup_assembly_line_modal_title.svg";
 import { getLineGroups, initLine } from "../../../../apis/production";
 import { toast } from "react-toastify";
+import {
+  FINAL_MATERIALS,
+  INTERMEDIATE_MATERIALS_LEVEL_ONE,
+  INTERMEDIATE_MATERIALS_LEVEL_TWO,
+  RAW_MATERIALS,
+} from "../../../../constants/materials";
+
+import sampleImg from "../../../../assets/icons/copper.png";
 
 function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
   const [availableProducts, setAvailableProducts] = useState([]);
@@ -89,12 +97,21 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
               <div className="init-line-modal__available-products-title">
                 محصولات قابل {stringType} در این دسته:
               </div>
-              {selectedProduct?.products?.map((product) => (
-                <div className="init-line-modal__product">
-                  <div className="init-line-modal__product-bullet"></div>
-                  {product?.name}
-                </div>
-              ))}
+              <div className="init-line-modal__product-list">
+                {selectedProduct?.products?.map((product) => (
+                  <img
+                    className="init-line-modal__product-img"
+                    src={
+                      RAW_MATERIALS[product?.name]?.icon ||
+                      INTERMEDIATE_MATERIALS_LEVEL_ONE[product?.name]?.icon ||
+                      INTERMEDIATE_MATERIALS_LEVEL_TWO[product?.name]?.icon ||
+                      FINAL_MATERIALS[product?.name]?.icon ||
+                      sampleImg
+                    }
+                    alt=""
+                  />
+                ))}
+              </div>
             </div>
           )}
           <Button disabled={!selectedProduct} onClick={handleSubmit}>
