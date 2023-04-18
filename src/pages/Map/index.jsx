@@ -40,6 +40,7 @@ const GLOW = [
   "ground_2",
   "ground_3",
   "ali_heidari",
+  "r_and_d_facility"
 ];
 
 function hide(id) {
@@ -63,15 +64,18 @@ function show(id) {
 }
 
 function glow(id) {
+  //add building class to buildings
   const building = document.getElementById(id);
   building.classList.add("building");
-  console.log(building);
-  building.addEventListener("mouseenter", (e) => {
-    e.currentTarget.setAttribute("filter", "url(#softGlow)");
-  });
-  building.addEventListener("mouseleave", (e) => {
-    e.currentTarget.removeAttribute("filter", "url(#softGlow)");
-  });
+
+  //removed glow filter .css glow replaced.
+  // console.log(building);
+  // building.addEventListener("mouseenter", (e) => {
+  //   e.currentTarget.setAttribute("filter", "url(#softGlow)");
+  // });
+  // building.addEventListener("mouseleave", (e) => {
+  //   e.currentTarget.removeAttribute("filter", "url(#softGlow)");
+  // });
 }
 
 function MapTest({ buildings, updateBuildings }) {
@@ -121,6 +125,7 @@ function MapTest({ buildings, updateBuildings }) {
 
       if (buildings?.buildings?.regionUpgraded) {
         HIDDEN_ITEMS.push("ground_3_locked");
+        HIDDEN_ITEMS.push("fences_extra")
         show("ground_3_unfinished_building");
         HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
           (item) => item !== "ground_3_unfinished_building"
