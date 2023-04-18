@@ -23,7 +23,7 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
       getSubjectInfo(data.value)
         .then((res) => {
           setInfo({
-            price: res.data.result.subject.price,
+            price: res.data.result.price,
             balance: res.data.result.balance,
             endTime: res.data.result.endTime,
             beginTime: res.data.result.beginTime,
