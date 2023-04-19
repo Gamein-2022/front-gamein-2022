@@ -12,7 +12,7 @@ import classNames from "classnames";
 import { createBuilding, getBuildingsInfo } from "../../../../apis/factory";
 import { toast } from "react-toastify";
 
-function ShopBuildings() {
+function ShopBuildings({ updateBuildings }) {
   const [buildingsInfo, setBuildingsInfo] = useState();
   const [selectedBuilding, setSelectedBuilding] = useState(null);
 
@@ -76,6 +76,7 @@ function ShopBuildings() {
       .then((data) => {
         console.log(data);
         toast.success("ساختمان با موفقیت خریداری شد.");
+        updateBuildings();
       })
       .catch((error) => {
         console.log(error);
@@ -94,7 +95,7 @@ function ShopBuildings() {
             className={classNames("shop-buildings__building", {
               "shop-buildings__building--active":
                 building.name === selectedBuilding?.name,
-                "shop-buildings__building-lock": building?.showLock,
+              "shop-buildings__building-lock": building?.showLock,
             })}
           >
             <img

@@ -10,13 +10,15 @@ import "./style.scss";
 
 function Home() {
   const [buildings, setBuildings] = useState([]);
+  const [buildingsLoaded, setBuildingsLoaded] = useState(false);
 
   useEffect(() => {
     getTeamBuildings()
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        setBuildings({ loaded: true, buildings: data?.result });
+        setBuildingsLoaded(true);
+        setBuildings(data?.result || []);
       })
       .catch((error) => {
         console.log(error);
@@ -28,7 +30,7 @@ function Home() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        setBuildings({ loaded: true, buildings: data?.result });
+        setBuildings(data?.result || []);
       })
       .catch((error) => {
         console.log(error);
@@ -40,9 +42,9 @@ function Home() {
       <Helmet>
         <title>کارخانه من</title>
       </Helmet>
-      <Map buildings={buildings} updateBuildings={updateBuildings} />
+      {buildingsLoaded &&  <Map buildings={buildings} updateBuildings={updateBuildings} />}
       <div className="home__bottom-sheet">
-        <RightTable />
+        <RightTable updateBuildings={updateBuildings} />
         <MiddleTable />
         <LeftTable />
       </div>

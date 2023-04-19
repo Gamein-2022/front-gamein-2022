@@ -4,7 +4,7 @@ import ShopBuildings from "../ShopBuildings";
 import ShopInitial from "../ShopInitial";
 import "./style.scss";
 
-function Shop() {
+function Shop({ updateBuildings }) {
   const [activeTab, setActiveTab] = useState("initial");
 
   return (
@@ -28,7 +28,9 @@ function Shop() {
         </div>
       </div>
       {activeTab === "initial" && <ShopInitial />}
-      {activeTab === "buildings" && <ShopBuildings />}
+      {activeTab === "buildings" && (
+        <ShopBuildings updateBuildings={updateBuildings} />
+      )}
     </div>
   );
 }
