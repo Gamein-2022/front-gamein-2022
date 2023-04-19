@@ -7,6 +7,14 @@
 
   .building {
     cursor: pointer;
+  
+  }
+  .building:hover{
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+    
+    filter: drop-shadow(0px 0px 10px #d6bf12) drop-shadow(0px 0px 10px #d6bf12) drop-shadow(0px 0px 10px #d6bf12);
+
   }
 }
 
@@ -14,9 +22,6 @@
   display: none;
 }
 
-#sea_waves {
-  animation: floating 3s ease-in-out infinite;
-}
 
 .floating {
   animation-name: floating;
@@ -38,7 +43,112 @@
     transform: translate(0, -0px);
   }
 }
+@keyframes blinking {
+  0% {
+    opacity: 0%;
+  }
+  50% {
+   opacity: 100%;
+  }
+ 
+  100% {
+    opacity: 0;
+  }
+  
+}
+@keyframes half_blinking {
+  0% {
+    opacity: 30%;
+  }
+  50% {
+   opacity: 100%;
+  }
+ 
+  100% {
+    opacity: 30%;
+  }
+  
+}
+
+
+#sea_waves {
+  animation: floating 7s ease-in-out infinite;
+}
+#r_and_d_facility_light {
+  animation: half_blinking 8s ease-in-out infinite;
+}
+.light_active {
+  animation: blinking 1s ease-in-out infinite;
+}
+
+
+// #ground_1_prodcution_facility_door_2_light {
+//   animation: blinking 1s ease-in-out infinite;
+// }
+// #ground_1_prodcution_facility_door_3_light {
+//   animation: blinking 1s ease-in-out infinite;
+// }
+
+// #ground_2_assembly_facility_door_1_light {
+//   animation: blinking 1s ease-in-out infinite;
+// }
+// #ground_2_assembly_facility_door_2_light {
+//   animation: blinking 1s ease-in-out infinite;
+// }
+// #ground_2_assembly_facility_door_3_light {
+//   animation: blinking 1s ease-in-out infinite;
+// }
+// #ground_2_assembly_facility_door_4_light {
+//   animation: blinking 1s ease-in-out infinite;
+// }
+
+@keyframes boat_out {
+  0% {
+    transform: translate(0, 0px);
+  }
+  100% {
+    transform: translate(-200px, calc(200px*0.577));
+  }
+ 
+  100% {
+    transform: translate(-400px, calc(400px*0.577));
+  }
+}
+
+@keyframes boat_in {
+  0% {
+    transform: translate(0, 0px);
+  }
+  100% {
+    transform: translate(+200px, calc(-200px*0.577));
+  }
+ 
+  100% {
+    transform: translate(+400px, calc(-400px*0.577));
+  }
+}
+
+
+.boat_out {
+  animation-name: boat_out;
+  animation-duration: 3s;
+  animation-iteration-count:forwards;
+  animation-timing-function: ease-in-out;
+  margin-left: 30px;
+  margin-top: 5px;
+}
+.boat_in {
+  animation-name: boat_in;
+  animation-duration: 3s;
+  animation-iteration-count:forwards;
+  animation-timing-function: ease-in-out;
+  margin-left: 30px;
+  margin-top: 5px;
+}
+
 
 #dock_boat {
-  animation: floating 3s ease-in-out infinite;
+  animation: floating 5s ease-in-out infinite;
+
+
 }
