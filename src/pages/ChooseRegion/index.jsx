@@ -88,6 +88,12 @@ function ChooseRegion() {
 
     ws.current.onopen = function (event) {
       console.log("connecting to ws....");
+      ws.current?.send(
+        JSON.stringify({
+          event: "SET_TEAM_ID",
+          token: "Bearer " + localStorage.getItem("token"),
+        })
+      );
     };
 
     ws.current.onmessage = function (event) {
