@@ -39,7 +39,7 @@ const Time = () => {
         setYear(newYear);
         setMonth(newMonth);
         setDay(newDay);
-      }, 6000);
+      }, 8000);
 
       return () => {
         clearInterval(id);
