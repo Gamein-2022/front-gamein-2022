@@ -3,8 +3,10 @@ import InQueueItem from "../InQueueItem";
 
 import "./style.scss";
 import { getStorageQueue } from "../../../../apis/storage";
+import GameinLoading from "../../../GameinLoading";
 
 function InQueue() {
+  const [loading, setLoading] = useState(true);
   const [inQueueProducts, setInQueueProducts] = useState([]);
   useEffect(() => {
     getStorageQueue()
@@ -15,7 +17,8 @@ function InQueue() {
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const updateInQueueProducts = () => {
@@ -32,14 +35,19 @@ function InQueue() {
 
   return (
     <div className="in-queue">
-      {inQueueProducts.map((item) => (
-        <InQueueItem
-          updateInQueueProducts={updateInQueueProducts}
-          item={item}
-        />
-      ))}
-      {inQueueProducts.length <= 0 && (
-        <div className="in-queue__empty">صف انبار خالی می‌باشد.</div>
+      {loading && <GameinLoading size={32} />}
+      {!loading && (
+        <>
+          {inQueueProducts.map((item) => (
+            <InQueueItem
+              updateInQueueProducts={updateInQueueProducts}
+              item={item}
+            />
+          ))}
+          {inQueueProducts.length <= 0 && (
+            <div className="in-queue__empty">صف انبارت خالیه!</div>
+          )}
+        </>
       )}
     </div>
   );

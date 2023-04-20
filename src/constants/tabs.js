@@ -4,6 +4,11 @@ export const RIGHT_TABLE_TABS = {
   deals: "DEALS",
 };
 
+export const SHOP_INNER_TABS = {
+  rawMaterials: "rawMaterials",
+  buildings: "buildings",
+};
+
 export const MIDDLE_TABLE_TABS = {
   news: "NEWS",
   announcements: "ANNOUNCEMENTS",

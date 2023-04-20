@@ -3,6 +3,7 @@ import { atom } from "recoil";
 import {
   LEFT_TABLE_TABS,
   MIDDLE_TABLE_TABS,
+  SHOP_INNER_TABS,
   RIGHT_TABLE_TABS,
 } from "../constants/tabs";
 
@@ -13,6 +14,21 @@ export const rightTableTab = atom({
 
 export const rightTableOpen = atom({
   key: "rightTableOpen",
+  default: false,
+});
+
+export const shopInnerTab = atom({
+  key: "shopInnerTab",
+  default: SHOP_INNER_TABS.rawMaterials,
+});
+
+export const middleTableTab = atom({
+  key: "middleTableTab",
+  default: MIDDLE_TABLE_TABS.news,
+});
+
+export const middleTableOpen = atom({
+  key: "middleTableOpen",
   default: false,
 });
 

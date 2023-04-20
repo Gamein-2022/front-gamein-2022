@@ -1,3 +1,13 @@
 .gamein-loading {
   margin: 16px auto;
+  animation: rotation .8s infinite linear forwards;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(359deg);
+  }
 }

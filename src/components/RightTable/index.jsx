@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import tradeLogo from "../../assets/trade.svg";
 import transactionsLogo from "../../assets/transactions.svg";
 import shopLogo from "../../assets/shop.svg";
@@ -40,7 +40,14 @@ function RightTable({ updateBuildings }) {
           className={classNames("right-table__header-item", {
             "right-table__header-item--active": tab === RIGHT_TABLE_TABS.trade,
           })}
-          onClick={() => setTab(RIGHT_TABLE_TABS.trade)}
+          onClick={(e) => {
+            if (tab === RIGHT_TABLE_TABS.trade && open) {
+              setOpen(false);
+              e.stopPropagation();
+            } else {
+              setTab(RIGHT_TABLE_TABS.trade);
+            }
+          }}
         >
           <img className="right-table__logo" src={tradeLogo} alt="trade" />
           تجارت
@@ -49,7 +56,14 @@ function RightTable({ updateBuildings }) {
           className={classNames("right-table__header-item", {
             "right-table__header-item--active": tab === RIGHT_TABLE_TABS.shop,
           })}
-          onClick={() => setTab(RIGHT_TABLE_TABS.shop)}
+          onClick={(e) => {
+            if (tab === RIGHT_TABLE_TABS.shop && open) {
+              setOpen(false);
+              e.stopPropagation();
+            } else {
+              setTab(RIGHT_TABLE_TABS.shop);
+            }
+          }}
         >
           <img className="right-table__logo" src={shopLogo} alt="shop" />
           فروشگاه گیمین
@@ -58,7 +72,14 @@ function RightTable({ updateBuildings }) {
           className={classNames("right-table__header-item", {
             "right-table__header-item--active": tab === RIGHT_TABLE_TABS.deals,
           })}
-          onClick={() => setTab(RIGHT_TABLE_TABS.deals)}
+          onClick={(e) => {
+            if (tab === RIGHT_TABLE_TABS.deals && open) {
+              setOpen(false);
+              e.stopPropagation();
+            } else {
+              setTab(RIGHT_TABLE_TABS.deals);
+            }
+          }}
         >
           <img
             className="right-table__logo"
@@ -70,7 +91,9 @@ function RightTable({ updateBuildings }) {
       </div>
       <div className="right-table__body">
         {tab === RIGHT_TABLE_TABS.trade && <Trade />}
-        {tab === RIGHT_TABLE_TABS.shop && <Shop updateBuildings={updateBuildings} />}
+        {tab === RIGHT_TABLE_TABS.shop && (
+          <Shop updateBuildings={updateBuildings} />
+        )}
         {tab === RIGHT_TABLE_TABS.deals && <Deals />}
       </div>
       <div className="left-table__close-icon" onClick={closeRightTable}>

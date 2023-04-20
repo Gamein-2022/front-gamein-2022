@@ -20,6 +20,10 @@ function InRouteItem({ item }) {
     }, 1000);
   }, []);
 
+  if (remainedTime <= 0) {
+    return null;
+  }
+
   return (
     <div className="in-route-item">
       <div className="in-route-item__header">

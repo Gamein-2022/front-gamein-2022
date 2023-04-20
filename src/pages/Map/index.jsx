@@ -5,14 +5,22 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { upgradeRegion } from "../../apis/factory";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
-import { LEFT_TABLE_TABS, RIGHT_TABLE_TABS } from "../../constants/tabs";
+import {
+  LEFT_TABLE_TABS,
+  MIDDLE_TABLE_TABS,
+  RIGHT_TABLE_TABS,
+  SHOP_INNER_TABS,
+} from "../../constants/tabs";
 import useUpdateBalance from "../../hooks/useUpdateBalance";
 import { updateRegionModalOpen } from "../../store/modals";
 import {
   leftTableOpen,
   leftTableTab,
+  middleTableOpen,
+  middleTableTab,
   rightTableOpen,
   rightTableTab,
+  shopInnerTab,
 } from "../../store/tabs";
 import { formatPrice } from "../../utils/formatters";
 import { ReactComponent as MapImage } from "./gamein_map.svg";
@@ -79,6 +87,11 @@ function Map({ buildings, updateBuildings }) {
   const setLeftTableActiveTab = useSetRecoilState(leftTableTab);
   const setLeftTableOpen = useSetRecoilState(leftTableOpen);
 
+  const setMiddleTableActiveTab = useSetRecoilState(middleTableTab);
+  const setMiddleTableOpen = useSetRecoilState(middleTableOpen);
+
+  const setShopInnerTab = useSetRecoilState(shopInnerTab);
+
   const navigate = useNavigate();
 
   const [updateRegionModalOpenState, setUpdateRegionModalOpenState] =
@@ -88,8 +101,49 @@ function Map({ buildings, updateBuildings }) {
 
   useEffect(() => {
     // add functionality
+    document
+      .getElementById("ground_1_unfinished_building")
+      ?.addEventListener("click", () => {
+        setRightTableActiveTab(RIGHT_TABLE_TABS.shop);
+        setShopInnerTab(SHOP_INNER_TABS.buildings);
+        setRightTableOpen(true);
+      });
+    document
+      .getElementById("ground_2_unfinished_building")
+      ?.addEventListener("click", () => {
+        setRightTableActiveTab(RIGHT_TABLE_TABS.shop);
+        setShopInnerTab(SHOP_INNER_TABS.buildings);
+        setRightTableOpen(true);
+      });
+    document
+      .getElementById("ground_3_unfinished_building")
+      ?.addEventListener("click", () => {
+        setRightTableActiveTab(RIGHT_TABLE_TABS.shop);
+        setShopInnerTab(SHOP_INNER_TABS.buildings);
+        setRightTableOpen(true);
+      });
+    document
+      .getElementById("recycling_facility_unfinished_building")
+      ?.addEventListener("click", () => {
+        setRightTableActiveTab(RIGHT_TABLE_TABS.shop);
+        setShopInnerTab(SHOP_INNER_TABS.buildings);
+        setRightTableOpen(true);
+      });
+    document
+      .getElementById("recycling_facility_building")
+      ?.addEventListener("click", () => {
+        setLeftTableActiveTab(LEFT_TABLE_TABS.recycle);
+        setLeftTableOpen(true);
+      });
+
+    document.getElementById("ali_heidari")?.addEventListener("click", () => {
+      setMiddleTableActiveTab(MIDDLE_TABLE_TABS.news);
+      setMiddleTableOpen(true);
+    });
+
     document.getElementById("gamein_store")?.addEventListener("click", () => {
       setRightTableActiveTab(RIGHT_TABLE_TABS.shop);
+      setShopInnerTab(SHOP_INNER_TABS.rawMaterials);
       setRightTableOpen(true);
     });
 

@@ -31,7 +31,14 @@ function LeftTable() {
             "left-table__header-item--active":
               tab === LEFT_TABLE_TABS.productionAndAssembly,
           })}
-          onClick={() => setTab(LEFT_TABLE_TABS.productionAndAssembly)}
+          onClick={(e) => {
+            if (tab === LEFT_TABLE_TABS.productionAndAssembly && open) {
+              setOpen(false);
+              e.stopPropagation();
+            } else {
+              setTab(LEFT_TABLE_TABS.productionAndAssembly);
+            }
+          }}
         >
           <img
             className="left-table__logo"
@@ -44,7 +51,14 @@ function LeftTable() {
           className={classNames("left-table__header-item", {
             "left-table__header-item--active": tab === LEFT_TABLE_TABS.storage,
           })}
-          onClick={() => setTab(LEFT_TABLE_TABS.storage)}
+          onClick={(e) => {
+            if (tab === LEFT_TABLE_TABS.storage && open) {
+              setOpen(false);
+              e.stopPropagation();
+            } else {
+              setTab(LEFT_TABLE_TABS.storage);
+            }
+          }}
         >
           <img className="left-table__logo" src={storageLogo} alt="storage" />
           مدیریت انبار
@@ -53,7 +67,14 @@ function LeftTable() {
           className={classNames("left-table__header-item", {
             "left-table__header-item--active": tab === LEFT_TABLE_TABS.recycle,
           })}
-          onClick={() => setTab(LEFT_TABLE_TABS.recycle)}
+          onClick={(e) => {
+            if (tab === LEFT_TABLE_TABS.recycle && open) {
+              setOpen(false);
+              e.stopPropagation();
+            } else {
+              setTab(LEFT_TABLE_TABS.recycle);
+            }
+          }}
         >
           <img className="left-table__logo" src={recycleLogo} alt="recycle" />
           بازیافت
@@ -64,9 +85,7 @@ function LeftTable() {
         {tab === LEFT_TABLE_TABS.productionAndAssembly && (
           <ProductionAndAssembly />
         )}
-        {tab === LEFT_TABLE_TABS.recycle && (
-          <Recycle />
-        )}
+        {tab === LEFT_TABLE_TABS.recycle && <Recycle />}
       </div>
       <div className="left-table__close-icon" onClick={() => setOpen(false)}>
         <ExpandCircleDownIcon fontSize="large" />
