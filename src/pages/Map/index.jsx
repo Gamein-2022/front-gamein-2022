@@ -70,6 +70,7 @@ function glow(id) {
 }
 
 function Map({ buildings, updateBuildings }) {
+  const [hidden, setHidden] = useState(true);
   const setRightTableActiveTab = useSetRecoilState(rightTableTab);
   const setRightTableOpen = useSetRecoilState(rightTableOpen);
 
@@ -110,6 +111,42 @@ function Map({ buildings, updateBuildings }) {
       .getElementById("ground_3_inventory")
       .addEventListener("click", () => {
         setLeftTableActiveTab(LEFT_TABLE_TABS.storage);
+        setLeftTableOpen(true);
+      });
+    document
+      .getElementById("ground_1_assembly_facility")
+      .addEventListener("click", () => {
+        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
+        setLeftTableOpen(true);
+      });
+    document
+      .getElementById("ground_2_assembly_facility")
+      .addEventListener("click", () => {
+        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
+        setLeftTableOpen(true);
+      });
+    document
+      .getElementById("ground_3_assembly_facility")
+      .addEventListener("click", () => {
+        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
+        setLeftTableOpen(true);
+      });
+    document
+      .getElementById("ground_1_production_facility")
+      .addEventListener("click", () => {
+        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
+        setLeftTableOpen(true);
+      });
+    document
+      .getElementById("ground_2_production_facility")
+      .addEventListener("click", () => {
+        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
+        setLeftTableOpen(true);
+      });
+    document
+      .getElementById("ground_3_production_facility")
+      .addEventListener("click", () => {
+        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
         setLeftTableOpen(true);
       });
 
@@ -176,6 +213,7 @@ function Map({ buildings, updateBuildings }) {
     SHOW_ITEMS.forEach((item) => {
       show(item);
     });
+    setHidden(false);
   }, [buildings]);
 
   const handleUpgradeRegion = () => {
@@ -197,7 +235,9 @@ function Map({ buildings, updateBuildings }) {
 
   return (
     <div className="map">
-      <MapImage />
+      <div style={{ visibility: hidden ? "hidden" : "unset" }}>
+        <MapImage />
+      </div>
       <Modal
         open={updateRegionModalOpenState}
         onClose={() => setUpdateRegionModalOpenState(false)}
