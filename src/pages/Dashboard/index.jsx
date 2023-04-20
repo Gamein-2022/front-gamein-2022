@@ -55,7 +55,7 @@ function Dashboard() {
               عملکرد بقیه تیما!
             </div>
           </div>
-          <div className="dashboard__right-bottom">sdfsdf</div>
+          <div className="dashboard__right-bottom"></div>
         </div>
         <div className="dashboard__left"></div>
       </div>

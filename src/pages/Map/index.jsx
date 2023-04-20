@@ -203,13 +203,20 @@ function Map({ buildings, updateBuildings }) {
         onClose={() => setUpdateRegionModalOpenState(false)}
       >
         <div>آیا مطمئن هستید می‌خواهید زمین را گسترش دهید؟</div>
-        <Button onClick={handleUpgradeRegion}>بله</Button>
-        <Button
-          onClick={() => setUpdateRegionModalOpenState(false)}
-          type="error"
-        >
-          بازگشت
-        </Button>
+        <div className="extend-ground__btns">
+          <Button
+            className="extend-ground__btn-yes"
+            onClick={handleUpgradeRegion}
+          >
+            بله
+          </Button>
+          <Button
+            onClick={() => setUpdateRegionModalOpenState(false)}
+            type="error"
+          >
+            بازگشت
+          </Button>
+        </div>
       </Modal>
     </div>
   );
