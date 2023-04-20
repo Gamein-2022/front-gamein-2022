@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Helmet from "react-helmet";
 import { getTeamBuildings } from "../../apis/factory";
 import LeftTable from "../../components/LeftTable";
@@ -25,7 +25,7 @@ function Home() {
       });
   }, []);
 
-  const updateBuildings = () => {
+  const updateBuildings = useCallback(() => {
     getTeamBuildings()
       .then((res) => res.data)
       .then((data) => {
@@ -35,14 +35,16 @@ function Home() {
       .catch((error) => {
         console.log(error);
       });
-  };
+  }, []);
 
   return (
     <div className="home">
       <Helmet>
         <title>کارخانه من</title>
       </Helmet>
-      {buildingsLoaded &&  <Map buildings={buildings} updateBuildings={updateBuildings} />}
+      {buildingsLoaded && (
+        <Map buildings={buildings} updateBuildings={updateBuildings} />
+      )}
       <div className="home__bottom-sheet">
         <RightTable updateBuildings={updateBuildings} />
         <MiddleTable />

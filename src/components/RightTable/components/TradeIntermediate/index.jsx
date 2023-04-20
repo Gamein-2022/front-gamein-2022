@@ -18,9 +18,16 @@ import cargoImg from "../../../../assets/cargo.png";
 import cargoDisableImg from "../../../../assets/cargo-disable.png";
 import airplaneImg from "../../../../assets/airplane.png";
 import airplaneDisableImg from "../../../../assets/airplane-disable.png";
+import sampleImg from "../../../../assets/icons/copper.png";
 
 import "./style.scss";
 import { getOrderShippingInfo } from "../../../../apis/orders";
+import {
+  FINAL_MATERIALS,
+  INTERMEDIATE_MATERIALS_LEVEL_ONE,
+  INTERMEDIATE_MATERIALS_LEVEL_TWO,
+  RAW_MATERIALS,
+} from "../../../../constants/materials";
 
 function TradeIntermediate() {
   const [activeTab, setActiveTab] = useState("buy");
@@ -171,12 +178,18 @@ function TradeIntermediate() {
         setBuyOrders(
           data.result
             .filter((item) => item.orderType === "SELL")
-            .filter((item) => !selectedMaterial || item.productName === selectedMaterial)
+            .filter(
+              (item) =>
+                !selectedMaterial || item.productName === selectedMaterial
+            )
         );
         setSellOrders(
           data.result
             .filter((item) => item.orderType === "BUY")
-            .filter((item) => !selectedMaterial || item.productName === selectedMaterial)
+            .filter(
+              (item) =>
+                !selectedMaterial || item.productName === selectedMaterial
+            )
         );
       })
       .catch((error) => {
@@ -246,6 +259,7 @@ function TradeIntermediate() {
               <table className="trade-filter__table">
                 <thead>
                   <tr>
+                    <td>کالا</td>
                     <td>تعداد</td>
                     <td>قیمت</td>
                     <td>منطقه</td>
@@ -255,6 +269,21 @@ function TradeIntermediate() {
                 <tbody>
                   {currentOrders.map((row) => (
                     <tr>
+                      <td className="trade-filter__table-row-img-wrapper">
+                        <img
+                          className="trade-filter__table-row-img"
+                          src={
+                            RAW_MATERIALS[row?.productName]?.icon ||
+                            INTERMEDIATE_MATERIALS_LEVEL_ONE[row?.productName]
+                              ?.icon ||
+                            INTERMEDIATE_MATERIALS_LEVEL_TWO[row?.productName]
+                              ?.icon ||
+                            FINAL_MATERIALS[row?.productName]?.icon ||
+                            sampleImg
+                          }
+                          alt=""
+                        />
+                      </td>
                       <td>{row.quantity}</td>
                       <td>{row.unitPrice}</td>
                       <td>1</td>

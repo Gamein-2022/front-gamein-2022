@@ -12,6 +12,7 @@ import Support from "./pages/Support";
 import ChooseRegion from "./pages/ChooseRegion";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
+import BackPanel from "./pages/BackPanel";
 
 const AppRouter = () => {
   const ws = useRef();
@@ -59,6 +60,7 @@ const AppRouter = () => {
           <Route path="guide" element={<Guide />} />
           <Route path="support" element={<Support />} />
         </Route>
+        <Route path="back-panel" element={<BackPanel />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
