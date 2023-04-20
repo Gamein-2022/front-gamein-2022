@@ -69,10 +69,9 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
         }
       >
         <div className="init-line-modal">
-          <div className="init-line-modal__img"></div>
           <p className="init-line-modal__description">
             می‌خوای این خط {stringType}، برای {stringType} کدوم دسته از محصولات
-            میانی سطح یک استفاده بشه؟
+            استفاده بشه؟
             <br />
             (این تنظیمات فقط یک بار انجام میشه و غیر قابل تغییره)
           </p>
