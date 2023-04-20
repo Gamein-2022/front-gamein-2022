@@ -31,11 +31,7 @@ function BackPanel() {
   const handleSendNotification = () => {
     sendNotification({ message: notifText, type: notifType })
       .then((res) => res.data)
-      .then((data) => {
-        if (!data?.admin) {
-          navigate("/");
-        }
-      })
+      .then((data) => {})
       .catch((error) => {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
