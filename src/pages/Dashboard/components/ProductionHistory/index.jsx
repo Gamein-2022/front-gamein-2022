@@ -32,7 +32,9 @@ function ProductionHistory() {
               <td>{row?.type === "PRODUCTION" ? "تولید" : "مونتاژ"}</td>
               <td>{row?.productName}</td>
               <td>{row?.count}</td>
-              <td>{row?.totalCost}</td>
+              <td className="production-assembly-logs__red">
+                {row?.totalCost}-
+              </td>
             </tr>
           ))}
         </tbody>

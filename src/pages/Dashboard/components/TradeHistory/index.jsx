@@ -9,12 +9,13 @@ function TradeHistory() {
     getBuySellLogs()
       .then((res) => res.data)
       .then((data) => {
-        setRows(data?.logs);
+        setRows(data?.result?.logs);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
   return (
     <div className="trade-logs">
       <table className="trade-logs__table">
@@ -29,10 +30,17 @@ function TradeHistory() {
         <tbody>
           {rows.map((row) => (
             <tr>
-              <td>{row?.type === "PRODUCTION" ? "تولید" : "مونتاژ"}</td>
+              <td>{row?.type === "BUY" ? "خرید" : "فروش"}</td>
               <td>{row?.productName}</td>
               <td>{row?.count}</td>
-              <td>{row?.totalCost}</td>
+              <td
+                className={
+                  row?.type === "BUY" ? "trade-logs__red" : "trade-logs__green"
+                }
+              >
+                {row?.totalCost}
+                {row?.type === "BUY" ? "-" : "+"}
+              </td>
             </tr>
           ))}
         </tbody>

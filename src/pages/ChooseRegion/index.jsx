@@ -70,7 +70,7 @@ function ChooseRegion() {
         console.log("data", data);
         const currentRegion = +data.teamRegionId;
         if (data?.remainingTime <= 0) {
-          navigate("/");
+          // navigate("/");
         }
         setInitialRemainedTimeState(+data?.remainingTime || 30);
         if (currentRegion > 0) {
