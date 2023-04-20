@@ -28,6 +28,7 @@ import {
   INTERMEDIATE_MATERIALS_LEVEL_TWO,
   RAW_MATERIALS,
 } from "../../../../constants/materials";
+import { Tooltip } from "@mui/material";
 
 function TradeIntermediate() {
   const [activeTab, setActiveTab] = useState("buy");
@@ -270,19 +271,21 @@ function TradeIntermediate() {
                   {currentOrders.map((row) => (
                     <tr>
                       <td className="trade-filter__table-row-img-wrapper">
-                        <img
-                          className="trade-filter__table-row-img"
-                          src={
-                            RAW_MATERIALS[row?.productName]?.icon ||
-                            INTERMEDIATE_MATERIALS_LEVEL_ONE[row?.productName]
-                              ?.icon ||
-                            INTERMEDIATE_MATERIALS_LEVEL_TWO[row?.productName]
-                              ?.icon ||
-                            FINAL_MATERIALS[row?.productName]?.icon ||
-                            sampleImg
-                          }
-                          alt=""
-                        />
+                        <Tooltip title={row?.productName}>
+                          <img
+                            className="trade-filter__table-row-img"
+                            src={
+                              RAW_MATERIALS[row?.productName]?.icon ||
+                              INTERMEDIATE_MATERIALS_LEVEL_ONE[row?.productName]
+                                ?.icon ||
+                              INTERMEDIATE_MATERIALS_LEVEL_TWO[row?.productName]
+                                ?.icon ||
+                              FINAL_MATERIALS[row?.productName]?.icon ||
+                              sampleImg
+                            }
+                            alt=""
+                          />
+                        </Tooltip>
                       </td>
                       <td>{row.quantity}</td>
                       <td>{row.unitPrice}</td>

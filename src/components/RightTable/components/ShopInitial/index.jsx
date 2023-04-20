@@ -13,6 +13,10 @@ import { toast } from "react-toastify";
 import Modal from "../../../Modal";
 import { RAW_MATERIALS } from "../../../../constants/materials";
 import { RAW_MATERIALS_TREES } from "../../../../constants/trees";
+import { formatPrice } from "../../../../utils/formatters";
+import { useRecoilValue } from "recoil";
+import { balanceState } from "../../../../store/team-info";
+import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 
 function ShopInitial() {
   const [data, setData] = useState(null);
@@ -20,6 +24,9 @@ function ShopInitial() {
   const [count, setCount] = useState();
   const [open, setOpen] = useState(false);
   const [transport, setTransport] = useState("airplane");
+
+  const balance = useRecoilValue(balanceState);
+  const updateBalance = useUpdateBalance();
 
   const transportCost =
     transport === "ship"
@@ -54,7 +61,8 @@ function ShopInitial() {
       .then((data) => {
         toast.success("ماده اولیه با موفقیت خریداری شد.");
         setOpen(false);
-        console.log(data);
+        setCount(0);
+        updateBalance();
       })
       .catch((error) => {
         toast.error(
@@ -123,7 +131,9 @@ function ShopInitial() {
           <div className="shop-initial__preview">
             <img
               className="shop-initial__preview-img"
-              src={RAW_MATERIALS_TREES[selectedMaterial?.name]?.icon || sampleImg}
+              src={
+                RAW_MATERIALS_TREES[selectedMaterial?.name]?.icon || sampleImg
+              }
               alt="selected material"
             />
             <div className="shop-initial__preview-price">
@@ -209,18 +219,18 @@ function ShopInitial() {
           </div>
         </div>
         <div className="shop-modal__summary-text">
-          هزینه خرید کالاها: {productCost}
+          هزینه خرید کالاها: {formatPrice(productCost)}
         </div>
         <div className="shop-modal__summary-text">
-          هزینه حمل و نقل: {transportCost}
+          هزینه حمل و نقل: {formatPrice(transportCost)}
         </div>
         <div className="shop-modal__summary-text">جمع کل: {totalCost}</div>
         <div className="shop-modal__seperator"></div>
         <div className="shop-modal__summary-text">
-          دارایی فعلی: {data?.balance}{" "}
+          دارایی فعلی: {formatPrice(balance)}{" "}
         </div>
         <div className="shop-modal__summary-text">
-          دارایی پس از خرید: {data?.balance - totalCost}
+          دارایی پس از خرید: {formatPrice(balance - totalCost)}
         </div>
         <button
           onClick={handleBuyRawMaterial}

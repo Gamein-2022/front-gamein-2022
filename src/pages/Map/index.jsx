@@ -6,6 +6,7 @@ import { upgradeRegion } from "../../apis/factory";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import { LEFT_TABLE_TABS, RIGHT_TABLE_TABS } from "../../constants/tabs";
+import useUpdateBalance from "../../hooks/useUpdateBalance";
 import { updateRegionModalOpen } from "../../store/modals";
 import {
   leftTableOpen,
@@ -13,6 +14,7 @@ import {
   rightTableOpen,
   rightTableTab,
 } from "../../store/tabs";
+import { formatPrice } from "../../utils/formatters";
 import { ReactComponent as MapImage } from "./gamein_map.svg";
 import "./style.scss";
 
@@ -81,6 +83,8 @@ function Map({ buildings, updateBuildings }) {
 
   const [updateRegionModalOpenState, setUpdateRegionModalOpenState] =
     useRecoilState(updateRegionModalOpen);
+
+  const updateBalance = useUpdateBalance();
 
   useEffect(() => {
     // add functionality
@@ -224,6 +228,7 @@ function Map({ buildings, updateBuildings }) {
         setUpdateRegionModalOpenState(false);
         toast.success("زمین گسترش یافت.");
         updateBuildings();
+        updateBalance();
       })
       .catch((error) => {
         console.log(error);
@@ -243,6 +248,7 @@ function Map({ buildings, updateBuildings }) {
         onClose={() => setUpdateRegionModalOpenState(false)}
       >
         <div>آیا مطمئن هستید می‌خواهید زمین را گسترش دهید؟</div>
+        <div>هزینه گسترش زمین: {formatPrice("180000000")} جی‌کوین</div>
         <div className="extend-ground__btns">
           <Button
             className="extend-ground__btn-yes"

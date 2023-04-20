@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 
-import Time from "./Time";
 import LayoutHeader from "../LayoutHeader";
 import { getInfo } from "../../apis/profile";
 
@@ -29,7 +28,7 @@ const Layout = () => {
         if (error?.response?.status === 401) {
           navigate("/login");
         } else {
-          // setHasError(true);
+          setHasError(true);
         }
       })
       .finally(() => {

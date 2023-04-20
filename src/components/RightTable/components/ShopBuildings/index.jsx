@@ -11,10 +11,18 @@ import "./style.scss";
 import classNames from "classnames";
 import { createBuilding, getBuildingsInfo } from "../../../../apis/factory";
 import { toast } from "react-toastify";
+import useUpdateBalance from "../../../../hooks/useUpdateBalance";
+import { formatPrice } from "../../../../utils/formatters";
+import { useRecoilValue } from "recoil";
+import { balanceState } from "../../../../store/team-info";
 
 function ShopBuildings({ updateBuildings }) {
   const [buildingsInfo, setBuildingsInfo] = useState();
   const [selectedBuilding, setSelectedBuilding] = useState(null);
+
+  const balance = useRecoilValue(balanceState);
+
+  const updateBalance = useUpdateBalance();
 
   useEffect(() => {
     getBuildingsInfo()
@@ -77,6 +85,7 @@ function ShopBuildings({ updateBuildings }) {
         console.log(data);
         toast.success("ساختمان با موفقیت خریداری شد.");
         updateBuildings();
+        updateBalance();
       })
       .catch((error) => {
         console.log(error);
@@ -117,7 +126,7 @@ function ShopBuildings({ updateBuildings }) {
                   src={coinImg}
                   alt="coin"
                 />
-                {building.price}
+                {formatPrice(building.price)}
               </div>
             </div>
           </div>
@@ -126,10 +135,10 @@ function ShopBuildings({ updateBuildings }) {
       <div className="shop-buildings__buy">
         {selectedBuilding && (
           <div className="shop-buildings__buy-summary">
-            <div>موجودی فعلی: {buildingsInfo?.balance}</div>
+            <div>موجودی فعلی: {formatPrice(balance)}</div>
             <div>
               موجودی پس از سرمایه‌گذاری:{" "}
-              {buildingsInfo?.balance - selectedBuilding?.price}
+              {formatPrice(balance - selectedBuilding?.price)}
             </div>
           </div>
         )}
