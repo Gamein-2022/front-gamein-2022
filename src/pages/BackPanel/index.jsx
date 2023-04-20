@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getAdminInfo, sendNotification } from "../../apis/back-panel";
+import {
+  getAdminInfo,
+  increaseUsersMoney,
+  pauseGame,
+  resumeGame,
+  sendNotification,
+  startOverGame,
+} from "../../apis/back-panel";
 import BasicInput from "../../components/BasicInput";
 import Button from "../../components/Button";
 import "./style.scss";
@@ -39,12 +46,53 @@ function BackPanel() {
       });
   };
 
+  const handleIncreaseMoney = () => {
+    increaseUsersMoney({ value: increaseMoney })
+      .then((res) => res.data)
+      .then((data) => {
+        toast.success("پول به همه بازیکنان اضافه شد.");
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleStopGame = () => {
+    pauseGame()
+      .then((res) => res.data)
+      .then((data) => {})
+      .catch((error) => console.log(error));
+  };
+
+  const handleStartOverGame = () => {
+    startOverGame()
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleResumeGame = () => {
+    resumeGame()
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <>
       {!loading && (
         <div className="back-panel">
-          <Button type="error">توقف بازی</Button>
-          <Button type="success">شروع مجدد بازی</Button>
+          <Button onClick={handleStartOverGame} type="info">
+            شروع بازی جدید
+          </Button>
+          <Button onClick={handleStopGame} type="error">
+            توقف بازی
+          </Button>
+          <Button onClick={handleResumeGame} type="success">
+            ادامه بازی
+          </Button>
 
           <hr />
 
@@ -59,6 +107,7 @@ function BackPanel() {
             <option value="SUCCESS">success</option>
             <option value="WARNING">warning</option>
             <option value="ERROR">error</option>
+            <option value="GAME_PAUSED">game paused</option>
           </select>
           <Button onClick={handleSendNotification}>ارسال نوتیفیکیشن</Button>
 
@@ -70,7 +119,9 @@ function BackPanel() {
             onChange={(e) => setIncreaseMoney(e.target.value)}
             label="مقدار پول افزایش:"
           />
-          <Button>اضافه‌کردن پول به همه بازیکنان</Button>
+          <Button onClick={handleIncreaseMoney}>
+            اضافه‌کردن پول به همه بازیکنان
+          </Button>
 
           <hr />
 
@@ -85,7 +136,7 @@ function BackPanel() {
             onChange={(e) => setRAndDCostCoefficient(e.target.value)}
             label="هزینه پایه r and d:"
           />
-          <Button>اضافه‌کردن پول به همه بازیکنان</Button>
+          <Button>تغییر پارامترهای r and d</Button>
         </div>
       )}
     </>

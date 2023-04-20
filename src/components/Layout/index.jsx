@@ -5,16 +5,20 @@ import { ScaleLoader } from "react-spinners";
 import LayoutHeader from "../LayoutHeader";
 import { getInfo } from "../../apis/profile";
 
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { balanceState } from "../../store/team-info";
 
+import gameinLogo from "../../assets/gamein_logo_color.svg";
+
 import "./style.scss";
+import { isGamePausedState } from "../../store/time";
 
 const Layout = () => {
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
   const setBalance = useSetRecoilState(balanceState);
+  const isGamePaused = useRecoilValue(isGamePausedState);
 
   const navigate = useNavigate();
 
@@ -36,26 +40,38 @@ const Layout = () => {
       });
   }, []);
 
+  console.log(isGamePaused);
+
   return (
     <>
-      {loading && (
-        <div className="layout-loader">
-          <ScaleLoader color="#000" />
+      {isGamePaused && (
+        <div className="game-paused">
+          <img src={gameinLogo} alt="gamein logo" />
+          <div>بازی متوقف شده است.</div>
         </div>
       )}
-      {!loading && hasError && (
-        <div className="layout-error">
-          <div> مشکلی در سامانه رخ داده!</div>
-          لطفا دوباره تلاش کنید.
-        </div>
-      )}
-      {!loading && !hasError && (
-        <div className="layout">
-          <LayoutHeader />
-          <div className="layout-body">
-            <Outlet />
-          </div>
-        </div>
+      {!isGamePaused && (
+        <>
+          {loading && (
+            <div className="layout-loader">
+              <ScaleLoader color="#000" />
+            </div>
+          )}
+          {!loading && hasError && (
+            <div className="layout-error">
+              <div> مشکلی در سامانه رخ داده!</div>
+              لطفا دوباره تلاش کنید.
+            </div>
+          )}
+          {!loading && !hasError && (
+            <div className="layout">
+              <LayoutHeader />
+              <div className="layout-body">
+                <Outlet />
+              </div>
+            </div>
+          )}
+        </>
       )}
     </>
   );

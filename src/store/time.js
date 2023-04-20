@@ -14,3 +14,8 @@ export const dayState = atom({
   key: "dayState",
   default: 0,
 });
+
+export const isGamePausedState = atom({
+  key: "isGamePausedState",
+  default: false,
+});

@@ -40,3 +40,29 @@
     color: #be3737;
   }
 }
+
+.game-paused {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
+  font-size: 32px;
+
+  img {
+    width: 100px;
+    height: 200px;
+    animation: rotation 3s infinite linear forwards;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(359deg);
+  }
+}

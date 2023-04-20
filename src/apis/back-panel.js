@@ -10,3 +10,21 @@ export function sendNotification({ message, type }) {
 export function getAdminInfo() {
   return AxiosInstance.get("/dashboard/panel");
 }
+
+export function increaseUsersMoney({ value }) {
+  return AxiosInstance.post("/dashboard/panel/balance", {
+    addBalance: value,
+  });
+}
+
+export function startOverGame() {
+  return AxiosInstance.post("/dashboard/panel/start-over");
+}
+
+export function pauseGame() {
+  return AxiosInstance.post("/dashboard/panel/pause");
+}
+
+export function resumeGame() {
+  return AxiosInstance.post("/dashboard/panel/resume");
+}

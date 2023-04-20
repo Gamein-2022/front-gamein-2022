@@ -1,12 +1,18 @@
 import React, { useEffect } from "react";
-import { yearState, monthState, dayState } from "../../store/time";
+import {
+  yearState,
+  monthState,
+  dayState,
+  isGamePausedState,
+} from "../../store/time";
 import { getTime } from "../../apis/time";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 const Time = () => {
   const [year, setYear] = useRecoilState(yearState);
   const [month, setMonth] = useRecoilState(monthState);
   const [day, setDay] = useRecoilState(dayState);
+  const setIsGamePaused = useSetRecoilState(isGamePausedState);
 
   useEffect(() => {
     getTime()
@@ -17,6 +23,10 @@ const Time = () => {
         setYear(data.year);
         setMonth(data.month);
         setDay(data.day);
+        if (data.isGamePaused) {
+          console.log("pause game");
+          setIsGamePaused(true);
+        }
       });
   }, []);
 

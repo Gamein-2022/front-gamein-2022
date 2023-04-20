@@ -2,7 +2,12 @@ import React, { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import classnames from "classnames";
 
-import { yearState, monthState, dayState } from "../../store/time";
+import {
+  yearState,
+  monthState,
+  dayState,
+  isGamePausedState,
+} from "../../store/time";
 import { balanceState } from "../../store/team-info";
 import { getTime } from "../../apis/time";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -22,6 +27,7 @@ function LayoutHeader() {
   const [year, setYear] = useRecoilState(yearState);
   const [month, setMonth] = useRecoilState(monthState);
   const [day, setDay] = useRecoilState(dayState);
+  const [isGamePaused, setIsGamePaused] = useRecoilState(isGamePausedState);
   const balance = useRecoilValue(balanceState);
 
   useEffect(() => {
@@ -33,6 +39,7 @@ function LayoutHeader() {
         setYear(data.year);
         setMonth(data.month);
         setDay(data.day);
+        setIsGamePaused(data.isGamePaused);
       });
   }, []);
 
