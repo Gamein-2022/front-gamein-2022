@@ -5,6 +5,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import TokenIcon from "@mui/icons-material/Token";
 import "./style.scss";
 import classNames from "classnames";
+import { formatPrice } from "../../../../utils/formatters";
 
 interface RegionProps {
   title: string;
@@ -46,7 +47,7 @@ function Region({
           </div>
           <div className="region__price">
             <MonetizationOnIcon />
-            قیمت زمین: {price}
+            قیمت زمین: {formatPrice(price)}
           </div>
         </div>
       </div>
