@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { upgradeRegion } from "../../apis/factory";
@@ -75,6 +76,8 @@ function Map({ buildings, updateBuildings }) {
   const setLeftTableActiveTab = useSetRecoilState(leftTableTab);
   const setLeftTableOpen = useSetRecoilState(leftTableOpen);
 
+  const navigate = useNavigate();
+
   const [updateRegionModalOpenState, setUpdateRegionModalOpenState] =
     useRecoilState(updateRegionModalOpen);
 
@@ -84,6 +87,12 @@ function Map({ buildings, updateBuildings }) {
       setRightTableActiveTab(RIGHT_TABLE_TABS.shop);
       setRightTableOpen(true);
     });
+
+    document
+      .getElementById("r_and_d_facility")
+      .addEventListener("click", () => {
+        navigate("/r-and-d");
+      });
 
     document
       .getElementById("transactions_office")

@@ -30,7 +30,8 @@ const REGIONS = [
   },
   {
     title: "منطقه شش",
-    resources: "Plastic, Glass, Silicon, Microphone, Chips, Speaker, Vibration Motor",
+    resources:
+      "Plastic, Glass, Silicon, Microphone, Chips, Speaker, Vibration Motor",
   },
   {
     title: "منطقه هفت",
@@ -38,7 +39,8 @@ const REGIONS = [
   },
   {
     title: "منطقه هشت",
-    resources: "Plastic, Aluminum, Cobalt, Microphone, Chips, Ports, Vibration Motor",
+    resources:
+      "Plastic, Aluminum, Cobalt, Microphone, Chips, Ports, Vibration Motor",
   },
 ];
 
@@ -67,7 +69,8 @@ function ChooseRegion() {
       .then((data) => {
         console.log("data", data);
         const currentRegion = +data.teamRegionId;
-        if (+data?.remainedTime) {
+        if (data?.remainingTime <= 0) {
+          navigate("/");
         }
         setInitialRemainedTimeState(+data?.remainingTime || 30);
         if (currentRegion > 0) {
@@ -84,7 +87,9 @@ function ChooseRegion() {
         }
       });
 
-    ws.current = new WebSocket("ws://api-gamein.dariahamrah.ir/websocket/region");
+    ws.current = new WebSocket(
+      "ws://api-gamein.dariahamrah.ir/websocket/region"
+    );
 
     ws.current.onopen = function (event) {
       console.log("connecting to ws....");

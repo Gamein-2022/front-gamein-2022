@@ -141,37 +141,41 @@ function Off({
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
             />
-            <div className="setup-line-modal__storage-description">
-              برای {modalType === "PRODUCTION" ? "تولید" : "مونتاژ"} {quantity}{" "}
-              عدد {product?.name} به مواد اولیه‌ی زیر نیاز دارید:
-            </div>
-            <div className="setup-line-modal__storage-table">
-              <table>
-                <thead>
-                  <tr>
-                    <td>نام</td>
-                    <td>تعداد</td>
-                    <td>موجودی انبار</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {product?.requirements.map((req) => (
-                    <tr>
-                      <td>{req.product.name}</td>
-                      <td>{req.numberPerOne * quantity}</td>
-                      <td>{req.inStorage}</td>
-                      <td className="setup-line-modal__storage-icon">
-                        {req.inStorage >= req.numberPerOne * quantity ? (
-                          <CheckIcon style={{ color: "#009054" }} />
-                        ) : (
-                          <CloseIcon style={{ color: "#D63F26" }} />
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            {quantity > 0 && (
+              <>
+                <div className="setup-line-modal__storage-description">
+                  برای {modalType === "PRODUCTION" ? "تولید" : "مونتاژ"}{" "}
+                  {quantity} عدد {product?.name} به مواد اولیه‌ی زیر نیاز دارید:
+                </div>
+                <div className="setup-line-modal__storage-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <td>نام</td>
+                        <td>تعداد</td>
+                        <td>موجودی انبار</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {product?.requirements.map((req) => (
+                        <tr>
+                          <td>{req.product.name}</td>
+                          <td>{req.numberPerOne * quantity}</td>
+                          <td>{req.inStorage}</td>
+                          <td className="setup-line-modal__storage-icon">
+                            {req.inStorage >= req.numberPerOne * quantity ? (
+                              <CheckIcon style={{ color: "#009054" }} />
+                            ) : (
+                              <CloseIcon style={{ color: "#D63F26" }} />
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            )}
           </div>
           <div className="setup-line-modal__column">
             <div className="setup-line-modal__column-title">
@@ -188,7 +192,8 @@ function Off({
                 مدت زمان مورد نیاز:{" "}
               </div>
               <div className="setup-line-modal__confirm-value">
-                {quantity / product?.product?.productionRate || 0} روز
+                {(quantity / product?.product?.productionRate).toFixed(2) || 0}{" "}
+                روز
               </div>
               <div className="setup-line-modal__confirm-title">
                 هزینه {lineTypeString}:
