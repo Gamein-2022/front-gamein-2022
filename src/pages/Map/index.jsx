@@ -51,7 +51,7 @@ const GLOW = [
 function hide(id) {
   try {
     const building = document.getElementById(id);
-    building.classList.add("hide");
+    building?.classList.add("hide");
   } catch (error) {
     return;
   }
@@ -60,7 +60,7 @@ function hide(id) {
 function show(id) {
   try {
     const building = document.getElementById(id);
-    building.classList.remove("hide");
+    building?.classList.remove("hide");
   } catch (error) {
     return;
   }
@@ -68,7 +68,7 @@ function show(id) {
 
 function glow(id) {
   const building = document.getElementById(id);
-  building.classList.add("building");
+  building?.classList.add("building");
 }
 
 function Map({ buildings, updateBuildings }) {
@@ -88,75 +88,77 @@ function Map({ buildings, updateBuildings }) {
 
   useEffect(() => {
     // add functionality
-    document.getElementById("gamein_store").addEventListener("click", () => {
+    document.getElementById("gamein_store")?.addEventListener("click", () => {
       setRightTableActiveTab(RIGHT_TABLE_TABS.shop);
       setRightTableOpen(true);
     });
 
     document
       .getElementById("r_and_d_facility")
-      .addEventListener("click", () => {
+      ?.addEventListener("click", () => {
         navigate("/r-and-d");
       });
 
     document
       .getElementById("transactions_office")
-      .addEventListener("click", () => {
+      ?.addEventListener("click", () => {
         setRightTableActiveTab(RIGHT_TABLE_TABS.deals);
         setRightTableOpen(true);
       });
 
-    document.getElementById("inventory").addEventListener("click", () => {
+    document.getElementById("inventory")?.addEventListener("click", () => {
       setLeftTableActiveTab(LEFT_TABLE_TABS.storage);
       setLeftTableOpen(true);
     });
 
     document
       .getElementById("ground_3_inventory")
-      .addEventListener("click", () => {
+      ?.addEventListener("click", () => {
         setLeftTableActiveTab(LEFT_TABLE_TABS.storage);
         setLeftTableOpen(true);
       });
     document
       .getElementById("ground_1_assembly_facility")
-      .addEventListener("click", () => {
+      ?.addEventListener("click", () => {
         setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
         setLeftTableOpen(true);
       });
     document
       .getElementById("ground_2_assembly_facility")
-      .addEventListener("click", () => {
+      ?.addEventListener("click", () => {
         setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
         setLeftTableOpen(true);
       });
     document
       .getElementById("ground_3_assembly_facility")
-      .addEventListener("click", () => {
+      ?.addEventListener("click", () => {
         setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
         setLeftTableOpen(true);
       });
     document
       .getElementById("ground_1_production_facility")
-      .addEventListener("click", () => {
+      ?.addEventListener("click", () => {
         setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
         setLeftTableOpen(true);
       });
     document
       .getElementById("ground_2_production_facility")
-      .addEventListener("click", () => {
+      ?.addEventListener("click", () => {
         setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
         setLeftTableOpen(true);
       });
     document
       .getElementById("ground_3_production_facility")
-      .addEventListener("click", () => {
+      ?.addEventListener("click", () => {
         setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
         setLeftTableOpen(true);
       });
 
-    document.getElementById("ground_3_locked").addEventListener("click", () => {
-      setUpdateRegionModalOpenState(true);
-    });
+    document
+      .getElementById("ground_3_locked")
+      ?.addEventListener("click", () => {
+        setUpdateRegionModalOpenState(true);
+      });
 
     if (buildings?.regionUpgraded) {
       HIDDEN_ITEMS.push("ground_3_locked");

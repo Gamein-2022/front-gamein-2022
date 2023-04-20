@@ -66,9 +66,9 @@
   }
 }
 
-#sea_waves {
-  animation: floating 7s ease-in-out infinite;
-}
+// #sea_waves {
+//   animation: floating 7s ease-in-out infinite;
+// }
 #r_and_d_facility_light {
   animation: half_blinking 8s ease-in-out infinite;
 }
@@ -122,26 +122,26 @@
   }
 }
 
-.boat_out {
-  animation-name: boat_out;
-  animation-duration: 3s;
-  animation-iteration-count: forwards;
-  animation-timing-function: ease-in-out;
-  margin-left: 30px;
-  margin-top: 5px;
-}
-.boat_in {
-  animation-name: boat_in;
-  animation-duration: 3s;
-  animation-iteration-count: forwards;
-  animation-timing-function: ease-in-out;
-  margin-left: 30px;
-  margin-top: 5px;
-}
+// .boat_out {
+//   animation-name: boat_out;
+//   animation-duration: 3s;
+//   animation-iteration-count: forwards;
+//   animation-timing-function: ease-in-out;
+//   margin-left: 30px;
+//   margin-top: 5px;
+// }
+// .boat_in {
+//   animation-name: boat_in;
+//   animation-duration: 3s;
+//   animation-iteration-count: forwards;
+//   animation-timing-function: ease-in-out;
+//   margin-left: 30px;
+//   margin-top: 5px;
+// }
 
-#dock_boat {
-  animation: floating 5s ease-in-out infinite;
-}
+// #dock_boat {
+//   animation: floating 5s ease-in-out infinite;
+// }
 
 .extend-ground {
   &__btns {

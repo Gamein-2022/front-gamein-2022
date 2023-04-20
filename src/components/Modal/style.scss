@@ -18,6 +18,8 @@
     border-radius: 16px;
     padding: 24px;
     position: relative;
+    max-height: calc(100% - 64px);
+    overflow-y: auto;
   }
 
   &__title {
