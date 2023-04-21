@@ -23,9 +23,6 @@ function TradeFinal() {
       })
       .catch((error) => {
         console.log(error);
-        // toast.error(
-        //   error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
-        // );
       });
   }, []);
 
@@ -44,17 +41,16 @@ function TradeFinal() {
 
   return (
     <div className="trade-final">
-      <img src={sampleImg} alt="trade final" />
+      {/* <img src={sampleImg} alt="trade final" /> */}
       <p>
         اینجا می‌تونی محصولات نهایی رو به بازار جهانی عرضه کنی. برای این کار،
-        محصول، تعداد و قیمت مورد نظرت رو مشخص کن. با توجه به تقاضای بازار بهت
-        گفته میشه که می‌تونی با این قیمت و تعداد بفروشی یا نه :)
+        محصول، تعداد و قیمت مورد نظرت رو مشخص کن.
       </p>
       <div>محصول</div>
       <select
         value={selectedProductId}
         onChange={(e) => setSelectedProductId(e.target.value)}
-        className="trade-filter__select"
+        className="trade-filter__select trade-final__select"
       >
         <option disabled selected>
           انتخاب کن

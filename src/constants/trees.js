@@ -192,8 +192,8 @@ export const INTERMEDIATE_MATERIALS_LEVEL_ONE_TREES = {
     name: "phoneFrame",
     icon: phoneFrame,
   },
-  "phoneFrameKeypad": {
-    name: "phoneFrameKeypad",
+  "phoneFrameWithKeypad": {
+    name: "phoneFrameWithKeypad",
     icon: phoneFrameKeypad,
   },
   "ramAndStorage": {

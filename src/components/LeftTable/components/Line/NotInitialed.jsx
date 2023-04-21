@@ -48,6 +48,10 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
           toast.error(error?.response?.data?.message);
           onClose();
           updateLines();
+        } else {
+          toast.error(
+            error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          );
         }
       });
   };
