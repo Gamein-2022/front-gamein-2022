@@ -194,7 +194,8 @@ function Off({
                 نرخ {lineTypeString}:{" "}
               </div>
               <div className="setup-line-modal__confirm-value">
-                {product?.product?.productionRate} کالا در روز
+                {((product?.product?.productionRate * 60) / 8 || 0).toFixed(0)}{" "}
+                کالا در دقیقه
               </div>
               <div className="setup-line-modal__confirm-title">
                 مدت زمان مورد نیاز:{" "}

@@ -430,8 +430,7 @@ function Orders() {
                   کل، خریدت رو کامل کنی!
                 </div>
                 <div className="order-offer-final__region-info">
-                  خرید {selectedOffer.order.productName} از تیم{" "}
-                  {selectedOffer.order.submitterTeamName} در منطقه{" "}
+                  خرید {selectedOffer.order.productName} از منطقه{" "}
                   {selectedOffer.region + 1}
                 </div>
                 <div className="order-offer-final__count">
