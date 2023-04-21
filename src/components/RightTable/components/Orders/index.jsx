@@ -117,7 +117,7 @@ function Orders() {
   const handleAcceptOffer = () => {
     acceptOffer({
       id: selectedOffer.id,
-      shippingMethod: transport === "plane" ? "PLANE" : "SHIP",
+      shippingMethod: transport === "airplane" ? "PLANE" : "SHIP",
     })
       .then((res) => res.data)
       .then((data) => {
