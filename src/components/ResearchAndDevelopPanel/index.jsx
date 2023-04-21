@@ -13,6 +13,8 @@ import rAndDEmpty from "../../assets/r-and-d-empty.svg";
 
 import styles from "./style.module.scss";
 
+import jsonData from "./data.json";
+
 const ResearchAndDevelopPanel = ({ refresh }) => {
   const data = useRecoilValue(dataState);
   const [info, setInfo] = useState(null);
@@ -87,12 +89,7 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
           />
 
           <div className={styles["title"]}>{data?.title}</div>
-          <div className={styles["desc"]}>
-            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-            استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در
-            ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و
-            کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
-          </div>
+          <div className={styles["desc"]}>{jsonData[data.value]?.desc}</div>
 
           {info?.endTime && info?.beginTime ? (
             info?.done ? (
