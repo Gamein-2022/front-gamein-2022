@@ -381,7 +381,7 @@ function Orders() {
               <div className="order-offer">
                 <div className="order-offer__header">
                   <div className="order-offer__region">
-                    از منطقه {offer.region + 1}
+                    از منطقه {offer.region}
                   </div>
                   <div className="order-offer__price">
                     قیمت واحد: {offer.order.unitPrice}

@@ -293,7 +293,7 @@ function TradeIntermediate() {
                       </td>
                       <td>{row.quantity}</td>
                       <td>{row.unitPrice}</td>
-                      <td>1</td>
+                      <td>{row.region}</td>
                       <td>
                         {activeTab === "buy" && (
                           <button
