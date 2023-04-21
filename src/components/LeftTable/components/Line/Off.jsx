@@ -29,6 +29,7 @@ import {
   shopInnerTab,
 } from "../../../../store/tabs";
 import { RIGHT_TABLE_TABS, SHOP_INNER_TABS } from "../../../../constants/tabs";
+import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 
 function Off({
   open,
@@ -44,6 +45,7 @@ function Off({
   const [info, setInfo] = useState();
 
   const navigate = useNavigate();
+  const updateBalance = useUpdateBalance();
 
   const [rightTab, setRightTab] = useRecoilState(rightTableTab);
   const [rightOpen, setRightOpen] = useRecoilState(rightTableOpen);
@@ -69,6 +71,7 @@ function Off({
         toast.success(`خط ${lineTypeString} با موفقیت راه‌اندازی شد.`);
         updateLines();
         onClose();
+        updateBalance();
       })
       .catch((error) => {
         console.log(error);

@@ -14,6 +14,7 @@ import {
 } from "../../../../constants/materials";
 
 import sampleImg from "../../../../assets/icons/copper.png";
+import { GROUPS } from "../../../../constants/groups";
 
 function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
   const [availableProducts, setAvailableProducts] = useState([]);
@@ -92,7 +93,7 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
               انتخاب
             </option>
             {availableProducts.map((product) => (
-              <option value={product.name}>{product.name}</option>
+              <option value={product.name}>{GROUPS[product.name] || product.name}</option>
             ))}
           </select>
           {selectedProduct && (

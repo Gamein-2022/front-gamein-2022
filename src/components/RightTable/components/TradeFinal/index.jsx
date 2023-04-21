@@ -59,6 +59,16 @@ function TradeFinal() {
           <option value={item.product.id}>{item.product.name}</option>
         ))}
       </select>
+      <div>
+        حداقل قیمت:{" "}
+        {finalProducts.find((item) => item.product.id == selectedProductId)
+          ?.product?.minPrice || 0}
+      </div>
+      <div>
+        حداکثر قیمت:{" "}
+        {finalProducts.find((item) => item.product.id == selectedProductId)
+          ?.product?.maxPrice || 0}
+      </div>
       <BasicInput
         label={"قیمت پیشنهادی"}
         placeholder="مثلا ۱۰۰۰"

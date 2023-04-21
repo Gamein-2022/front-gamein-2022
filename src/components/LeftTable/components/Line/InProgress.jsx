@@ -3,6 +3,7 @@ import { collectLine } from "../../../../apis/production";
 import Button from "../../../Button";
 import gameinGearLogo from "../../../../assets/gamein_gear_gray.svg";
 import { toast } from "react-toastify";
+import { GROUPS } from "../../../../constants/groups";
 
 function InProgress({
   lineTypeString,
@@ -65,7 +66,7 @@ function InProgress({
       >
         <div className="line__header">
           <div>
-            خط {lineTypeString} {group}
+            خط {lineTypeString} {GROUPS[group] || group}
           </div>
           <img src={gameinGearLogo} alt="gamein gear logo" />
         </div>

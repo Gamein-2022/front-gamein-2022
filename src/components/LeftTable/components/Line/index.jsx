@@ -6,6 +6,7 @@ import "./style.scss";
 import NotInitialed from "./NotInitialed";
 import Off from "./Off";
 import InProgress from "./InProgress";
+import { GROUPS } from "../../../../constants/groups";
 
 function Line({
   status,
@@ -61,7 +62,7 @@ function Line({
         <div className={`line line--${status}`}>
           <div className="line__header">
             <div>
-              خط {lineTypeString} {group}
+              خط {lineTypeString} {GROUPS[group] || group}
             </div>
             <img src={gameinGearLogo} alt="gamein gear logo" />
           </div>
