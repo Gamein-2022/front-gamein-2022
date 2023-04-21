@@ -22,6 +22,7 @@ import airplaneDisableImg from "../../../../assets/airplane-disable.png";
 import "./style.scss";
 import { declineOffer } from "../../../../apis/offers";
 import {
+  FINAL_MATERIALS,
   INTERMEDIATE_MATERIALS_LEVEL_ONE,
   INTERMEDIATE_MATERIALS_LEVEL_TWO,
   RAW_MATERIALS,
@@ -44,7 +45,7 @@ function Orders() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data.result);
-        setOrders(data.result?.orders);
+        setOrders(data.result?.orders || []);
         setFinalOrders(data.result?.finalOrders);
       })
       .catch((error) => {
@@ -57,7 +58,8 @@ function Orders() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data.result);
-        setOrders(data.result);
+        setOrders(data.result?.orders || []);
+        setFinalOrders(data.result?.finalOrders);
       })
       .catch((error) => {
         console.log(error);
@@ -188,7 +190,7 @@ function Orders() {
         {orders?.length <= 0 && (
           <div className="offers-sent__empty">شما هیچ سفارش فعالی ندارید.</div>
         )}
-        {orders.map(
+        {orders?.map(
           ({
             acceptDate,
             cancelled,
@@ -256,6 +258,86 @@ function Orders() {
                       </div>
                     )}
                     {!isWaiting && (
+                      <Button
+                        className="order-card__btn-success"
+                        onClick={() => handleArchiveOrder(id)}
+                      >
+                        بایگانی
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          }
+        )}
+        {finalOrders?.map(
+          ({
+            acceptDate,
+            cancelled,
+            id,
+            product,
+            unitPrice,
+            orderType,
+            quantity,
+            soldQuantity,
+          }) => {
+            if (cancelled) {
+              return null;
+            }
+            const isWaiting = !acceptDate;
+            return (
+              <div
+                className={classNames("order-card", {
+                  "order-card--warning": soldQuantity <= 0,
+                })}
+              >
+                <div className="order-card__title">
+                  {soldQuantity <= 0 ? (
+                    <AccessTimeIcon fontSize="small" />
+                  ) : (
+                    <CheckIcon fontSize="small" />
+                  )}
+                  {soldQuantity <= 0 ? "در انتظار خریدار" : "فروخته‌شده"}
+                </div>
+                <div className="order-card__body">
+                  <div className="order-card__right">
+                    <img
+                      className="order-card__img"
+                      src={
+                        RAW_MATERIALS[product?.name]?.icon ||
+                        INTERMEDIATE_MATERIALS_LEVEL_ONE[product?.name]?.icon ||
+                        INTERMEDIATE_MATERIALS_LEVEL_TWO[product?.name]?.icon ||
+                        FINAL_MATERIALS[product?.name]?.icon ||
+                        sampleImg
+                      }
+                      alt="order card"
+                    />
+                    <div className="order-card__name">{product?.name}</div>
+                  </div>
+                  <div className="order-card__left">
+                    <div className="order-card__count">{quantity} واحد</div>
+                    <div className="order-card__unit-price">
+                      قیمت واحد: {unitPrice}
+                    </div>
+                    <div>مقدار فروخته‌شده: {soldQuantity}</div>
+                    {/* {isWaiting && (
+                      <div className="order-card__btns">
+                        <Button
+                          className="order-card__btn-error"
+                          onClick={() => handleDeleteOrder(id)}
+                        >
+                          حذف
+                        </Button>
+                        <Button
+                          className="order-card__btn-success"
+                          onClick={() => handleTrackOrder(id)}
+                        >
+                          پیگیری
+                        </Button>
+                      </div>
+                    )} */}
+                    {soldQuantity > 0 && (
                       <Button
                         className="order-card__btn-success"
                         onClick={() => handleArchiveOrder(id)}
@@ -401,20 +483,26 @@ function Orders() {
               </div>
               <div className="shop-modal__summary-text">
                 هزینه خرید کالاها:{" "}
-                {formatPrice(selectedOffer.order.quantity * selectedOffer.order.unitPrice)}
+                {formatPrice(
+                  selectedOffer.order.quantity * selectedOffer.order.unitPrice
+                )}
               </div>
               <div className="shop-modal__summary-text">
                 هزینه حمل و نقل:{" "}
-                {formatPrice(transport === "airplane"
-                  ? selectedOffer.planePrice
-                  : selectedOffer.shipPrice)}
+                {formatPrice(
+                  transport === "airplane"
+                    ? selectedOffer.planePrice
+                    : selectedOffer.shipPrice
+                )}
               </div>
               <div className="shop-modal__summary-text">
                 جمع کل:{" "}
-                {formatPrice(selectedOffer.order.quantity * selectedOffer.order.unitPrice +
-                  (transport === "airplane"
-                    ? selectedOffer.planePrice
-                    : selectedOffer.shipPrice))}
+                {formatPrice(
+                  selectedOffer.order.quantity * selectedOffer.order.unitPrice +
+                    (transport === "airplane"
+                      ? selectedOffer.planePrice
+                      : selectedOffer.shipPrice)
+                )}
               </div>
               <div className="shop-modal__seperator"></div>
               <div className="shop-modal__summary-text">
