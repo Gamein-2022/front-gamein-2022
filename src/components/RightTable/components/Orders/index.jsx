@@ -31,6 +31,7 @@ import { FormatPaintRounded } from "@mui/icons-material";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
+  const [finalOrders, setFinalOrders] = useState([]);
   const [orderTrackingModalOpen, setOrderTrackingModalOpen] = useState(false);
   const [offers, setOffers] = useState([]);
   const [selectedOffer, setSelectedOffer] = useState();
@@ -43,7 +44,8 @@ function Orders() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data.result);
-        setOrders(data.result);
+        setOrders(data.result?.orders);
+        setFinalOrders(data.result?.finalOrders);
       })
       .catch((error) => {
         console.log(error);
