@@ -62,6 +62,9 @@ function TradeIntermediate() {
       })
       .catch((error) => {
         console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
+        );
       });
   };
 
@@ -346,16 +349,32 @@ function TradeIntermediate() {
         <BasicInput
           label={"چند واحد می‌خوای بخری؟"}
           type="number"
+          min={0}
           value={buyCount}
           onChange={(e) => setBuyCount(e.target.value)}
         />
         <BasicInput
           label={"هر واحد رو حداکثر با چه قیمتی می‌خوای بخری؟"}
           type="number"
+          min={0}
           value={buyPrice}
           onChange={(e) => setBuyPrice(e.target.value)}
         />
-        <div>هزینه خرید کالاها: {buyCount * buyPrice}</div>
+        <div>
+          حداقل قیمت:{" "}
+          {formatPrice(
+            intermediateMaterials.find((item) => item.name === selectedMaterial)
+              ?.minPrice || 0
+          )}
+        </div>
+        <div>
+          حداکثر قیمت:{" "}
+          {formatPrice(
+            intermediateMaterials.find((item) => item.name === selectedMaterial)
+              ?.maxPrice || 0
+          )}
+        </div>
+        <div>هزینه خرید کالاها: {formatPrice(buyCount * buyPrice)}</div>
         <Button onClick={handleSubmitBuyOrder}>تایید خرید</Button>
       </Modal>
       <Modal
@@ -367,16 +386,32 @@ function TradeIntermediate() {
         <BasicInput
           label={"چند واحد می‌خوای بفروشی؟"}
           type="number"
+          min={0}
           value={sellCount}
           onChange={(e) => setSellCount(e.target.value)}
         />
         <BasicInput
           label={"هر واحد رو حداقل با چه قیمتی می‌خوای بفروشی؟"}
           type="number"
+          min={0}
           value={sellPrice}
           onChange={(e) => setSellPrice(e.target.value)}
         />
-        <div>درآمد فروش کالاها: {sellCount * sellPrice || 0}</div>
+        <div>
+          حداقل قیمت:{" "}
+          {formatPrice(
+            intermediateMaterials.find((item) => item.name === selectedMaterial)
+              ?.minPrice || 0
+          )}
+        </div>
+        <div>
+          حداکثر قیمت:{" "}
+          {formatPrice(
+            intermediateMaterials.find((item) => item.name === selectedMaterial)
+              ?.maxPrice || 0
+          )}
+        </div>
+        <div>درآمد فروش کالاها: {formatPrice(sellCount * sellPrice || 0)}</div>
         <Button onClick={handleSubmitSellOrder} type={"error"}>
           تایید فروش
         </Button>
@@ -448,10 +483,12 @@ function TradeIntermediate() {
             </div>
             <div className="shop-modal__summary-text">
               جمع کل:{" "}
-              {formatPrice(selectedOrder.quantity * selectedOrder.unitPrice +
-                (transport === "airplane"
-                  ? shippingInfo.planePrice
-                  : shippingInfo.shipPrice))}
+              {formatPrice(
+                selectedOrder.quantity * selectedOrder.unitPrice +
+                  (transport === "airplane"
+                    ? shippingInfo.planePrice
+                    : shippingInfo.shipPrice)
+              )}
             </div>
             <div className="shop-modal__seperator"></div>
             <div className="shop-modal__summary-text">
