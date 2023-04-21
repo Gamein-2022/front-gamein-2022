@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getProductionAssemblyLogs } from "../../../../apis/dashboard";
 import GameinLoading from "../../../../components/GameinLoading";
+import { formatPrice } from "../../../../utils/formatters";
 import "./style.scss";
 
 function ProductionHistory() {
@@ -40,7 +41,7 @@ function ProductionHistory() {
                     <td>{row?.productName}</td>
                     <td>{row?.count}</td>
                     <td className="production-assembly-logs__red">
-                      {row?.totalCost}-
+                      {formatPrice(row?.totalCost)}-
                     </td>
                   </tr>
                 ))}

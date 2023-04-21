@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getBuySellLogs } from "../../../../apis/dashboard";
 import GameinLoading from "../../../../components/GameinLoading";
+import { formatPrice } from "../../../../utils/formatters";
 import "./style.scss";
 
 function TradeHistory() {
@@ -47,7 +48,7 @@ function TradeHistory() {
                           : "trade-logs__green"
                       }
                     >
-                      {row?.totalCost}
+                      {formatPrice(row?.totalCost)}
                       {row?.type === "BUY" ? "-" : "+"}
                     </td>
                   </tr>
