@@ -67,6 +67,7 @@ function TradeFinal() {
         label={"قیمت پیشنهادی"}
         placeholder="مثلا ۱۰۰۰"
         type="number"
+        min={0}
         value={price}
         onChange={(e) => setPrice(e.target.value)}
       />
@@ -74,6 +75,7 @@ function TradeFinal() {
         label={"تعداد"}
         placeholder="مثلا ۵۰۰"
         type="number"
+        min={0}
         value={quantity}
         onChange={(e) => setQuantity(e.target.value)}
       />
