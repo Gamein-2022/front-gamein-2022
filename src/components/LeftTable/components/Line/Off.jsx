@@ -23,8 +23,12 @@ import {
 } from "../../../../constants/trees";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { rightTableOpen, rightTableTab } from "../../../../store/tabs";
-import { RIGHT_TABLE_TABS } from "../../../../constants/tabs";
+import {
+  rightTableOpen,
+  rightTableTab,
+  shopInnerTab,
+} from "../../../../store/tabs";
+import { RIGHT_TABLE_TABS, SHOP_INNER_TABS } from "../../../../constants/tabs";
 
 function Off({
   open,
@@ -43,6 +47,7 @@ function Off({
 
   const [rightTab, setRightTab] = useRecoilState(rightTableTab);
   const [rightOpen, setRightOpen] = useRecoilState(rightTableOpen);
+  const [shopTab, setShopTab] = useRecoilState(shopInnerTab);
 
   useEffect(() => {
     getLineAvailableProducts({ id: lineId })
@@ -141,7 +146,7 @@ function Off({
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
             />
-            {quantity > 0 && (
+            {quantity > 0 && product && (
               <>
                 <div className="setup-line-modal__storage-description">
                   برای {modalType === "PRODUCTION" ? "تولید" : "مونتاژ"}{" "}
@@ -192,7 +197,9 @@ function Off({
                 مدت زمان مورد نیاز:{" "}
               </div>
               <div className="setup-line-modal__confirm-value">
-                {(quantity / product?.product?.productionRate).toFixed(2) || 0}{" "}
+                {(quantity / (product?.product?.productionRate || 1)).toFixed(
+                  2
+                ) || 0}{" "}
                 روز
               </div>
               <div className="setup-line-modal__confirm-title">
@@ -240,6 +247,7 @@ function Off({
                   setRightOpen(true);
                   if (modalType === "PRODUCTION") {
                     setRightTab(RIGHT_TABLE_TABS.shop);
+                    setShopTab(SHOP_INNER_TABS.rawMaterials);
                   } else {
                     setRightTab(RIGHT_TABLE_TABS.deals);
                   }

@@ -6,6 +6,7 @@ import storageEmpty from "../../../../assets/empty_states/storage_empty.svg";
 
 import "./style.scss";
 import GameinLoading from "../../../GameinLoading";
+import { formatPrice } from "../../../../utils/formatters";
 
 function InStorage() {
   const [loading, setLoading] = useState(true);
@@ -44,7 +45,7 @@ function InStorage() {
           {storageInfo?.products?.length > 0 ? (
             <>
               <div className="in-storage__space">
-                فضای کل انبار: {storageInfo?.storageSpace}
+                فضای کل انبار: {formatPrice(storageInfo?.storageSpace)}
               </div>
               <div className="in-storage-chart">
                 {storageInfo?.inStoragePercent > 0 && (
@@ -109,6 +110,7 @@ function InStorage() {
                     <StorageItem
                       updateStorageInfo={updateStorageInfo}
                       item={item}
+                      key={item?.id}
                       storageSpace={storageInfo?.storageSpace}
                     />
                   ))}

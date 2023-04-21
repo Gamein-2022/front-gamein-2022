@@ -1,4 +1,3 @@
-
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import { getRawMaterials, buyFromGamein } from "../../../../apis/trade";
@@ -30,8 +29,8 @@ function ShopInitial() {
 
   const transportCost =
     transport === "ship"
-      ? selectedMaterial?.shipPrice * count || 0
-      : selectedMaterial?.planePrice * count || 0;
+      ? selectedMaterial?.shipPrice
+      : selectedMaterial?.planePrice;
 
   const productCost = count * selectedMaterial?.price || 0;
 
@@ -224,7 +223,9 @@ function ShopInitial() {
         <div className="shop-modal__summary-text">
           هزینه حمل و نقل: {formatPrice(transportCost)}
         </div>
-        <div className="shop-modal__summary-text">جمع کل: {totalCost}</div>
+        <div className="shop-modal__summary-text">
+          جمع کل: {formatPrice(totalCost)}
+        </div>
         <div className="shop-modal__seperator"></div>
         <div className="shop-modal__summary-text">
           دارایی فعلی: {formatPrice(balance)}{" "}

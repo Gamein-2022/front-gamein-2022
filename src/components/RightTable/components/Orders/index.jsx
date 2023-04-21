@@ -26,6 +26,8 @@ import {
   INTERMEDIATE_MATERIALS_LEVEL_TWO,
   RAW_MATERIALS,
 } from "../../../../constants/materials";
+import { formatPrice } from "../../../../utils/formatters";
+import { FormatPaintRounded } from "@mui/icons-material";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -397,20 +399,20 @@ function Orders() {
               </div>
               <div className="shop-modal__summary-text">
                 هزینه خرید کالاها:{" "}
-                {selectedOffer.order.quantity * selectedOffer.order.unitPrice}
+                {formatPrice(selectedOffer.order.quantity * selectedOffer.order.unitPrice)}
               </div>
               <div className="shop-modal__summary-text">
                 هزینه حمل و نقل:{" "}
-                {transport === "airplane"
+                {formatPrice(transport === "airplane"
                   ? selectedOffer.planePrice
-                  : selectedOffer.shipPrice}
+                  : selectedOffer.shipPrice)}
               </div>
               <div className="shop-modal__summary-text">
                 جمع کل:{" "}
-                {selectedOffer.order.quantity * selectedOffer.order.unitPrice +
+                {formatPrice(selectedOffer.order.quantity * selectedOffer.order.unitPrice +
                   (transport === "airplane"
                     ? selectedOffer.planePrice
-                    : selectedOffer.shipPrice)}
+                    : selectedOffer.shipPrice))}
               </div>
               <div className="shop-modal__seperator"></div>
               <div className="shop-modal__summary-text">

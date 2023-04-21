@@ -29,6 +29,7 @@ import {
   RAW_MATERIALS,
 } from "../../../../constants/materials";
 import { Tooltip } from "@mui/material";
+import { formatPrice } from "../../../../utils/formatters";
 
 function TradeIntermediate() {
   const [activeTab, setActiveTab] = useState("buy");
@@ -447,10 +448,10 @@ function TradeIntermediate() {
             </div>
             <div className="shop-modal__summary-text">
               جمع کل:{" "}
-              {selectedOrder.quantity * selectedOrder.unitPrice +
+              {formatPrice(selectedOrder.quantity * selectedOrder.unitPrice +
                 (transport === "airplane"
                   ? shippingInfo.planePrice
-                  : shippingInfo.shipPrice)}
+                  : shippingInfo.shipPrice))}
             </div>
             <div className="shop-modal__seperator"></div>
             <div className="shop-modal__summary-text">

@@ -9,6 +9,7 @@ import Modal from "../../../Modal";
 import BasicInput from "../../../BasicInput";
 import { removeFromStorage } from "../../../../apis/storage";
 import { toast } from "react-toastify";
+import { formatPrice } from "../../../../utils/formatters";
 
 function StorageItem({ item, storageSpace, updateStorageInfo }) {
   const [open, setOpen] = useState(false);
@@ -42,7 +43,7 @@ function StorageItem({ item, storageSpace, updateStorageInfo }) {
       <div className="storage-item__summary">
         <div className="storage-item__name">{item.product.name}</div>
         <div className="storage-item__count">
-          {item.inStorageAmount + item.manufacturingAmount}
+          {formatPrice(item.inStorageAmount + item.manufacturingAmount)}
           عدد
         </div>
         <div className="storage-item__percent">
