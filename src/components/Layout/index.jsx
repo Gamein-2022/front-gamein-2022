@@ -12,6 +12,7 @@ import gameinLogo from "../../assets/gamein_logo_color.svg";
 
 import "./style.scss";
 import { isGamePausedState } from "../../store/time";
+import GameinLoading from "../GameinLoading";
 
 const Layout = () => {
   const [loading, setLoading] = useState(true);
@@ -46,8 +47,8 @@ const Layout = () => {
     <>
       {isGamePaused && (
         <div className="game-paused">
-          <img src={gameinLogo} alt="gamein logo" />
-          <div>بازی متوقف شده است.</div>
+          <GameinLoading size={100} duration={"2s"} />
+          <div>بازی فعلا متوقف شده است!</div>
         </div>
       )}
       {!isGamePaused && (

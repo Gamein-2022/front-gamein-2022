@@ -1,10 +1,15 @@
 import React from "react";
-import gameinLogo from "../../assets/gamein_logo_color.svg";
 import "./style.scss";
 
-function GameinLoading({ size }) {
+function GameinLoading({ size, duration }) {
   return (
-    <div className="gamein-loading" style={{ width: size }}>
+    <div
+      className="gamein-loading"
+      style={{
+        width: size,
+        animation: `rotation ${duration || ".8s"} infinite linear forwards`,
+      }}
+    >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66.36 88.52">
         <g>
           <path

@@ -13,9 +13,12 @@ import ChooseRegion from "./pages/ChooseRegion";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 import BackPanel from "./pages/BackPanel";
+import { useRecoilState } from "recoil";
+import { isGamePausedState } from "./store/time";
 
 const AppRouter = () => {
   const ws = useRef();
+  const [isGamePaused, setIsGamePaused] = useRecoilState(isGamePausedState);
 
   useEffect(() => {
     ws.current = new WebSocket(
@@ -43,6 +46,19 @@ const AppRouter = () => {
       }
       if (data.type === "ERROR") {
         toast.error(data.message, { position: "bottom-center" });
+      }
+      if (data.type === "GAME_PAUSED") {
+        toast.warning(data.message || "بازی فعلا متوقف شده!", {
+          position: "bottom-center",
+        });
+        setIsGamePaused(true);
+      }
+
+      if (data.type === "GAME_RESUMED") {
+        toast.warning(data.message || "ادامه بازی شروع شد!", {
+          position: "bottom-center",
+        });
+        setIsGamePaused(false);
       }
     };
   }, []);

@@ -20,6 +20,7 @@ import logoutLogo from "../../assets/logout.svg";
 
 import "./style.scss";
 import { formatPrice } from "../../utils/formatters";
+import { toast } from "react-toastify";
 
 function LayoutHeader() {
   const navigate = useNavigate();
@@ -153,6 +154,7 @@ function LayoutHeader() {
         <div
           onClick={() => {
             localStorage.removeItem("token");
+            toast.success("شما با موفقیت از بازی خارج شدید.");
             navigate("/login");
           }}
           className={classnames(
