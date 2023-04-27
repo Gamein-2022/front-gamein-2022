@@ -3,10 +3,12 @@
   position: relative;
   top: 48px;
   height: calc(100% - 48px);
-  overflow-y: scroll;
-
+  
   &__materials-list {
     padding: 8px;
+    height: 100%;
+    padding-bottom: 128px;
+    overflow-y: scroll;
   }
 
   &__list {
@@ -44,6 +46,23 @@
   &__material-img {
     width: 64px;
     height: 64px;
+  }
+
+  &__buy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    height: 128px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #8d8d8d;
+    padding: 8px 16px;
+    background-color: #fff;
+    z-index: 2;
+    border-radius: 0 0 16px 16px;
   }
 
   &__preview {

@@ -125,29 +125,36 @@ function ShopInitial() {
               </div>
             </>
           )}
+          {selectedMaterial && (
+            <div className="shop-initial__preview">
+              <img
+                className="shop-initial__preview-img"
+                src={
+                  RAW_MATERIALS_TREES[selectedMaterial?.name]?.icon || sampleImg
+                }
+                alt="selected material"
+              />
+            </div>
+          )}
         </div>
-        {selectedMaterial && (
-          <div className="shop-initial__preview">
-            <img
-              className="shop-initial__preview-img"
-              src={
-                RAW_MATERIALS_TREES[selectedMaterial?.name]?.icon || sampleImg
-              }
-              alt="selected material"
-            />
-            <div className="shop-initial__preview-price">
-              قیمت هر واحد: {selectedMaterial?.price} جی‌کوین
-            </div>
-            <div className="shop-initial__preview-btns">
-              <button
-                onClick={() => setOpen(true)}
-                className="shop-initial__preview-btn-buy"
-              >
-                خرید
-              </button>
-            </div>
-          </div>
-        )}
+        <div className="shop-initial__buy">
+          {!selectedMaterial && <div>یک ماده را انتخاب کنید.</div>}
+          {selectedMaterial && (
+            <>
+              <div className="shop-initial__preview-price">
+                قیمت هر واحد: {selectedMaterial?.price} جی‌کوین
+              </div>
+              <div className="shop-initial__preview-btns">
+                <button
+                  onClick={() => setOpen(true)}
+                  className="shop-initial__preview-btn-buy"
+                >
+                  خرید
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </div>
       <Modal
         open={open}
