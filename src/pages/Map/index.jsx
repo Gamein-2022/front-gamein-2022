@@ -52,7 +52,7 @@ const GLOW = [
   "ground_1",
   "ground_2",
   "ground_3",
-  "ali_heidari",
+  "ali_heidari_building",
   "r_and_d_facility",
 ];
 
