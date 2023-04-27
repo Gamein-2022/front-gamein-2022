@@ -26,6 +26,7 @@ function InProgress({
     (currentTimeInSec - startTimeInSec) /
     (endTimeInSec - startTimeInSec)
   ).toFixed(2);
+  const remainedTime = ((endTimeInSec - currentTimeInSec) / 1000).toFixed(2);
 
   const handleCollect = () => {
     collectLine({ lineId })
@@ -44,7 +45,6 @@ function InProgress({
 
   useEffect(() => {
     intervalId.current = setInterval(() => {
-      console.log("i fire");
       setCurrentTimeInSec((old) => old + 1000);
     }, 1000);
   }, []);
@@ -91,10 +91,7 @@ function InProgress({
             <div>
               در حال {lineTypeString} {product?.name}
             </div>
-            <div>{Math.round(percent * 100)}٪</div>
-            <div>
-              {Math.round(percent * count)} از {count}
-            </div>
+            <div>{Math.floor(remainedTime)}ثانیه</div>
           </div>
         )}
       </div>
