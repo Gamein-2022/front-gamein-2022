@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import { useState } from "react";
 import Helmet from "react-helmet";
+import { useRecoilValue } from "recoil";
+import { infoState } from "../../store/team-info";
 import MyPerformance from "./components/MyPerformance";
 import OtherPerformance from "./components/OtherPerformance";
 import ProductionHistory from "./components/ProductionHistory";
@@ -15,6 +17,7 @@ const DASHBOARD_TABS = {
 };
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("production-history");
+  const teamInfo = useRecoilValue(infoState);
   return (
     <>
       <Helmet>
@@ -65,7 +68,24 @@ function Dashboard() {
               عملکرد بقیه تیما!
             </div>
           </div>
-          <div className="dashboard__right-bottom"></div>
+          <div className="dashboard__right-bottom">
+            <div className="dashboard__right-bottom-item">
+              <div className="dashboard__right-bottom-item-title">
+                اسم تیم شما:
+              </div>
+              <div className="dashboard__right-bottom-item-value">
+                {teamInfo?.teamName || ""}
+              </div>
+            </div>
+            <div className="dashboard__right-bottom-item">
+              <div className="dashboard__right-bottom-item-title">
+                منطقه شما:
+              </div>
+              <div className="dashboard__right-bottom-item-value">
+                منطقه {teamInfo?.region}
+              </div>
+            </div>
+          </div>
         </div>
         <div className="dashboard__left">
           {activeTab === DASHBOARD_TABS.productionHistory && (

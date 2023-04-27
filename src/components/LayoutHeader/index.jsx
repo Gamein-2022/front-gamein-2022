@@ -135,7 +135,8 @@ function LayoutHeader() {
         >
           <div className="layout-header__item-text">
             <img src={calendarLogo} alt="calendar" />
-            {year}/{month}/{day}
+            {year}/{String(month).padStart(2, "0")}/
+            {String(day).padStart(2, "0")}
           </div>
         </div>
 

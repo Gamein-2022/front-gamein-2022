@@ -6,9 +6,7 @@ import LayoutHeader from "../LayoutHeader";
 import { getInfo } from "../../apis/profile";
 
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { balanceState } from "../../store/team-info";
-
-import gameinLogo from "../../assets/gamein_logo_color.svg";
+import { balanceState, infoState } from "../../store/team-info";
 
 import "./style.scss";
 import { isGamePausedState } from "../../store/time";
@@ -19,6 +17,7 @@ const Layout = () => {
   const [hasError, setHasError] = useState(false);
 
   const setBalance = useSetRecoilState(balanceState);
+  const setInfo = useSetRecoilState(infoState);
   const isGamePaused = useRecoilValue(isGamePausedState);
 
   const navigate = useNavigate();
@@ -28,6 +27,7 @@ const Layout = () => {
       .then((res) => res.data)
       .then((data) => {
         setBalance(data.balance);
+        setInfo(data);
       })
       .catch((error) => {
         if (error?.response?.status === 401) {

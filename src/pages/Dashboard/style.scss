@@ -60,5 +60,15 @@
 
   &__right-bottom {
     flex-grow: 1;
+    background-color: rgba(65, 65, 65, 1);
+    color: #fff;
+  }
+
+  &__right-bottom-item {
+    padding: 14px 24px;
+  }
+
+  &__right-bottom-item-value {
+    font-weight: 600;
   }
 }
