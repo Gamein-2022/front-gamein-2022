@@ -38,7 +38,9 @@ function BackPanel() {
   const handleSendNotification = () => {
     sendNotification({ message: notifText, type: notifType })
       .then((res) => res.data)
-      .then((data) => {})
+      .then((data) => {
+        toast.success("عملیات با موفقیت انجام شد.");
+      })
       .catch((error) => {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
@@ -58,7 +60,9 @@ function BackPanel() {
   const handleStopGame = () => {
     pauseGame()
       .then((res) => res.data)
-      .then((data) => {})
+      .then((data) => {
+        toast.success("عملیات با موفقیت انجام شد.");
+      })
       .catch((error) => console.log(error));
   };
 
@@ -67,6 +71,7 @@ function BackPanel() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
+        toast.success("عملیات با موفقیت انجام شد.");
       })
       .catch((error) => console.log(error));
   };
@@ -76,6 +81,7 @@ function BackPanel() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
+        toast.success("عملیات با موفقیت انجام شد.");
       })
       .catch((error) => console.log(error));
   };
