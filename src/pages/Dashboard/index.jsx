@@ -4,7 +4,7 @@ import Helmet from "react-helmet";
 import { useRecoilValue } from "recoil";
 import { infoState } from "../../store/team-info";
 import MyPerformance from "./components/MyPerformance";
-import OtherPerformance from "./components/OtherPerformance";
+import RegionsMap from "./components/RegionsMap";
 import ProductionHistory from "./components/ProductionHistory";
 import TradeHistory from "./components/TradeHistory";
 import "./style.scss";
@@ -13,7 +13,7 @@ const DASHBOARD_TABS = {
   productionHistory: "production-history",
   tradeHistory: "trade-history",
   myPerformance: "my-performance",
-  otherPerformance: "other-performance",
+  regionsMap: "regions-map",
 };
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("production-history");
@@ -60,12 +60,12 @@ function Dashboard() {
             <div
               className={classNames("dashboard__right-top-item", {
                 "dashboard__right-top-item--active":
-                  activeTab === DASHBOARD_TABS.otherPerformance,
+                  activeTab === DASHBOARD_TABS.regionsMap,
               })}
-              onClick={() => setActiveTab(DASHBOARD_TABS.otherPerformance)}
+              onClick={() => setActiveTab(DASHBOARD_TABS.regionsMap)}
               style={{ zIndex: 1 }}
             >
-              عملکرد بقیه تیما!
+              نقشه منطقه‌ها
             </div>
           </div>
           <div className="dashboard__right-bottom">
@@ -93,9 +93,7 @@ function Dashboard() {
           )}
           {activeTab === DASHBOARD_TABS.tradeHistory && <TradeHistory />}
           {activeTab === DASHBOARD_TABS.myPerformance && <MyPerformance />}
-          {activeTab === DASHBOARD_TABS.otherPerformance && (
-            <OtherPerformance />
-          )}
+          {activeTab === DASHBOARD_TABS.regionsMap && <RegionsMap />}
         </div>
       </div>
     </>

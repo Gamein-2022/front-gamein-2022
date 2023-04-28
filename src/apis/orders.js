@@ -33,3 +33,7 @@ export function cancelFinalOrder({ id }) {
 export function getOrderShippingInfo({ id }) {
   return AxiosInstance.get(`/market/order/${id}/shipping-info`);
 }
+
+export function getFinalNextTime() {
+  return AxiosInstance.get(`/market/gamein/next-time`);
+}
