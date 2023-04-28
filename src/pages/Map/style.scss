@@ -21,74 +21,74 @@
   display: none;
 }
 
-.floating {
-  animation-name: floating;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-  margin-left: 30px;
-  margin-top: 5px;
-}
+// .floating {
+//   animation-name: floating;
+//   animation-duration: 3s;
+//   animation-iteration-count: infinite;
+//   animation-timing-function: ease-in-out;
+//   margin-left: 30px;
+//   margin-top: 5px;
+// }
 
-@keyframes floating {
-  0% {
-    transform: translate(0, 0px);
-  }
-  50% {
-    transform: translate(15px, -15px);
-  }
-  100% {
-    transform: translate(0, -0px);
-  }
-}
-@keyframes up_floating {
-  0% {
-    transform: translate(0, 0px);
-  }
-  50% {
-    transform: translate(2px,-3px );
-  }
-  100% {
-    transform: translate(0, 0px);
-  }
-}
-@keyframes blinking {
-  0% {
-    opacity: 0%;
-  }
-  50% {
-    opacity: 100%;
-  }
+// @keyframes floating {
+//   0% {
+//     transform: translate(0, 0px);
+//   }
+//   50% {
+//     transform: translate(15px, -15px);
+//   }
+//   100% {
+//     transform: translate(0, -0px);
+//   }
+// }
+// @keyframes up_floating {
+//   0% {
+//     transform: translate(0, 0px);
+//   }
+//   50% {
+//     transform: translate(2px,-3px );
+//   }
+//   100% {
+//     transform: translate(0, 0px);
+//   }
+// }
+// @keyframes blinking {
+//   0% {
+//     opacity: 0%;
+//   }
+//   50% {
+//     opacity: 100%;
+//   }
 
-  100% {
-    opacity: 0;
-  }
-}
-@keyframes half_blinking {
-  0% {
-    opacity: 30%;
-  }
-  50% {
-    opacity: 100%;
-  }
+//   100% {
+//     opacity: 0;
+//   }
+// }
+// @keyframes half_blinking {
+//   0% {
+//     opacity: 30%;
+//   }
+//   50% {
+//     opacity: 100%;
+//   }
 
-  100% {
-    opacity: 30%;
-  }
-}
+//   100% {
+//     opacity: 30%;
+//   }
+// }
 
-#sea_waves {
-  animation: floating 7s ease-in-out infinite;
-}
-#ali_heidari_wave {
-  animation: up_floating 3s ease-in-out infinite;
-}
-#r_and_d_facility_light {
-  animation: half_blinking 8s ease-in-out infinite;
-}
-.light_active {
-  animation: blinking 1s ease-in-out infinite;
-}
+// #sea_waves {
+//   animation: floating 7s ease-in-out infinite;
+// }
+// #ali_heidari_wave {
+//   animation: up_floating 3s ease-in-out infinite;
+// }
+// #r_and_d_facility_light {
+//   animation: half_blinking 8s ease-in-out infinite;
+// }
+// .light_active {
+//   animation: blinking 1s ease-in-out infinite;
+// }
 
 // #ground_1_prodcution_facility_door_2_light {
 //   animation: blinking 1s ease-in-out infinite;
@@ -110,31 +110,31 @@
 //   animation: blinking 1s ease-in-out infinite;
 // }
 
-@keyframes boat_out {
-  0% {
-    transform: translate(0, 0px);
-  }
-  100% {
-    transform: translate(-200px, calc(200px * 0.577));
-  }
+// @keyframes boat_out {
+//   0% {
+//     transform: translate(0, 0px);
+//   }
+//   100% {
+//     transform: translate(-200px, calc(200px * 0.577));
+//   }
 
-  100% {
-    transform: translate(-400px, calc(400px * 0.577));
-  }
-}
+//   100% {
+//     transform: translate(-400px, calc(400px * 0.577));
+//   }
+// }
 
-@keyframes boat_in {
-  0% {
-    transform: translate(0, 0px);
-  }
-  100% {
-    transform: translate(+200px, calc(-200px * 0.577));
-  }
+// @keyframes boat_in {
+//   0% {
+//     transform: translate(0, 0px);
+//   }
+//   100% {
+//     transform: translate(+200px, calc(-200px * 0.577));
+//   }
 
-  100% {
-    transform: translate(+400px, calc(-400px * 0.577));
-  }
-}
+//   100% {
+//     transform: translate(+400px, calc(-400px * 0.577));
+//   }
+// }
 
 // .boat_out {
 //   animation-name: boat_out;
@@ -153,9 +153,9 @@
 //   margin-top: 5px;
 // }
 
-#dock_boat {
-  animation: floating 5s ease-in-out infinite;
-}
+// #dock_boat {
+//   animation: floating 5s ease-in-out infinite;
+// }
 
 
 .extend-ground {
@@ -173,80 +173,80 @@
 
 
 
-#flame_one {
-  animation-name: flamefly;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  opacity: 0;
-  transform-origin: 50% 50% 0;
-  animation-delay: 1s;
-  animation-duration: 3s;
-}
-#flame3_two{
-  animation-name: flamefly;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  opacity: 0;
-  transform-origin: 50% 50% 0;
-  animation-duration: 5s;
-  animation-delay: 1s;
-}
+// #flame_one {
+//   animation-name: flamefly;
+//   animation-timing-function: linear;
+//   animation-iteration-count: infinite;
+//   opacity: 0;
+//   transform-origin: 50% 50% 0;
+//   animation-delay: 1s;
+//   animation-duration: 3s;
+// }
+// #flame3_two{
+//   animation-name: flamefly;
+//   animation-timing-function: linear;
+//   animation-iteration-count: infinite;
+//   opacity: 0;
+//   transform-origin: 50% 50% 0;
+//   animation-duration: 5s;
+//   animation-delay: 1s;
+// }
 
 
-#flame-main_one {
-  animation-name: flameWobble;
+// #flame-main_one {
+//   animation-name: flameWobble;
 
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-duration: 4s;
-  animation-delay: 1s;
-}
-#flame-main_two {
-  animation-name: flameWobble;
+//   animation-timing-function: linear;
+//   animation-iteration-count: infinite;
+//   animation-duration: 4s;
+//   animation-delay: 1s;
+// }
+// #flame-main_two {
+//   animation-name: flameWobble;
  
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-duration: 3s;
-  animation-delay: 2s;
-}
-#flame-main_three {
-  animation-name: flameWobble;
+//   animation-timing-function: linear;
+//   animation-iteration-count: infinite;
+//   animation-duration: 3s;
+//   animation-delay: 2s;
+// }
+// #flame-main_three {
+//   animation-name: flameWobble;
   
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-duration: 2.1s;
-  animation-delay: 3s;
-}
-#flame-main_four {
-  animation-name: flameWobble;
+//   animation-timing-function: linear;
+//   animation-iteration-count: infinite;
+//   animation-duration: 2.1s;
+//   animation-delay: 3s;
+// }
+// #flame-main_four {
+//   animation-name: flameWobble;
 
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-duration: 3.2s;
-  animation-delay: 4s;
-}
-#flame-main_five {
-    animation-name: flameWobble;
+//   animation-timing-function: linear;
+//   animation-iteration-count: infinite;
+//   animation-duration: 3.2s;
+//   animation-delay: 4s;
+// }
+// #flame-main_five {
+//     animation-name: flameWobble;
   
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-duration: 2.5s;
-  animation-delay: 5s;
-}
-@keyframes flameWobble {
-  50% {
-    transform: scale(1,1) translate(0%, 1%) rotate(-2deg);
-  }
-}
-@keyframes flamefly {
-  0%{
-    transform: translate(0) rotate(180deg);
-  }
-   50% {
-     opacity: 1;
-  }
-  100% {
-    transform: translate(-20px, -10px) rotate(180deg);
-    opacity: 0;
-  }
-}
+//   animation-timing-function: linear;
+//   animation-iteration-count: infinite;
+//   animation-duration: 2.5s;
+//   animation-delay: 5s;
+// }
+// @keyframes flameWobble {
+//   50% {
+//     transform: scale(1,1) translate(0%, 1%) rotate(-2deg);
+//   }
+// }
+// @keyframes flamefly {
+//   0%{
+//     transform: translate(0) rotate(180deg);
+//   }
+//    50% {
+//      opacity: 1;
+//   }
+//   100% {
+//     transform: translate(-20px, -10px) rotate(180deg);
+//     opacity: 0;
+//   }
+// }

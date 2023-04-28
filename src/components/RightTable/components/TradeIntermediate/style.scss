@@ -134,6 +134,13 @@
     background-color: #fff;
   }
 
+  &__create-order-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__table-row-img {
     width: 48px;
     height: 48px;

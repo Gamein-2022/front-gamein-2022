@@ -35,7 +35,7 @@ function MyPerformance() {
               رتبه شما در بین صد تیم برتر
             </div>
             <div className="my-performance__item-value">
-              {performanceInfo?.rank}
+              {performanceInfo?.rank + 1}
             </div>
           </div>
         )}
