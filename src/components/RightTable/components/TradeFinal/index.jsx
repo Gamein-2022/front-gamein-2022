@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import BasicInput from "../../../BasicInput";
 import Button from "../../../Button";
@@ -8,12 +8,15 @@ import "./style.scss";
 import { getFinalProducts, sellToGamein } from "../../../../apis/trade";
 import { toast } from "react-toastify";
 import { formatPrice } from "../../../../utils/formatters";
+import { getFinalNextTime } from "../../../../apis/orders";
 
 function TradeFinal() {
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0);
   const [finalProducts, setFinalProducts] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState();
+  const [remainedTime, setRemainedTime] = useState("0");
+  const timeStamp = useRef(0);
 
   useEffect(() => {
     getFinalProducts()
@@ -25,6 +28,34 @@ function TradeFinal() {
       .catch((error) => {
         console.log(error);
       });
+  }, []);
+
+  useEffect(() => {
+    let intervalId;
+    getFinalNextTime()
+      .then((res) => res.data)
+      .then((data) => {
+        timeStamp.current = data?.result?.nextTime;
+        setRemainedTime(new Date(timeStamp.current) - new Date());
+
+        intervalId = setInterval(() => {
+          const newTime = new Date(timeStamp.current) - new Date();
+          if (newTime <= 0) {
+            setRemainedTime(0);
+            getFinalNextTime()
+              .then((res) => res.data)
+              .then((data) => {
+                timeStamp.current = data?.result?.nextTime;
+                setRemainedTime(new Date(timeStamp.current) - new Date());
+              })
+              .catch((error) => console.log(error));
+          } else {
+            setRemainedTime(new Date(timeStamp.current) - new Date());
+          }
+        }, 1000);
+      })
+      .catch((error) => console.log(error));
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleSellFinalProduct = () => {
@@ -42,7 +73,11 @@ function TradeFinal() {
 
   return (
     <div className="trade-final">
-      {/* <img src={sampleImg} alt="trade final" /> */}
+      <div>زمان باقیمانده تا خرید بعدی گیمین: </div>
+      <div className="trade-final__remained-time">
+        {Math.round(remainedTime / 1000)}
+        ثانیه
+      </div>
       <p>
         اینجا می‌تونی محصولات نهایی رو به بازار جهانی عرضه کنی. برای این کار،
         محصول، تعداد و قیمت مورد نظرت رو مشخص کن.
@@ -62,13 +97,17 @@ function TradeFinal() {
       </select>
       <div>
         حداقل قیمت:{" "}
-        {formatPrice(finalProducts.find((item) => item.product.id == selectedProductId)
-          ?.product?.minPrice || 0)}
+        {formatPrice(
+          finalProducts.find((item) => item.product.id == selectedProductId)
+            ?.product?.minPrice || 0
+        )}
       </div>
       <div>
         حداکثر قیمت:{" "}
-        {formatPrice(finalProducts.find((item) => item.product.id == selectedProductId)
-          ?.product?.maxPrice || 0)}
+        {formatPrice(
+          finalProducts.find((item) => item.product.id == selectedProductId)
+            ?.product?.maxPrice || 0
+        )}
       </div>
       <BasicInput
         label={"قیمت پیشنهادی"}
