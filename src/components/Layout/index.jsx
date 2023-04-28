@@ -5,7 +5,7 @@ import { ScaleLoader } from "react-spinners";
 import LayoutHeader from "../LayoutHeader";
 import { getInfo } from "../../apis/profile";
 
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { balanceState, infoState } from "../../store/team-info";
 
 import "./style.scss";
@@ -18,7 +18,7 @@ const Layout = () => {
 
   const setBalance = useSetRecoilState(balanceState);
   const setInfo = useSetRecoilState(infoState);
-  const isGamePaused = useRecoilValue(isGamePausedState);
+  const [isGamePaused, setIsGamePaused] = useRecoilState(isGamePausedState);
 
   const navigate = useNavigate();
 
@@ -28,6 +28,9 @@ const Layout = () => {
       .then((data) => {
         setBalance(data.balance);
         setInfo(data);
+        if (data?.isGamePaused) {
+          setIsGamePaused(data?.isGamePaused);
+        }
       })
       .catch((error) => {
         if (error?.response?.status === 401) {
