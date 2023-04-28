@@ -3,7 +3,7 @@
   position: relative;
   top: 48px;
   height: calc(100% - 48px);
-  
+
   &__materials-list {
     padding: 8px;
     height: 100%;
@@ -23,23 +23,17 @@
     align-items: center;
     width: 96px;
     margin: 4px;
+    border-radius: 4px;
+    padding: 4px;
     cursor: pointer;
 
     &--active {
       color: #781e5d;
       font-weight: 600;
-
-      .shop-initial__material-img-wrapper {
-        box-shadow: 0 0 0 2px #781e5d !important;
-      }
     }
 
     &:hover {
       color: #781e5d;
-
-      .shop-initial__material-img-wrapper {
-        box-shadow: 0 0 0 2px #781e5d;
-      }
     }
   }
 

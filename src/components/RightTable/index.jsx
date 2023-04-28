@@ -38,22 +38,6 @@ function RightTable({ updateBuildings }) {
       <div className="right-table__header" onClick={openRightTable}>
         <div
           className={classNames("right-table__header-item", {
-            "right-table__header-item--active": tab === RIGHT_TABLE_TABS.trade,
-          })}
-          onClick={(e) => {
-            if (tab === RIGHT_TABLE_TABS.trade && open) {
-              setOpen(false);
-              e.stopPropagation();
-            } else {
-              setTab(RIGHT_TABLE_TABS.trade);
-            }
-          }}
-        >
-          <img className="right-table__logo" src={tradeLogo} alt="trade" />
-          تجارت
-        </div>
-        <div
-          className={classNames("right-table__header-item", {
             "right-table__header-item--active": tab === RIGHT_TABLE_TABS.shop,
           })}
           onClick={(e) => {
@@ -67,6 +51,22 @@ function RightTable({ updateBuildings }) {
         >
           <img className="right-table__logo" src={shopLogo} alt="shop" />
           فروشگاه گیمین
+        </div>
+        <div
+          className={classNames("right-table__header-item", {
+            "right-table__header-item--active": tab === RIGHT_TABLE_TABS.trade,
+          })}
+          onClick={(e) => {
+            if (tab === RIGHT_TABLE_TABS.trade && open) {
+              setOpen(false);
+              e.stopPropagation();
+            } else {
+              setTab(RIGHT_TABLE_TABS.trade);
+            }
+          }}
+        >
+          <img className="right-table__logo" src={tradeLogo} alt="trade" />
+          تجارت
         </div>
         <div
           className={classNames("right-table__header-item", {
