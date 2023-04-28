@@ -5,12 +5,13 @@ import { ScaleLoader } from "react-spinners";
 import LayoutHeader from "../LayoutHeader";
 import { getInfo } from "../../apis/profile";
 
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { balanceState, infoState } from "../../store/team-info";
 
 import "./style.scss";
 import { isGamePausedState } from "../../store/time";
 import GameinLoading from "../GameinLoading";
+import { getInitialRegion } from "../../apis/region";
 
 const Layout = () => {
   const [loading, setLoading] = useState(true);
@@ -18,16 +19,26 @@ const Layout = () => {
 
   const setBalance = useSetRecoilState(balanceState);
   const setInfo = useSetRecoilState(infoState);
-  const isGamePaused = useRecoilValue(isGamePausedState);
+  const [isGamePaused, setIsGamePaused] = useRecoilState(isGamePausedState);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    getInitialRegion()
+      .then((res) => res.data)
+      .then((data) => {
+        if (data.remainingTime > 0) {
+          navigate("/choose-region");
+        }
+      });
     getInfo()
       .then((res) => res.data)
       .then((data) => {
         setBalance(data.balance);
         setInfo(data);
+        if (data?.isGamePaused) {
+          setIsGamePaused(data?.isGamePaused);
+        }
       })
       .catch((error) => {
         if (error?.response?.status === 401) {
