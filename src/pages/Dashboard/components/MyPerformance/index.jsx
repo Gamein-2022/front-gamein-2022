@@ -45,7 +45,9 @@ function MyPerformance() {
               فاصله دارایی با تیم صدم
             </div>
             <div className="my-performance__item-value">
-              {formatPrice(performanceInfo?.lastTopWealth - performanceInfo?.teamWealth)}
+              {formatPrice(
+                performanceInfo?.lastTopWealth - performanceInfo?.teamWealth
+              )}
             </div>
           </div>
         )}
@@ -100,7 +102,7 @@ function MyPerformance() {
             </>
           )}
           {performanceInfo?.lower?.length <= 0 && (
-            <div style={{ marginTop: 32 }}>شما تیم اول هستید.</div>
+            <div style={{ marginTop: 32 }}>شما تیم آخر هستید.</div>
           )}
         </div>
       </div>
