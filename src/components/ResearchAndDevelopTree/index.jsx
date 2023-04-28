@@ -23,7 +23,7 @@ import { dataState } from "../../store/research-and-develop";
 
 import styles from "./styles.module.scss";
 
-const ResearchAndDevelopTree = ({ year, technologies }) => {
+const ResearchAndDevelopTree = ({ era, technologies }) => {
   const [data, setData] = useRecoilState(dataState);
   const [_, setSize] = useState([0, 0]);
 
@@ -73,10 +73,10 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
       <div className={styles["chart-container"]}>
         <div className={styles["column"]}>
           <div></div>
-          <div className={styles["year-item"]}>2008 - 2010</div>
-          <div className={styles["year-item"]}>2011 - 2015</div>
-          <div className={styles["year-item"]}>2016 - 2022</div>
-          <div className={styles["year-item"]}>2023 - 2030</div>
+          <div className={styles["year-item"]}>2006 - 2010</div>
+          <div className={styles["year-item"]}>2010 - 2015</div>
+          <div className={styles["year-item"]}>2015 - 2023</div>
+          <div className={styles["year-item"]}>2023 - 2026</div>
         </div>
         <div className={styles["column"]}>
           <div>Body</div>
@@ -97,7 +97,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({ value: "touch-screen", title: "Touch Screen" });
+              if (era >= 1)
+                setData({ value: "touch-screen", title: "Touch Screen" });
             }}
           >
             <div
@@ -105,7 +106,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 (data?.value === "touch-screen"
                   ? styles["selected"] + " "
                   : "") +
-                (year < 2008
+                (era < 1
                   ? ""
                   : technologies["touch-screen"] === "done"
                   ? styles["unlocked"]
@@ -113,8 +114,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setBody1}
             >
-              {year < 2008 ? <LockIcon /> : <TouchScreenIcon />}
-              {year >= 2008 && (
+              {era < 1 ? <LockIcon /> : <TouchScreenIcon />}
+              {era >= 1 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -126,7 +127,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                         : "#8d8d8d",
                   }}
                 >
-                  {year >= 2008 &&
+                  {era >= 1 &&
                     (technologies["touch-screen"] === "done" ? (
                       <OkIcon />
                     ) : technologies["touch-screen"] === "doing" ? (
@@ -158,7 +159,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({ value: "foldable-screen", title: "Foldable Screen" });
+              if (era >= 3)
+                setData({ value: "foldable-screen", title: "Foldable Screen" });
             }}
           >
             <div
@@ -166,7 +168,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 (data?.value === "foldable-screen"
                   ? styles["selected"] + " "
                   : "") +
-                (year < 2016
+                (era < 3
                   ? ""
                   : technologies["foldable-screen"] === "done"
                   ? styles["unlocked"]
@@ -174,8 +176,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setBody2}
             >
-              {year < 2016 ? <LockIcon /> : <FoldableScreenIcon />}
-              {year >= 2016 && (
+              {era < 3 ? <LockIcon /> : <FoldableScreenIcon />}
+              {era >= 3 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -216,7 +218,11 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({ value: "advanced-display", title: "Advanced Display" });
+              if (era >= 4)
+                setData({
+                  value: "advanced-display",
+                  title: "Advanced Display",
+                });
             }}
           >
             <div
@@ -224,7 +230,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 (data?.value === "advanced-display"
                   ? styles["selected"] + " "
                   : "") +
-                (year < 2023
+                (era < 4
                   ? ""
                   : technologies["advanced-display"] === "done"
                   ? styles["unlocked"]
@@ -232,8 +238,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setBody3}
             >
-              {year < 2023 ? <LockIcon /> : <AdvancedDisplayIcon />}
-              {year >= 2023 && (
+              {era < 4 ? <LockIcon /> : <AdvancedDisplayIcon />}
+              {era >= 4 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -276,13 +282,13 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({ value: "3G", title: "3G" });
+              if (era >= 1) setData({ value: "3G", title: "3G" });
             }}
           >
             <div
               className={
                 (data?.value === "3G" ? styles["selected"] + " " : "") +
-                (year < 2008
+                (era < 1
                   ? ""
                   : technologies["3G"] === "done"
                   ? styles["unlocked"]
@@ -290,8 +296,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setComms1}
             >
-              {year < 2008 ? <LockIcon /> : <ThreeGIcon />}
-              {year >= 2008 && (
+              {era < 1 ? <LockIcon /> : <ThreeGIcon />}
+              {era >= 1 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -332,13 +338,13 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({ value: "4G", title: "4G" });
+              if (era >= 2) setData({ value: "4G", title: "4G" });
             }}
           >
             <div
               className={
                 (data?.value === "4G" ? styles["selected"] + " " : "") +
-                (year < 2011
+                (era < 2
                   ? ""
                   : technologies["4G"] === "done"
                   ? styles["unlocked"]
@@ -346,8 +352,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setComms2}
             >
-              {year < 2011 ? <LockIcon /> : <FourGIcon />}
-              {year >= 2011 && (
+              {era < 2 ? <LockIcon /> : <FourGIcon />}
+              {era >= 2 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -388,13 +394,13 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({ value: "5G", title: "5G" });
+              if (era >= 3) setData({ value: "5G", title: "5G" });
             }}
           >
             <div
               className={
                 (data?.value === "5G" ? styles["selected"] + " " : "") +
-                (year < 2016
+                (era < 3
                   ? ""
                   : technologies["5G"] === "done"
                   ? styles["unlocked"]
@@ -402,8 +408,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setComms3}
             >
-              {year < 2016 ? <LockIcon /> : <FiveGIcon />}
-              {year >= 2016 && (
+              {era < 3 ? <LockIcon /> : <FiveGIcon />}
+              {era >= 3 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -450,10 +456,11 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({
-                value: "basic-soc-memory",
-                title: "Basic SoC & Memory",
-              });
+              if (era >= 2)
+                setData({
+                  value: "basic-soc-memory",
+                  title: "Basic SoC & Memory",
+                });
             }}
           >
             <div
@@ -461,7 +468,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 (data?.value === "basic-soc-memory"
                   ? styles["selected"] + " "
                   : "") +
-                (year < 2011
+                (era < 2
                   ? ""
                   : technologies["basic-soc-memory"] === "done"
                   ? styles["unlocked"]
@@ -469,8 +476,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setMemory1}
             >
-              {year < 2011 ? <LockIcon /> : <BasicSoCIcon />}
-              {year >= 2011 && (
+              {era < 2 ? <LockIcon /> : <BasicSoCIcon />}
+              {era >= 2 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -513,10 +520,11 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({
-                value: "quantum-computation",
-                title: "Quantum Computing",
-              });
+              if (era >= 4)
+                setData({
+                  value: "quantum-computation",
+                  title: "Quantum Computing",
+                });
             }}
           >
             <div
@@ -524,7 +532,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 (data?.value === "quantum-computation"
                   ? styles["selected"] + " "
                   : "") +
-                (year < 2023
+                (era < 4
                   ? ""
                   : technologies["quantum-computation"] === "done"
                   ? styles["unlocked"]
@@ -532,8 +540,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setMemory2}
             >
-              {year < 2023 ? <LockIcon /> : <QuantumComputationIcon />}
-              {year >= 2023 && (
+              {era < 4 ? <LockIcon /> : <QuantumComputationIcon />}
+              {era >= 4 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -577,13 +585,13 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({ value: "camera", title: "Camera" });
+              if (era >= 1) setData({ value: "camera", title: "Camera" });
             }}
           >
             <div
               className={
                 (data?.value === "camera" ? styles["selected"] + " " : "") +
-                (year < 2008
+                (era < 1
                   ? ""
                   : technologies["camera"] === "done"
                   ? styles["unlocked"]
@@ -591,8 +599,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setMedia1}
             >
-              {year < 2008 ? <LockIcon /> : <CameraIcon />}
-              {year >= 2008 && (
+              {era < 1 ? <LockIcon /> : <CameraIcon />}
+              {era >= 1 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -635,7 +643,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({ value: "multi-camera", title: "Multi Camera" });
+              if (era >= 3)
+                setData({ value: "multi-camera", title: "Multi Camera" });
             }}
           >
             <div
@@ -643,7 +652,7 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
                 (data?.value === "multi-camera"
                   ? styles["selected"] + " "
                   : "") +
-                (year < 2016
+                (era < 3
                   ? ""
                   : technologies["multi-camera"] === "done"
                   ? styles["unlocked"]
@@ -651,8 +660,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setMedia2}
             >
-              {year < 2016 ? <LockIcon /> : <MultiCameraIcon />}
-              {year >= 2016 && (
+              {era < 3 ? <LockIcon /> : <MultiCameraIcon />}
+              {era >= 3 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -700,13 +709,14 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({ value: "assembly-1", title: "Era 2 Assembly" });
+              if (era >= 1)
+                setData({ value: "assembly-1", title: "Era 2 Assembly" });
             }}
           >
             <div
               className={
                 (data?.value === "assembly-1" ? styles["selected"] + " " : "") +
-                (year < 2008
+                (era < 1
                   ? ""
                   : technologies["assembly-1"] === "done"
                   ? styles["unlocked"]
@@ -714,8 +724,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setAssembly1}
             >
-              {year < 2008 ? <LockIcon /> : <Assembly1Icon />}
-              {year >= 2008 && (
+              {era < 1 ? <LockIcon /> : <Assembly1Icon />}
+              {era >= 1 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -756,13 +766,14 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({ value: "assembly-2", title: "Era 3 Assembly" });
+              if (era >= 2)
+                setData({ value: "assembly-2", title: "Era 3 Assembly" });
             }}
           >
             <div
               className={
                 (data?.value === "assembly-2" ? styles["selected"] + " " : "") +
-                (year < 2011
+                (era < 2
                   ? ""
                   : technologies["assembly-2"] === "done"
                   ? styles["unlocked"]
@@ -770,8 +781,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setAssembly2}
             >
-              {year < 2011 ? <LockIcon /> : <Assembly2Icon />}
-              {year >= 2011 && (
+              {era < 2 ? <LockIcon /> : <Assembly2Icon />}
+              {era >= 2 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -812,13 +823,14 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({ value: "assembly-3", title: "Era 4 Assembly" });
+              if (era >= 3)
+                setData({ value: "assembly-3", title: "Era 4 Assembly" });
             }}
           >
             <div
               className={
                 (data?.value === "assembly-3" ? styles["selected"] + " " : "") +
-                (year < 2016
+                (era < 3
                   ? ""
                   : technologies["assembly-3"] === "done"
                   ? styles["unlocked"]
@@ -826,8 +838,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setAssembly3}
             >
-              {year < 2016 ? <LockIcon /> : <Assembly3Icon />}
-              {year >= 2016 && (
+              {era < 3 ? <LockIcon /> : <Assembly3Icon />}
+              {era >= 3 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{
@@ -868,13 +880,14 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               },
             }}
             onClick={() => {
-              setData({ value: "assembly-4", title: "Era 5 Assembly" });
+              if (era >= 4)
+                setData({ value: "assembly-4", title: "Era 5 Assembly" });
             }}
           >
             <div
               className={
                 (data?.value === "assembly-4" ? styles["selected"] + " " : "") +
-                (year < 2023
+                (era < 4
                   ? ""
                   : technologies["assembly-4"] === "done"
                   ? styles["unlocked"]
@@ -882,8 +895,8 @@ const ResearchAndDevelopTree = ({ year, technologies }) => {
               }
               ref={setAssembly4}
             >
-              {year < 2023 ? <LockIcon /> : <Assembly4Icon />}
-              {year >= 2023 && (
+              {era < 4 ? <LockIcon /> : <Assembly4Icon />}
+              {era >= 4 && (
                 <div
                   className={styles["absolute-icon"]}
                   style={{

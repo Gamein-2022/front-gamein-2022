@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
 import Helmet from "react-helmet";
-import Layout from "../../components/Layout";
 import ResearchAndDevelopTree from "../../components/ResearchAndDevelopTree";
 import ResearchAndDevelopPanel from "../../components/ResearchAndDevelopPanel";
 import { getResearches } from "../../apis/research";
-import { useRecoilValue } from "recoil";
-import { yearState } from "../../store/time";
 import { toast } from "react-toastify";
 
 import "./style.scss";
+import { getTime } from "../../apis/time";
 
 const ResearchAndDevelopPage = () => {
   const [refresh, setRefresh] = useState(true);
   const [researches, setResearches] = useState({});
-  const year = useRecoilValue(yearState);
+  const [era, setEra] = useState(0);
 
   useEffect(() => {
     if (refresh) {
@@ -37,13 +35,21 @@ const ResearchAndDevelopPage = () => {
     }
   }, [refresh]);
 
+  useEffect(() => {
+    if (refresh) {
+      getTime().then((res) => {
+        setEra(res.data.era);
+      });
+    }
+  }, [refresh]);
+
   return (
     <div className="research-and-develop-main-container">
       <Helmet>
         <title>تحقیق و توسعه</title>
       </Helmet>
       <ResearchAndDevelopPanel refresh={() => setRefresh(true)} />
-      <ResearchAndDevelopTree year={year} technologies={researches} />
+      <ResearchAndDevelopTree era={era} technologies={researches} />
     </div>
   );
 };

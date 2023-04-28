@@ -102,7 +102,10 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
                       <div>
                         {remainingTime ? Math.floor(remainingTime / 60) : "00"}:
                         {remainingTime
-                          ? String(remainingTime % 60).padStart(2, "0")
+                          ? String(Math.floor(remainingTime % 60)).padStart(
+                              2,
+                              "0"
+                            )
                           : "00"}
                       </div>
                     </div>
@@ -168,7 +171,7 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
                     زمان مورد نیاز:{" "}
                     {info?.duration ? Math.floor(info?.duration / 60) : "00"}:
                     {info?.duration
-                      ? String(info?.duration % 60).padStart(2, "0")
+                      ? String(Math.floor(info?.duration % 60)).padStart(2, "0")
                       : "00"}
                   </div>
                   <div className={styles["invest-cost"]}>
