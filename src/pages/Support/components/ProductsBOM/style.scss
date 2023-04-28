@@ -1,0 +1,17 @@
+.products-bom {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 100%;
+  padding: 32px;
+
+  img {
+    width: calc(100% - 64px);
+    margin: auto;
+    cursor: pointer;
+  }
+
+  h3 {
+    padding: 16px;
+  }
+}

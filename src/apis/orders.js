@@ -22,6 +22,14 @@ export function archiveOrder({ id }) {
   return AxiosInstance.put(`/market/order/${id}/archive`);
 }
 
+export function archiveFinalOrder({ id }) {
+  return AxiosInstance.put(`/market/gamein/${id}/archive`);
+}
+
+export function cancelFinalOrder({ id }) {
+  return AxiosInstance.delete(`/market/gamein/${id}`);
+}
+
 export function getOrderShippingInfo({ id }) {
   return AxiosInstance.get(`/market/order/${id}/shipping-info`);
 }
