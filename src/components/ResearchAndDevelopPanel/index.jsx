@@ -33,10 +33,11 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
             done:
               res.data.result?.endTime &&
               new Date() > new Date(res.data.result?.endTime),
+            duration: res.data.result.duration / 1000,
           });
         })
         .catch((err) => {
-          setInfo(null);
+          setInfo({});
           toast.error(
             err?.response?.data?.message || "خطایی در دریافت اطلاعات روی داد!"
           );
@@ -45,94 +46,150 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
     }
   }, [data?.value, refreshSelf]);
 
-  const [currentPercentage, setCurrentPercentage] = useState(
-    info?.endTime && info?.beginTime
-      ? Math.floor(
-          (100 * (new Date().getTime() - new Date(info.beginTime).getTime())) /
-            (new Date(info.endTime).getTime() -
-              new Date(info.beginTime).getTime())
-        )
-      : 0
+  const [remainingTime, setRemainingTime] = useState(
+    (new Date(info?.endTime) - new Date()) / 1000
   );
 
   useEffect(() => {
     let id;
-    if (currentPercentage >= 100) {
-      setCurrentPercentage(0);
+    if (remainingTime < 0) {
+      setRemainingTime(0);
       setRefreshSelf(true);
       refresh();
       return;
     }
     if (info?.endTime && info?.beginTime && info?.done === false) {
       id = setTimeout(() => {
-        setCurrentPercentage(
-          Math.floor(
-            (100 *
-              (new Date().getTime() - new Date(info.beginTime).getTime())) /
-              (new Date(info.endTime).getTime() -
-                new Date(info.beginTime).getTime())
-          )
+        setRemainingTime(
+          Math.floor((new Date(info?.endTime) - new Date()) / 1000)
         );
-      }, (new Date(info.endTime).getTime() - new Date(info.beginTime).getTime()) / 100);
+      }, 1000);
     }
 
     return () => clearTimeout(id);
-  }, [info?.endTime, info?.beginTime, currentPercentage]);
+  }, [info?.endTime, info?.beginTime, remainingTime, refreshSelf]);
 
   return (
     <div className={styles["container"]}>
       {data && (
         <>
-          <img
-            className={styles["subject-image"]}
-            src="/touch-screen.png"
-            alt=""
-          />
+          <div>
+            <img
+              className={styles["subject-image"]}
+              src="/touch-screen.png"
+              alt=""
+            />
 
-          <div className={styles["title"]}>{data?.title}</div>
-          <div className={styles["desc"]}>{jsonData[data.value]?.desc}</div>
+            <div className={styles["title"]}>{data?.title}</div>
+            <div className={styles["desc"]}>{jsonData[data.value]?.desc}</div>
+          </div>
 
-          {info?.endTime && info?.beginTime ? (
-            info?.done ? (
-              <div className={styles["done"]} dir="rtl">
-                <div className={styles["icon-container"]}>
-                  <OkIcon />
+          <div>
+            <div className={styles["divider"]}></div>
+            {info?.endTime && info?.beginTime ? (
+              info?.done ? (
+                <div className={styles["done"]} dir="rtl">
+                  <div className={styles["icon-container"]}>
+                    <OkIcon />
+                  </div>
+                  <div>کارخانه‌ی شما به این فناوری مجهز شده است.</div>
                 </div>
-                <div>کارخانه‌ی شما به این فناوری مجهز شده است.</div>
-              </div>
+              ) : (
+                <>
+                  <div className={styles["info"]} dir="rtl">
+                    <div className={styles["percentage"]}>
+                      <div>در حال تحقیق و توسعه</div>
+                      <div>
+                        {remainingTime ? Math.floor(remainingTime / 60) : "00"}:
+                        {remainingTime
+                          ? String(remainingTime % 60).padStart(2, "0")
+                          : "00"}
+                      </div>
+                    </div>
+                    <div className={styles["bar"]}>
+                      <div
+                        className={styles["progress"]}
+                        style={{
+                          width: `${Math.floor(
+                            (1 -
+                              remainingTime /
+                                ((new Date(info?.endTime) -
+                                  new Date(info?.beginTime)) /
+                                  1000)) *
+                              100
+                          )}%`,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                  <button
+                    className={styles["r-and-d-button"]}
+                    disabled={
+                      (1 -
+                        remainingTime /
+                          ((new Date(info?.endTime) -
+                            new Date(info?.beginTime)) /
+                            1000)) *
+                        100 >=
+                      50
+                    }
+                    onClick={() => {
+                      putOffResearch(data?.value)
+                        .then((res) => {
+                          setInfo({
+                            price: res.data.result.price,
+                            balance: res.data.result.balance,
+                            endTime: res.data.result.endTime,
+                            beginTime: res.data.result.beginTime,
+                            done:
+                              res.data.result?.endTime &&
+                              new Date() > new Date(res.data.result?.endTime),
+                            duration: res.data.result?.duration / 1000,
+                          });
+                          setRemainingTime(0);
+                          refresh();
+                        })
+                        .catch((err) => {
+                          toast.error(
+                            err?.response?.data?.message ||
+                              "خطایی در درخواست شما روی داد!"
+                          );
+                        });
+                    }}
+                  >
+                    انصراف
+                  </button>
+                </>
+              )
             ) : (
               <>
                 <div className={styles["info"]} dir="rtl">
-                  <div className={styles["percentage"]}>
-                    <div>در حال تحقیق و توسعه</div>
-                    <div>{currentPercentage}٪</div>
+                  <div className={styles["invest-cost"]}>
+                    زمان مورد نیاز:{" "}
+                    {info?.duration ? Math.floor(info?.duration / 60) : "00"}:
+                    {info?.duration
+                      ? String(info?.duration % 60).padStart(2, "0")
+                      : "00"}
                   </div>
-                  <div className={styles["bar"]}>
-                    <div
-                      className={styles["progress"]}
-                      style={{ width: `${currentPercentage}%` }}
-                    ></div>
+                  <div className={styles["invest-cost"]}>
+                    هزینه سرمایه‌گذاری: {formatPrice(info?.price)}
+                  </div>
+                  <div>موجودی فعلی: {formatPrice(info?.balance)}</div>
+                  <div>
+                    موجودی بعد از سرمایه‌گذاری:{" "}
+                    {formatPrice(info?.balance - info?.price || 0)}
                   </div>
                 </div>
                 <button
                   className={styles["r-and-d-button"]}
-                  disabled={currentPercentage >= 50}
                   onClick={() => {
-                    putOffResearch(data?.value)
-                      .then((res) => {
-                        setInfo({
-                          price: res.data.result.subject.price,
-                          balance: res.data.result.balance,
-                          endTime: res.data.result.endTime,
-                          beginTime: res.data.result.beginTime,
-                          done:
-                            res.data.result?.endTime &&
-                            new Date() > new Date(res.data.result?.endTime),
-                        });
-                        setCurrentPercentage(0);
+                    startResearch(data.value)
+                      .then(() => {
                         refresh();
+                        setRefreshSelf(true);
                       })
                       .catch((err) => {
+                        console.log(err);
                         toast.error(
                           err?.response?.data?.message ||
                             "خطایی در درخواست شما روی داد!"
@@ -140,43 +197,11 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
                       });
                   }}
                 >
-                  انصراف
+                  سرمایه‌گذاری
                 </button>
               </>
-            )
-          ) : (
-            <>
-              <div className={styles["info"]} dir="rtl">
-                <div className={styles["invest-cost"]}>
-                  هزینه سرمایه‌گذاری: {formatPrice(info?.price)}
-                </div>
-                <div>موجودی فعلی: {formatPrice(info?.balance)}</div>
-                <div>
-                  موجودی بعد از سرمایه‌گذاری:{" "}
-                  {formatPrice(info?.balance - info?.price || 0)}
-                </div>
-              </div>
-              <button
-                className={styles["r-and-d-button"]}
-                onClick={() => {
-                  startResearch(data.value)
-                    .then(() => {
-                      refresh();
-                      setRefreshSelf(true);
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                      toast.error(
-                        err?.response?.data?.message ||
-                          "خطایی در درخواست شما روی داد!"
-                      );
-                    });
-                }}
-              >
-                سرمایه‌گذاری
-              </button>
-            </>
-          )}
+            )}
+          </div>
         </>
       )}
       {!data && (
