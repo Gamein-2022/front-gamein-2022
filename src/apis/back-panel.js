@@ -28,3 +28,7 @@ export function pauseGame() {
 export function resumeGame() {
   return AxiosInstance.post("/dashboard/panel/resume");
 }
+
+export function getBackPanelLeaderBoard() {
+  return AxiosInstance.get("/dashboard/panel/top-100");
+}

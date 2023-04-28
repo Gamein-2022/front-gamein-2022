@@ -45,7 +45,7 @@ function MyPerformance() {
               فاصله دارایی با تیم صدم
             </div>
             <div className="my-performance__item-value">
-              {formatPrice(870000)}
+              {formatPrice(performanceInfo?.lastTopWealth - performanceInfo?.teamWealth)}
             </div>
           </div>
         )}
@@ -53,57 +53,55 @@ function MyPerformance() {
       <div className="my-performance__tables">
         <div className="my-performance__table">
           <div className="my-performance__table-title">
-            سه تیم بالاتر از شما
+            تیم‌های بالاتر از شما
           </div>
-          <div className="my-performance__table-row">
-            <div className="my-performance__table-right">اسم تیم</div>
-            <div className="my-performance__table-left">دارایی</div>
-          </div>
-          <div className="my-performance__table-row">
-            <div className="my-performance__table-right">تیم فلانی</div>
-            <div className="my-performance__table-left">
-              {formatPrice(12345678)}
-            </div>
-          </div>
-          <div className="my-performance__table-row">
-            <div className="my-performance__table-right">تیم فلانی</div>
-            <div className="my-performance__table-left">
-              {formatPrice(12345678)}
-            </div>
-          </div>
-          <div className="my-performance__table-row">
-            <div className="my-performance__table-right">تیم فلانی</div>
-            <div className="my-performance__table-left">
-              {formatPrice(12345678)}
-            </div>
-          </div>
+          {performanceInfo?.upper?.length > 0 && (
+            <>
+              <div className="my-performance__table-row">
+                <div className="my-performance__table-right">اسم تیم</div>
+                <div className="my-performance__table-left">دارایی</div>
+              </div>
+              {performanceInfo?.upper?.map((item) => (
+                <div className="my-performance__table-row">
+                  <div className="my-performance__table-right">
+                    {item?.teamName}
+                  </div>
+                  <div className="my-performance__table-left">
+                    {formatPrice(item?.wealth)}
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
+          {performanceInfo?.upper?.length <= 0 && (
+            <div style={{ marginTop: 32 }}>شما تیم اول هستید.</div>
+          )}
         </div>
         <div className="my-performance__table">
           <div className="my-performance__table-title">
-            سه تیم پایین‌تر از شما
+            تیم‌های پایین‌تر از شما
           </div>
-          <div className="my-performance__table-row">
-            <div className="my-performance__table-right">اسم تیم</div>
-            <div className="my-performance__table-left">دارایی</div>
-          </div>
-          <div className="my-performance__table-row">
-            <div className="my-performance__table-right">تیم فلانی</div>
-            <div className="my-performance__table-left">
-              {formatPrice(12345678)}
-            </div>
-          </div>
-          <div className="my-performance__table-row">
-            <div className="my-performance__table-right">تیم فلانی</div>
-            <div className="my-performance__table-left">
-              {formatPrice(12345678)}
-            </div>
-          </div>
-          <div className="my-performance__table-row">
-            <div className="my-performance__table-right">تیم فلانی</div>
-            <div className="my-performance__table-left">
-              {formatPrice(12345678)}
-            </div>
-          </div>
+          {performanceInfo?.lower?.length > 0 && (
+            <>
+              <div className="my-performance__table-row">
+                <div className="my-performance__table-right">اسم تیم</div>
+                <div className="my-performance__table-left">دارایی</div>
+              </div>
+              {performanceInfo?.lower?.map((item) => (
+                <div className="my-performance__table-row">
+                  <div className="my-performance__table-right">
+                    {item?.teamName}
+                  </div>
+                  <div className="my-performance__table-left">
+                    {formatPrice(item?.wealth)}
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
+          {performanceInfo?.lower?.length <= 0 && (
+            <div style={{ marginTop: 32 }}>شما تیم اول هستید.</div>
+          )}
         </div>
       </div>
     </div>

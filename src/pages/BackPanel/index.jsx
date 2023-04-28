@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   getAdminInfo,
+  getBackPanelLeaderBoard,
   increaseUsersMoney,
   pauseGame,
   resumeGame,
@@ -11,6 +12,7 @@ import {
 } from "../../apis/back-panel";
 import BasicInput from "../../components/BasicInput";
 import Button from "../../components/Button";
+import { formatPrice } from "../../utils/formatters";
 import "./style.scss";
 
 function BackPanel() {
@@ -25,10 +27,18 @@ function BackPanel() {
   const [rAndDCostCoefficient, setRAndDCostCoefficient] = useState("");
   const [increaseMoney, setIncreaseMoney] = useState("");
 
+  const [leaderboard, setLeaderboard] = useState([]);
+
   useEffect(() => {
     getAdminInfo()
       .then((res) => res.data)
-      .then((data) => {})
+      .then((data) => {
+        getBackPanelLeaderBoard()
+          .then((res) => res.data)
+          .then((data) => {
+            setLeaderboard(data?.topTeams);
+          });
+      })
       .catch((error) => {
         navigate("/");
       })
@@ -146,6 +156,25 @@ function BackPanel() {
           <Button>تغییر پارامترهای r and d</Button>
         </div>
       )}
+      <div>
+        <h1 className="back-panel__table-title">جدول تیم‌های برتر</h1>
+        <div className="back-panel__table">
+          <div className="back-panel__table-row">
+            <div className="back-panel__table-column">رتبه</div>
+            <div className="back-panel__table-column">اسم تیم</div>
+            <div className="back-panel__table-column">دارایی</div>
+          </div>
+          {leaderboard.map((item, index) => (
+            <div className="back-panel__table-row">
+              <div className="back-panel__table-column">{index + 1}</div>
+              <div className="back-panel__table-column">{item?.teamName}</div>
+              <div className="back-panel__table-column">
+                {formatPrice(item?.wealth)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 }
