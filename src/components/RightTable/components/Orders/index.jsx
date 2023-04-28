@@ -239,7 +239,7 @@ function Orders() {
                   <div className="order-card__left">
                     <div className="order-card__count">{quantity} واحد</div>
                     <div className="order-card__unit-price">
-                      قیمت واحد: {unitPrice}
+                      قیمت واحد: {formatPrice(unitPrice)}
                     </div>
                     {isWaiting && (
                       <div className="order-card__btns">
@@ -318,25 +318,9 @@ function Orders() {
                   <div className="order-card__left">
                     <div className="order-card__count">{quantity} واحد</div>
                     <div className="order-card__unit-price">
-                      قیمت واحد: {unitPrice}
+                      قیمت واحد: {formatPrice(unitPrice)}
                     </div>
                     <div>مقدار فروخته‌شده: {soldQuantity}</div>
-                    {/* {isWaiting && (
-                      <div className="order-card__btns">
-                        <Button
-                          className="order-card__btn-error"
-                          onClick={() => handleDeleteOrder(id)}
-                        >
-                          حذف
-                        </Button>
-                        <Button
-                          className="order-card__btn-success"
-                          onClick={() => handleTrackOrder(id)}
-                        >
-                          پیگیری
-                        </Button>
-                      </div>
-                    )} */}
                     {soldQuantity > 0 && (
                       <Button
                         className="order-card__btn-success"
@@ -384,7 +368,7 @@ function Orders() {
                     از منطقه {offer.region}
                   </div>
                   <div className="order-offer__price">
-                    قیمت واحد: {offer.order.unitPrice}
+                    قیمت واحد: {formatPrice(offer.order.unitPrice)}
                   </div>
                 </div>
                 <div className="order-offer__body">

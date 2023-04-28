@@ -11,6 +11,7 @@ import {
   INTERMEDIATE_MATERIALS_LEVEL_TWO,
   RAW_MATERIALS,
 } from "../../../../constants/materials";
+import { formatPrice } from "../../../../utils/formatters";
 
 function OrderCard({
   quantity,
@@ -72,7 +73,7 @@ function OrderCard({
         </div>
         <div className="order-card__left">
           <div className="order-card__count">{quantity} واحد</div>
-          <div className="order-card__unit-price">قیمت واحد: {unitPrice}</div>
+          <div className="order-card__unit-price">قیمت واحد: {formatPrice(unitPrice)}</div>
           {color === "warning" && (
             <button
               className="order-card__action-btn"

@@ -473,13 +473,13 @@ function TradeIntermediate() {
             </div>
             <div className="shop-modal__summary-text">
               هزینه خرید کالاها:{" "}
-              {selectedOrder.quantity * selectedOrder.unitPrice}
+              {formatPrice(selectedOrder.quantity * selectedOrder.unitPrice)}
             </div>
             <div className="shop-modal__summary-text">
               هزینه حمل و نقل:{" "}
-              {transport === "airplane"
+              {formatPrice(transport === "airplane"
                 ? shippingInfo.planePrice
-                : shippingInfo.shipPrice}
+                : shippingInfo.shipPrice)}
             </div>
             <div className="shop-modal__summary-text">
               جمع کل:{" "}

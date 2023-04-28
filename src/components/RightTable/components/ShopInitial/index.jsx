@@ -142,7 +142,7 @@ function ShopInitial() {
           {selectedMaterial && (
             <>
               <div className="shop-initial__preview-price">
-                قیمت هر واحد: {selectedMaterial?.price} جی‌کوین
+                قیمت هر واحد: {formatPrice(selectedMaterial?.price)} جی‌کوین
               </div>
               <div className="shop-initial__preview-btns">
                 <button

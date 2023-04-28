@@ -7,6 +7,7 @@ import sampleImg from "../../../../assets/img/mapPreview.png";
 import "./style.scss";
 import { getFinalProducts, sellToGamein } from "../../../../apis/trade";
 import { toast } from "react-toastify";
+import { formatPrice } from "../../../../utils/formatters";
 
 function TradeFinal() {
   const [quantity, setQuantity] = useState(0);
@@ -61,13 +62,13 @@ function TradeFinal() {
       </select>
       <div>
         حداقل قیمت:{" "}
-        {finalProducts.find((item) => item.product.id == selectedProductId)
-          ?.product?.minPrice || 0}
+        {formatPrice(finalProducts.find((item) => item.product.id == selectedProductId)
+          ?.product?.minPrice || 0)}
       </div>
       <div>
         حداکثر قیمت:{" "}
-        {finalProducts.find((item) => item.product.id == selectedProductId)
-          ?.product?.maxPrice || 0}
+        {formatPrice(finalProducts.find((item) => item.product.id == selectedProductId)
+          ?.product?.maxPrice || 0)}
       </div>
       <BasicInput
         label={"قیمت پیشنهادی"}

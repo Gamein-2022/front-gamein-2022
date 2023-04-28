@@ -14,6 +14,7 @@ import rAndDEmpty from "../../assets/r-and-d-empty.svg";
 import styles from "./style.module.scss";
 
 import jsonData from "./data.json";
+import { formatPrice } from "../../utils/formatters";
 
 const ResearchAndDevelopPanel = ({ refresh }) => {
   const data = useRecoilValue(dataState);
@@ -147,12 +148,12 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
             <>
               <div className={styles["info"]} dir="rtl">
                 <div className={styles["invest-cost"]}>
-                  هزینه سرمایه‌گذاری: {info?.price}
+                  هزینه سرمایه‌گذاری: {formatPrice(info?.price)}
                 </div>
-                <div>موجودی فعلی: {info?.balance}</div>
+                <div>موجودی فعلی: {formatPrice(info?.balance)}</div>
                 <div>
                   موجودی بعد از سرمایه‌گذاری:{" "}
-                  {info?.balance - info?.price || undefined}
+                  {formatPrice(info?.balance - info?.price || 0)}
                 </div>
               </div>
               <button

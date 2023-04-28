@@ -12,6 +12,7 @@ import OrderCard from "../OrderCard";
 import "./style.scss";
 import { toast } from "react-toastify";
 import { INTERMEDIATE_MATERIALS_LEVEL_ONE, INTERMEDIATE_MATERIALS_LEVEL_TWO, RAW_MATERIALS } from "../../../../constants/materials";
+import { formatPrice } from "../../../../utils/formatters";
 
 function OffersSent() {
   const [sentOffers, setSentOffers] = useState([]);
@@ -110,7 +111,7 @@ function OffersSent() {
               <div className="order-card__left">
                 <div className="order-card__count">{order?.quantity} واحد</div>
                 <div className="order-card__unit-price">
-                  قیمت واحد: {order?.unitPrice}
+                  قیمت واحد: {formatPrice(order?.unitPrice)}
                 </div>
                 {isWaiting && (
                   <button
