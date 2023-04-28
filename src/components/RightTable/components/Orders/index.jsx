@@ -6,7 +6,9 @@ import sampleImg from "../../../../assets/icons/copper.png";
 import { toast } from "react-toastify";
 import {
   acceptOffer,
+  archiveFinalOrder,
   archiveOrder,
+  cancelFinalOrder,
   cancelOrder,
   getOrderOffers,
   getOrdersHistory,
@@ -82,8 +84,40 @@ function Orders() {
       });
   };
 
+  const handleArchiveFinalOrder = (id) => {
+    archiveFinalOrder({ id })
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        toast.success("سفارش با موفقیت بایگانی شد.");
+        updateOrders();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
   const handleDeleteOrder = (id) => {
     cancelOrder({ id })
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        toast.success("سفارش با موفقیت حذف شد.");
+        updateOrders();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
+  const handleDeleteFinalOrder = (id) => {
+    cancelFinalOrder({ id })
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
@@ -281,11 +315,11 @@ function Orders() {
             orderType,
             quantity,
             soldQuantity,
+            closed,
           }) => {
             if (cancelled) {
               return null;
             }
-            const isWaiting = !acceptDate;
             return (
               <div
                 className={classNames("order-card", {
@@ -321,12 +355,20 @@ function Orders() {
                       قیمت واحد: {formatPrice(unitPrice)}
                     </div>
                     <div>مقدار فروخته‌شده: {soldQuantity}</div>
-                    {soldQuantity > 0 && (
+                    {closed && (
                       <Button
                         className="order-card__btn-success"
-                        onClick={() => handleArchiveOrder(id)}
+                        onClick={() => handleArchiveFinalOrder(id)}
                       >
                         بایگانی
+                      </Button>
+                    )}
+                    {!closed && (
+                      <Button
+                        className="order-card__btn-error"
+                        onClick={() => handleDeleteFinalOrder(id)}
+                      >
+                        حذف
                       </Button>
                     )}
                   </div>
