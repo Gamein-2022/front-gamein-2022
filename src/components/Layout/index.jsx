@@ -11,6 +11,7 @@ import { balanceState, infoState } from "../../store/team-info";
 import "./style.scss";
 import { isGamePausedState } from "../../store/time";
 import GameinLoading from "../GameinLoading";
+import { getInitialRegion } from "../../apis/region";
 
 const Layout = () => {
   const [loading, setLoading] = useState(true);
@@ -23,6 +24,13 @@ const Layout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    getInitialRegion()
+      .then((res) => res.data)
+      .then((data) => {
+        if (data.remainingTime > 0) {
+          navigate("/choose-region");
+        }
+      });
     getInfo()
       .then((res) => res.data)
       .then((data) => {
