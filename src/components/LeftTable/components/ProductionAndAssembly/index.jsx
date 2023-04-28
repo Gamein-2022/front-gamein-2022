@@ -20,6 +20,7 @@ function ProductionAndAssembly() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
+
         setLines(data.result);
       })
       .catch((error) => {
@@ -41,9 +42,21 @@ function ProductionAndAssembly() {
 
   return (
     <div className="production-and-assembly">
-      {lines.map((line) => (
-        <Line {...line} updateLines={updateLines} />
-      ))}
+      {lines
+        .filter((item) => item.status === "IN_PROGRESS")
+        .map((line) => (
+          <Line {...line} updateLines={updateLines} />
+        ))}
+      {lines
+        .filter((item) => item.status === "OFF")
+        .map((line) => (
+          <Line {...line} updateLines={updateLines} />
+        ))}
+      {lines
+        .filter((item) => item.status === "NOT_INITIAL")
+        .map((line) => (
+          <Line {...line} updateLines={updateLines} />
+        ))}
       {lines?.length <= 0 && (
         <div className="production-and-assembly__empty">
           <img src={productionEmpty} alt="empty production" />
