@@ -56,6 +56,11 @@
     }
   }
 
+  &__table-buy-btn {
+    min-width: auto;
+    padding: 4px 8px;
+  }
+
   &__wrapper {
     display: flex;
     flex-direction: column;
