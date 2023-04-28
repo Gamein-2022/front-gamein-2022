@@ -266,7 +266,7 @@ function TradeIntermediate() {
                   <tr>
                     <td>کالا</td>
                     <td>تعداد</td>
-                    <td>قیمت</td>
+                    <td>قیمت واحد</td>
                     <td>منطقه</td>
                     <td></td>
                   </tr>
@@ -292,7 +292,7 @@ function TradeIntermediate() {
                         </Tooltip>
                       </td>
                       <td>{row.quantity}</td>
-                      <td>{row.unitPrice}</td>
+                      <td>{formatPrice(row.unitPrice)}</td>
                       <td>{row.region}</td>
                       <td>
                         {activeTab === "buy" && (
@@ -321,22 +321,28 @@ function TradeIntermediate() {
         </div>
         <div className="trade-filter__create-order">
           {activeTab === "buy" && (
-            <Button
-              onClick={() => setBuyOrderModalOpen(true)}
-              className="trade-filter__buy-btn"
-              disabled={!selectedMaterial}
-            >
-              ثبت سفارش خرید
-            </Button>
+            <div className="trade-filter__create-order-bottom">
+              {!selectedMaterial && <p>ابتدا یک کالا انتخاب کنید.</p>}
+              <Button
+                onClick={() => setBuyOrderModalOpen(true)}
+                className="trade-filter__buy-btn"
+                disabled={!selectedMaterial}
+              >
+                ثبت سفارش خرید
+              </Button>
+            </div>
           )}
           {activeTab === "sell" && (
-            <Button
-              onClick={() => setSellOrderModalOpen(true)}
-              className="trade-filter__sell-btn"
-              disabled={!selectedMaterial}
-            >
-              ثبت سفارش فروش
-            </Button>
+            <div className="trade-filter__create-order-bottom">
+              {!selectedMaterial && <p>ابتدا یک کالا انتخاب کنید.</p>}
+              <Button
+                onClick={() => setSellOrderModalOpen(true)}
+                className="trade-filter__sell-btn"
+                disabled={!selectedMaterial}
+              >
+                ثبت سفارش فروش
+              </Button>
+            </div>
           )}
         </div>
       </div>
@@ -477,9 +483,11 @@ function TradeIntermediate() {
             </div>
             <div className="shop-modal__summary-text">
               هزینه حمل و نقل:{" "}
-              {formatPrice(transport === "airplane"
-                ? shippingInfo.planePrice
-                : shippingInfo.shipPrice)}
+              {formatPrice(
+                transport === "airplane"
+                  ? shippingInfo.planePrice
+                  : shippingInfo.shipPrice
+              )}
             </div>
             <div className="shop-modal__summary-text">
               جمع کل:{" "}

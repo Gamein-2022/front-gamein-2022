@@ -101,6 +101,20 @@ function Map({ buildings, updateBuildings }) {
 
   useEffect(() => {
     // add functionality
+    document.getElementById("ground").addEventListener("click", (e) => {
+      let closeAllTabs = true;
+      GLOW.forEach((item) => {
+        if (e.target === document.getElementById(item)) {
+          closeAllTabs = false;
+        }
+      });
+      if (closeAllTabs) {
+        setRightTableOpen(false);
+        setLeftTableOpen(false);
+        setMiddleTableOpen(false);
+      }
+    });
+
     document
       .getElementById("ground_1_unfinished_building")
       ?.addEventListener("click", () => {
