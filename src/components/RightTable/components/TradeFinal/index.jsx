@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import BasicInput from "../../../BasicInput";
 import Button from "../../../Button";
 import coinImg from "../../../../assets/coin.svg";
 import sampleImg from "../../../../assets/img/mapPreview.png";
@@ -8,6 +7,7 @@ import "./style.scss";
 import { getFinalProducts, sellToGamein } from "../../../../apis/trade";
 import { toast } from "react-toastify";
 import { formatPrice } from "../../../../utils/formatters";
+import NumberInput from "../../../NumberInput";
 import { getFinalNextTime } from "../../../../apis/orders";
 
 function TradeFinal() {
@@ -109,21 +109,20 @@ function TradeFinal() {
             ?.product?.maxPrice || 0
         )}
       </div>
-      <BasicInput
+      <NumberInput
         label={"قیمت پیشنهادی"}
         placeholder="مثلا ۱۰۰۰"
-        type="number"
         min={0}
         value={price}
-        onChange={(e) => setPrice(e.target.value)}
+        onChange={(value) => setPrice(value)}
       />
-      <BasicInput
+      <NumberInput
         label={"تعداد"}
         placeholder="مثلا ۵۰۰"
-        type="number"
         min={0}
+        step={100}
         value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
+        onChange={(value) => setQuantity(value)}
       />
       <div>
         موجودی انبار:{" "}

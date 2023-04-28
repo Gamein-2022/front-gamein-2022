@@ -5,8 +5,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import Modal from "../../../Modal";
 import Button from "../../../Button";
 
-import BasicInput from "../../../BasicInput";
-
 import sampleImg from "../../../../assets/sample_bom.png";
 import cargoImg from "../../../../assets/cargo.png";
 import cargoDisableImg from "../../../../assets/cargo-disable.png";
@@ -39,6 +37,7 @@ import classNames from "classnames";
 import { RAW_MATERIALS } from "../../../../constants/materials";
 import { balanceState } from "../../../../store/team-info";
 import { buyFromGamein } from "../../../../apis/trade";
+import NumberInput from "../../../NumberInput";
 
 function Off({
   open,
@@ -192,14 +191,12 @@ function Off({
               <div className="setup-line-modal__column-title">
                 بررسی موجودی انبار
               </div>
-              <BasicInput
+              <NumberInput
                 label="تعداد:"
-                type="number"
-                min="0"
-                step="10"
+                step={100}
                 wrapperClassName="setup-line-modal__quantity"
                 value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
+                onChange={(value) => setQuantity(value)}
               />
               {quantity > 0 && product && (
                 <>
@@ -236,20 +233,20 @@ function Off({
                               <td className="setup-line-modal__storage-icon">
                                 {req.inStorage <
                                   req.numberPerOne * quantity && (
-                                  <Button
-                                    onClick={() => {
-                                      setBuyModalOpen(true);
-                                      setSelectedMaterial(req.product);
-                                      setCount(
-                                        req.numberPerOne * quantity -
+                                    <Button
+                                      onClick={() => {
+                                        setBuyModalOpen(true);
+                                        setSelectedMaterial(req.product);
+                                        setCount(
+                                          req.numberPerOne * quantity -
                                           req.inStorage
-                                      );
-                                    }}
-                                    className="setup-line-modal__table-buy-btn"
-                                  >
-                                    خرید
-                                  </Button>
-                                )}
+                                        );
+                                      }}
+                                      className="setup-line-modal__table-buy-btn"
+                                    >
+                                      خرید
+                                    </Button>
+                                  )}
                               </td>
                             )}
                           </tr>
@@ -355,13 +352,13 @@ function Off({
                   دارایی پس از {lineTypeString}:{" "}
                   {formatPrice(
                     product?.balance -
-                      (product?.basePrice +
-                        product?.product?.price * quantity) || 0
+                    (product?.basePrice +
+                      product?.product?.price * quantity) || 0
                   )}{" "}
                   {"جی‌کوین"}
                 </div>
                 <Button
-                  disabled={quantity == 0 || !product || !product.hasRAndDRequirement }
+                  disabled={quantity == 0 || !product || !product.hasRAndDRequirement}
                   onClick={handleSubmit}
                   className="setup-line-modal__confirm-btn"
                 >
@@ -392,12 +389,10 @@ function Off({
           مواد اولیه از نزدیکترین منطقه به شما خریداری می‌شن.
         </div>
         <div className="shop-modal__unit">چند واحد می‌خوای بخری؟</div>
-        <input
+        <NumberInput
           value={count}
-          onChange={(e) => setCount(e.target.value)}
-          type="number"
+          onChange={(value) => setCount(value)}
           step={100}
-          min={0}
           className="shop-modal__input"
           placeholder="مثلا ۵۰۰"
         />
