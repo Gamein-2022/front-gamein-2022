@@ -7,3 +7,7 @@ export function getProductionAssemblyLogs() {
 export function getBuySellLogs() {
   return AxiosInstance.get("/market/order/logs");
 }
+
+export function getLeaderboard() {
+  return AxiosInstance.get("/dashboard/team/rank");
+}

@@ -3,6 +3,7 @@ import Helmet from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getInitialRegion } from "../../apis/region";
+import { formatPrice } from "../../utils/formatters";
 import Region from "./components/Region";
 import RegionsMap from "./components/RegionsMap";
 import "./style.scss";
@@ -57,6 +58,7 @@ function ChooseRegion() {
   ]);
   const ws = useRef();
   const [prices, setPrices] = useState([]);
+  const [balance, setBalance] = useState(0);
   const [populations, setPopulations] = useState([]);
   const selectedRegion = regionsState.findIndex((item) => item === "selected");
   const [remainedTime, setRemainedTime] = useState("00:00");
@@ -67,11 +69,11 @@ function ChooseRegion() {
     getInitialRegion()
       .then((res) => res.data)
       .then((data) => {
-        console.log("data", data);
         const currentRegion = +data.teamRegionId;
         if (data?.remainingTime <= 0) {
           navigate("/");
         }
+        setBalance(data?.teamBalance || 0);
         setInitialRemainedTimeState(+data?.remainingTime || 30);
         if (currentRegion > 0) {
           setRegionsState(() => {
@@ -187,6 +189,12 @@ function ChooseRegion() {
           </p>
 
           <div className="choose-region__time">
+            <div className="choose-region__balance-title">
+              دارایی پس از خرید زمین
+            </div>
+            <div className="choose-region__balance-value">
+              {formatPrice(balance - (prices[selectedRegion] || 0))}
+            </div>
             <div className="choose-region__time-value">{remainedTime}</div>
             <div className="choose-region__time-title">
               تا پایان انتخاب منطقه
