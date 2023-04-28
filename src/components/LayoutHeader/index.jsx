@@ -21,6 +21,7 @@ import logoutLogo from "../../assets/logout.svg";
 import "./style.scss";
 import { formatPrice } from "../../utils/formatters";
 import { toast } from "react-toastify";
+import SyncedClock from "../SyncedClock/SyncedClock";
 
 function LayoutHeader() {
   const navigate = useNavigate();
@@ -30,45 +31,6 @@ function LayoutHeader() {
   const [day, setDay] = useRecoilState(dayState);
   const [isGamePaused, setIsGamePaused] = useRecoilState(isGamePausedState);
   const balance = useRecoilValue(balanceState);
-
-  useEffect(() => {
-    getTime()
-      .then((res) => res.data)
-      .then((data) => {
-        console.log("************************");
-        console.log(data);
-        setYear(data.year);
-        setMonth(data.month);
-        setDay(data.day);
-        setIsGamePaused(data.isGamePaused);
-      });
-  }, []);
-
-  useEffect(() => {
-    if (year && month && day) {
-      const id = setInterval(() => {
-        let newDay = day;
-        let newMonth = month;
-        let newYear = year;
-        newDay += 1;
-        if (newDay > 30) {
-          newDay = 1;
-          newMonth += 1;
-          if (newMonth > 12) {
-            newMonth = 1;
-            newYear += 1;
-          }
-        }
-        setYear(newYear);
-        setMonth(newMonth);
-        setDay(newDay);
-      }, 8000);
-
-      return () => {
-        clearInterval(id);
-      };
-    }
-  }, [year, month, day]);
 
   return (
     <header className="layout-header">
@@ -134,9 +96,7 @@ function LayoutHeader() {
           style={{ zIndex: 2 }}
         >
           <div className="layout-header__item-text">
-            <img src={calendarLogo} alt="calendar" />
-            {year}/{String(month).padStart(2, "0")}/
-            {String(day).padStart(2, "0")}
+            <SyncedClock/>
           </div>
         </div>
 
