@@ -232,7 +232,7 @@ function Off({
                             >
                               {req.inStorage}
                             </td>
-                            {modalType === "PRODUCTION" && (
+                            {req.product.level === 0 && (
                               <td className="setup-line-modal__storage-icon">
                                 {req.inStorage <
                                   req.numberPerOne * quantity && (
