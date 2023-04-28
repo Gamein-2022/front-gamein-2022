@@ -125,6 +125,7 @@ function BackPanel() {
             <option value="ERROR">error</option>
             <option value="GAME_PAUSED">game paused</option>
             <option value="GAME_RESUMED">game resumed</option>
+            <option value="REFRESH">refresh window</option>
           </select>
           <Button onClick={handleSendNotification}>ارسال نوتیفیکیشن</Button>
 

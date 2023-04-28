@@ -47,6 +47,9 @@ const AppRouter = () => {
       if (data.type === "ERROR") {
         toast.error(data.message, { position: "bottom-center" });
       }
+      if (data.type === "REFRESH") {
+        window?.location.reload();
+      }
       if (data.type === "GAME_PAUSED") {
         toast.warning(data.message || "بازی فعلا متوقف شده!", {
           position: "bottom-center",
