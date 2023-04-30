@@ -13,9 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: |
-             export PATH=$PATH:/opt/gradle/gradle-8.1.1/bin
+             export PATH=$PATH:/opt/sonar-scanner/bin/
              echo $PATH
-             gradle -v
              sonar-scanner \
               -Dsonar.projectKey=front-gamein-2022 \
               -Dsonar.sources=. \
