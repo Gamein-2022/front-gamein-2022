@@ -72,12 +72,12 @@ function Off({
       ? selectedMaterial?.shipPrice +
         (selectedMaterial?.shipPrice / 100) *
           Math.sqrt(
-            quantity * selectedMaterial?.unitVolume * selectedMaterial?.distance
+            count * selectedMaterial?.unitVolume * selectedMaterial?.distance || 0
           )
       : selectedMaterial?.planePrice +
         (selectedMaterial?.planePrice / 100) *
           Math.sqrt(
-            quantity * selectedMaterial?.unitVolume * selectedMaterial?.distance
+            count * selectedMaterial?.unitVolume * selectedMaterial?.distance || 0
           );
 
   const productCost = count * selectedMaterial?.price || 0;
