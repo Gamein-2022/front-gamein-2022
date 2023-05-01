@@ -1,35 +1,22 @@
-import React, { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import classnames from "classnames";
+import { useRecoilValue } from "recoil";
+import { toast } from "react-toastify";
 
-import {
-  yearState,
-  monthState,
-  dayState,
-  isGamePausedState,
-} from "../../store/time";
+
 import { balanceState } from "../../store/team-info";
-import { getTime } from "../../apis/time";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { formatPrice } from "../../utils/formatters";
+import SyncedClock from "../SyncedClock/SyncedClock";
 
 import gameinHeaderLogo from "../../assets/headerLogo.svg";
 import gcoinLogo from "../../assets/gcoin.svg";
-import calendarLogo from "../../assets/calendar.svg";
 import helpLogo from "../../assets/help.svg";
 import logoutLogo from "../../assets/logout.svg";
 
 import "./style.scss";
-import { formatPrice } from "../../utils/formatters";
-import { toast } from "react-toastify";
-import SyncedClock from "../SyncedClock/SyncedClock";
 
 function LayoutHeader() {
   const navigate = useNavigate();
-
-  const [year, setYear] = useRecoilState(yearState);
-  const [month, setMonth] = useRecoilState(monthState);
-  const [day, setDay] = useRecoilState(dayState);
-  const [isGamePaused, setIsGamePaused] = useRecoilState(isGamePausedState);
   const balance = useRecoilValue(balanceState);
 
   return (
