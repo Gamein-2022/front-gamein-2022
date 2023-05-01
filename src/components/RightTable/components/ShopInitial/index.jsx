@@ -180,7 +180,6 @@ function ShopInitial() {
         <NumberInput
           value={count}
           onChange={(value) => setCount(value)}
-          step={100}
           min={0}
           className="shop-modal__input"
           placeholder="مثلا ۵۰۰"

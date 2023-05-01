@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { useEffect, useState } from "react";
 
 import Button from "../Button";
 
@@ -11,8 +12,11 @@ function NumberInput({
   onChange,
   wrapperClassName,
   className: inputClassName,
+  setHasError = () => {},
   ...otherprops
 }) {
+  const [focused, setFocused] = useState(false);
+  const [hasErrorState, setHasErrorState] = useState("");
   const add = () => {
     onChange(value + step);
   };
@@ -25,6 +29,11 @@ function NumberInput({
     const next = +e.target.value;
     onChange(next);
   };
+
+  useEffect(() => {
+    setHasErrorState(value % step !== 0 && focused);
+    setHasError(value % step !== 0 && focused);
+  }, [value, step, focused]);
 
   return (
     <div className={classNames("number-input", wrapperClassName)}>
@@ -40,12 +49,13 @@ function NumberInput({
           className={classNames(
             "number-input__input",
             inputClassName,
-            value % step == 0 ? "" : "number-input__invalid"
+            value % step !== 0 && focused ? "number-input__invalid" : ""
           )}
           type="number"
           step={step}
-          value={value == 0 ? null : value}
+          value={value == "0" ? "" : value}
           onChange={handleChange}
+          onFocus={() => setFocused(true)}
           {...otherprops}
         />
         <Button
@@ -56,6 +66,9 @@ function NumberInput({
           {step} -
         </Button>
       </div>
+      {hasErrorState && (
+        <div className="number-input__error">{`عدد واردشده باید مضرب ${step} باشد.`}</div>
+      )}
     </div>
   );
 }

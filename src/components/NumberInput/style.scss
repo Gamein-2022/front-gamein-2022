@@ -25,6 +25,11 @@
     direction: ltr;
   }
 
+  &__error {
+    font-size: 12px;
+    color: red;
+  }
+
   &__invalid {
     border: 2px solid red;
     border-left: none;

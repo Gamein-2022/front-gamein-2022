@@ -28,7 +28,7 @@ import {
   RAW_MATERIALS,
 } from "../../../../constants/materials";
 import { Tooltip } from "@mui/material";
-import { formatPrice } from "../../../../utils/formatters";
+import { formatPrice, isEmpty } from "../../../../utils/formatters";
 import NumberInput from "../../../NumberInput";
 import { getProductIcon } from "../../../../utils/icons";
 
@@ -39,10 +39,17 @@ function TradeIntermediate() {
   const [buyOfferModalOpen, setBuyOfferModalOpen] = useState(false);
   const [intermediateMaterials, setIntermediateMaterials] = useState([]);
   const [selectedMaterial, setSelectedMaterial] = useState();
+
   const [buyCount, setBuyCount] = useState(0);
+  const [buyCountError, setBuyCountError] = useState(false);
   const [buyPrice, setBuyPrice] = useState(0);
+  const [buyPriceError, setBuyPriceError] = useState(false);
+
   const [sellCount, setSellCount] = useState(0);
+  const [sellCountError, setSellCountError] = useState(false);
   const [sellPrice, setSellPrice] = useState(0);
+  const [sellPriceError, setSellPriceError] = useState(false);
+
   const [buyOrders, setBuyOrders] = useState([]);
   const [sellOrders, setSellOrders] = useState([]);
   const [transport, setTransport] = useState("airplane");
@@ -367,6 +374,7 @@ function TradeIntermediate() {
           value={buyCount}
           step={100}
           onChange={(value) => setBuyCount(value)}
+          setHasError={setBuyCountError}
         />
         <NumberInput
           label={"هر واحد رو حداکثر با چه قیمتی می‌خوای بخری؟"}
@@ -374,6 +382,7 @@ function TradeIntermediate() {
           value={buyPrice}
           step={100}
           onChange={(value) => setBuyPrice(value)}
+          setHasError={setBuyPriceError}
         />
         <div>
           حداقل قیمت:{" "}
@@ -390,7 +399,19 @@ function TradeIntermediate() {
           )}
         </div>
         <div>هزینه خرید کالاها: {formatPrice(buyCount * buyPrice)}</div>
-        <Button onClick={handleSubmitBuyOrder}>تایید خرید</Button>
+        <Button
+          disabled={
+            buyCountError ||
+            buyPriceError ||
+            isEmpty(buyCount) ||
+            isEmpty(buyPrice) ||
+            buyCount == "0" ||
+            buyPrice == "0"
+          }
+          onClick={handleSubmitBuyOrder}
+        >
+          تایید خرید
+        </Button>
       </Modal>
       <Modal
         title={<img src={tradeModalTitle} alt="trade" />}
@@ -409,14 +430,18 @@ function TradeIntermediate() {
         <NumberInput
           label={"چند واحد می‌خوای بفروشی؟"}
           min={0}
+          step={100}
           value={sellCount}
           onChange={(value) => setSellCount(value)}
+          setHasError={setSellCountError}
         />
         <NumberInput
           label={"هر واحد رو حداقل با چه قیمتی می‌خوای بفروشی؟"}
           min={0}
+          step={100}
           value={sellPrice}
           onChange={(value) => setSellPrice(value)}
+          setHasError={setSellPriceError}
         />
         <div>
           حداقل قیمت:{" "}
@@ -433,7 +458,18 @@ function TradeIntermediate() {
           )}
         </div>
         <div>درآمد فروش کالاها: {formatPrice(sellCount * sellPrice || 0)}</div>
-        <Button onClick={handleSubmitSellOrder} type={"error"}>
+        <Button
+          disabled={
+            sellCountError ||
+            sellPriceError ||
+            isEmpty(sellCount) ||
+            isEmpty(sellPrice) ||
+            sellCount == "0" ||
+            sellPrice == "0"
+          }
+          onClick={handleSubmitSellOrder}
+          type={"error"}
+        >
           تایید فروش
         </Button>
       </Modal>
