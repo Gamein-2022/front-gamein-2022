@@ -1,8 +1,8 @@
 .number-input {
   display: flex;
   flex-direction: column;
-  // align-items: center;
   width: 100%;
+  max-width: 360px;
   margin: 8px 0;
 
   &__label {
@@ -11,38 +11,40 @@
 
   &__body {
     display: flex;
-    flex-direction: row;
+    justify-content: center;
   }
 
   &__input {
+    outline: none;
     flex-grow: 1;
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 !important;
     padding: 6px;
     border: 1px solid #8d8d8d;
+    border-left: none;
+    border-right: none;
     direction: ltr;
   }
 
   &__invalid {
     border: 2px solid red;
-  }
-
-  &__addsub {
-    display: flex;
-    flex-direction: column;
+    border-left: none;
+    border-right: none;
   }
 
   &__addsub-button {
-    border-radius: 0;
-    min-width: 40px;
-    padding: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: auto;
+    padding: 8px;
     margin: 0;
   }
 
   &__add-button {
-    border-radius: 8px 0 0 0;
+    border-radius: 0 8px 8px 0;
   }
 
   &__sub-button {
-    border-radius: 0 0 0 8px;
+    border-radius: 8px 0 0 8px;
   }
 }

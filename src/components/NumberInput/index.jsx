@@ -1,7 +1,8 @@
 import classNames from "classnames";
-import React from "react";
-import "./style.scss";
+
 import Button from "../Button";
+
+import "./style.scss";
 
 function NumberInput({
   label,
@@ -9,38 +10,51 @@ function NumberInput({
   step = 1,
   onChange,
   wrapperClassName,
+  className: inputClassName,
   ...otherprops
 }) {
   const add = () => {
-    onChange(value + step)
-  }
+    onChange(value + step);
+  };
 
   const sub = () => {
-    if (value > step)
-      onChange(value - step)
-  }
+    if (value > step) onChange(value - step);
+  };
 
   const handleChange = (e) => {
     const next = +e.target.value;
     onChange(next);
-  }
+  };
 
   return (
     <div className={classNames("number-input", wrapperClassName)}>
       {label && <div className="number-input__label">{label}</div>}
       <div className="number-input__body">
+        <Button
+          className="number-input__addsub-button number-input__add-button"
+          onClick={add}
+        >
+          {step} +
+        </Button>
         <input
-          className={classNames("number-input__input", value % step == 0 ? "" : "number-input__invalid")}
+          className={classNames(
+            "number-input__input",
+            inputClassName,
+            value % step == 0 ? "" : "number-input__invalid"
+          )}
           type="number"
           step={step}
           value={value == 0 ? null : value}
           onChange={handleChange}
           {...otherprops}
         />
-        <div className="number-input__addsub">
-          <Button className="number-input__addsub-button number-input__add-button" onClick={add}>{step} +</Button>
-          <Button type="error" className="number-input__addsub-button number-input__sub-button" onClick={sub}>{step} -</Button>
-        </div>
+        <Button
+          type="error"
+          className="number-input__addsub-button number-input__sub-button"
+          onClick={sub}
+        >
+          {step} -
+        </Button>
       </div>
     </div>
   );
