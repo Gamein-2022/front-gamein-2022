@@ -30,6 +30,7 @@ import {
 import { Tooltip } from "@mui/material";
 import { formatPrice } from "../../../../utils/formatters";
 import NumberInput from "../../../NumberInput";
+import { getProductIcon } from "../../../../utils/icons";
 
 function TradeIntermediate() {
   const [activeTab, setActiveTab] = useState("buy");
@@ -351,17 +352,27 @@ function TradeIntermediate() {
         open={buyOrderModalOpen}
         onClose={() => setBuyOrderModalOpen(false)}
       >
-        <div>ثبت سفارش خرید</div>
+        <div className="submit-order-modal__title">ثبت سفارش خرید</div>
+        <img
+          className="submit-order-modal__img"
+          src={getProductIcon(selectedMaterial)}
+          alt={selectedMaterial}
+        />
+        <div className="submit-order-modal__product-name">
+          {selectedMaterial}
+        </div>
         <NumberInput
           label={"چند واحد می‌خوای بخری؟"}
           min={0}
           value={buyCount}
+          step={100}
           onChange={(value) => setBuyCount(value)}
         />
         <NumberInput
           label={"هر واحد رو حداکثر با چه قیمتی می‌خوای بخری؟"}
           min={0}
           value={buyPrice}
+          step={100}
           onChange={(value) => setBuyPrice(value)}
         />
         <div>
@@ -386,7 +397,15 @@ function TradeIntermediate() {
         open={sellOrderModalOpen}
         onClose={() => setSellOrderModalOpen(false)}
       >
-        <div>ثبت سفارش فروش</div>
+        <div className="submit-order-modal__title">ثبت سفارش فروش</div>
+        <img
+          className="submit-order-modal__img"
+          src={getProductIcon(selectedMaterial)}
+          alt={selectedMaterial}
+        />
+        <div className="submit-order-modal__product-name">
+          {selectedMaterial}
+        </div>
         <NumberInput
           label={"چند واحد می‌خوای بفروشی؟"}
           min={0}

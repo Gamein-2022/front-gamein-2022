@@ -147,3 +147,20 @@
     margin-top: 8px;
   }
 }
+
+.submit-order-modal {
+  &__title {
+    font-weight: 500;
+    font-size: 18px;
+  }
+
+  &__img {
+    width: 64px;
+    height: 64px;
+    margin-top: 8px;
+  }
+
+  &__product-name {
+    font-weight: 500;
+  }
+}
