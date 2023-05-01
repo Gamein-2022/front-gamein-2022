@@ -6,10 +6,10 @@ import IndeterminateCheckBoxOutlinedIcon from "@mui/icons-material/Indeterminate
 import "./style.scss";
 import Button from "../../../Button";
 import Modal from "../../../Modal";
-import BasicInput from "../../../BasicInput";
 import { removeFromStorage } from "../../../../apis/storage";
 import { toast } from "react-toastify";
 import { formatPrice } from "../../../../utils/formatters";
+import NumberInput from "../../../NumberInput";
 
 function StorageItem({ item, storageSpace, updateStorageInfo }) {
   const [open, setOpen] = useState(false);
@@ -101,11 +101,10 @@ function StorageItem({ item, storageSpace, updateStorageInfo }) {
       )}
       <Modal open={deleteModalOpen} onClose={onClose}>
         <div>چه تعداد {item?.product?.name} از انبار حذف بشه؟</div>
-        <BasicInput
-          type="number"
+        <NumberInput
           min="0"
           value={deleteCount}
-          onChange={(e) => setDeleteCount(e.target.value)}
+          onChange={(value) => setDeleteCount(value)}
         />
         <div>ظرفیت آزاد شونده: {deleteCount * item?.product?.unitVolume}</div>
         <div className="storage-item__modal-btns">

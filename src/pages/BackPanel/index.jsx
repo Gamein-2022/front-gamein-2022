@@ -12,10 +12,10 @@ import {
   sendNotification,
   startOverGame,
 } from "../../apis/back-panel";
-import BasicInput from "../../components/BasicInput";
 import Button from "../../components/Button";
 import { formatPrice } from "../../utils/formatters";
 import "./style.scss";
+import BasicInput from "../../components/BasicInput";
 
 function BackPanel() {
   const navigate = useNavigate();

@@ -9,7 +9,6 @@ import {
   submitBuyOrder,
   submitSellOrder,
 } from "../../../../apis/trade";
-import BasicInput from "../../../BasicInput";
 import Button from "../../../Button";
 import Modal from "../../../Modal";
 import tradeModalTitle from "../../../../assets/modals/trade_modal_title.svg";
@@ -30,6 +29,7 @@ import {
 } from "../../../../constants/materials";
 import { Tooltip } from "@mui/material";
 import { formatPrice } from "../../../../utils/formatters";
+import NumberInput from "../../../NumberInput";
 
 function TradeIntermediate() {
   const [activeTab, setActiveTab] = useState("buy");
@@ -352,19 +352,17 @@ function TradeIntermediate() {
         onClose={() => setBuyOrderModalOpen(false)}
       >
         <div>ثبت سفارش خرید</div>
-        <BasicInput
+        <NumberInput
           label={"چند واحد می‌خوای بخری؟"}
-          type="number"
           min={0}
           value={buyCount}
-          onChange={(e) => setBuyCount(e.target.value)}
+          onChange={(value) => setBuyCount(value)}
         />
-        <BasicInput
+        <NumberInput
           label={"هر واحد رو حداکثر با چه قیمتی می‌خوای بخری؟"}
-          type="number"
           min={0}
           value={buyPrice}
-          onChange={(e) => setBuyPrice(e.target.value)}
+          onChange={(value) => setBuyPrice(value)}
         />
         <div>
           حداقل قیمت:{" "}
@@ -389,19 +387,17 @@ function TradeIntermediate() {
         onClose={() => setSellOrderModalOpen(false)}
       >
         <div>ثبت سفارش فروش</div>
-        <BasicInput
+        <NumberInput
           label={"چند واحد می‌خوای بفروشی؟"}
-          type="number"
           min={0}
           value={sellCount}
-          onChange={(e) => setSellCount(e.target.value)}
+          onChange={(value) => setSellCount(value)}
         />
-        <BasicInput
+        <NumberInput
           label={"هر واحد رو حداقل با چه قیمتی می‌خوای بفروشی؟"}
-          type="number"
           min={0}
           value={sellPrice}
-          onChange={(e) => setSellPrice(e.target.value)}
+          onChange={(value) => setSellPrice(value)}
         />
         <div>
           حداقل قیمت:{" "}

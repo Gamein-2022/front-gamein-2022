@@ -16,6 +16,7 @@ import { formatPrice } from "../../../../utils/formatters";
 import { useRecoilValue } from "recoil";
 import { balanceState } from "../../../../store/team-info";
 import useUpdateBalance from "../../../../hooks/useUpdateBalance";
+import NumberInput from "../../../NumberInput";
 
 function ShopInitial() {
   const [data, setData] = useState(null);
@@ -176,10 +177,9 @@ function ShopInitial() {
           مواد اولیه از نزدیکترین منطقه به شما خریداری می‌شن.
         </div>
         <div className="shop-modal__unit">چند واحد می‌خوای بخری؟</div>
-        <input
+        <NumberInput
           value={count}
-          onChange={(e) => setCount(e.target.value)}
-          type="number"
+          onChange={(value) => setCount(value)}
           step={100}
           min={0}
           className="shop-modal__input"
