@@ -69,8 +69,16 @@ function Off({
 
   const transportCost =
     transport === "ship"
-      ? selectedMaterial?.shipPrice
-      : selectedMaterial?.planePrice;
+      ? selectedMaterial?.shipPrice +
+        (selectedMaterial?.shipPrice / 100) *
+          Math.sqrt(
+            quantity * selectedMaterial?.unitVolume * selectedMaterial?.distance
+          )
+      : selectedMaterial?.planePrice +
+        (selectedMaterial?.planePrice / 100) *
+          Math.sqrt(
+            quantity * selectedMaterial?.unitVolume * selectedMaterial?.distance
+          );
 
   const productCost = count * selectedMaterial?.price || 0;
 

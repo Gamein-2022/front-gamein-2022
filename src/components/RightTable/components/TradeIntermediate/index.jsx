@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import {
   getIntermediateMaterials,
   getOrders,
-  getRawMaterials,
   sendOffer,
   submitBuyOrder,
   submitSellOrder,
@@ -21,12 +20,6 @@ import sampleImg from "../../../../assets/icons/copper.png";
 
 import "./style.scss";
 import { getOrderShippingInfo } from "../../../../apis/orders";
-import {
-  FINAL_MATERIALS,
-  INTERMEDIATE_MATERIALS_LEVEL_ONE,
-  INTERMEDIATE_MATERIALS_LEVEL_TWO,
-  RAW_MATERIALS,
-} from "../../../../constants/materials";
 import { Tooltip } from "@mui/material";
 import { formatPrice, isEmpty } from "../../../../utils/formatters";
 import NumberInput from "../../../NumberInput";
@@ -194,7 +187,7 @@ function TradeIntermediate() {
             .filter((item) => item.orderType === "SELL")
             .filter(
               (item) =>
-                !selectedMaterial || item.productName === selectedMaterial
+                !selectedMaterial || item?.product?.name === selectedMaterial
             )
         );
         setSellOrders(
@@ -202,7 +195,7 @@ function TradeIntermediate() {
             .filter((item) => item.orderType === "BUY")
             .filter(
               (item) =>
-                !selectedMaterial || item.productName === selectedMaterial
+                !selectedMaterial || item?.product?.name === selectedMaterial
             )
         );
       })
@@ -222,12 +215,12 @@ function TradeIntermediate() {
                 setBuyOrders(
                   data
                     .filter((item) => item.orderType === "SELL")
-                    .filter((item) => item.productName === e.target.value)
+                    .filter((item) => item?.product?.name === e.target.value)
                 );
                 setSellOrders(
                   data
                     .filter((item) => item.orderType === "BUY")
-                    .filter((item) => item.productName === e.target.value)
+                    .filter((item) => item?.product?.name === e.target.value)
                 );
               }}
               value={selectedMaterial}
@@ -284,18 +277,10 @@ function TradeIntermediate() {
                   {currentOrders.map((row) => (
                     <tr>
                       <td className="trade-filter__table-row-img-wrapper">
-                        <Tooltip title={row?.productName}>
+                        <Tooltip title={row?.product?.name}>
                           <img
                             className="trade-filter__table-row-img"
-                            src={
-                              RAW_MATERIALS[row?.productName]?.icon ||
-                              INTERMEDIATE_MATERIALS_LEVEL_ONE[row?.productName]
-                                ?.icon ||
-                              INTERMEDIATE_MATERIALS_LEVEL_TWO[row?.productName]
-                                ?.icon ||
-                              FINAL_MATERIALS[row?.productName]?.icon ||
-                              sampleImg
-                            }
+                            src={getProductIcon(row?.product?.name)}
                             alt=""
                           />
                         </Tooltip>
@@ -483,7 +468,7 @@ function TradeIntermediate() {
         {shippingInfo && selectedOrder && (
           <>
             <div>
-              خرید {selectedOrder.productName} از منطقه{" "}
+              خرید {selectedOrder?.product?.name} از منطقه{" "}
               {selectedOrder.region + 1}
             </div>
             <div>تعداد {selectedOrder.quantity} واحد</div>

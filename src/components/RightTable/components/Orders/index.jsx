@@ -219,6 +219,17 @@ function Orders() {
       });
   };
 
+  const transportCost =
+    transport === "ship"
+      ? selectedOffer?.shipPrice +
+        (selectedOffer?.shipPrice / 100) *
+          Math.sqrt(selectedOffer?.order?.quantity * selectedOffer?.unitVolume * selectedOffer?.distance)
+      : selectedOffer?.planePrice +
+        (selectedOffer?.planePrice / 100) *
+          Math.sqrt(
+            selectedOffer?.order?.quantity * selectedOffer?.unitVolume * selectedOffer?.distance
+          );
+
   return (
     <>
       <div className="offers-sent">
@@ -462,7 +473,7 @@ function Orders() {
                 </div>
                 <div className="order-offer-final__region-info">
                   خرید {selectedOffer.order.productName} از منطقه{" "}
-                  {selectedOffer.region + 1}
+                  {selectedOffer.region}
                 </div>
                 <div className="order-offer-final__count">
                   تعداد {selectedOffer.order.quantity} واحد
@@ -527,20 +538,13 @@ function Orders() {
                 )}
               </div>
               <div className="shop-modal__summary-text">
-                هزینه حمل و نقل:{" "}
-                {formatPrice(
-                  transport === "airplane"
-                    ? selectedOffer.planePrice
-                    : selectedOffer.shipPrice
-                )}
+                هزینه حمل و نقل: {formatPrice(transportCost)}
               </div>
               <div className="shop-modal__summary-text">
                 جمع کل:{" "}
                 {formatPrice(
                   selectedOffer.order.quantity * selectedOffer.order.unitPrice +
-                    (transport === "airplane"
-                      ? selectedOffer.planePrice
-                      : selectedOffer.shipPrice)
+                    transportCost
                 )}
               </div>
               <div className="shop-modal__seperator"></div>
@@ -553,9 +557,7 @@ function Orders() {
                   balance -
                     (selectedOffer.order.quantity *
                       selectedOffer.order.unitPrice +
-                      (transport === "airplane"
-                        ? selectedOffer.planePrice
-                        : selectedOffer.shipPrice))
+                      transportCost)
                 )}
               </div>
               <div className="order-offer-final__action-btns">

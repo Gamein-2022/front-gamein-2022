@@ -35,6 +35,7 @@
     color: #fff;
     justify-content: center;
     overflow: hidden;
+    flex-shrink: 0;
   }
 
   &__right-top-header,
@@ -62,6 +63,7 @@
     flex-grow: 1;
     background-color: rgba(65, 65, 65, 1);
     color: #fff;
+    overflow-y: auto;
   }
 
   &__right-bottom-item {
