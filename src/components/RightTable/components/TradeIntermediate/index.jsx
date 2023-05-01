@@ -506,7 +506,7 @@ function TradeIntermediate() {
                 <div className="shop-modal__transport-text">
                   هواپیما
                   <br />
-                  در {shippingInfo.planeDuration} روز
+                  در {shippingInfo.planeDuration * 8} ثانیه
                 </div>
               </div>
               <div
@@ -523,7 +523,7 @@ function TradeIntermediate() {
                 <div className="shop-modal__transport-text">
                   کشتی
                   <br />
-                  در {shippingInfo.shipDuration} روز
+                  در {shippingInfo.shipDuration * 8} ثانیه
                 </div>
               </div>
             </div>

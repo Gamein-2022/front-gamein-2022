@@ -416,11 +416,11 @@ function Orders() {
                 <div className="order-offer__body">
                   <div>
                     <div>
-                      ارسال با هواپیما در {offer.planeDuration} روز با هزینه{" "}
+                      ارسال با هواپیما در {offer.planeDuration * 8} ثانیه با هزینه{" "}
                       {offer.planePrice}
                     </div>
                     <div>
-                      ارسال با کشتی در {offer.shipDuration} روز با هزینه{" "}
+                      ارسال با کشتی در {offer.shipDuration * 8} ثانیه با هزینه{" "}
                       {offer.shipPrice}
                     </div>
                   </div>
@@ -484,7 +484,7 @@ function Orders() {
                     <div className="shop-modal__transport-text">
                       هواپیما
                       <br />
-                      در {selectedOffer.planeDuration} روز
+                      در {selectedOffer.planeDuration} ثانیه
                     </div>
                   </div>
                   <div
@@ -501,7 +501,7 @@ function Orders() {
                     <div className="shop-modal__transport-text">
                       کشتی
                       <br />
-                      در {selectedOffer.shipDuration} روز
+                      در {selectedOffer.shipDuration} ثانیه
                     </div>
                   </div>
                 </div>

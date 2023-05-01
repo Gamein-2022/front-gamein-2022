@@ -233,20 +233,20 @@ function Off({
                               <td className="setup-line-modal__storage-icon">
                                 {req.inStorage <
                                   req.numberPerOne * quantity && (
-                                    <Button
-                                      onClick={() => {
-                                        setBuyModalOpen(true);
-                                        setSelectedMaterial(req.product);
-                                        setCount(
-                                          req.numberPerOne * quantity -
+                                  <Button
+                                    onClick={() => {
+                                      setBuyModalOpen(true);
+                                      setSelectedMaterial(req.product);
+                                      setCount(
+                                        req.numberPerOne * quantity -
                                           req.inStorage
-                                        );
-                                      }}
-                                      className="setup-line-modal__table-buy-btn"
-                                    >
-                                      خرید
-                                    </Button>
-                                  )}
+                                      );
+                                    }}
+                                    className="setup-line-modal__table-buy-btn"
+                                  >
+                                    خرید
+                                  </Button>
+                                )}
                               </td>
                             )}
                           </tr>
@@ -277,8 +277,8 @@ function Off({
                 <div className="setup-line-modal__confirm-value">
                   {(quantity / (product?.product?.productionRate || 1)).toFixed(
                     2
-                  ) || 0}{" "}
-                  روز
+                  ) * 8 || 0}{" "}
+                  ثانیه
                 </div>
                 <div className="setup-line-modal__confirm-title">
                   هزینه {lineTypeString}:
@@ -352,13 +352,15 @@ function Off({
                   دارایی پس از {lineTypeString}:{" "}
                   {formatPrice(
                     product?.balance -
-                    (product?.basePrice +
-                      product?.product?.price * quantity) || 0
+                      (product?.basePrice +
+                        product?.product?.price * quantity) || 0
                   )}{" "}
                   {"جی‌کوین"}
                 </div>
                 <Button
-                  disabled={quantity == 0 || !product || !product.hasRAndDRequirement}
+                  disabled={
+                    quantity == 0 || !product || !product.hasRAndDRequirement
+                  }
                   onClick={handleSubmit}
                   className="setup-line-modal__confirm-btn"
                 >
@@ -414,7 +416,7 @@ function Off({
             <div className="shop-modal__transport-text">
               هواپیما
               <br />
-              در {selectedMaterial?.planeDuration} روز
+              در {selectedMaterial?.planeDuration * 8} ثانیه
             </div>
           </div>
           <div
@@ -431,7 +433,7 @@ function Off({
             <div className="shop-modal__transport-text">
               کشتی
               <br />
-              در {selectedMaterial?.shipDuration} روز
+              در {selectedMaterial?.shipDuration * 8} ثانیه
             </div>
           </div>
         </div>

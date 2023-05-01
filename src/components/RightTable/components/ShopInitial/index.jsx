@@ -201,7 +201,7 @@ function ShopInitial() {
             <div className="shop-modal__transport-text">
               هواپیما
               <br />
-              در {selectedMaterial?.planeDuration} روز
+              در {selectedMaterial?.planeDuration * 8} ثانیه
             </div>
           </div>
           <div
@@ -218,7 +218,7 @@ function ShopInitial() {
             <div className="shop-modal__transport-text">
               کشتی
               <br />
-              در {selectedMaterial?.shipDuration} روز
+              در {selectedMaterial?.shipDuration * 8} ثانیه
             </div>
           </div>
         </div>
