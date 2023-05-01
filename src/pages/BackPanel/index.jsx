@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
+  addTeam,
   getAdminInfo,
   getBackPanelLeaderBoard,
   increaseUsersMoney,
   pauseGame,
+  registerNewUser,
   resumeGame,
   sendNotification,
   startOverGame,
@@ -28,6 +30,13 @@ function BackPanel() {
   const [increaseMoney, setIncreaseMoney] = useState("");
 
   const [leaderboard, setLeaderboard] = useState([]);
+
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState('')
+  const [addTeamPassword, setAddTeamPassword] = useState('')
+  const [username, setUsername] = useState("");
+  const [team, setTeam] = useState("");
 
   useEffect(() => {
     getAdminInfo()
@@ -96,10 +105,80 @@ function BackPanel() {
       .catch((error) => console.log(error));
   };
 
+  const handleRegisterNewUser = () => {
+    registerNewUser({ phone, email, password: registerPassword })
+      .then((res) => res.data)
+      .then((data) => {
+        toast.success("کاربر جدید اضافه شد");
+        setPhone("");
+        setEmail("");
+        setRegisterPassword("");
+      })
+      .catch((error) => {
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
+  const handleAddTeam = () => {
+    addTeam({ username, password: addTeamPassword, teamName: team })
+      .then((res) => res.data)
+      .then((data) => {
+        toast.success("کاربر به تیم اضافه شد");
+        setUsername("");
+        setAddTeamPassword("");
+        setTeam("");
+      })
+      .catch((error) => {
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
   return (
     <>
       {!loading && (
         <div className="back-panel">
+          <div className="back-panel__register">
+            <div>ثبت‌نام کاربر جدید</div>
+            <BasicInput
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              label="شماره همراه"
+            />
+            <BasicInput
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              label="ایمیل"
+            />
+            <BasicInput
+              value={registerPassword}
+              onChange={(e) => setRegisterPassword(e.target.value)}
+              label="رمز عبور"
+            />
+            <Button onClick={handleRegisterNewUser}>ثبت کاربر جدید</Button>
+          </div>
+          <div className="back-panel__register">
+            <div>اضافه‌کردن کاربر به تیم</div>
+            <BasicInput
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              label="ایمیل یا شماره همراه"
+            />
+            <BasicInput
+              value={addTeamPassword}
+              onChange={(e) => setAddTeamPassword(e.target.value)}
+              label="رمز عبور"
+            />
+            <BasicInput
+              value={team}
+              onChange={(e) => setTeam(e.target.value)}
+              label="اسم تیم"
+            />
+            <Button onClick={handleAddTeam}>اضافه‌کردن کاربر به تیم</Button>
+          </div>
           <Button onClick={handleStartOverGame} type="info">
             شروع بازی جدید
           </Button>

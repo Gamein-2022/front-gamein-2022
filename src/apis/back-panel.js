@@ -32,3 +32,19 @@ export function resumeGame() {
 export function getBackPanelLeaderBoard() {
   return AxiosInstance.get("/dashboard/panel/top-100");
 }
+
+export function registerNewUser({ phone, email, password }) {
+  return AxiosInstance.post("/dashboard/auth/register", {
+    phone,
+    email,
+    password,
+  });
+}
+
+export function addTeam({ username, password, teamName }) {
+  return AxiosInstance.post("/dashboard/panel/add-team", {
+    username,
+    password,
+    teamName,
+  });
+}
