@@ -26,3 +26,7 @@ export function removeFromStorage({ productId, quantity }) {
     quantity,
   });
 }
+
+export function upgradeStorage() {
+  return AxiosInstance.post("/factory/storage/update-storage");
+}
