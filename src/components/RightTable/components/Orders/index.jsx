@@ -531,16 +531,16 @@ function Orders() {
               </div>
               <div className="shop-modal__seperator"></div>
               <div className="shop-modal__summary-text">
-                دارایی فعلی: {balance}
+                دارایی فعلی: {formatPrice(balance)}
               </div>
               <div className="shop-modal__summary-text">
                 دارایی پس از خرید:{" "}
-                {balance -
+                {formatPrice(balance -
                   (selectedOffer.order.quantity *
                     selectedOffer.order.unitPrice +
                     (transport === "airplane"
                       ? selectedOffer.planePrice
-                      : selectedOffer.shipPrice))}
+                      : selectedOffer.shipPrice)))}
               </div>
               <div className="order-offer-final__action-btns">
                 <Button

@@ -478,12 +478,11 @@ function TradeIntermediate() {
         open={buyOfferModalOpen}
         onClose={() => setBuyOfferModalOpen(false)}
       >
-        <div>ثبت پیشنهاد خرید</div>
+        <div className="submit-order-modal__title">ثبت پیشنهاد خرید</div>
         {shippingInfo && selectedOrder && (
           <>
             <div>
-              خرید {selectedOrder.productName} از تیم{" "}
-              {selectedOrder.submitterTeamName} در منطقه{" "}
+              خرید {selectedOrder.productName} از منطقه{" "}
               {selectedOrder.region + 1}
             </div>
             <div>تعداد {selectedOrder.quantity} واحد</div>
@@ -551,15 +550,17 @@ function TradeIntermediate() {
             </div>
             <div className="shop-modal__seperator"></div>
             <div className="shop-modal__summary-text">
-              دارایی فعلی: {shippingInfo.balance}
+              دارایی فعلی: {formatPrice(shippingInfo.balance)}
             </div>
             <div className="shop-modal__summary-text">
               دارایی پس از خرید:{" "}
-              {shippingInfo.balance -
-                (selectedOrder.quantity * selectedOrder.unitPrice +
-                  (transport === "airplane"
-                    ? shippingInfo.planePrice
-                    : shippingInfo.shipPrice))}
+              {formatPrice(
+                shippingInfo.balance -
+                  (selectedOrder.quantity * selectedOrder.unitPrice +
+                    (transport === "airplane"
+                      ? shippingInfo.planePrice
+                      : shippingInfo.shipPrice))
+              )}
             </div>
             <div>
               <Button onClick={handleSendBuyOffer}>ارسال پیشنهاد خرید</Button>

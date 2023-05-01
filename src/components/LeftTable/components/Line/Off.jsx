@@ -193,7 +193,7 @@ function Off({
               </div>
               <NumberInput
                 label="تعداد:"
-                step={100}
+                step={1}
                 wrapperClassName="setup-line-modal__quantity"
                 value={quantity}
                 onChange={(value) => setQuantity(value)}
@@ -392,7 +392,7 @@ function Off({
         <NumberInput
           value={count}
           onChange={(value) => setCount(value)}
-          step={100}
+          step={1}
           className="shop-modal__input"
           placeholder="مثلا ۵۰۰"
         />

@@ -21,7 +21,7 @@ import NumberInput from "../../../NumberInput";
 function ShopInitial() {
   const [data, setData] = useState(null);
   const [selectedMaterial, setSelectedMaterial] = useState(null);
-  const [count, setCount] = useState();
+  const [count, setCount] = useState(0);
   const [open, setOpen] = useState(false);
   const [transport, setTransport] = useState("airplane");
 
@@ -182,7 +182,6 @@ function ShopInitial() {
           onChange={(value) => setCount(value)}
           min={0}
           className="shop-modal__input"
-          placeholder="مثلا ۵۰۰"
         />
         <div className="shop-modal__transport-name">
           با چه وسیله‌ای ارسال بشه؟
