@@ -31,6 +31,7 @@ import { Tooltip } from "@mui/material";
 import { formatPrice, isEmpty } from "../../../../utils/formatters";
 import NumberInput from "../../../NumberInput";
 import { getProductIcon } from "../../../../utils/icons";
+import TransportEmptyState from "../../../TansportEmptyState";
 
 function TradeIntermediate() {
   const [activeTab, setActiveTab] = useState("buy");
@@ -486,47 +487,55 @@ function TradeIntermediate() {
               {selectedOrder.region + 1}
             </div>
             <div>تعداد {selectedOrder.quantity} واحد</div>
-            <div className="shop-modal__transport-name">
-              با چه وسیله‌ای ارسال بشه؟
-            </div>
-            <div className="shop-modal__transport-list">
-              <div
-                className={classNames("shop-modal__transport", {
-                  "shop-modal__transport--active": transport === "airplane",
-                })}
-                onClick={() => setTransport("airplane")}
-              >
-                <img
-                  className="shop-modal__transport-img"
-                  src={
-                    transport === "airplane" ? airplaneImg : airplaneDisableImg
-                  }
-                  alt="airplane"
-                />
-                <div className="shop-modal__transport-text">
-                  هواپیما
-                  <br />
-                  در {shippingInfo.planeDuration * 8} ثانیه
+            {shippingInfo.planeDuration !== 0 ? (
+              <>
+                <div className="shop-modal__transport-name">
+                  با چه وسیله‌ای ارسال بشه؟
                 </div>
-              </div>
-              <div
-                className={classNames("shop-modal__transport", {
-                  "shop-modal__transport--active": transport === "ship",
-                })}
-                onClick={() => setTransport("ship")}
-              >
-                <img
-                  className="shop-modal__transport-img"
-                  src={transport === "ship" ? cargoImg : cargoDisableImg}
-                  alt="airplane"
-                />
-                <div className="shop-modal__transport-text">
-                  کشتی
-                  <br />
-                  در {shippingInfo.shipDuration * 8} ثانیه
+                <div className="shop-modal__transport-list">
+                  <div
+                    className={classNames("shop-modal__transport", {
+                      "shop-modal__transport--active": transport === "airplane",
+                    })}
+                    onClick={() => setTransport("airplane")}
+                  >
+                    <img
+                      className="shop-modal__transport-img"
+                      src={
+                        transport === "airplane"
+                          ? airplaneImg
+                          : airplaneDisableImg
+                      }
+                      alt="airplane"
+                    />
+                    <div className="shop-modal__transport-text">
+                      هواپیما
+                      <br />
+                      در {shippingInfo.planeDuration * 8} ثانیه
+                    </div>
+                  </div>
+                  <div
+                    className={classNames("shop-modal__transport", {
+                      "shop-modal__transport--active": transport === "ship",
+                    })}
+                    onClick={() => setTransport("ship")}
+                  >
+                    <img
+                      className="shop-modal__transport-img"
+                      src={transport === "ship" ? cargoImg : cargoDisableImg}
+                      alt="airplane"
+                    />
+                    <div className="shop-modal__transport-text">
+                      کشتی
+                      <br />
+                      در {shippingInfo.shipDuration * 8} ثانیه
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </>
+            ) : (
+              <TransportEmptyState />
+            )}
             <div className="shop-modal__summary-text">
               هزینه خرید کالاها:{" "}
               {formatPrice(selectedOrder.quantity * selectedOrder.unitPrice)}
