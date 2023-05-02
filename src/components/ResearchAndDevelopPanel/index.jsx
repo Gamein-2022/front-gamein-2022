@@ -32,7 +32,7 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
             beginTime: res.data.result.beginTime,
             done:
               res.data.result?.endTime &&
-              new Date() > new Date(res.data.result?.endTime),
+              Date.now() > new Date(res.data.result?.endTime).getTime(),
             duration: res.data.result.duration / 1000,
           });
         })
@@ -47,7 +47,7 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
   }, [data?.value, refreshSelf]);
 
   const [remainingTime, setRemainingTime] = useState(
-    (new Date(info?.endTime) - new Date()) / 1000
+    (new Date(info?.endTime).getTime() - Date.now()) / 1000
   );
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
     if (info?.endTime && info?.beginTime && info?.done === false) {
       id = setTimeout(() => {
         setRemainingTime(
-          Math.floor((new Date(info?.endTime) - new Date()) / 1000)
+          Math.floor((new Date(info?.endTime).getTime() - Date.now()) / 1000)
         );
       }, 1000);
     }
@@ -116,8 +116,8 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
                           width: `${Math.floor(
                             (1 -
                               remainingTime /
-                                ((new Date(info?.endTime) -
-                                  new Date(info?.beginTime)) /
+                                ((new Date(info?.endTime).getTime() -
+                                  new Date(info?.beginTime).getTime()) /
                                   1000)) *
                               100
                           )}%`,
@@ -130,8 +130,8 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
                     disabled={
                       (1 -
                         remainingTime /
-                          ((new Date(info?.endTime) -
-                            new Date(info?.beginTime)) /
+                          ((new Date(info?.endTime).getTime() -
+                            new Date(info?.beginTime).getTime()) /
                             1000)) *
                         100 >=
                       50
@@ -146,7 +146,8 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
                             beginTime: res.data.result.beginTime,
                             done:
                               res.data.result?.endTime &&
-                              new Date() > new Date(res.data.result?.endTime),
+                              Date.now() >
+                                new Date(res.data.result?.endTime).getTime(),
                             duration: res.data.result?.duration / 1000,
                           });
                           setRemainingTime(0);
