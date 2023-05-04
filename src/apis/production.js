@@ -40,3 +40,15 @@ export function startLine({ lineId, count, productId }) {
 export function collectLine({ lineId }) {
   return AxiosInstance.get(`/factory/line/collect?id=${lineId}`);
 }
+
+export function getGroundInfo(ground) {
+  return AxiosInstance.get(`/factory/building/${ground}`);
+}
+
+export function deleteBuilding(ground) {
+  return AxiosInstance.delete(`/factory/building/${ground}`);
+}
+
+export function upgradeBuilding(buildingId) {
+  return AxiosInstance.put(`/factory/building/${buildingId}`);
+}

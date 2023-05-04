@@ -85,6 +85,22 @@ function Dashboard() {
                 منطقه {teamInfo?.region}
               </div>
             </div>
+            <div className="dashboard__right-bottom-item">
+              <div className="dashboard__right-bottom-item-title">
+                شماره شما:
+              </div>
+              <div className="dashboard__right-bottom-item-value">
+                {teamInfo?.phone}
+              </div>
+            </div>
+            <div className="dashboard__right-bottom-item">
+              <div className="dashboard__right-bottom-item-title">
+                ایمیل شما:
+              </div>
+              <div className="dashboard__right-bottom-item-value">
+                {teamInfo?.email}
+              </div>
+            </div>
           </div>
         </div>
         <div className="dashboard__left">

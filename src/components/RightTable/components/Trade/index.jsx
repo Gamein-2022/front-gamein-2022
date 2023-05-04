@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import React, { useState } from "react";
-import ShopBuildings from "../ShopBuildings";
 import TradeIntermediate from "../TradeIntermediate";
 import TradeFinal from "../TradeFinal";
 import "./style.scss";

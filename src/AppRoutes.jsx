@@ -15,10 +15,12 @@ import Layout from "./components/Layout";
 import BackPanel from "./pages/BackPanel";
 import { useRecoilState } from "recoil";
 import { isGamePausedState } from "./store/time";
+import useUpdateBalance from "./hooks/useUpdateBalance";
 
 const AppRouter = () => {
   const ws = useRef();
   const [isGamePaused, setIsGamePaused] = useRecoilState(isGamePausedState);
+  const updateBalance = useUpdateBalance()
 
   useEffect(() => {
     ws.current = new WebSocket(
@@ -55,6 +57,13 @@ const AppRouter = () => {
           position: "bottom-center",
         });
         setIsGamePaused(true);
+      }
+
+      if (data.type === "UPDATE_BALANCE") {
+        toast.warning(data.message || "بازی فعلا متوقف شده!", {
+          position: "bottom-center",
+        });
+        updateBalance();
       }
 
       if (data.type === "GAME_RESUMED") {

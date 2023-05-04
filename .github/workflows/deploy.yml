@@ -5,7 +5,26 @@ on:
     branches: [ "master" ]
 
 jobs:
+
+
+
+  check-code:
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@master
+      - run: |
+             export PATH=$PATH:/opt/sonar-scanner/bin/
+             echo $PATH
+             sonar-scanner \
+              -Dsonar.projectKey=front-gamein-2022 \
+              -Dsonar.sources=. \
+              -Dsonar.host.url=http://192.168.0.202:9000 \
+              -Dsonar.token=sqp_528a53971f596e815d5f323dca35b615485f77b4
+             
+             
+             
   build-front:
+    needs: check-code
     runs-on: [self-hosted, linux]
     steps:
       - uses: actions/checkout@master

@@ -1,90 +1,35 @@
 import React, { useEffect, useState } from "react";
-import LockIcon from "@mui/icons-material/Lock";
-import sampleImg from "../../../../assets/img/mapPreview.png";
 import buildingImg from "../../../../assets/building.png";
-import productionHallImg from "../../../../assets/production-hall.svg";
-import assemblyHallImg from "../../../../assets/assembly-hall.svg";
-import recycleHallImg from "../../../../assets/recycle-hall.svg";
-import inventoryImg from "../../../../assets/inventory.svg";
 import coinImg from "../../../../assets/coin.svg";
 import "./style.scss";
 import classNames from "classnames";
-import { createBuilding, getBuildingsInfo } from "../../../../apis/factory";
+import { createBuilding } from "../../../../apis/factory";
 import { toast } from "react-toastify";
 import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 import { formatPrice } from "../../../../utils/formatters";
 import { useRecoilValue } from "recoil";
 import { balanceState } from "../../../../store/team-info";
 
-function ShopBuildings({ updateBuildings }) {
-  const [buildingsInfo, setBuildingsInfo] = useState();
+function ShopBuildings({
+  ground,
+  updateBuildings,
+  buildings,
+  updateGroundInfo,
+}) {
   const [selectedBuilding, setSelectedBuilding] = useState(null);
 
   const balance = useRecoilValue(balanceState);
 
   const updateBalance = useUpdateBalance();
 
-  useEffect(() => {
-    getBuildingsInfo()
-      .then((res) => res.data)
-      .then((data) => {
-        console.log(data);
-
-        const {
-          assemblyPrice,
-          productionPrice,
-          recyclePrice,
-          regionUpgraded,
-          storagePrice,
-          teamBudget,
-        } = data?.result;
-
-        const BUILDINGS = [
-          {
-            name: "سوله تولید",
-            type: "PRODUCTION_FACTORY",
-            img: productionHallImg,
-            description: "دارای دو خط تولید، قابل ارتقا به سه خط",
-            price: productionPrice,
-          },
-          {
-            name: "سوله مونتاژ",
-            type: "ASSEMBLY_FACTORY",
-            img: assemblyHallImg,
-            description: "دارای سه خط مونتاژ، قابل ارتقا به چهار خط",
-            price: assemblyPrice,
-          },
-          {
-            name: "سوله بازیافت",
-            type: "RECYCLE_FACTORY",
-            img: recycleHallImg,
-            description: "",
-            price: recyclePrice,
-          },
-          {
-            name: "انبار",
-            type: "STORAGE",
-            img: inventoryImg,
-            description: "قابل خرید بعد از گسترش کارخانه",
-            price: storagePrice,
-            showLock: !regionUpgraded,
-          },
-        ];
-
-        setBuildingsInfo({ buildings: BUILDINGS, balance: teamBudget });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
   const handleBuyBuilding = () => {
-    createBuilding({ type: selectedBuilding?.type })
+    createBuilding({ type: selectedBuilding?.type, ground })
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
         toast.success("ساختمان با موفقیت خریداری شد.");
         updateBuildings();
+        updateGroundInfo();
         updateBalance();
       })
       .catch((error) => {
@@ -98,7 +43,7 @@ function ShopBuildings({ updateBuildings }) {
   return (
     <div className="shop-buildings">
       <div className="shop-buildings__list">
-        {buildingsInfo?.buildings?.map((building) => (
+        {buildings?.map((building) => (
           <div
             onClick={() => setSelectedBuilding(building)}
             className={classNames("shop-buildings__building", {
@@ -115,10 +60,6 @@ function ShopBuildings({ updateBuildings }) {
             <div className="shop-buildings__building-body">
               <div className="shop-buildings__building-name">
                 {building.name}
-              </div>
-              <div className="shop-buildings__building-description">
-                {building?.showLock && <LockIcon fontSize="small" />}
-                {building.description}
               </div>
               <div className="shop-buildings__building-price">
                 <img
@@ -149,7 +90,9 @@ function ShopBuildings({ updateBuildings }) {
               src={buildingImg}
               alt="choose building"
             />
-            <div>یک ساختمان انتخاب کنید.</div>
+            <div className="shop-buildings__buy-description">
+              یک ساختمان انتخاب کنید.
+            </div>
           </div>
         )}
         {selectedBuilding && (

@@ -1,7 +1,11 @@
 .in-storage {
+  &__upgrade-storage-btn {
+    margin: 16px auto 0;
+  }
+
   &__space {
     text-align: center;
-    padding: 16px 0 0;
+    padding: 8px 0 0;
   }
 
   &__empty {

@@ -1,25 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { deleteBuilding, getGroundInfo, upgradeBuilding } from "../../../../apis/production";
-import ShopBuildings from "../../../RightTable/components/ShopBuildings";
+import {
+  deleteBuilding,
+  getGroundInfo,
+  upgradeBuilding,
+} from "../../../../../../apis/production";
+import ShopBuildings from "../../../../../RightTable/components/ShopBuildings";
 import "./style.scss";
 
-import recycleHallImg from "../../../../assets/recycle-hall.svg";
-import GameinLoading from "../../../GameinLoading";
-import Line from "../Line";
-import Button from "../../../Button";
+import productionHallImg from "../../../../../../assets/production-hall.svg";
+import assemblyHallImg from "../../../../../../assets/assembly-hall.svg";
+import Button from "../../../../../Button";
+import Modal from "../../../../../Modal";
+import { formatPrice } from "../../../../../../utils/formatters";
+import { upgradeRegion } from "../../../../../../apis/factory";
 import { toast } from "react-toastify";
-import { formatPrice } from "../../../../utils/formatters";
-import Modal from "../../../Modal";
+import useUpdateBalance from "../../../../../../hooks/useUpdateBalance";
+import GameinLoading from "../../../../../GameinLoading";
+import Line from "../../../Line";
 
-function Recycle({ updateBuildings }) {
+function Ground3({ updateBuildings }) {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const [upgradeBuildingModalOpen, setUpgradeBuildingModalOpen] =
     useState(false);
   const [deleteBuildingModalOpen, setDeleteBuildingModalOpen] = useState(false);
 
+  const updateBalance = useUpdateBalance();
+
+  const [updateRegionModalOpenState, setUpdateRegionModalOpenState] =
+    useState(false);
+
   useEffect(() => {
-    getGroundInfo(0)
+    getGroundInfo(3)
       .then((res) => res.data)
       .then((data) => {
         setData(data?.result);
@@ -32,7 +44,7 @@ function Recycle({ updateBuildings }) {
 
   const updateGroundInfo = () => {
     setLoading(true);
-    getGroundInfo(0)
+    getGroundInfo(3)
       .then((res) => res.data)
       .then((data) => {
         setData(data?.result);
@@ -40,6 +52,24 @@ function Recycle({ updateBuildings }) {
       .catch((error) => console.log(error))
       .finally(() => {
         setLoading(false);
+      });
+  };
+
+  const handleUpgradeRegion = () => {
+    upgradeRegion()
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data);
+        setUpdateRegionModalOpenState(false);
+        toast.success("زمین گسترش یافت.");
+        updateBuildings();
+        updateBalance();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
       });
   };
 
@@ -59,7 +89,7 @@ function Recycle({ updateBuildings }) {
   };
 
   const handleDeleteBuilding = () => {
-    deleteBuilding(0)
+    deleteBuilding(3)
       .then((res) => res.data)
       .then((data) => {
         toast.success("ساختمان با موفقیت حذف شد.");
@@ -74,27 +104,72 @@ function Recycle({ updateBuildings }) {
   };
 
   return (
-    <div className="ground0">
+    <div className="ground3">
       {loading && <GameinLoading size={32} />}
       {!loading && (
         <>
           {!data?.building && (
             <>
-              <ShopBuildings
-                showUpgradeBuilding={false}
-                buildings={[
-                  {
-                    name: "سوله بازیافت",
-                    type: "RECYCLE_FACTORY",
-                    img: recycleHallImg,
-                    description: "",
-                    price: data?.recycleBuildCost,
-                  },
-                ]}
-                ground={0}
-                updateBuildings={updateBuildings}
-                updateGroundInfo={updateGroundInfo}
-              />
+              {!data?.isGroundAvailable && (
+                <div className="ground3-unavailable">
+                  <div>برای کارکردن روی این ساختمان، زمین را گسترش دهید.</div>
+                  <Button
+                    className="ground3-unavailable__upgrade-region-btn"
+                    onClick={() => {
+                      setUpdateRegionModalOpenState(true);
+                    }}
+                  >
+                    گسترش زمین
+                  </Button>
+                </div>
+              )}
+              {data?.isGroundAvailable && (
+                <ShopBuildings
+                  buildings={[
+                    {
+                      name: "سوله تولید",
+                      type: "PRODUCTION_FACTORY",
+                      img: productionHallImg,
+                      description: "دارای دو خط تولید، قابل ارتقا به سه خط",
+                      price: data?.productionBuildCost,
+                    },
+                    {
+                      name: "سوله مونتاژ",
+                      type: "ASSEMBLY_FACTORY",
+                      img: assemblyHallImg,
+                      description: "دارای سه خط مونتاژ، قابل ارتقا به چهار خط",
+                      price: data?.assemblyBuildCost,
+                    },
+                  ]}
+                  ground={3}
+                  updateBuildings={updateBuildings}
+                  updateGroundInfo={updateGroundInfo}
+                />
+              )}
+              <Modal
+                open={updateRegionModalOpenState}
+                onClose={() => setUpdateRegionModalOpenState(false)}
+              >
+                <div>آیا مطمئن هستید می‌خواهید زمین را گسترش دهید؟</div>
+                <div>
+                  هزینه گسترش زمین: {formatPrice(data?.upgradeRegionCost)}{" "}
+                  جی‌کوین
+                </div>
+                <div className="extend-ground__btns">
+                  <Button
+                    className="extend-ground__btn-yes"
+                    onClick={handleUpgradeRegion}
+                  >
+                    بله
+                  </Button>
+                  <Button
+                    onClick={() => setUpdateRegionModalOpenState(false)}
+                    type="error"
+                  >
+                    بازگشت
+                  </Button>
+                </div>
+              </Modal>
             </>
           )}
           {data?.building && !data?.building?.isUpgraded && (
@@ -179,4 +254,4 @@ function Recycle({ updateBuildings }) {
   );
 }
 
-export default Recycle;
+export default Ground3;

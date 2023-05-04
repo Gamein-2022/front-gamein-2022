@@ -20,7 +20,12 @@ function Line({
   const [setupLineModelOpen, setSetupLineModelOpen] = useState(false);
   const [initialLineModelOpen, setInitialLineModelOpen] = useState(false);
 
-  const lineTypeString = type === "PRODUCTION" ? "تولید" : "مونتاژ";
+  const lineTypeString =
+    type === "PRODUCTION"
+      ? "تولید"
+      : type === "ASSEMBLY"
+      ? "مونتاژ"
+      : "بازیافت";
   console.log("group: ", group);
 
   return (
@@ -62,7 +67,8 @@ function Line({
         <div className={`line line--${status}`}>
           <div className="line__header">
             <div>
-              خط {lineTypeString} {GROUPS[group] || group}
+              خط {lineTypeString}{" "}
+              {type === "RECYCLE" ? "" : GROUPS[group] || group}
             </div>
             <img src={gameinGearLogo} alt="gamein gear logo" />
           </div>

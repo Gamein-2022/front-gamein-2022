@@ -13,3 +13,7 @@ export const formatPrice = (input) => {
   }
   return res;
 };
+
+export function isEmpty(s) {
+  return String(s).trim() === "";
+}

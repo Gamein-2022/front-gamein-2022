@@ -14,7 +14,7 @@ import { leftTableOpen, leftTableTab } from "../../store/tabs";
 import { LEFT_TABLE_TABS } from "../../constants/tabs";
 import Recycle from "./components/Recycle";
 
-function LeftTable() {
+function LeftTable({ updateBuildings }) {
   const [tab, setTab] = useRecoilState(leftTableTab);
   const [open, setOpen] = useRecoilState(leftTableOpen);
 
@@ -83,9 +83,9 @@ function LeftTable() {
       <div className="left-table__body">
         {tab === LEFT_TABLE_TABS.storage && <Storage />}
         {tab === LEFT_TABLE_TABS.productionAndAssembly && (
-          <ProductionAndAssembly />
+          <ProductionAndAssembly updateBuildings={updateBuildings} />
         )}
-        {tab === LEFT_TABLE_TABS.recycle && <Recycle />}
+        {tab === LEFT_TABLE_TABS.recycle && <Recycle updateBuildings={updateBuildings} />}
       </div>
       <div className="left-table__close-icon" onClick={() => setOpen(false)}>
         <ExpandCircleDownIcon fontSize="large" />

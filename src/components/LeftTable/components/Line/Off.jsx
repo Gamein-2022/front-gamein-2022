@@ -5,8 +5,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import Modal from "../../../Modal";
 import Button from "../../../Button";
 
-import BasicInput from "../../../BasicInput";
-
 import sampleImg from "../../../../assets/sample_bom.png";
 import cargoImg from "../../../../assets/cargo.png";
 import cargoDisableImg from "../../../../assets/cargo-disable.png";
@@ -39,6 +37,8 @@ import classNames from "classnames";
 import { RAW_MATERIALS } from "../../../../constants/materials";
 import { balanceState } from "../../../../store/team-info";
 import { buyFromGamein } from "../../../../apis/trade";
+import NumberInput from "../../../NumberInput";
+import TransportEmptyState from "../../../TansportEmptyState";
 
 function Off({
   open,
@@ -69,8 +69,16 @@ function Off({
 
   const transportCost =
     transport === "ship"
-      ? selectedMaterial?.shipPrice
-      : selectedMaterial?.planePrice;
+      ? selectedMaterial?.shipPrice +
+        (selectedMaterial?.shipPrice / 100) *
+          Math.sqrt(
+            count * selectedMaterial?.unitVolume * selectedMaterial?.distance || 0
+          )
+      : selectedMaterial?.planePrice +
+        (selectedMaterial?.planePrice / 100) *
+          Math.sqrt(
+            count * selectedMaterial?.unitVolume * selectedMaterial?.distance || 0
+          );
 
   const productCost = count * selectedMaterial?.price || 0;
 
@@ -192,14 +200,12 @@ function Off({
               <div className="setup-line-modal__column-title">
                 بررسی موجودی انبار
               </div>
-              <BasicInput
+              <NumberInput
                 label="تعداد:"
-                type="number"
-                min="0"
-                step="10"
+                step={1}
                 wrapperClassName="setup-line-modal__quantity"
                 value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
+                onChange={(value) => setQuantity(value)}
               />
               {quantity > 0 && product && (
                 <>
@@ -280,8 +286,8 @@ function Off({
                 <div className="setup-line-modal__confirm-value">
                   {(quantity / (product?.product?.productionRate || 1)).toFixed(
                     2
-                  ) || 0}{" "}
-                  روز
+                  ) * 8 || 0}{" "}
+                  ثانیه
                 </div>
                 <div className="setup-line-modal__confirm-title">
                   هزینه {lineTypeString}:
@@ -361,7 +367,9 @@ function Off({
                   {"جی‌کوین"}
                 </div>
                 <Button
-                  disabled={quantity == 0 || !product || !product.hasRAndDRequirement }
+                  disabled={
+                    quantity == 0 || !product || !product.hasRAndDRequirement
+                  }
                   onClick={handleSubmit}
                   className="setup-line-modal__confirm-btn"
                 >
@@ -392,54 +400,60 @@ function Off({
           مواد اولیه از نزدیکترین منطقه به شما خریداری می‌شن.
         </div>
         <div className="shop-modal__unit">چند واحد می‌خوای بخری؟</div>
-        <input
+        <NumberInput
           value={count}
-          onChange={(e) => setCount(e.target.value)}
-          type="number"
-          step={100}
-          min={0}
+          onChange={(value) => setCount(value)}
+          step={1}
           className="shop-modal__input"
           placeholder="مثلا ۵۰۰"
         />
-        <div className="shop-modal__transport-name">
-          با چه وسیله‌ای ارسال بشه؟
-        </div>
-        <div className="shop-modal__transport-list">
-          <div
-            className={classNames("shop-modal__transport", {
-              "shop-modal__transport--active": transport === "airplane",
-            })}
-            onClick={() => setTransport("airplane")}
-          >
-            <img
-              className="shop-modal__transport-img"
-              src={transport === "airplane" ? airplaneImg : airplaneDisableImg}
-              alt="airplane"
-            />
-            <div className="shop-modal__transport-text">
-              هواپیما
-              <br />
-              در {selectedMaterial?.planeDuration} روز
+        {selectedMaterial?.planeDuration !== 0 ? (
+          <>
+            <div className="shop-modal__transport-name">
+              با چه وسیله‌ای ارسال بشه؟
             </div>
-          </div>
-          <div
-            className={classNames("shop-modal__transport", {
-              "shop-modal__transport--active": transport === "ship",
-            })}
-            onClick={() => setTransport("ship")}
-          >
-            <img
-              className="shop-modal__transport-img"
-              src={transport === "ship" ? cargoImg : cargoDisableImg}
-              alt="airplane"
-            />
-            <div className="shop-modal__transport-text">
-              کشتی
-              <br />
-              در {selectedMaterial?.shipDuration} روز
+            <div className="shop-modal__transport-list">
+              <div
+                className={classNames("shop-modal__transport", {
+                  "shop-modal__transport--active": transport === "airplane",
+                })}
+                onClick={() => setTransport("airplane")}
+              >
+                <img
+                  className="shop-modal__transport-img"
+                  src={
+                    transport === "airplane" ? airplaneImg : airplaneDisableImg
+                  }
+                  alt="airplane"
+                />
+                <div className="shop-modal__transport-text">
+                  هواپیما
+                  <br />
+                  در {selectedMaterial?.planeDuration * 8} ثانیه
+                </div>
+              </div>
+              <div
+                className={classNames("shop-modal__transport", {
+                  "shop-modal__transport--active": transport === "ship",
+                })}
+                onClick={() => setTransport("ship")}
+              >
+                <img
+                  className="shop-modal__transport-img"
+                  src={transport === "ship" ? cargoImg : cargoDisableImg}
+                  alt="airplane"
+                />
+                <div className="shop-modal__transport-text">
+                  کشتی
+                  <br />
+                  در {selectedMaterial?.shipDuration * 8} ثانیه
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </>
+        ) : (
+          <TransportEmptyState />
+        )}
         <div className="shop-modal__summary-text">
           هزینه خرید کالاها: {formatPrice(productCost)}
         </div>

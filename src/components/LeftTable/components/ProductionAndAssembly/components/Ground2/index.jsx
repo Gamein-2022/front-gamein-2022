@@ -1,25 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { deleteBuilding, getGroundInfo, upgradeBuilding } from "../../../../apis/production";
-import ShopBuildings from "../../../RightTable/components/ShopBuildings";
+import { useEffect, useState } from "react";
+import {
+  deleteBuilding,
+  getGroundInfo,
+  upgradeBuilding,
+} from "../../../../../../apis/production";
+import ShopBuildings from "../../../../../RightTable/components/ShopBuildings";
 import "./style.scss";
 
-import recycleHallImg from "../../../../assets/recycle-hall.svg";
-import GameinLoading from "../../../GameinLoading";
-import Line from "../Line";
-import Button from "../../../Button";
+import productionHallImg from "../../../../../../assets/production-hall.svg";
+import assemblyHallImg from "../../../../../../assets/assembly-hall.svg";
+import GameinLoading from "../../../../../GameinLoading";
+import Line from "../../../Line";
+import Button from "../../../../../Button";
+import Modal from "../../../../../Modal";
+import { formatPrice } from "../../../../../../utils/formatters";
 import { toast } from "react-toastify";
-import { formatPrice } from "../../../../utils/formatters";
-import Modal from "../../../Modal";
 
-function Recycle({ updateBuildings }) {
+function Ground2({ updateBuildings }) {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const [upgradeBuildingModalOpen, setUpgradeBuildingModalOpen] =
     useState(false);
-  const [deleteBuildingModalOpen, setDeleteBuildingModalOpen] = useState(false);
+    const [deleteBuildingModalOpen, setDeleteBuildingModalOpen] = useState(false);
 
   useEffect(() => {
-    getGroundInfo(0)
+    getGroundInfo(2)
       .then((res) => res.data)
       .then((data) => {
         setData(data?.result);
@@ -32,7 +37,7 @@ function Recycle({ updateBuildings }) {
 
   const updateGroundInfo = () => {
     setLoading(true);
-    getGroundInfo(0)
+    getGroundInfo(2)
       .then((res) => res.data)
       .then((data) => {
         setData(data?.result);
@@ -59,7 +64,7 @@ function Recycle({ updateBuildings }) {
   };
 
   const handleDeleteBuilding = () => {
-    deleteBuilding(0)
+    deleteBuilding(2)
       .then((res) => res.data)
       .then((data) => {
         toast.success("ساختمان با موفقیت حذف شد.");
@@ -74,24 +79,33 @@ function Recycle({ updateBuildings }) {
   };
 
   return (
-    <div className="ground0">
+    <div className="ground2">
       {loading && <GameinLoading size={32} />}
       {!loading && (
         <>
           {!data?.building && (
             <>
               <ShopBuildings
-                showUpgradeBuilding={false}
+                showUpgradeBuilding={
+                  data?.building && !data?.building?.isUpgraded
+                }
                 buildings={[
                   {
-                    name: "سوله بازیافت",
-                    type: "RECYCLE_FACTORY",
-                    img: recycleHallImg,
-                    description: "",
-                    price: data?.recycleBuildCost,
+                    name: "سوله تولید",
+                    type: "PRODUCTION_FACTORY",
+                    img: productionHallImg,
+                    description: "دارای دو خط تولید، قابل ارتقا به سه خط",
+                    price: data?.productionBuildCost,
+                  },
+                  {
+                    name: "سوله مونتاژ",
+                    type: "ASSEMBLY_FACTORY",
+                    img: assemblyHallImg,
+                    description: "دارای سه خط مونتاژ، قابل ارتقا به چهار خط",
+                    price: data?.assemblyBuildCost,
                   },
                 ]}
-                ground={0}
+                ground={2}
                 updateBuildings={updateBuildings}
                 updateGroundInfo={updateGroundInfo}
               />
@@ -179,4 +193,4 @@ function Recycle({ updateBuildings }) {
   );
 }
 
-export default Recycle;
+export default Ground2;

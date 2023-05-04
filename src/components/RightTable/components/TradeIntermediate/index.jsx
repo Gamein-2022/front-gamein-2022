@@ -4,12 +4,10 @@ import { toast } from "react-toastify";
 import {
   getIntermediateMaterials,
   getOrders,
-  getRawMaterials,
   sendOffer,
   submitBuyOrder,
   submitSellOrder,
 } from "../../../../apis/trade";
-import BasicInput from "../../../BasicInput";
 import Button from "../../../Button";
 import Modal from "../../../Modal";
 import tradeModalTitle from "../../../../assets/modals/trade_modal_title.svg";
@@ -22,14 +20,11 @@ import sampleImg from "../../../../assets/icons/copper.png";
 
 import "./style.scss";
 import { getOrderShippingInfo } from "../../../../apis/orders";
-import {
-  FINAL_MATERIALS,
-  INTERMEDIATE_MATERIALS_LEVEL_ONE,
-  INTERMEDIATE_MATERIALS_LEVEL_TWO,
-  RAW_MATERIALS,
-} from "../../../../constants/materials";
 import { Tooltip } from "@mui/material";
-import { formatPrice } from "../../../../utils/formatters";
+import { formatPrice, isEmpty } from "../../../../utils/formatters";
+import NumberInput from "../../../NumberInput";
+import { getProductIcon } from "../../../../utils/icons";
+import TransportEmptyState from "../../../TansportEmptyState";
 
 function TradeIntermediate() {
   const [activeTab, setActiveTab] = useState("buy");
@@ -38,10 +33,17 @@ function TradeIntermediate() {
   const [buyOfferModalOpen, setBuyOfferModalOpen] = useState(false);
   const [intermediateMaterials, setIntermediateMaterials] = useState([]);
   const [selectedMaterial, setSelectedMaterial] = useState();
+
   const [buyCount, setBuyCount] = useState(0);
+  const [buyCountError, setBuyCountError] = useState(false);
   const [buyPrice, setBuyPrice] = useState(0);
+  const [buyPriceError, setBuyPriceError] = useState(false);
+
   const [sellCount, setSellCount] = useState(0);
+  const [sellCountError, setSellCountError] = useState(false);
   const [sellPrice, setSellPrice] = useState(0);
+  const [sellPriceError, setSellPriceError] = useState(false);
+
   const [buyOrders, setBuyOrders] = useState([]);
   const [sellOrders, setSellOrders] = useState([]);
   const [transport, setTransport] = useState("airplane");
@@ -185,7 +187,7 @@ function TradeIntermediate() {
             .filter((item) => item.orderType === "SELL")
             .filter(
               (item) =>
-                !selectedMaterial || item.productName === selectedMaterial
+                !selectedMaterial || item?.product?.name === selectedMaterial
             )
         );
         setSellOrders(
@@ -193,7 +195,7 @@ function TradeIntermediate() {
             .filter((item) => item.orderType === "BUY")
             .filter(
               (item) =>
-                !selectedMaterial || item.productName === selectedMaterial
+                !selectedMaterial || item?.product?.name === selectedMaterial
             )
         );
       })
@@ -213,12 +215,12 @@ function TradeIntermediate() {
                 setBuyOrders(
                   data
                     .filter((item) => item.orderType === "SELL")
-                    .filter((item) => item.productName === e.target.value)
+                    .filter((item) => item?.product?.name === e.target.value)
                 );
                 setSellOrders(
                   data
                     .filter((item) => item.orderType === "BUY")
-                    .filter((item) => item.productName === e.target.value)
+                    .filter((item) => item?.product?.name === e.target.value)
                 );
               }}
               value={selectedMaterial}
@@ -275,18 +277,10 @@ function TradeIntermediate() {
                   {currentOrders.map((row) => (
                     <tr>
                       <td className="trade-filter__table-row-img-wrapper">
-                        <Tooltip title={row?.productName}>
+                        <Tooltip title={row?.product?.name}>
                           <img
                             className="trade-filter__table-row-img"
-                            src={
-                              RAW_MATERIALS[row?.productName]?.icon ||
-                              INTERMEDIATE_MATERIALS_LEVEL_ONE[row?.productName]
-                                ?.icon ||
-                              INTERMEDIATE_MATERIALS_LEVEL_TWO[row?.productName]
-                                ?.icon ||
-                              FINAL_MATERIALS[row?.productName]?.icon ||
-                              sampleImg
-                            }
+                            src={getProductIcon(row?.product?.name)}
                             alt=""
                           />
                         </Tooltip>
@@ -351,20 +345,30 @@ function TradeIntermediate() {
         open={buyOrderModalOpen}
         onClose={() => setBuyOrderModalOpen(false)}
       >
-        <div>ثبت سفارش خرید</div>
-        <BasicInput
+        <div className="submit-order-modal__title">ثبت سفارش خرید</div>
+        <img
+          className="submit-order-modal__img"
+          src={getProductIcon(selectedMaterial)}
+          alt={selectedMaterial}
+        />
+        <div className="submit-order-modal__product-name">
+          {selectedMaterial}
+        </div>
+        <NumberInput
           label={"چند واحد می‌خوای بخری؟"}
-          type="number"
           min={0}
           value={buyCount}
-          onChange={(e) => setBuyCount(e.target.value)}
+          step={100}
+          onChange={(value) => setBuyCount(value)}
+          setHasError={setBuyCountError}
         />
-        <BasicInput
+        <NumberInput
           label={"هر واحد رو حداکثر با چه قیمتی می‌خوای بخری؟"}
-          type="number"
           min={0}
           value={buyPrice}
-          onChange={(e) => setBuyPrice(e.target.value)}
+          step={100}
+          onChange={(value) => setBuyPrice(value)}
+          setHasError={setBuyPriceError}
         />
         <div>
           حداقل قیمت:{" "}
@@ -381,27 +385,49 @@ function TradeIntermediate() {
           )}
         </div>
         <div>هزینه خرید کالاها: {formatPrice(buyCount * buyPrice)}</div>
-        <Button onClick={handleSubmitBuyOrder}>تایید خرید</Button>
+        <Button
+          disabled={
+            buyCountError ||
+            buyPriceError ||
+            isEmpty(buyCount) ||
+            isEmpty(buyPrice) ||
+            buyCount == "0" ||
+            buyPrice == "0"
+          }
+          onClick={handleSubmitBuyOrder}
+        >
+          تایید خرید
+        </Button>
       </Modal>
       <Modal
         title={<img src={tradeModalTitle} alt="trade" />}
         open={sellOrderModalOpen}
         onClose={() => setSellOrderModalOpen(false)}
       >
-        <div>ثبت سفارش فروش</div>
-        <BasicInput
-          label={"چند واحد می‌خوای بفروشی؟"}
-          type="number"
-          min={0}
-          value={sellCount}
-          onChange={(e) => setSellCount(e.target.value)}
+        <div className="submit-order-modal__title">ثبت سفارش فروش</div>
+        <img
+          className="submit-order-modal__img"
+          src={getProductIcon(selectedMaterial)}
+          alt={selectedMaterial}
         />
-        <BasicInput
-          label={"هر واحد رو حداقل با چه قیمتی می‌خوای بفروشی؟"}
-          type="number"
+        <div className="submit-order-modal__product-name">
+          {selectedMaterial}
+        </div>
+        <NumberInput
+          label={"چند واحد می‌خوای بفروشی؟"}
           min={0}
+          step={100}
+          value={sellCount}
+          onChange={(value) => setSellCount(value)}
+          setHasError={setSellCountError}
+        />
+        <NumberInput
+          label={"هر واحد رو حداقل با چه قیمتی می‌خوای بفروشی؟"}
+          min={0}
+          step={100}
           value={sellPrice}
-          onChange={(e) => setSellPrice(e.target.value)}
+          onChange={(value) => setSellPrice(value)}
+          setHasError={setSellPriceError}
         />
         <div>
           حداقل قیمت:{" "}
@@ -418,7 +444,18 @@ function TradeIntermediate() {
           )}
         </div>
         <div>درآمد فروش کالاها: {formatPrice(sellCount * sellPrice || 0)}</div>
-        <Button onClick={handleSubmitSellOrder} type={"error"}>
+        <Button
+          disabled={
+            sellCountError ||
+            sellPriceError ||
+            isEmpty(sellCount) ||
+            isEmpty(sellPrice) ||
+            sellCount == "0" ||
+            sellPrice == "0"
+          }
+          onClick={handleSubmitSellOrder}
+          type={"error"}
+        >
           تایید فروش
         </Button>
       </Modal>
@@ -427,56 +464,63 @@ function TradeIntermediate() {
         open={buyOfferModalOpen}
         onClose={() => setBuyOfferModalOpen(false)}
       >
-        <div>ثبت پیشنهاد خرید</div>
+        <div className="submit-order-modal__title">ثبت پیشنهاد خرید</div>
         {shippingInfo && selectedOrder && (
           <>
             <div>
-              خرید {selectedOrder.productName} از تیم{" "}
-              {selectedOrder.submitterTeamName} در منطقه{" "}
+              خرید {selectedOrder?.product?.name} از منطقه{" "}
               {selectedOrder.region + 1}
             </div>
             <div>تعداد {selectedOrder.quantity} واحد</div>
-            <div className="shop-modal__transport-name">
-              با چه وسیله‌ای ارسال بشه؟
-            </div>
-            <div className="shop-modal__transport-list">
-              <div
-                className={classNames("shop-modal__transport", {
-                  "shop-modal__transport--active": transport === "airplane",
-                })}
-                onClick={() => setTransport("airplane")}
-              >
-                <img
-                  className="shop-modal__transport-img"
-                  src={
-                    transport === "airplane" ? airplaneImg : airplaneDisableImg
-                  }
-                  alt="airplane"
-                />
-                <div className="shop-modal__transport-text">
-                  هواپیما
-                  <br />
-                  در {shippingInfo.planeDuration} روز
+            {shippingInfo.planeDuration !== 0 ? (
+              <>
+                <div className="shop-modal__transport-name">
+                  با چه وسیله‌ای ارسال بشه؟
                 </div>
-              </div>
-              <div
-                className={classNames("shop-modal__transport", {
-                  "shop-modal__transport--active": transport === "ship",
-                })}
-                onClick={() => setTransport("ship")}
-              >
-                <img
-                  className="shop-modal__transport-img"
-                  src={transport === "ship" ? cargoImg : cargoDisableImg}
-                  alt="airplane"
-                />
-                <div className="shop-modal__transport-text">
-                  کشتی
-                  <br />
-                  در {shippingInfo.shipDuration} روز
+                <div className="shop-modal__transport-list">
+                  <div
+                    className={classNames("shop-modal__transport", {
+                      "shop-modal__transport--active": transport === "airplane",
+                    })}
+                    onClick={() => setTransport("airplane")}
+                  >
+                    <img
+                      className="shop-modal__transport-img"
+                      src={
+                        transport === "airplane"
+                          ? airplaneImg
+                          : airplaneDisableImg
+                      }
+                      alt="airplane"
+                    />
+                    <div className="shop-modal__transport-text">
+                      هواپیما
+                      <br />
+                      در {shippingInfo.planeDuration * 8} ثانیه
+                    </div>
+                  </div>
+                  <div
+                    className={classNames("shop-modal__transport", {
+                      "shop-modal__transport--active": transport === "ship",
+                    })}
+                    onClick={() => setTransport("ship")}
+                  >
+                    <img
+                      className="shop-modal__transport-img"
+                      src={transport === "ship" ? cargoImg : cargoDisableImg}
+                      alt="airplane"
+                    />
+                    <div className="shop-modal__transport-text">
+                      کشتی
+                      <br />
+                      در {shippingInfo.shipDuration * 8} ثانیه
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </>
+            ) : (
+              <TransportEmptyState />
+            )}
             <div className="shop-modal__summary-text">
               هزینه خرید کالاها:{" "}
               {formatPrice(selectedOrder.quantity * selectedOrder.unitPrice)}
@@ -500,15 +544,17 @@ function TradeIntermediate() {
             </div>
             <div className="shop-modal__seperator"></div>
             <div className="shop-modal__summary-text">
-              دارایی فعلی: {shippingInfo.balance}
+              دارایی فعلی: {formatPrice(shippingInfo.balance)}
             </div>
             <div className="shop-modal__summary-text">
               دارایی پس از خرید:{" "}
-              {shippingInfo.balance -
-                (selectedOrder.quantity * selectedOrder.unitPrice +
-                  (transport === "airplane"
-                    ? shippingInfo.planePrice
-                    : shippingInfo.shipPrice))}
+              {formatPrice(
+                shippingInfo.balance -
+                  (selectedOrder.quantity * selectedOrder.unitPrice +
+                    (transport === "airplane"
+                      ? shippingInfo.planePrice
+                      : shippingInfo.shipPrice))
+              )}
             </div>
             <div>
               <Button onClick={handleSendBuyOffer}>ارسال پیشنهاد خرید</Button>

@@ -1,8 +1,6 @@
 .left-table {
   grid-column: 5 / 7;
   grid-row: 1 / 4;
-  // width: 100%;
-  // max-width: 480px;
   border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   height: calc(100vh - 128px);
@@ -56,8 +54,8 @@
   }
 
   &__body {
-    height: calc(100% - 100px);
-    overflow-y: scroll;
+    height: calc(100% - 84px);
+    overflow-y: hidden;
   }
 
   &__close-icon {

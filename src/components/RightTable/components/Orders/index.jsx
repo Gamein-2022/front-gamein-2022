@@ -31,6 +31,7 @@ import {
 } from "../../../../constants/materials";
 import { formatPrice } from "../../../../utils/formatters";
 import { FormatPaintRounded } from "@mui/icons-material";
+import TransportEmptyState from "../../../TansportEmptyState";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -217,6 +218,17 @@ function Orders() {
         );
       });
   };
+
+  const transportCost =
+    transport === "ship"
+      ? selectedOffer?.shipPrice +
+        (selectedOffer?.shipPrice / 100) *
+          Math.sqrt(selectedOffer?.order?.quantity * selectedOffer?.unitVolume * selectedOffer?.distance)
+      : selectedOffer?.planePrice +
+        (selectedOffer?.planePrice / 100) *
+          Math.sqrt(
+            selectedOffer?.order?.quantity * selectedOffer?.unitVolume * selectedOffer?.distance
+          );
 
   return (
     <>
@@ -414,16 +426,20 @@ function Orders() {
                   </div>
                 </div>
                 <div className="order-offer__body">
-                  <div>
+                  {offer.planeDuration !== 0 ? (
                     <div>
-                      ارسال با هواپیما در {offer.planeDuration} روز با هزینه{" "}
-                      {offer.planePrice}
+                      <div>
+                        ارسال با هواپیما در {offer.planeDuration * 8} ثانیه با
+                        هزینه {offer.planePrice}
+                      </div>
+                      <div>
+                        ارسال با کشتی در {offer.shipDuration * 8} ثانیه با هزینه{" "}
+                        {offer.shipPrice}
+                      </div>
                     </div>
-                    <div>
-                      ارسال با کشتی در {offer.shipDuration} روز با هزینه{" "}
-                      {offer.shipPrice}
-                    </div>
-                  </div>
+                  ) : (
+                    <TransportEmptyState />
+                  )}
                   <div className="order-card__btns">
                     <Button
                       onClick={() => handleDeclineOffer(offer)}
@@ -457,54 +473,63 @@ function Orders() {
                 </div>
                 <div className="order-offer-final__region-info">
                   خرید {selectedOffer.order.productName} از منطقه{" "}
-                  {selectedOffer.region + 1}
+                  {selectedOffer.region}
                 </div>
                 <div className="order-offer-final__count">
                   تعداد {selectedOffer.order.quantity} واحد
                 </div>
-                <div className="shop-modal__transport-name">
-                  با چه وسیله‌ای ارسال بشه؟
-                </div>
-                <div className="shop-modal__transport-list">
-                  <div
-                    className={classNames("shop-modal__transport", {
-                      "shop-modal__transport--active": transport === "airplane",
-                    })}
-                    onClick={() => setTransport("airplane")}
-                  >
-                    <img
-                      className="shop-modal__transport-img"
-                      src={
-                        transport === "airplane"
-                          ? airplaneImg
-                          : airplaneDisableImg
-                      }
-                      alt="airplane"
-                    />
-                    <div className="shop-modal__transport-text">
-                      هواپیما
-                      <br />
-                      در {selectedOffer.planeDuration} روز
+                {selectedOffer.planeDuration !== 0 ? (
+                  <>
+                    <div className="shop-modal__transport-name">
+                      با چه وسیله‌ای ارسال بشه؟
                     </div>
-                  </div>
-                  <div
-                    className={classNames("shop-modal__transport", {
-                      "shop-modal__transport--active": transport === "ship",
-                    })}
-                    onClick={() => setTransport("ship")}
-                  >
-                    <img
-                      className="shop-modal__transport-img"
-                      src={transport === "ship" ? cargoImg : cargoDisableImg}
-                      alt="airplane"
-                    />
-                    <div className="shop-modal__transport-text">
-                      کشتی
-                      <br />
-                      در {selectedOffer.shipDuration} روز
+                    <div className="shop-modal__transport-list">
+                      <div
+                        className={classNames("shop-modal__transport", {
+                          "shop-modal__transport--active":
+                            transport === "airplane",
+                        })}
+                        onClick={() => setTransport("airplane")}
+                      >
+                        <img
+                          className="shop-modal__transport-img"
+                          src={
+                            transport === "airplane"
+                              ? airplaneImg
+                              : airplaneDisableImg
+                          }
+                          alt="airplane"
+                        />
+                        <div className="shop-modal__transport-text">
+                          هواپیما
+                          <br />
+                          در {selectedOffer.planeDuration} ثانیه
+                        </div>
+                      </div>
+                      <div
+                        className={classNames("shop-modal__transport", {
+                          "shop-modal__transport--active": transport === "ship",
+                        })}
+                        onClick={() => setTransport("ship")}
+                      >
+                        <img
+                          className="shop-modal__transport-img"
+                          src={
+                            transport === "ship" ? cargoImg : cargoDisableImg
+                          }
+                          alt="airplane"
+                        />
+                        <div className="shop-modal__transport-text">
+                          کشتی
+                          <br />
+                          در {selectedOffer.shipDuration} ثانیه
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </>
+                ) : (
+                  <TransportEmptyState />
+                )}
               </div>
               <div className="shop-modal__summary-text">
                 هزینه خرید کالاها:{" "}
@@ -513,34 +538,27 @@ function Orders() {
                 )}
               </div>
               <div className="shop-modal__summary-text">
-                هزینه حمل و نقل:{" "}
-                {formatPrice(
-                  transport === "airplane"
-                    ? selectedOffer.planePrice
-                    : selectedOffer.shipPrice
-                )}
+                هزینه حمل و نقل: {formatPrice(transportCost)}
               </div>
               <div className="shop-modal__summary-text">
                 جمع کل:{" "}
                 {formatPrice(
                   selectedOffer.order.quantity * selectedOffer.order.unitPrice +
-                    (transport === "airplane"
-                      ? selectedOffer.planePrice
-                      : selectedOffer.shipPrice)
+                    transportCost
                 )}
               </div>
               <div className="shop-modal__seperator"></div>
               <div className="shop-modal__summary-text">
-                دارایی فعلی: {balance}
+                دارایی فعلی: {formatPrice(balance)}
               </div>
               <div className="shop-modal__summary-text">
                 دارایی پس از خرید:{" "}
-                {balance -
-                  (selectedOffer.order.quantity *
-                    selectedOffer.order.unitPrice +
-                    (transport === "airplane"
-                      ? selectedOffer.planePrice
-                      : selectedOffer.shipPrice))}
+                {formatPrice(
+                  balance -
+                    (selectedOffer.order.quantity *
+                      selectedOffer.order.unitPrice +
+                      transportCost)
+                )}
               </div>
               <div className="order-offer-final__action-btns">
                 <Button
