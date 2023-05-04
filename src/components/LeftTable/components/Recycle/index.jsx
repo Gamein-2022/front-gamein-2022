@@ -56,6 +56,7 @@ function Recycle({ updateBuildings }) {
                 ]}
                 ground={0}
                 updateBuildings={updateBuildings}
+                updateGroundInfo={updateGroundInfo}
               />
             </>
           )}

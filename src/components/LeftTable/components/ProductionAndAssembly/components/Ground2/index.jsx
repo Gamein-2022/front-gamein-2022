@@ -67,6 +67,7 @@ function Ground2({ updateBuildings }) {
                 ]}
                 ground={2}
                 updateBuildings={updateBuildings}
+                updateGroundInfo={updateGroundInfo}
               />
             </>
           )}

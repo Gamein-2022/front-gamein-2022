@@ -106,6 +106,7 @@ function Ground3({ updateBuildings }) {
                   ]}
                   ground={3}
                   updateBuildings={updateBuildings}
+                  updateGroundInfo={updateGroundInfo}
                 />
               )}
               <Modal

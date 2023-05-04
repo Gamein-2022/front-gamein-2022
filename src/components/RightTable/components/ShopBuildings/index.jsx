@@ -10,7 +10,12 @@ import { formatPrice } from "../../../../utils/formatters";
 import { useRecoilValue } from "recoil";
 import { balanceState } from "../../../../store/team-info";
 
-function ShopBuildings({ ground, updateBuildings, buildings }) {
+function ShopBuildings({
+  ground,
+  updateBuildings,
+  buildings,
+  updateGroundInfo,
+}) {
   const [selectedBuilding, setSelectedBuilding] = useState(null);
 
   const balance = useRecoilValue(balanceState);
@@ -24,6 +29,7 @@ function ShopBuildings({ ground, updateBuildings, buildings }) {
         console.log(data);
         toast.success("ساختمان با موفقیت خریداری شد.");
         updateBuildings();
+        updateGroundInfo();
         updateBalance();
       })
       .catch((error) => {
