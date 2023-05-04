@@ -240,7 +240,7 @@ function Map({ buildings, updateBuildings }) {
     SHOW_ITEMS = [];
 
     const hasRecycleFactory =
-      buildings?.buildings?.filter((item) => item.type === "RECYCLE_FACTORY")
+      buildings?.buildings?.filter((item) => item?.type === "RECYCLE_FACTORY")
         .length > 0;
     if (hasRecycleFactory) {
       HIDDEN_ITEMS.push("recycling_facility_unfinished_building");
@@ -249,16 +249,16 @@ function Map({ buildings, updateBuildings }) {
     buildings?.buildings.forEach((building) => {
       const ground = building?.ground;
       if (ground === 1) {
-        if (building.type === "PRODUCTION_FACTORY") {
+        if (building?.type === "PRODUCTION_FACTORY") {
           SHOW_ITEMS.push("ground_1_production_facility");
-        } else if (building.type === "ASSEMBLY_FACTORY") {
+        } else if (building?.type === "ASSEMBLY_FACTORY") {
           SHOW_ITEMS.push("ground_1_assembly_facility");
         }
         HIDDEN_ITEMS.push("ground_1_unfinished_building");
       } else if (ground === 2) {
-        if (building.type === "PRODUCTION_FACTORY") {
+        if (building?.type === "PRODUCTION_FACTORY") {
           SHOW_ITEMS.push("ground_2_production_facility");
-        } else if (building.type === "ASSEMBLY_FACTORY") {
+        } else if (building?.type === "ASSEMBLY_FACTORY") {
           SHOW_ITEMS.push("ground_2_assembly_facility");
         }
         HIDDEN_ITEMS.push("ground_2_unfinished_building");
@@ -269,9 +269,9 @@ function Map({ buildings, updateBuildings }) {
         HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
           (item) => item !== "ground_3_asphalt"
         );
-        if (building.type === "PRODUCTION_FACTORY") {
+        if (building?.type === "PRODUCTION_FACTORY") {
           SHOW_ITEMS.push("ground_3_production_facility");
-        } else if (building.type === "ASSEMBLY_FACTORY") {
+        } else if (building?.type === "ASSEMBLY_FACTORY") {
           SHOW_ITEMS.push("ground_3_assembly_facility");
         } else {
           SHOW_ITEMS.push("ground_3_inventory");
