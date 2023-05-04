@@ -69,6 +69,7 @@ function Ground2({ updateBuildings }) {
       .then((data) => {
         toast.success("ساختمان با موفقیت حذف شد.");
         updateGroundInfo();
+        updateBuildings();
         setDeleteBuildingModalOpen(false);
       })
       .catch((error) => {
