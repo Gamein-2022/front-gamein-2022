@@ -6,6 +6,8 @@ import "./style.scss";
 import productionHallImg from "../../../../../../assets/production-hall.svg";
 import assemblyHallImg from "../../../../../../assets/assembly-hall.svg";
 import GameinLoading from "../../../../../GameinLoading";
+import Line from "../../../Line";
+import Button from "../../../../../Button";
 
 function Ground1({ updateBuildings }) {
   const [data, setData] = useState();
@@ -22,6 +24,20 @@ function Ground1({ updateBuildings }) {
         setLoading(false);
       });
   }, []);
+
+  const updateGroundInfo = () => {
+    setLoading(true);
+    getGroundInfo(1)
+      .then((res) => res.data)
+      .then((data) => {
+        setData(data?.result);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <div className="ground1">
       {loading && <GameinLoading size={32} />}
@@ -30,9 +46,6 @@ function Ground1({ updateBuildings }) {
           {!data?.building && (
             <>
               <ShopBuildings
-                showUpgradeBuilding={
-                  data?.building && !data?.building?.isUpgraded
-                }
                 buildings={[
                   {
                     name: "سوله تولید",
@@ -54,6 +67,26 @@ function Ground1({ updateBuildings }) {
               />
             </>
           )}
+          {data?.building && !data?.building?.isUpgraded && (
+            <Button className="shop-buildings__upgrade-btn">
+              ارتقای ساختمان
+            </Button>
+          )}
+          {data?.building?.lines
+            .filter((item) => item.status === "IN_PROGRESS")
+            .map((line) => (
+              <Line {...line} updateLines={updateGroundInfo} />
+            ))}
+          {data?.building?.lines
+            .filter((item) => item.status === "OFF")
+            .map((line) => (
+              <Line {...line} updateLines={updateGroundInfo} />
+            ))}
+          {data?.building?.lines
+            .filter((item) => item.status === "NOT_INITIAL")
+            .map((line) => (
+              <Line {...line} updateLines={updateGroundInfo} />
+            ))}
         </>
       )}
     </div>

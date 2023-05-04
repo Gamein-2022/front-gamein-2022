@@ -9,14 +9,8 @@ import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 import { formatPrice } from "../../../../utils/formatters";
 import { useRecoilValue } from "recoil";
 import { balanceState } from "../../../../store/team-info";
-import Button from "../../../Button";
 
-function ShopBuildings({
-  ground,
-  updateBuildings,
-  buildings,
-  showUpgradeBuilding,
-}) {
+function ShopBuildings({ ground, updateBuildings, buildings }) {
   const [selectedBuilding, setSelectedBuilding] = useState(null);
 
   const balance = useRecoilValue(balanceState);
@@ -43,11 +37,6 @@ function ShopBuildings({
   return (
     <div className="shop-buildings">
       <div className="shop-buildings__list">
-        {showUpgradeBuilding && (
-          <Button className="shop-buildings__upgrade-btn">
-            ارتقای ساختمان
-          </Button>
-        )}
         {buildings?.map((building) => (
           <div
             onClick={() => setSelectedBuilding(building)}
