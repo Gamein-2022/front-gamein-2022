@@ -5,8 +5,7 @@
 
   &__materials-list {
     padding: 8px;
-    height: 100%;
-    padding-bottom: 128px;
+    height: calc(100% - 96px);
     overflow-y: auto;
     border-radius: 0 0 16px 16px;
   }

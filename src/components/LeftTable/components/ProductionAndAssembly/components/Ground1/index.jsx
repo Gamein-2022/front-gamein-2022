@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { getGroundLines } from "../../../../../../apis/production";
+import ShopBuildings from "../../../../../RightTable/components/ShopBuildings";
 import "./style.scss";
 
 function Ground1() {
@@ -9,7 +10,11 @@ function Ground1() {
       .then((data) => {})
       .catch((error) => console.log(error));
   }, []);
-  return <div>Ground1</div>;
+  return (
+    <>
+      <ShopBuildings />
+    </>
+  );
 }
 
 export default Ground1;

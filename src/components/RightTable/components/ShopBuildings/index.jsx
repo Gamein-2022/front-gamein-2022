@@ -54,21 +54,6 @@ function ShopBuildings({ updateBuildings }) {
             description: "دارای سه خط مونتاژ، قابل ارتقا به چهار خط",
             price: assemblyPrice,
           },
-          {
-            name: "سوله بازیافت",
-            type: "RECYCLE_FACTORY",
-            img: recycleHallImg,
-            description: "",
-            price: recyclePrice,
-          },
-          {
-            name: "انبار",
-            type: "STORAGE",
-            img: inventoryImg,
-            description: "قابل خرید بعد از گسترش کارخانه",
-            price: storagePrice,
-            showLock: !regionUpgraded,
-          },
         ];
 
         setBuildingsInfo({ buildings: BUILDINGS, balance: teamBudget });
@@ -115,10 +100,6 @@ function ShopBuildings({ updateBuildings }) {
             <div className="shop-buildings__building-body">
               <div className="shop-buildings__building-name">
                 {building.name}
-              </div>
-              <div className="shop-buildings__building-description">
-                {building?.showLock && <LockIcon fontSize="small" />}
-                {building.description}
               </div>
               <div className="shop-buildings__building-price">
                 <img

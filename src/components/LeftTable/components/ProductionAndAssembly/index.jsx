@@ -1,14 +1,4 @@
-import React, { useEffect, useState } from "react";
-// import { getLines } from "../../../../apis/production";
-// import Line from "../Line";
-
-// import productionEmpty from "../../../../assets/empty_states/production_empty.svg";
-
 import "./style.scss";
-// import Button from "../../../Button";
-// import { useRecoilState } from "recoil";
-// import { rightTableOpen, rightTableTab } from "../../../../store/tabs";
-// import { RIGHT_TABLE_TABS } from "../../../../constants/tabs";
 import classNames from "classnames";
 import { useRecoilState } from "recoil";
 import { productionAndAssemblyInnerTab } from "../../../../store/tabs";
@@ -21,34 +11,6 @@ function ProductionAndAssembly() {
   const [activeTab, setActiveTab] = useRecoilState(
     productionAndAssemblyInnerTab
   );
-  // const [lines, setLines] = useState([]);
-  // const [rightTab, setRightTab] = useRecoilState(rightTableTab);
-  // const [rightOpen, setRightOpen] = useRecoilState(rightTableOpen);
-
-  // useEffect(() => {
-  //   getLines()
-  //     .then((res) => res.data)
-  //     .then((data) => {
-  //       console.log(data);
-
-  //       setLines(data.result);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
-  // const updateLines = () => {
-  //   getLines()
-  //     .then((res) => res.data)
-  //     .then((data) => {
-  //       console.log(data);
-  //       setLines(data.result);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
 
   return (
     <div className="production-and-assembly">
