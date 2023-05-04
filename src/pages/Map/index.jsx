@@ -221,6 +221,7 @@ function Map({ buildings, updateBuildings }) {
           HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
             (item) => item !== "ground_3_asphalt"
           );
+          SHOW_ITEMS.push("ground_3_asphalt");
           if (building?.type === "PRODUCTION_FACTORY") {
             SHOW_ITEMS.push("ground_3_production_facility");
           } else if (building?.type === "ASSEMBLY_FACTORY") {
