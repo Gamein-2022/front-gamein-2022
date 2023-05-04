@@ -61,6 +61,10 @@ function InQueueItem({ item, updateInQueueProducts }) {
       });
   };
 
+  const handleCountDownCompleted = () => {
+    setRemainedTime(0)
+  }
+
   return (
     <div className="in-queue-item">
       <div className="in-queue-item__header">
@@ -92,7 +96,7 @@ function InQueueItem({ item, updateInQueueProducts }) {
       )}
       <div className="in-queue-item__footer">
         <div className="in-queue-item__time">
-          زمان باقیمانده: <MyCountDown timeInSeconds={remainedTime}/>
+          زمان باقیمانده: <MyCountDown timeInSeconds={remainedTime} onComplete={handleCountDownCompleted}/>
         </div>
         <div className="in-queue-item__actions">
           <Button

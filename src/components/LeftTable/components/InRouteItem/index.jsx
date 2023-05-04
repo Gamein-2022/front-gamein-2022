@@ -14,9 +14,13 @@ function InRouteItem({ item }) {
   useEffect(() => {
     const ariveTime = new Date(item.arrivalTime).getTime();
     const currentTime = new Date(item.currentTime).getTime();
-    const newTime = ariveTime - currentTime;
+    const newTime = (ariveTime - currentTime) / 1000;
     setRemainedTime(newTime);
   }, []);
+
+  const handleCountDownCompleted = () => {
+    setRemainedTime(0)
+  }
 
   if (remainedTime <= 0) {
     return null;
@@ -42,7 +46,7 @@ function InRouteItem({ item }) {
       </div>
       <div className="in-route-item__footer">
         <div className="in-route-item__time">
-          زمان باقیمانده: <MyCountDown timeInSeconds={remainedTime}/>
+          زمان باقیمانده: <MyCountDown timeInSeconds={remainedTime} onComplete={handleCountDownCompleted}/>
         </div>
       </div>
     </div>
