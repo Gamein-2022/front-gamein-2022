@@ -3,14 +3,24 @@
   position: relative;
   height: 100%;
 
-  &__upgrade-btn {
-    margin: 16px auto;
+  &__btns {
+    display: flex;
+    justify-content: center;
+    margin: 16px;
+
+    button:first-child {
+      margin-left: 8px;
+    }
   }
 
   &__list {
     padding: 8px 16px;
     height: calc(100% - 128px);
     overflow-y: auto;
+  }
+
+  &__list-description {
+    text-align: center;
   }
 
   &__building {

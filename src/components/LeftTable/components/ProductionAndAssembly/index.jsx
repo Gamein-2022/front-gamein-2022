@@ -52,38 +52,6 @@ function ProductionAndAssembly({ updateBuildings }) {
       {activeTab === PRODUCTION_AND_ASSEMBLY_TABS.ground3 && (
         <Ground3 updateBuildings={updateBuildings} />
       )}
-      {/* {lines
-        .filter((item) => item.status === "IN_PROGRESS")
-        .map((line) => (
-          <Line {...line} updateLines={updateLines} />
-        ))}
-      {lines
-        .filter((item) => item.status === "OFF")
-        .map((line) => (
-          <Line {...line} updateLines={updateLines} />
-        ))}
-      {lines
-        .filter((item) => item.status === "NOT_INITIAL")
-        .map((line) => (
-          <Line {...line} updateLines={updateLines} />
-        ))}
-      {lines?.length <= 0 && (
-        <div className="production-and-assembly__empty">
-          <img src={productionEmpty} alt="empty production" />
-          <p>
-            هنوز هیچ خط تولید یا مونتاژی نداری. برای شروع، از فروشگاه گیمین سوله
-            تولید یا مونتاژ بخر!
-          </p>
-          <Button
-            onClick={() => {
-              setRightTab(RIGHT_TABLE_TABS.shop);
-              setRightOpen(true);
-            }}
-          >
-            خرید از فروشگاه گیمین
-          </Button>
-        </div>
-      )} */}
     </div>
   );
 }

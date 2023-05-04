@@ -173,23 +173,7 @@ function Ground3({ updateBuildings }) {
               </Modal>
             </>
           )}
-          {data?.building && !data?.building?.isUpgraded && (
-            <Button
-              onClick={() => setUpgradeBuildingModalOpen(true)}
-              className="shop-buildings__upgrade-btn"
-            >
-              ارتقای ساختمان
-            </Button>
-          )}
-          {data?.building && (
-            <Button
-              type="error"
-              onClick={() => setDeleteBuildingModalOpen(true)}
-              className="shop-buildings__upgrade-btn"
-            >
-              حذف ساختمان
-            </Button>
-          )}
+
           {data?.building?.lines
             .filter((item) => item.status === "IN_PROGRESS")
             .map((line) => (
@@ -205,6 +189,27 @@ function Ground3({ updateBuildings }) {
             .map((line) => (
               <Line {...line} updateLines={updateGroundInfo} />
             ))}
+          {data?.building && (
+            <div className="shop-buildings__btns">
+              {data?.building && !data?.building?.isUpgraded && (
+                <Button
+                  onClick={() => setUpgradeBuildingModalOpen(true)}
+                  className="shop-buildings__upgrade-btn"
+                >
+                  ارتقای ساختمان
+                </Button>
+              )}
+              {data?.building && (
+                <Button
+                  type="error"
+                  onClick={() => setDeleteBuildingModalOpen(true)}
+                  className="shop-buildings__upgrade-btn"
+                >
+                  حذف ساختمان
+                </Button>
+              )}
+            </div>
+          )}
         </>
       )}
       <Modal

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import IndeterminateCheckBoxOutlinedIcon from "@mui/icons-material/IndeterminateCheckBoxOutlined";
 import "./style.scss";
 import Button from "../../../Button";
 import Modal from "../../../Modal";

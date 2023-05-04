@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import buildingImg from "../../../../assets/building.png";
 import coinImg from "../../../../assets/coin.svg";
 import "./style.scss";
@@ -43,6 +43,9 @@ function ShopBuildings({
   return (
     <div className="shop-buildings">
       <div className="shop-buildings__list">
+        <div className="shop-buildings__list-description">
+          برای بهره‌برداری از این زمین اول یه سوله بخر.
+        </div>
         {buildings?.map((building) => (
           <div
             onClick={() => setSelectedBuilding(building)}
@@ -91,7 +94,7 @@ function ShopBuildings({
               alt="choose building"
             />
             <div className="shop-buildings__buy-description">
-              یک ساختمان انتخاب کنید.
+              یه ساختمون انتخاب کن.
             </div>
           </div>
         )}
