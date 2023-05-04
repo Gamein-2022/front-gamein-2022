@@ -54,8 +54,9 @@
   }
 
   &__body {
-    height: calc(100% - 90px);
-    // overflow-y: scroll;
+    height: calc(100% - 84px);
+    overflow-y: hidden;
+    border-radius: 0 0 16px 16px;
   }
 
   &__close-icon {

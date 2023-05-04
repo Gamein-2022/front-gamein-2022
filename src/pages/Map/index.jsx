@@ -46,8 +46,8 @@ let SHOW_ITEMS = [];
 
 const GLOW = [
   "recycling_facility",
-  "dock",
-  "dock_boat",
+  // "dock",
+  // "dock_boat",
   "gamein_store",
   "inventory",
   "transactions_office",
@@ -121,21 +121,21 @@ function Map({ buildings, updateBuildings }) {
     });
 
     document
-      .getElementById("ground_1_unfinished_building")
+      .getElementById("ground_1")
       ?.addEventListener("click", () => {
         setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
         setProductionAndAssemblyInnerTab(PRODUCTION_AND_ASSEMBLY_TABS.ground1);
         setLeftTableOpen(true);
       });
     document
-      .getElementById("ground_2_unfinished_building")
+      .getElementById("ground_2")
       ?.addEventListener("click", () => {
         setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
         setProductionAndAssemblyInnerTab(PRODUCTION_AND_ASSEMBLY_TABS.ground2);
         setLeftTableOpen(true);
       });
     document
-      .getElementById("ground_3_unfinished_building")
+      .getElementById("ground_3")
       ?.addEventListener("click", () => {
         setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
         setProductionAndAssemblyInnerTab(PRODUCTION_AND_ASSEMBLY_TABS.ground3);
@@ -182,55 +182,6 @@ function Map({ buildings, updateBuildings }) {
       setLeftTableActiveTab(LEFT_TABLE_TABS.storage);
       setLeftTableOpen(true);
     });
-
-    document
-      .getElementById("ground_3_inventory")
-      ?.addEventListener("click", () => {
-        setLeftTableActiveTab(LEFT_TABLE_TABS.storage);
-        setLeftTableOpen(true);
-      });
-    document
-      .getElementById("ground_1_assembly_facility")
-      ?.addEventListener("click", () => {
-        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
-        setLeftTableOpen(true);
-      });
-    document
-      .getElementById("ground_2_assembly_facility")
-      ?.addEventListener("click", () => {
-        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
-        setLeftTableOpen(true);
-      });
-    document
-      .getElementById("ground_3_assembly_facility")
-      ?.addEventListener("click", () => {
-        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
-        setLeftTableOpen(true);
-      });
-    document
-      .getElementById("ground_1_production_facility")
-      ?.addEventListener("click", () => {
-        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
-        setLeftTableOpen(true);
-      });
-    document
-      .getElementById("ground_2_production_facility")
-      ?.addEventListener("click", () => {
-        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
-        setLeftTableOpen(true);
-      });
-    document
-      .getElementById("ground_3_production_facility")
-      ?.addEventListener("click", () => {
-        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
-        setLeftTableOpen(true);
-      });
-
-    document
-      .getElementById("ground_3_locked")
-      ?.addEventListener("click", () => {
-        setUpdateRegionModalOpenState(true);
-      });
 
     if (buildings?.regionUpgraded) {
       HIDDEN_ITEMS.push("ground_3_locked");

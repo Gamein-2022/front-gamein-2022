@@ -10,7 +10,7 @@ import {
 
 export const rightTableTab = atom({
   key: "rightTableTab",
-  default: RIGHT_TABLE_TABS.trade,
+  default: RIGHT_TABLE_TABS.shop,
 });
 
 export const rightTableOpen = atom({
