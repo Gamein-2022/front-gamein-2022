@@ -153,6 +153,12 @@ function ChooseRegion() {
     }
   }
 
+  const handleCountDownTick = () => {
+    if (initialRemainedTimeState) {
+      setInitialRemainedTimeState(initialRemainedTimeState - 1)
+    }
+  }
+
   return (
     <div className="choose-region">
       <Helmet>
@@ -177,8 +183,8 @@ function ChooseRegion() {
             <div className="choose-region__balance-value">
               {formatPrice(balance - (prices[selectedRegion] || 0))}
             </div>
-            <div className="choose-region__time-value">
-              <MyCountDown timeInSeconds={initialRemainedTimeState} onComplete={handleCountDownComplete} />
+            <div key={initialRemainedTimeState} className="choose-region__time-value">
+              <MyCountDown timeInSeconds={initialRemainedTimeState} onComplete={handleCountDownComplete} onTick={handleCountDownTick} />
             </div>
             <div className="choose-region__time-title">
               تا پایان انتخاب منطقه
