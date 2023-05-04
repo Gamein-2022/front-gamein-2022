@@ -11,9 +11,11 @@ import { formatPrice } from "../../../../../../utils/formatters";
 import { upgradeRegion } from "../../../../../../apis/factory";
 import { toast } from "react-toastify";
 import useUpdateBalance from "../../../../../../hooks/useUpdateBalance";
+import GameinLoading from "../../../../../GameinLoading";
 
 function Ground3({ updateBuildings }) {
   const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
 
   const updateBalance = useUpdateBalance();
 
@@ -26,7 +28,10 @@ function Ground3({ updateBuildings }) {
       .then((data) => {
         setData(data?.result);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   const handleUpgradeRegion = () => {
@@ -49,66 +54,75 @@ function Ground3({ updateBuildings }) {
 
   return (
     <div className="ground3">
-      {!data?.building && (
+      {loading && <GameinLoading size={32} />}
+      {!loading && (
         <>
-          {!data?.isGroundAvailable && (
-            <div className="ground3-unavailable">
-              <div>برای کارکردن روی این ساختمان، زمین را گسترش دهید.</div>
-              <Button
-                className="ground3-unavailable__upgrade-region-btn"
-                onClick={() => {
-                  setUpdateRegionModalOpenState(true);
-                }}
+          {!data?.building && (
+            <>
+              {!data?.isGroundAvailable && (
+                <div className="ground3-unavailable">
+                  <div>برای کارکردن روی این ساختمان، زمین را گسترش دهید.</div>
+                  <Button
+                    className="ground3-unavailable__upgrade-region-btn"
+                    onClick={() => {
+                      setUpdateRegionModalOpenState(true);
+                    }}
+                  >
+                    گسترش زمین
+                  </Button>
+                </div>
+              )}
+              {data?.isGroundAvailable && (
+                <ShopBuildings
+                  showUpgradeBuilding={
+                    data?.building && !data?.building?.isUpgraded
+                  }
+                  buildings={[
+                    {
+                      name: "سوله تولید",
+                      type: "PRODUCTION_FACTORY",
+                      img: productionHallImg,
+                      description: "دارای دو خط تولید، قابل ارتقا به سه خط",
+                      price: data?.productionBuildCost,
+                    },
+                    {
+                      name: "سوله مونتاژ",
+                      type: "ASSEMBLY_FACTORY",
+                      img: assemblyHallImg,
+                      description: "دارای سه خط مونتاژ، قابل ارتقا به چهار خط",
+                      price: data?.assemblyBuildCost,
+                    },
+                  ]}
+                  ground={3}
+                  updateBuildings={updateBuildings}
+                />
+              )}
+              <Modal
+                open={updateRegionModalOpenState}
+                onClose={() => setUpdateRegionModalOpenState(false)}
               >
-                گسترش زمین
-              </Button>
-            </div>
+                <div>آیا مطمئن هستید می‌خواهید زمین را گسترش دهید؟</div>
+                <div>
+                  هزینه گسترش زمین: {formatPrice(data?.upgradeRegionCost)}{" "}
+                  جی‌کوین
+                </div>
+                <div className="extend-ground__btns">
+                  <Button
+                    className="extend-ground__btn-yes"
+                    onClick={handleUpgradeRegion}
+                  >
+                    بله
+                  </Button>
+                  <Button
+                    onClick={() => setUpdateRegionModalOpenState(false)}
+                    type="error"
+                  >
+                    بازگشت
+                  </Button>
+                </div>
+              </Modal>
+            </>
           )}
-          {data?.isGroundAvailable && (
-            <ShopBuildings
-              buildings={[
-                {
-                  name: "سوله تولید",
-                  type: "PRODUCTION_FACTORY",
-                  img: productionHallImg,
-                  description: "دارای دو خط تولید، قابل ارتقا به سه خط",
-                  price: data?.productionBuildCost,
-                },
-                {
-                  name: "سوله مونتاژ",
-                  type: "ASSEMBLY_FACTORY",
-                  img: assemblyHallImg,
-                  description: "دارای سه خط مونتاژ، قابل ارتقا به چهار خط",
-                  price: data?.assemblyBuildCost,
-                },
-              ]}
-              ground={3}
-              updateBuildings={updateBuildings}
-            />
-          )}
-          <Modal
-            open={updateRegionModalOpenState}
-            onClose={() => setUpdateRegionModalOpenState(false)}
-          >
-            <div>آیا مطمئن هستید می‌خواهید زمین را گسترش دهید؟</div>
-            <div>
-              هزینه گسترش زمین: {formatPrice(data?.upgradeRegionCost)} جی‌کوین
-            </div>
-            <div className="extend-ground__btns">
-              <Button
-                className="extend-ground__btn-yes"
-                onClick={handleUpgradeRegion}
-              >
-                بله
-              </Button>
-              <Button
-                onClick={() => setUpdateRegionModalOpenState(false)}
-                type="error"
-              >
-                بازگشت
-              </Button>
-            </div>
-          </Modal>
         </>
       )}
     </div>
