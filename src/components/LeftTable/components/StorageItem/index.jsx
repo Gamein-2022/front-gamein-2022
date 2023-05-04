@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import BreakfastDiningIcon from "@mui/icons-material/BreakfastDining";
-import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import IndeterminateCheckBoxOutlinedIcon from "@mui/icons-material/IndeterminateCheckBoxOutlined";
 import "./style.scss";
@@ -43,15 +43,14 @@ function StorageItem({ item, storageSpace, updateStorageInfo }) {
       <div className="storage-item__summary">
         <div className="storage-item__name">{item.product.name}</div>
         <div className="storage-item__count">
-          {formatPrice(item.inStorageAmount + item.manufacturingAmount)}
-          عدد
+          {formatPrice(item.inStorageAmount + item.manufacturingAmount)} عدد
         </div>
         <div className="storage-item__percent">
           {(
             ((item.inStorageAmount + item.manufacturingAmount) / storageSpace) *
             item.product.unitVolume *
             100
-          ).toFixed(1)}
+          ).toFixed(2)}
           %
         </div>
         <div className="storage-item__btns">
@@ -60,9 +59,9 @@ function StorageItem({ item, storageSpace, updateStorageInfo }) {
             onClick={() => setOpen((old) => !old)}
           >
             {open ? (
-              <IndeterminateCheckBoxOutlinedIcon fontSize="large" />
+              <ExpandLessIcon fontSize="large" />
             ) : (
-              <AddBoxOutlinedIcon fontSize="large" />
+              <ExpandMoreIcon fontSize="large" />
             )}
           </div>
           <Button
@@ -76,26 +75,18 @@ function StorageItem({ item, storageSpace, updateStorageInfo }) {
       {open && (
         <div className="storage-item__expansion">
           <div className="storage-item__expansion-item">
-            <div className="storage-item__expansion-icon">
-              <BreakfastDiningIcon style={{ color: "#2798F2" }} />
-            </div>
             <div className="storage-item__expansion-name">کالاهای موجود</div>
             <div className="storage-item__expansion-percent">
-              {item.inStorageAmount}
+              {formatPrice(item.inStorageAmount)} عدد
             </div>
-            <div></div>
           </div>
           <div className="storage-item__expansion-item">
-            <div className="storage-item__expansion-icon">
-              <BreakfastDiningIcon style={{ color: "#781E5D" }} />
-            </div>
             <div className="storage-item__expansion-name">
               کالاهای در حال تولید
             </div>
             <div className="storage-item__expansion-percent">
-              {item.manufacturingAmount}
+              {formatPrice(item.manufacturingAmount)} عدد
             </div>
-            <div></div>
           </div>
         </div>
       )}

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import Chart from "react-apexcharts";
+
 import { getStorageInfo, upgradeStorage } from "../../../../apis/storage";
 import StorageItem from "../StorageItem";
 
@@ -58,6 +60,30 @@ function InStorage() {
         );
       });
   };
+
+  const options = {
+    labels: [
+      "کالای موجود",
+      "کالای در حال تولید",
+      "فضای خالی",
+      "کالای بلوکه فروش",
+    ],
+    legend: {
+      fontFamily: "kalameh",
+      fontSize: 14,
+      position: "bottom",
+    },
+    colors: ["#775DD0", "#FFB019", "#00E396", "#FF4560"],
+  };
+  const series = loading
+    ? []
+    : [
+        storageInfo?.inStoragePercent,
+        storageInfo?.manufacturingPercent,
+        storageInfo?.emptyPercent,
+        0,
+      ];
+
   return (
     <div>
       {loading && <GameinLoading size={32} />}
@@ -76,7 +102,10 @@ function InStorage() {
               <div className="in-storage__space">
                 فضای کل انبار: {formatPrice(storageInfo?.storageSpace)}
               </div>
-              <div className="in-storage-chart">
+              <div className="in-storage__chart">
+                <Chart type="pie" options={options} series={series} />
+              </div>
+              {/* <div className="in-storage-chart">
                 {storageInfo?.inStoragePercent > 0 && (
                   <div
                     style={{
@@ -114,8 +143,8 @@ function InStorage() {
                   </p>
                   <div className="in-storage-chart__value"></div>
                 </div>
-              </div>
-              <div className="in-storage-chart-guide">
+              </div> */}
+              {/* <div className="in-storage-chart-guide">
                 <div className="in-storage-chart-guide__item in-storage-chart-guide__empty">
                   <div className="in-storage-chart-guide__bullet"></div>
                   <div className="in-storage-chart-guide__text">ظرفیت خالی</div>
@@ -132,7 +161,7 @@ function InStorage() {
                     کالای موجود
                   </div>
                 </div>
-              </div>
+              </div> */}
               {storageInfo?.products?.length > 0 && (
                 <div className="storage-items">
                   {storageInfo?.products?.map((item) => (

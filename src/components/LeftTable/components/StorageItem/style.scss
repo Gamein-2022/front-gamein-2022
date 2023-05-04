@@ -43,9 +43,14 @@
     margin: 0 !important;
   }
 
+  &__expansion {
+    padding-right: 8px;
+    border-right: 2px dashed #8d8d8d;
+    margin-bottom: 8px;
+  }
+
   &__expansion-item {
     display: flex;
-    justify-content: space-between;
   }
 
   &__expansion-icon {
@@ -54,6 +59,7 @@
 
   &__expansion-name {
     min-width: 128px;
+    margin-left: 24px;
   }
 
   &__modal-btns {

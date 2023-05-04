@@ -3,6 +3,12 @@
     margin: 16px auto 0;
   }
 
+  &__chart {
+    width: 100%;
+    margin: auto;
+    max-width: 400px;
+  }
+
   &__space {
     text-align: center;
     padding: 8px 0 0;
@@ -104,4 +110,13 @@
   border-radius: 10px;
   border: 1px solid #8d8d8d;
   margin: 16px;
+}
+
+.apexcharts-legend-series {
+  display: flex;
+  align-items: center;
+
+  span:first-child {
+    margin-left: 4px;
+  }
 }

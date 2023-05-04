@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
-import { getStorageInfo } from "../../../../apis/storage";
 import "./style.scss";
 import InStorage from "../InStorage";
 import InQueue from "../InQueue";
