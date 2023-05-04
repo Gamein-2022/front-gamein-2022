@@ -7,6 +7,7 @@ import { formatPrice } from "../../utils/formatters";
 import Region from "./components/Region";
 import RegionsMap from "./components/RegionsMap";
 import "./style.scss";
+import MyCountDown from "../../components/CountDown/MyCountDown";
 
 const REGIONS = [
   {
@@ -61,8 +62,7 @@ function ChooseRegion() {
   const [balance, setBalance] = useState(0);
   const [populations, setPopulations] = useState([]);
   const selectedRegion = regionsState.findIndex((item) => item === "selected");
-  const [remainedTime, setRemainedTime] = useState("00:00");
-  const [initialRemainedTimeState, setInitialRemainedTimeState] = useState(0);
+  const [initialRemainedTimeState, setInitialRemainedTimeState] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -126,32 +126,6 @@ function ChooseRegion() {
     };
   }, []);
 
-  useEffect(() => {
-    if (initialRemainedTimeState > 0) {
-      let initialRemainedTime = initialRemainedTimeState * 1000;
-      const x = setInterval(function () {
-        var minutes = Math.floor(
-          (initialRemainedTime % (1000 * 60 * 60)) / (1000 * 60)
-        );
-        var seconds = Math.floor((initialRemainedTime % (1000 * 60)) / 1000);
-        setRemainedTime(
-          `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
-            2,
-            "0"
-          )}`
-        );
-
-        // If the count down is finished, write some text
-        if (initialRemainedTime < 0) {
-          clearInterval(x);
-          toast.success("مرحله انتخاب زمین پایان یافت.");
-          navigate("/");
-        }
-        initialRemainedTime -= 1000;
-      }, 1000);
-    }
-  }, [initialRemainedTimeState]);
-
   const updateRegionsState = (region, state) => {
     setRegionsState((old) => {
       let newState = [...old];
@@ -171,6 +145,14 @@ function ChooseRegion() {
       );
     }
   };
+
+  const handleCountDownComplete = () => {
+    if (initialRemainedTimeState) {
+      toast.success("مرحله انتخاب زمین پایان یافت.");
+      navigate("/");
+    }
+  }
+
   return (
     <div className="choose-region">
       <Helmet>
@@ -195,7 +177,9 @@ function ChooseRegion() {
             <div className="choose-region__balance-value">
               {formatPrice(balance - (prices[selectedRegion] || 0))}
             </div>
-            <div className="choose-region__time-value">{remainedTime}</div>
+            <div className="choose-region__time-value">
+              <MyCountDown timeInSeconds={initialRemainedTimeState} onComplete={handleCountDownComplete} />
+            </div>
             <div className="choose-region__time-title">
               تا پایان انتخاب منطقه
             </div>

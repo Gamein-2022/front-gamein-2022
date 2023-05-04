@@ -6,6 +6,7 @@ import {
   RAW_MATERIALS,
 } from "../../../../constants/materials";
 import "./style.scss";
+import MyCountDown from "../../../CountDown/MyCountDown";
 
 function InRouteItem({ item }) {
   const [remainedTime, setRemainedTime] = useState();
@@ -15,9 +16,6 @@ function InRouteItem({ item }) {
     const currentTime = new Date(item.currentTime).getTime();
     const newTime = ariveTime - currentTime;
     setRemainedTime(newTime);
-    setInterval(() => {
-      setRemainedTime((old) => (old - 1000 > 0 ? old - 1000 : 0));
-    }, 1000);
   }, []);
 
   if (remainedTime <= 0) {
@@ -44,7 +42,7 @@ function InRouteItem({ item }) {
       </div>
       <div className="in-route-item__footer">
         <div className="in-route-item__time">
-          زمان باقیمانده: {Math.round(remainedTime / 1000)} ثانیه
+          زمان باقیمانده: <MyCountDown timeInSeconds={remainedTime}/>
         </div>
       </div>
     </div>

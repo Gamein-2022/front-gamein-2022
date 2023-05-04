@@ -4,6 +4,7 @@ import Button from "../../../Button";
 import gameinGearLogo from "../../../../assets/gamein_gear_gray.svg";
 import { toast } from "react-toastify";
 import { GROUPS } from "../../../../constants/groups";
+import MyCountDown from "../../../CountDown/MyCountDown";
 
 function InProgress({
   lineTypeString,
@@ -16,17 +17,16 @@ function InProgress({
   product,
   group,
 }) {
-  const [currentTimeInSec, setCurrentTimeInSec] = useState(
+  const [currentTimeInMilliSec, setCurrentTimeInSec] = useState(
     new Date(currentTime).getTime()
   );
-  const intervalId = useRef();
-  const startTimeInSec = new Date(startTime).getTime();
-  const endTimeInSec = new Date(endTime).getTime();
+  const startTimeInMilliSec = new Date(startTime).getTime();
+  const endTimeInMilliSec = new Date(endTime).getTime();
   const percent = (
-    (currentTimeInSec - startTimeInSec) /
-    (endTimeInSec - startTimeInSec)
+    (currentTimeInMilliSec - startTimeInMilliSec) /
+    (endTimeInMilliSec - startTimeInMilliSec)
   ).toFixed(2);
-  const remainedTime = ((endTimeInSec - currentTimeInSec) / 1000).toFixed(2);
+  const remainedTime = ((endTimeInMilliSec - currentTimeInMilliSec) / 1000);
 
   const handleCollect = () => {
     collectLine({ lineId })
@@ -43,23 +43,11 @@ function InProgress({
       });
   };
 
-  useEffect(() => {
-    intervalId.current = setInterval(() => {
-      setCurrentTimeInSec((old) => old + 1000);
-    }, 1000);
-  }, []);
-
-  useEffect(() => {
-    if (percent >= 100) {
-      clearInterval(intervalId.current);
-    }
-  }, [percent]);
-
   return (
     <>
       <div
         className={
-          currentTimeInSec >= endTimeInSec
+          currentTimeInMilliSec >= endTimeInMilliSec
             ? "line line--DONE"
             : "line line--IN_PROGRESS"
         }
@@ -74,10 +62,10 @@ function InProgress({
         <div
           className="line__progress"
           style={{
-            width: currentTimeInSec < endTimeInSec ? `${percent * 100}%` : 0,
+            width: currentTimeInMilliSec < endTimeInMilliSec ? `${percent * 100}%` : 0,
           }}
         ></div>
-        {currentTimeInSec >= endTimeInSec ? (
+        {currentTimeInMilliSec >= endTimeInMilliSec ? (
           <div className="line__body">
             <div>
               {lineTypeString} {product?.name} انجام شد!
@@ -91,7 +79,7 @@ function InProgress({
             <div>
               در حال {lineTypeString} {product?.name}
             </div>
-            <div>{Math.floor(remainedTime)}ثانیه</div>
+            <MyCountDown timeInSeconds={remainedTime}/>
           </div>
         )}
       </div>

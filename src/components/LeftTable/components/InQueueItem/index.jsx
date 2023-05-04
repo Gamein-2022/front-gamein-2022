@@ -15,6 +15,7 @@ import {
   INTERMEDIATE_MATERIALS_LEVEL_TWO,
   RAW_MATERIALS,
 } from "../../../../constants/materials";
+import MyCountDown from "../../../CountDown/MyCountDown";
 
 function InQueueItem({ item, updateInQueueProducts }) {
   const [remainedTime, setRemainedTime] = useState(0);
@@ -24,9 +25,6 @@ function InQueueItem({ item, updateInQueueProducts }) {
     const currentTime = new Date(item.currentTime).getTime();
     const newTime = 60 - Math.round((currentTime - ariveTime) / 1000);
     setRemainedTime(newTime > 0 ? newTime : 0);
-    setInterval(() => {
-      setRemainedTime((old) => (old - 1 > 0 ? old - 1 : 0));
-    }, 1000);
   }, []);
 
   const handleCollect = (item) => {
@@ -94,7 +92,7 @@ function InQueueItem({ item, updateInQueueProducts }) {
       )}
       <div className="in-queue-item__footer">
         <div className="in-queue-item__time">
-          زمان باقیمانده: {remainedTime} ثانیه
+          زمان باقیمانده: <MyCountDown timeInSeconds={remainedTime}/>
         </div>
         <div className="in-queue-item__actions">
           <Button
