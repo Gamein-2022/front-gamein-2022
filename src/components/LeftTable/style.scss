@@ -57,7 +57,7 @@
 
   &__body {
     height: calc(100% - 100px);
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   &__close-icon {

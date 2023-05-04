@@ -19,3 +19,9 @@ export const LEFT_TABLE_TABS = {
   storage: "STORAGE",
   recycle: "RECYCLE",
 };
+
+export const PRODUCTION_AND_ASSEMBLY_TABS = {
+  ground1: "GROUND1",
+  ground2: "GROUND2",
+  ground3: "GROUND3",
+};

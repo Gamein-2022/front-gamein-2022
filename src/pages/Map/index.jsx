@@ -8,6 +8,7 @@ import Modal from "../../components/Modal";
 import {
   LEFT_TABLE_TABS,
   MIDDLE_TABLE_TABS,
+  PRODUCTION_AND_ASSEMBLY_TABS,
   RIGHT_TABLE_TABS,
   SHOP_INNER_TABS,
 } from "../../constants/tabs";
@@ -18,6 +19,7 @@ import {
   leftTableTab,
   middleTableOpen,
   middleTableTab,
+  productionAndAssemblyInnerTab,
   rightTableOpen,
   rightTableTab,
   shopInnerTab,
@@ -91,6 +93,9 @@ function Map({ buildings, updateBuildings }) {
   const setMiddleTableOpen = useSetRecoilState(middleTableOpen);
 
   const setShopInnerTab = useSetRecoilState(shopInnerTab);
+  const setProductionAndAssemblyInnerTab = useSetRecoilState(
+    productionAndAssemblyInnerTab
+  );
 
   const navigate = useNavigate();
 
@@ -118,30 +123,29 @@ function Map({ buildings, updateBuildings }) {
     document
       .getElementById("ground_1_unfinished_building")
       ?.addEventListener("click", () => {
-        setRightTableActiveTab(RIGHT_TABLE_TABS.shop);
-        setShopInnerTab(SHOP_INNER_TABS.buildings);
-        setRightTableOpen(true);
+        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
+        setProductionAndAssemblyInnerTab(PRODUCTION_AND_ASSEMBLY_TABS.ground1);
+        setLeftTableOpen(true);
       });
     document
       .getElementById("ground_2_unfinished_building")
       ?.addEventListener("click", () => {
-        setRightTableActiveTab(RIGHT_TABLE_TABS.shop);
-        setShopInnerTab(SHOP_INNER_TABS.buildings);
-        setRightTableOpen(true);
+        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
+        setProductionAndAssemblyInnerTab(PRODUCTION_AND_ASSEMBLY_TABS.ground2);
+        setLeftTableOpen(true);
       });
     document
       .getElementById("ground_3_unfinished_building")
       ?.addEventListener("click", () => {
-        setRightTableActiveTab(RIGHT_TABLE_TABS.shop);
-        setShopInnerTab(SHOP_INNER_TABS.buildings);
-        setRightTableOpen(true);
+        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
+        setProductionAndAssemblyInnerTab(PRODUCTION_AND_ASSEMBLY_TABS.ground3);
+        setLeftTableOpen(true);
       });
     document
       .getElementById("recycling_facility_unfinished_building")
       ?.addEventListener("click", () => {
-        setRightTableActiveTab(RIGHT_TABLE_TABS.shop);
-        setShopInnerTab(SHOP_INNER_TABS.buildings);
-        setRightTableOpen(true);
+        setLeftTableActiveTab(LEFT_TABLE_TABS.recycle);
+        setLeftTableOpen(true);
       });
     document
       .getElementById("recycling_facility_building")

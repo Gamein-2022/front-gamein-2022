@@ -40,3 +40,7 @@ export function startLine({ lineId, count, productId }) {
 export function collectLine({ lineId }) {
   return AxiosInstance.get(`/factory/line/collect?id=${lineId}`);
 }
+
+export function getGroundLines(ground) {
+  return AxiosInstance.get(`/factory/building/${ground}`);
+}

@@ -5,6 +5,7 @@ import {
   MIDDLE_TABLE_TABS,
   SHOP_INNER_TABS,
   RIGHT_TABLE_TABS,
+  PRODUCTION_AND_ASSEMBLY_TABS,
 } from "../constants/tabs";
 
 export const rightTableTab = atom({
@@ -20,6 +21,11 @@ export const rightTableOpen = atom({
 export const shopInnerTab = atom({
   key: "shopInnerTab",
   default: SHOP_INNER_TABS.rawMaterials,
+});
+
+export const productionAndAssemblyInnerTab = atom({
+  key: "productionAndAssemblyInnerTab",
+  default: PRODUCTION_AND_ASSEMBLY_TABS.ground1,
 });
 
 export const middleTableTab = atom({
