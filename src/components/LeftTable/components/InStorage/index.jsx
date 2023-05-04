@@ -85,7 +85,7 @@ function InStorage() {
       ];
 
   return (
-    <div>
+    <div className="in-storage">
       {loading && <GameinLoading size={32} />}
       {!loading && (
         <>

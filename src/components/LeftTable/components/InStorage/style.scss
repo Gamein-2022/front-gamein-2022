@@ -1,4 +1,7 @@
 .in-storage {
+  height: calc(100% - 48px);
+  overflow-y: auto;
+
   &__upgrade-storage-btn {
     margin: 16px auto 0;
   }
