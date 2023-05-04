@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getGroundInfo } from "../../../../../../apis/production";
+import {
+  deleteBuilding,
+  getGroundInfo,
+  upgradeBuilding,
+} from "../../../../../../apis/production";
 import ShopBuildings from "../../../../../RightTable/components/ShopBuildings";
 import "./style.scss";
 
@@ -8,10 +12,16 @@ import assemblyHallImg from "../../../../../../assets/assembly-hall.svg";
 import GameinLoading from "../../../../../GameinLoading";
 import Line from "../../../Line";
 import Button from "../../../../../Button";
+import Modal from "../../../../../Modal";
+import { formatPrice } from "../../../../../../utils/formatters";
+import { toast } from "react-toastify";
 
 function Ground1({ updateBuildings }) {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
+  const [upgradeBuildingModalOpen, setUpgradeBuildingModalOpen] =
+    useState(false);
+  const [deleteBuildingModalOpen, setDeleteBuildingModalOpen] = useState(false);
 
   useEffect(() => {
     getGroundInfo(1)
@@ -35,6 +45,36 @@ function Ground1({ updateBuildings }) {
       .catch((error) => console.log(error))
       .finally(() => {
         setLoading(false);
+      });
+  };
+
+  const handleUpgradeBuilding = () => {
+    upgradeBuilding(data?.building?.id)
+      .then((res) => res.data)
+      .then((data) => {
+        toast.success("ساختمان با موفقیت ارتقا یافت.");
+        updateGroundInfo();
+        setUpgradeBuildingModalOpen(false);
+      })
+      .catch((error) => {
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
+  const handleDeleteBuilding = () => {
+    deleteBuilding(1)
+      .then((res) => res.data)
+      .then((data) => {
+        toast.success("ساختمان با موفقیت حذف شد.");
+        updateGroundInfo();
+        setDeleteBuildingModalOpen(false);
+      })
+      .catch((error) => {
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
       });
   };
 
@@ -69,8 +109,20 @@ function Ground1({ updateBuildings }) {
             </>
           )}
           {data?.building && !data?.building?.isUpgraded && (
-            <Button className="shop-buildings__upgrade-btn">
+            <Button
+              onClick={() => setUpgradeBuildingModalOpen(true)}
+              className="shop-buildings__upgrade-btn"
+            >
               ارتقای ساختمان
+            </Button>
+          )}
+          {data?.building && (
+            <Button
+              type="error"
+              onClick={() => setDeleteBuildingModalOpen(true)}
+              className="shop-buildings__upgrade-btn"
+            >
+              حذف ساختمان
             </Button>
           )}
           {data?.building?.lines
@@ -90,6 +142,50 @@ function Ground1({ updateBuildings }) {
             ))}
         </>
       )}
+      <Modal
+        open={upgradeBuildingModalOpen}
+        onClose={() => setUpgradeBuildingModalOpen(false)}
+      >
+        <div>آیا مطمئن هستید می‌خواهید ساختمان را ارتقا دهید؟</div>
+        <div>
+          هزینه ارتقا ساختمان: {formatPrice(data?.building?.upgradeCost)}{" "}
+          جی‌کوین
+        </div>
+        <div className="extend-ground__btns">
+          <Button
+            className="extend-ground__btn-yes"
+            onClick={handleUpgradeBuilding}
+          >
+            بله
+          </Button>
+          <Button
+            onClick={() => setUpgradeBuildingModalOpen(false)}
+            type="error"
+          >
+            بازگشت
+          </Button>
+        </div>
+      </Modal>
+      <Modal
+        open={deleteBuildingModalOpen}
+        onClose={() => setDeleteBuildingModalOpen(false)}
+      >
+        <div>آیا مطمئن هستید می‌خواهید ساختمان را حذف کنید؟</div>
+        <div className="extend-ground__btns">
+          <Button
+            className="extend-ground__btn-yes"
+            onClick={handleDeleteBuilding}
+          >
+            بله
+          </Button>
+          <Button
+            onClick={() => setDeleteBuildingModalOpen(false)}
+            type="error"
+          >
+            بازگشت
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 }
