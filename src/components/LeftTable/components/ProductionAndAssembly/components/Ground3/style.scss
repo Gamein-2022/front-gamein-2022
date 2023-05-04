@@ -1,0 +1,12 @@
+.ground3 {
+  height: calc(100% - 48px);
+}
+
+.ground3-unavailable {
+  padding: 16px;
+  text-align: center;
+
+  &__upgrade-region-btn {
+    margin: 16px auto;
+  }
+}

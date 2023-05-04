@@ -7,7 +7,7 @@ import { PRODUCTION_AND_ASSEMBLY_TABS } from "../../../../constants/tabs";
 import Ground2 from "./components/Ground2";
 import Ground3 from "./components/Ground3";
 
-function ProductionAndAssembly() {
+function ProductionAndAssembly({ updateBuildings }) {
   const [activeTab, setActiveTab] = useRecoilState(
     productionAndAssemblyInnerTab
   );
@@ -43,9 +43,15 @@ function ProductionAndAssembly() {
           زمین ۳
         </div>
       </div>
-      {activeTab === PRODUCTION_AND_ASSEMBLY_TABS.ground1 && <Ground1 />}
-      {activeTab === PRODUCTION_AND_ASSEMBLY_TABS.ground2 && <Ground2 />}
-      {activeTab === PRODUCTION_AND_ASSEMBLY_TABS.ground3 && <Ground3 />}
+      {activeTab === PRODUCTION_AND_ASSEMBLY_TABS.ground1 && (
+        <Ground1 updateBuildings={updateBuildings} />
+      )}
+      {activeTab === PRODUCTION_AND_ASSEMBLY_TABS.ground2 && (
+        <Ground2 updateBuildings={updateBuildings} />
+      )}
+      {activeTab === PRODUCTION_AND_ASSEMBLY_TABS.ground3 && (
+        <Ground3 updateBuildings={updateBuildings} />
+      )}
       {/* {lines
         .filter((item) => item.status === "IN_PROGRESS")
         .map((line) => (

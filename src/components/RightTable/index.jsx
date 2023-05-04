@@ -13,7 +13,7 @@ import { useRecoilState } from "recoil";
 import { rightTableOpen, rightTableTab } from "../../store/tabs";
 import { RIGHT_TABLE_TABS } from "../../constants/tabs";
 
-function RightTable({ updateBuildings }) {
+function RightTable() {
   const [tab, setTab] = useRecoilState(rightTableTab);
   const [open, setOpen] = useRecoilState(rightTableOpen);
 
@@ -91,9 +91,7 @@ function RightTable({ updateBuildings }) {
       </div>
       <div className="right-table__body">
         {tab === RIGHT_TABLE_TABS.trade && <Trade />}
-        {tab === RIGHT_TABLE_TABS.shop && (
-          <Shop updateBuildings={updateBuildings} />
-        )}
+        {tab === RIGHT_TABLE_TABS.shop && <Shop />}
         {tab === RIGHT_TABLE_TABS.deals && <Deals />}
       </div>
       <div className="left-table__close-icon" onClick={closeRightTable}>

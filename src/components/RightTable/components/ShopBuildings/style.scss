@@ -1,12 +1,16 @@
 .shop-buildings {
   color: #8d8d8d;
   position: relative;
-  height: calc(100% - 48px);
+  height: 100%;
+
+  &__upgrade-btn {
+    margin: auto;
+  }
 
   &__list {
-    padding: 16px;
+    padding: 8px 16px;
     height: calc(100% - 128px);
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   &__building {
@@ -105,7 +109,7 @@
     background-color: #009054;
     color: #fff;
     border-radius: 8px;
-    padding: 8px;
+    padding: 6px;
     min-width: 128px;
     margin-top: 8px;
     border: none;

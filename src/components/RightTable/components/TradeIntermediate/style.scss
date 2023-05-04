@@ -2,7 +2,7 @@
   position: relative;
   top: 48px;
   height: calc(100% - 48px);
-  overflow-y: scroll;
+  overflow-y: auto;
 
   &__top {
     height: calc(100% - 72px);

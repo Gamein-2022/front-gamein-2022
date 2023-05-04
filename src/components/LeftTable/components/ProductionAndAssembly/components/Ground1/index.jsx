@@ -1,19 +1,49 @@
-import React, { useEffect } from "react";
-import { getGroundLines } from "../../../../../../apis/production";
+import React, { useEffect, useState } from "react";
+import { getGroundInfo } from "../../../../../../apis/production";
 import ShopBuildings from "../../../../../RightTable/components/ShopBuildings";
 import "./style.scss";
 
-function Ground1() {
+import productionHallImg from "../../../../../../assets/production-hall.svg";
+import assemblyHallImg from "../../../../../../assets/assembly-hall.svg";
+
+function Ground1({ updateBuildings }) {
+  const [data, setData] = useState();
+
   useEffect(() => {
-    getGroundLines(1)
+    getGroundInfo(1)
       .then((res) => res.data)
-      .then((data) => {})
+      .then((data) => {
+        setData(data?.result);
+      })
       .catch((error) => console.log(error));
   }, []);
   return (
-    <>
-      <ShopBuildings />
-    </>
+    <div className="ground1">
+      {!data?.building && (
+        <>
+          <ShopBuildings
+            buildings={[
+              {
+                name: "سوله تولید",
+                type: "PRODUCTION_FACTORY",
+                img: productionHallImg,
+                description: "دارای دو خط تولید، قابل ارتقا به سه خط",
+                price: data?.productionBuildCost,
+              },
+              {
+                name: "سوله مونتاژ",
+                type: "ASSEMBLY_FACTORY",
+                img: assemblyHallImg,
+                description: "دارای سه خط مونتاژ، قابل ارتقا به چهار خط",
+                price: data?.assemblyBuildCost,
+              },
+            ]}
+            ground={1}
+            updateBuildings={updateBuildings}
+          />
+        </>
+      )}
+    </div>
   );
 }
 

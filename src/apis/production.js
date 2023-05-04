@@ -41,6 +41,6 @@ export function collectLine({ lineId }) {
   return AxiosInstance.get(`/factory/line/collect?id=${lineId}`);
 }
 
-export function getGroundLines(ground) {
+export function getGroundInfo(ground) {
   return AxiosInstance.get(`/factory/building/${ground}`);
 }

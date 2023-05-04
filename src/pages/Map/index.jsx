@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { upgradeRegion } from "../../apis/factory";
-import Button from "../../components/Button";
-import Modal from "../../components/Modal";
+import { useSetRecoilState } from "recoil";
 import {
   LEFT_TABLE_TABS,
   MIDDLE_TABLE_TABS,
@@ -12,8 +8,6 @@ import {
   RIGHT_TABLE_TABS,
   SHOP_INNER_TABS,
 } from "../../constants/tabs";
-import useUpdateBalance from "../../hooks/useUpdateBalance";
-import { updateRegionModalOpen } from "../../store/modals";
 import {
   leftTableOpen,
   leftTableTab,
@@ -24,7 +18,6 @@ import {
   rightTableTab,
   shopInnerTab,
 } from "../../store/tabs";
-import { formatPrice } from "../../utils/formatters";
 import { ReactComponent as MapImage } from "./gamein_map.svg";
 import "./style.scss";
 
@@ -99,11 +92,6 @@ function Map({ buildings, updateBuildings }) {
 
   const navigate = useNavigate();
 
-  const [updateRegionModalOpenState, setUpdateRegionModalOpenState] =
-    useRecoilState(updateRegionModalOpen);
-
-  const updateBalance = useUpdateBalance();
-
   useEffect(() => {
     // add functionality
     document.getElementById("ground").addEventListener("click", (e) => {
@@ -120,27 +108,21 @@ function Map({ buildings, updateBuildings }) {
       }
     });
 
-    document
-      .getElementById("ground_1")
-      ?.addEventListener("click", () => {
-        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
-        setProductionAndAssemblyInnerTab(PRODUCTION_AND_ASSEMBLY_TABS.ground1);
-        setLeftTableOpen(true);
-      });
-    document
-      .getElementById("ground_2")
-      ?.addEventListener("click", () => {
-        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
-        setProductionAndAssemblyInnerTab(PRODUCTION_AND_ASSEMBLY_TABS.ground2);
-        setLeftTableOpen(true);
-      });
-    document
-      .getElementById("ground_3")
-      ?.addEventListener("click", () => {
-        setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
-        setProductionAndAssemblyInnerTab(PRODUCTION_AND_ASSEMBLY_TABS.ground3);
-        setLeftTableOpen(true);
-      });
+    document.getElementById("ground_1")?.addEventListener("click", () => {
+      setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
+      setProductionAndAssemblyInnerTab(PRODUCTION_AND_ASSEMBLY_TABS.ground1);
+      setLeftTableOpen(true);
+    });
+    document.getElementById("ground_2")?.addEventListener("click", () => {
+      setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
+      setProductionAndAssemblyInnerTab(PRODUCTION_AND_ASSEMBLY_TABS.ground2);
+      setLeftTableOpen(true);
+    });
+    document.getElementById("ground_3")?.addEventListener("click", () => {
+      setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
+      setProductionAndAssemblyInnerTab(PRODUCTION_AND_ASSEMBLY_TABS.ground3);
+      setLeftTableOpen(true);
+    });
     document
       .getElementById("recycling_facility_unfinished_building")
       ?.addEventListener("click", () => {
@@ -201,35 +183,37 @@ function Map({ buildings, updateBuildings }) {
       HIDDEN_ITEMS.push("recycling_facility_unfinished_building");
       SHOW_ITEMS.push("recycling_facility_building");
     }
-    buildings?.buildings.forEach((building) => {
-      const ground = building?.ground;
-      if (ground === 1) {
-        if (building?.type === "PRODUCTION_FACTORY") {
-          SHOW_ITEMS.push("ground_1_production_facility");
-        } else if (building?.type === "ASSEMBLY_FACTORY") {
-          SHOW_ITEMS.push("ground_1_assembly_facility");
-        }
-        HIDDEN_ITEMS.push("ground_1_unfinished_building");
-      } else if (ground === 2) {
-        if (building?.type === "PRODUCTION_FACTORY") {
-          SHOW_ITEMS.push("ground_2_production_facility");
-        } else if (building?.type === "ASSEMBLY_FACTORY") {
-          SHOW_ITEMS.push("ground_2_assembly_facility");
-        }
-        HIDDEN_ITEMS.push("ground_2_unfinished_building");
-      } else if (ground === 3) {
-        HIDDEN_ITEMS.push("fences_extra");
-        HIDDEN_ITEMS.push("ground_3_locked");
-        HIDDEN_ITEMS.push("ground_3_unfinished_building");
-        HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
-          (item) => item !== "ground_3_asphalt"
-        );
-        if (building?.type === "PRODUCTION_FACTORY") {
-          SHOW_ITEMS.push("ground_3_production_facility");
-        } else if (building?.type === "ASSEMBLY_FACTORY") {
-          SHOW_ITEMS.push("ground_3_assembly_facility");
-        } else {
-          SHOW_ITEMS.push("ground_3_inventory");
+    buildings?.buildings.forEach((building, index) => {
+      const ground = index;
+      if (building) {
+        if (ground === 1) {
+          if (building?.type === "PRODUCTION_FACTORY") {
+            SHOW_ITEMS.push("ground_1_production_facility");
+          } else if (building?.type === "ASSEMBLY_FACTORY") {
+            SHOW_ITEMS.push("ground_1_assembly_facility");
+          }
+          HIDDEN_ITEMS.push("ground_1_unfinished_building");
+        } else if (ground === 2) {
+          if (building?.type === "PRODUCTION_FACTORY") {
+            SHOW_ITEMS.push("ground_2_production_facility");
+          } else if (building?.type === "ASSEMBLY_FACTORY") {
+            SHOW_ITEMS.push("ground_2_assembly_facility");
+          }
+          HIDDEN_ITEMS.push("ground_2_unfinished_building");
+        } else if (ground === 3) {
+          HIDDEN_ITEMS.push("fences_extra");
+          HIDDEN_ITEMS.push("ground_3_locked");
+          HIDDEN_ITEMS.push("ground_3_unfinished_building");
+          HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+            (item) => item !== "ground_3_asphalt"
+          );
+          if (building?.type === "PRODUCTION_FACTORY") {
+            SHOW_ITEMS.push("ground_3_production_facility");
+          } else if (building?.type === "ASSEMBLY_FACTORY") {
+            SHOW_ITEMS.push("ground_3_assembly_facility");
+          } else {
+            SHOW_ITEMS.push("ground_3_inventory");
+          }
         }
       }
     });
@@ -245,50 +229,11 @@ function Map({ buildings, updateBuildings }) {
     setHidden(false);
   }, [buildings]);
 
-  const handleUpgradeRegion = () => {
-    upgradeRegion()
-      .then((res) => res.data)
-      .then((data) => {
-        console.log(data);
-        setUpdateRegionModalOpenState(false);
-        toast.success("زمین گسترش یافت.");
-        updateBuildings();
-        updateBalance();
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
-        );
-      });
-  };
-
   return (
     <div className="map">
       <div style={{ visibility: hidden ? "hidden" : "unset" }}>
         <MapImage />
       </div>
-      <Modal
-        open={updateRegionModalOpenState}
-        onClose={() => setUpdateRegionModalOpenState(false)}
-      >
-        <div>آیا مطمئن هستید می‌خواهید زمین را گسترش دهید؟</div>
-        <div>هزینه گسترش زمین: {formatPrice("180000000")} جی‌کوین</div>
-        <div className="extend-ground__btns">
-          <Button
-            className="extend-ground__btn-yes"
-            onClick={handleUpgradeRegion}
-          >
-            بله
-          </Button>
-          <Button
-            onClick={() => setUpdateRegionModalOpenState(false)}
-            type="error"
-          >
-            بازگشت
-          </Button>
-        </div>
-      </Modal>
     </div>
   );
 }

@@ -46,9 +46,9 @@ function Home() {
         <Map buildings={buildings} updateBuildings={updateBuildings} />
       )}
       <div className="home__bottom-sheet">
-        <RightTable updateBuildings={updateBuildings} />
+        <RightTable />
         <MiddleTable />
-        <LeftTable />
+        <LeftTable updateBuildings={updateBuildings} />
       </div>
     </div>
   );
