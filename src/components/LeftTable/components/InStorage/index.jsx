@@ -75,14 +75,18 @@ function InStorage() {
     },
     colors: ["#775DD0", "#FFB019", "#00E396", "#FF4560"],
   };
+
+  const inStoragePercent = +parseFloat(storageInfo?.inStoragePercent).toFixed(
+    3
+  );
+  const manufacturingPercent = +parseFloat(
+    storageInfo?.manufacturingPercent
+  ).toFixed(3);
+  const emptyPercent = +parseFloat(storageInfo?.emptyPercent).toFixed(3);
+  const blockedPercent = +parseFloat(storageInfo?.blockedPercent).toFixed(3) || 0;
   const series = loading
     ? []
-    : [
-        storageInfo?.inStoragePercent,
-        storageInfo?.manufacturingPercent,
-        storageInfo?.emptyPercent,
-        0,
-      ];
+    : [inStoragePercent, manufacturingPercent, emptyPercent, blockedPercent];
 
   return (
     <div className="in-storage">
@@ -105,63 +109,6 @@ function InStorage() {
               <div className="in-storage__chart">
                 <Chart type="pie" options={options} series={series} />
               </div>
-              {/* <div className="in-storage-chart">
-                {storageInfo?.inStoragePercent > 0 && (
-                  <div
-                    style={{
-                      width: `${storageInfo?.inStoragePercent?.toFixed(1)}%`,
-                    }}
-                    className="in-storage-chart__in-storage"
-                  >
-                    <p className="in-storage-chart__title">
-                      {storageInfo?.inStoragePercent?.toFixed(1)}%
-                    </p>
-                    <div className="in-storage-chart__value"></div>
-                  </div>
-                )}
-                {storageInfo?.manufacturingPercent > 0 && (
-                  <div
-                    style={{
-                      width: `${storageInfo?.manufacturingPercent?.toFixed(
-                        1
-                      )}%`,
-                    }}
-                    className="in-storage-chart__in-manifacture"
-                  >
-                    <p className="in-storage-chart__title">
-                      {storageInfo?.manufacturingPercent?.toFixed(1)}%
-                    </p>
-                    <div className="in-storage-chart__value"></div>
-                  </div>
-                )}
-                <div
-                  style={{ width: `${storageInfo?.emptyPercent?.toFixed(1)}%` }}
-                  className="in-storage-chart__empty"
-                >
-                  <p className="in-storage-chart__title">
-                    {storageInfo?.emptyPercent?.toFixed(1)}%
-                  </p>
-                  <div className="in-storage-chart__value"></div>
-                </div>
-              </div> */}
-              {/* <div className="in-storage-chart-guide">
-                <div className="in-storage-chart-guide__item in-storage-chart-guide__empty">
-                  <div className="in-storage-chart-guide__bullet"></div>
-                  <div className="in-storage-chart-guide__text">ظرفیت خالی</div>
-                </div>
-                <div className="in-storage-chart-guide__item in-storage-chart-guide__in-manifacture">
-                  <div className="in-storage-chart-guide__bullet"></div>
-                  <div className="in-storage-chart-guide__text">
-                    کالای در حال تولید
-                  </div>
-                </div>
-                <div className="in-storage-chart-guide__item in-storage-chart-guide__in-storage">
-                  <div className="in-storage-chart-guide__bullet"></div>
-                  <div className="in-storage-chart-guide__text">
-                    کالای موجود
-                  </div>
-                </div>
-              </div> */}
               {storageInfo?.products?.length > 0 && (
                 <div className="storage-items">
                   {storageInfo?.products?.map((item) => (
