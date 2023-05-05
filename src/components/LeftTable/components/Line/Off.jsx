@@ -151,6 +151,9 @@ function Off({
       });
   };
 
+  console.log("HHHHHHHHHHHHHH");
+  console.log(product);
+
   return (
     <>
       <Modal
@@ -208,13 +211,19 @@ function Off({
               <div className="setup-line-modal__column-title">
                 بررسی موجودی انبار
               </div>
-              <NumberInput
-                label="تعداد:"
-                step={1}
-                wrapperClassName="setup-line-modal__quantity"
-                value={quantity}
-                onChange={(value) => setQuantity(value)}
-              />
+              <div style={{ display: "flex" }}>
+                <div style={{ marginLeft: 8 }}>تعداد:</div>
+                <NumberInput
+                  step={
+                    product.product.level === 0
+                      ? product.requirements[0].numberPerOne
+                      : 1
+                  }
+                  wrapperClassName="setup-line-modal__quantity"
+                  value={quantity}
+                  onChange={(value) => setQuantity(value)}
+                />
+              </div>
               {quantity > 0 && product && (
                 <>
                   <div className="setup-line-modal__storage-description">
@@ -235,7 +244,11 @@ function Off({
                         {product?.requirements.map((req) => (
                           <tr>
                             <td>{req.product.name}</td>
-                            <td>{req.numberPerOne * quantity}</td>
+                            <td>
+                              {req.product.level === -1
+                                ? (quantity / req.numberPerOne).toFixed(2)
+                                : req.numberPerOne * quantity}
+                            </td>
                             <td
                               style={{
                                 color:
@@ -246,7 +259,7 @@ function Off({
                             >
                               {req.inStorage}
                             </td>
-                            {req.product.level === 0 && (
+                            {req.product.level <= 0 && (
                               <td className="setup-line-modal__storage-icon">
                                 {req.inStorage <
                                   req.numberPerOne * quantity && (
@@ -437,7 +450,7 @@ function Off({
                 <div className="shop-modal__transport-text">
                   هواپیما
                   <br />
-                  در {selectedMaterial?.planeDuration * 8} ثانیه
+                  در {selectedMaterial?.planeDuration} ثانیه
                 </div>
               </div>
               <div
@@ -454,7 +467,7 @@ function Off({
                 <div className="shop-modal__transport-text">
                   کشتی
                   <br />
-                  در {selectedMaterial?.shipDuration * 8} ثانیه
+                  در {selectedMaterial?.shipDuration} ثانیه
                 </div>
               </div>
             </div>
