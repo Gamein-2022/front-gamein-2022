@@ -71,23 +71,23 @@ function Off({
   const transportCost =
     transport === "ship"
       ? selectedMaterial?.shipPrice +
-        Math.floor(
-          (selectedMaterial?.shipPrice / 100) *
+        selectedMaterial?.shipVariablePrice *
+          Math.floor(
             Math.sqrt(
               count *
                 selectedMaterial?.unitVolume *
                 selectedMaterial?.distance || 0
             )
-        )
+          )
       : selectedMaterial?.planePrice +
-        Math.floor(
-          (selectedMaterial?.planePrice / 100) *
+        selectedMaterial?.planeVariablePrice *
+          Math.floor(
             Math.sqrt(
               count *
                 selectedMaterial?.unitVolume *
                 selectedMaterial?.distance || 0
             )
-        );
+          );
 
   const productCost = count * selectedMaterial?.price || 0;
 

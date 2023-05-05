@@ -222,24 +222,23 @@ function Orders() {
   const transportCost =
     transport === "ship"
       ? selectedOffer?.shipPrice +
-        Math.floor(
-          (selectedOffer?.shipPrice / 100) *
+        selectedOffer?.shipVariablePrice *
+          Math.floor(
             Math.sqrt(
               selectedOffer?.order?.quantity *
                 selectedOffer?.unitVolume *
                 selectedOffer?.distance
             )
-        )
+          )
       : selectedOffer?.planePrice +
-        Math.floor(
-          (selectedOffer?.planePrice / 100) *
+        selectedOffer?.planeVariablePrice *
+          Math.floor(
             Math.sqrt(
               selectedOffer?.order?.quantity *
                 selectedOffer?.unitVolume *
                 selectedOffer?.distance
             )
-        );
-
+          );
   return (
     <>
       <div className="offers-sent">
@@ -278,7 +277,9 @@ function Orders() {
                     : orderType === "BUY"
                     ? "خریداری شده"
                     : "فروخته‌شده"}
-                  {isWaiting && <div className="order-card__offer-count">{offerCount}</div>}
+                  {isWaiting && (
+                    <div className="order-card__offer-count">{offerCount}</div>
+                  )}
                 </div>
                 <div className="order-card__body">
                   <div className="order-card__right">
@@ -436,8 +437,8 @@ function Orders() {
                   {offer.distance > 0 ? (
                     <div>
                       <div>
-                        ارسال با هواپیما در {offer.planeDuration} ثانیه با
-                        هزینه {offer.planePrice}
+                        ارسال با هواپیما در {offer.planeDuration} ثانیه با هزینه{" "}
+                        {offer.planePrice}
                       </div>
                       <div>
                         ارسال با کشتی در {offer.shipDuration} ثانیه با هزینه{" "}

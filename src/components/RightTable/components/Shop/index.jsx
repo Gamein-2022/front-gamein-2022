@@ -33,20 +33,19 @@ function Shop() {
   const transportCost =
     transport === "ship"
       ? selectedMaterial?.shipPrice +
-        Math.floor(
-          (selectedMaterial?.shipPrice / 100) *
+        selectedMaterial?.shipVariablePrice *
+          Math.floor(
             Math.sqrt(
               count * selectedMaterial?.unitVolume * selectedMaterial?.distance
             )
-        )
+          )
       : selectedMaterial?.planePrice +
-        Math.floor(
-          (selectedMaterial?.planePrice / 100) *
+        selectedMaterial?.planeVariablePrice *
+          Math.floor(
             Math.sqrt(
               count * selectedMaterial?.unitVolume * selectedMaterial?.distance
             )
-        );
-
+          );
   const productCost = count * selectedMaterial?.price || 0;
 
   const totalCost = transportCost + productCost || 0;
