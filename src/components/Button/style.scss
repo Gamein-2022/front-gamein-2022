@@ -20,6 +20,11 @@
     border: 1px solid #009054;
   }
 
+  &--warning {
+    color: #000;
+    background-color: rgb(255, 194, 39);
+  }
+
   &--error {
     background-color: #d63f26;
   }

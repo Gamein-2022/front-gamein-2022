@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { collectLine } from "../../../../apis/production";
+import { cancelLine, collectLine } from "../../../../apis/production";
 import Button from "../../../Button";
 import gameinGearLogo from "../../../../assets/gamein_gear_gray.svg";
 import { toast } from "react-toastify";
 import { GROUPS } from "../../../../constants/groups";
 import MyCountDown from "../../../CountDown/MyCountDown";
+import Modal from "../../../Modal";
 
 function InProgress({
   lineTypeString,
@@ -20,13 +21,14 @@ function InProgress({
   const [currentTimeInMilliSec, setCurrentTimeInMilliSec] = useState(
     new Date(currentTime).getTime()
   );
+  const [cancelLineModalOpen, setCancelLineModalOpen] = useState(false);
   const startTimeInMilliSec = new Date(startTime).getTime();
   const endTimeInMilliSec = new Date(endTime).getTime();
   const percent = (
     (currentTimeInMilliSec - startTimeInMilliSec) /
     (endTimeInMilliSec - startTimeInMilliSec)
   ).toFixed(2);
-  const remainedTime = ((endTimeInMilliSec - currentTimeInMilliSec) / 1000);
+  const remainedTime = (endTimeInMilliSec - currentTimeInMilliSec) / 1000;
 
   const handleCollect = () => {
     collectLine({ lineId })
@@ -44,12 +46,27 @@ function InProgress({
   };
 
   const handleCountDownTick = () => {
-    setCurrentTimeInMilliSec(currentTimeInMilliSec + 1000)
-  }
+    setCurrentTimeInMilliSec(currentTimeInMilliSec + 1000);
+  };
 
   const handleCountDownComplete = () => {
-    setCurrentTimeInMilliSec(endTimeInMilliSec)
-  }
+    setCurrentTimeInMilliSec(endTimeInMilliSec);
+  };
+
+  const handleCancelLine = () => {
+    cancelLine({ lineId })
+      .then((res) => res.data)
+      .then((data) => {
+        toast.success(`${lineTypeString} با موفقیت لغو شد.`);
+        setCancelLineModalOpen(false);
+        updateLines();
+      })
+      .catch((error) => {
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
 
   return (
     <>
@@ -70,7 +87,10 @@ function InProgress({
         <div
           className="line__progress"
           style={{
-            width: currentTimeInMilliSec < endTimeInMilliSec ? `${percent * 100}%` : 0,
+            width:
+              currentTimeInMilliSec < endTimeInMilliSec
+                ? `${percent * 100}%`
+                : 0,
           }}
         ></div>
         {currentTimeInMilliSec >= endTimeInMilliSec ? (
@@ -87,10 +107,34 @@ function InProgress({
             <div>
               در حال {lineTypeString} {product?.name}
             </div>
-            <MyCountDown timeInSeconds={remainedTime} onComplete={handleCountDownComplete} onTick={handleCountDownTick}/>
+            <MyCountDown
+              timeInSeconds={remainedTime}
+              onComplete={handleCountDownComplete}
+              onTick={handleCountDownTick}
+            />
+            <Button
+              onClick={() => setCancelLineModalOpen(true)}
+              type={"warning"}
+            >
+              لغو {lineTypeString}
+            </Button>
           </div>
         )}
       </div>
+      <Modal
+        open={cancelLineModalOpen}
+        onClose={() => setCancelLineModalOpen(false)}
+      >
+        <div>آیا مطمئن هستید می‌خواهید {lineTypeString} را لغو کنید</div>
+        <div className="extend-ground__btns">
+          <Button className="extend-ground__btn-yes" onClick={handleCancelLine}>
+            بله
+          </Button>
+          <Button onClick={() => setCancelLineModalOpen(false)} type="error">
+            بازگشت
+          </Button>
+        </div>
+      </Modal>
     </>
   );
 }
