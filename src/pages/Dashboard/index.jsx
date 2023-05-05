@@ -4,19 +4,17 @@ import Helmet from "react-helmet";
 import { useRecoilValue } from "recoil";
 import { infoState } from "../../store/team-info";
 import MyPerformance from "./components/MyPerformance";
+import Transactions from "./components/Transactions";
 import RegionsMap from "./components/RegionsMap";
-import ProductionHistory from "./components/ProductionHistory";
-import TradeHistory from "./components/TradeHistory";
 import "./style.scss";
 
 const DASHBOARD_TABS = {
-  productionHistory: "production-history",
-  tradeHistory: "trade-history",
+  transctions: "transctions",
   myPerformance: "my-performance",
   regionsMap: "regions-map",
 };
 function Dashboard() {
-  const [activeTab, setActiveTab] = useState("production-history");
+  const [activeTab, setActiveTab] = useState(DASHBOARD_TABS.transctions);
   const teamInfo = useRecoilValue(infoState);
   return (
     <>
@@ -30,22 +28,12 @@ function Dashboard() {
             <div
               className={classNames("dashboard__right-top-item", {
                 "dashboard__right-top-item--active":
-                  activeTab === DASHBOARD_TABS.productionHistory,
+                  activeTab === DASHBOARD_TABS.transctions,
               })}
-              onClick={() => setActiveTab(DASHBOARD_TABS.productionHistory)}
-              style={{ zIndex: 4 }}
-            >
-              تاریخچه تولید و مونتاژ
-            </div>
-            <div
-              className={classNames("dashboard__right-top-item", {
-                "dashboard__right-top-item--active":
-                  activeTab === DASHBOARD_TABS.tradeHistory,
-              })}
-              onClick={() => setActiveTab(DASHBOARD_TABS.tradeHistory)}
+              onClick={() => setActiveTab(DASHBOARD_TABS.transctions)}
               style={{ zIndex: 3 }}
             >
-              تاریخچه خرید و فروش کالا
+              تراکنش‌ها
             </div>
             <div
               className={classNames("dashboard__right-top-item", {
@@ -104,10 +92,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="dashboard__left">
-          {activeTab === DASHBOARD_TABS.productionHistory && (
-            <ProductionHistory />
-          )}
-          {activeTab === DASHBOARD_TABS.tradeHistory && <TradeHistory />}
+          {activeTab === DASHBOARD_TABS.transctions && <Transactions />}
           {activeTab === DASHBOARD_TABS.myPerformance && <MyPerformance />}
           {activeTab === DASHBOARD_TABS.regionsMap && <RegionsMap />}
         </div>

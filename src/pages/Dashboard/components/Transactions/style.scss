@@ -1,0 +1,66 @@
+.logs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px;
+  overflow-y: auto;
+  height: 100%;
+
+  &__chips {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  &__chip {
+    cursor: pointer;
+    padding: 8px 24px;
+    color: #a5262d;
+    border: 1px solid #a5262d;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 32px;
+    margin: 6px;
+
+    &--active {
+      border: none;
+      background: linear-gradient(#414141 0%, #a5262d 100%);
+      color: #fff;
+    }
+  }
+
+  &__table {
+    width: 100%;
+    padding: 8px;
+    text-align: center;
+    max-width: 600px;
+    color: #607d8b;
+    border: 1px solid #b0bec5;
+    overflow: hidden;
+
+    border-collapse: collapse;
+    border-radius: 16px;
+    border-style: hidden; /* hide standard table (collapsed) border */
+    box-shadow: 0 0 0 1px #b0bec5; /* this draws the table border  */
+
+    thead {
+      border-bottom: 1px solid #b0bec5;
+      background-color: #eceff1;
+    }
+
+    td,
+    th {
+      border: 1px solid #b0bec5;
+      padding: 4px;
+    }
+  }
+
+  &__red {
+    color: #d63f26;
+    font-weight: 600;
+  }
+
+  &__green {
+    color: #009054;
+    font-weight: 600;
+  }
+}
