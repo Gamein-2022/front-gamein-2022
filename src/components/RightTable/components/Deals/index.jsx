@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import OffersSent from "../OffersSent";
 import Orders from "../Orders";
 import "./style.scss";
-
+import { Trans } from '@lingui/macro';
+import { t } from "@lingui/macro";
 function Deals() {
   const [activeTab, setActiveTab] = useState("recieved");
 
@@ -16,7 +17,7 @@ function Deals() {
           })}
           onClick={() => setActiveTab("sent")}
         >
-          پیشنهاد‌های فرستاده‌شده
+          <Trans>پیشنهاد‌های فرستاده‌شده</Trans>
         </div>
         <div
           className={classNames("offers__header-item", {
@@ -24,7 +25,7 @@ function Deals() {
           })}
           onClick={() => setActiveTab("recieved")}
         >
-          سفارش‌ها
+         <Trans> سفارش‌ها</Trans>
         </div>
       </div>
       {activeTab === "sent" && <OffersSent />}

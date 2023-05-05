@@ -7,7 +7,8 @@ import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import productionAssemblyLogo from "../../assets/productionAssemblyIcon.svg";
 import storageLogo from "../../assets/storageIcon.svg";
 import recycleLogo from "../../assets/recycleIcon.svg";
-
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro";
 import "./style.scss";
 import { useRecoilState } from "recoil";
 import { leftTableOpen, leftTableTab } from "../../store/tabs";
@@ -45,8 +46,8 @@ function LeftTable({ updateBuildings }) {
             src={productionAssemblyLogo}
             alt="production"
           />
-          تولید و مونتاژ
-        </div>
+<Trans>تولید و مونتاژ
+</Trans>        </div>
         <div
           className={classNames("left-table__header-item", {
             "left-table__header-item--active": tab === LEFT_TABLE_TABS.storage,
@@ -61,8 +62,8 @@ function LeftTable({ updateBuildings }) {
           }}
         >
           <img className="left-table__logo" src={storageLogo} alt="storage" />
-          مدیریت انبار
-        </div>
+<Trans>مدیریت انبار
+</Trans>        </div>
         <div
           className={classNames("left-table__header-item", {
             "left-table__header-item--active": tab === LEFT_TABLE_TABS.recycle,
@@ -77,8 +78,8 @@ function LeftTable({ updateBuildings }) {
           }}
         >
           <img className="left-table__logo" src={recycleLogo} alt="recycle" />
-          بازیافت
-        </div>
+<Trans>بازیافت
+</Trans>        </div>
       </div>
       <div className="left-table__body">
         {tab === LEFT_TABLE_TABS.storage && <Storage />}

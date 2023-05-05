@@ -12,7 +12,8 @@ import "./style.scss";
 import { isGamePausedState } from "../../store/time";
 import GameinLoading from "../GameinLoading";
 import { getInitialRegion } from "../../apis/region";
-
+import { Trans } from '@lingui/macro';
+import { t } from '@lingui/macro';
 const Layout = () => {
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
@@ -59,7 +60,11 @@ const Layout = () => {
       {isGamePaused && (
         <div className="game-paused">
           <GameinLoading size={100} duration={"2s"} />
-          <div>بازی فعلا متوقف شده است!</div>
+          <div>
+<Trans>بازی فعلا متوقف شده است
+</Trans>
+
+            !</div>
         </div>
       )}
       {!isGamePaused && (
@@ -71,9 +76,9 @@ const Layout = () => {
           )}
           {!loading && hasError && (
             <div className="layout-error">
-              <div> مشکلی در سامانه رخ داده!</div>
-              لطفا دوباره تلاش کنید.
-            </div>
+              <div><Trans> مشکلی در سامانه رخ داده!</Trans></div>
+<Trans>لطفا دوباره تلاش کنید.
+</Trans>            </div>
           )}
           {!loading && !hasError && (
             <div className="layout">

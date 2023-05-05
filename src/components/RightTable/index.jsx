@@ -12,7 +12,8 @@ import Deals from "./components/Deals";
 import { useRecoilState } from "recoil";
 import { rightTableOpen, rightTableTab } from "../../store/tabs";
 import { RIGHT_TABLE_TABS } from "../../constants/tabs";
-
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro";
 function RightTable() {
   const [tab, setTab] = useRecoilState(rightTableTab);
   const [open, setOpen] = useRecoilState(rightTableOpen);
@@ -50,7 +51,7 @@ function RightTable() {
           }}
         >
           <img className="right-table__logo" src={shopLogo} alt="shop" />
-          فروشگاه گیمین
+          <Trans><Trans>فروشگاه گیمین</Trans></Trans>
         </div>
         <div
           className={classNames("right-table__header-item", {
@@ -66,7 +67,7 @@ function RightTable() {
           }}
         >
           <img className="right-table__logo" src={tradeLogo} alt="trade" />
-          تجارت
+         <Trans>تجارت</Trans>
         </div>
         <div
           className={classNames("right-table__header-item", {
@@ -86,7 +87,7 @@ function RightTable() {
             src={transactionsLogo}
             alt="orders"
           />
-          معاملات
+          <Trans>معاملات</Trans>
         </div>
       </div>
       <div className="right-table__body">

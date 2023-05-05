@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { dataState } from "../../store/research-and-develop";
+import { Trans } from '@lingui/macro';
+import { t } from "@lingui/macro";
 import {
   getSubjectInfo,
   putOffResearch,
@@ -39,7 +41,7 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
         .catch((err) => {
           setInfo({});
           toast.error(
-            err?.response?.data?.message || "خطایی در دریافت اطلاعات روی داد!"
+            err?.response?.data?.message || t`خطایی در دریافت اطلاعات روی داد!`
           );
         });
       setRefreshSelf(false);
@@ -92,13 +94,13 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
                   <div className={styles["icon-container"]}>
                     <OkIcon />
                   </div>
-                  <div>کارخانه‌ی شما به این فناوری مجهز شده است.</div>
+                  <div><Trans>کارخانه‌ی شما به این فناوری مجهز شده است.</Trans></div>
                 </div>
               ) : (
                 <>
                   <div className={styles["info"]} dir="rtl">
                     <div className={styles["percentage"]}>
-                      <div>در حال تحقیق و توسعه</div>
+                      <div><Trans>در حال تحقیق و توسعه</Trans></div>
                       <div>
                         {remainingTime ? Math.floor(remainingTime / 60) : "00"}:
                         {remainingTime
@@ -156,12 +158,12 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
                         .catch((err) => {
                           toast.error(
                             err?.response?.data?.message ||
-                              "خطایی در درخواست شما روی داد!"
+                              t`خطایی در درخواست شما روی داد!`
                           );
                         });
                     }}
                   >
-                    انصراف
+                   <Trans> انصراف</Trans>
                   </button>
                 </>
               )
@@ -169,18 +171,19 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
               <>
                 <div className={styles["info"]} dir="rtl">
                   <div className={styles["invest-cost"]}>
-                    زمان مورد نیاز:{" "}
+                    <Trans>زمان مورد نیاز:</Trans>{" "}
                     {info?.duration ? Math.floor(info?.duration / 60) : "00"}:
                     {info?.duration
                       ? String(Math.floor(info?.duration % 60)).padStart(2, "0")
                       : "00"}
                   </div>
                   <div className={styles["invest-cost"]}>
-                    هزینه سرمایه‌گذاری: {formatPrice(info?.price)}
+                  <Trans>  هزینه سرمایه‌گذاری:</Trans> {formatPrice(info?.price)}
                   </div>
-                  <div>موجودی فعلی: {formatPrice(info?.balance)}</div>
                   <div>
-                    موجودی بعد از سرمایه‌گذاری:{" "}
+                  <Trans>  موجودی فعلی:</Trans> {formatPrice(info?.balance)}</div>
+                  <div>
+                  <Trans>  موجودی بعد از سرمایه‌گذاری:</Trans>{" "}
                     {formatPrice(info?.balance - info?.price || 0)}
                   </div>
                 </div>
@@ -196,7 +199,7 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
                         console.log(err);
                         toast.error(
                           err?.response?.data?.message ||
-                            "خطایی در درخواست شما روی داد!"
+                            t`خطایی در درخواست شما روی داد!`
                         );
                       });
                   }}
@@ -212,7 +215,7 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
         <div className={styles["empty"]}>
           <img src={rAndDEmpty} alt="r and d" />
           <p>
-            برای مشاهده‌ی توضیحات هر کدام از فناوری‌ها، روی شکل آن کلیک کنید.
+          <Trans>  برای مشاهده‌ی توضیحات هر کدام از فناوری‌ها، روی شکل آن کلیک کنید.</Trans>
           </p>
         </div>
       )}

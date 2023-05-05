@@ -2,20 +2,21 @@ import { NavLink, useNavigate } from "react-router-dom";
 import classnames from "classnames";
 import { useRecoilValue } from "recoil";
 import { toast } from "react-toastify";
-
-
 import { balanceState } from "../../store/team-info";
 import { formatPrice } from "../../utils/formatters";
 import SyncedClock from "../SyncedClock/SyncedClock";
-
-import gameinHeaderLogo from "../../assets/headerLogo.svg";
+import { useLingui } from "@lingui/react";
+import gameinHeaderLogo_fa from "../../assets/headerLogo_fa.svg";
+import gameinHeaderLogo_en from "../../assets/headerLogo_en.svg";
 import gcoinLogo from "../../assets/gcoin.svg";
 import helpLogo from "../../assets/help.svg";
 import logoutLogo from "../../assets/logout.svg";
-
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro";
 import "./style.scss";
 
 function LayoutHeader() {
+  const { i18n } = useLingui()
   const navigate = useNavigate();
   const balance = useRecoilValue(balanceState);
 
@@ -31,7 +32,10 @@ function LayoutHeader() {
           }
           style={{ zIndex: 1 }}
         >
-          <div className="layout-header__item-text">کارخانه من</div>
+          <div className="layout-header__item-text">
+<Trans>کارخانه من
+</Trans>
+          </div>
         </NavLink>
 
         <NavLink
@@ -43,7 +47,9 @@ function LayoutHeader() {
           }
           style={{ zIndex: 2 }}
         >
-          <div className="layout-header__item-text">تحقیق و توسعه</div>
+          <div className="layout-header__item-text">
+<Trans>تحقیق و توسعه
+</Trans>            </div>
         </NavLink>
 
         <NavLink
@@ -55,12 +61,14 @@ function LayoutHeader() {
           }
           style={{ zIndex: 3 }}
         >
-          <div className="layout-header__item-text">داشبورد</div>
+          <div className="layout-header__item-text">
+            <Trans>داشبورد</Trans>
+            </div>
         </NavLink>
       </div>
       <div className="layout-header__logo-wrapper">
         <img
-          src={gameinHeaderLogo}
+          src={i18n.locale=="fa"?gameinHeaderLogo_fa:gameinHeaderLogo_en}
           alt="gamein logo"
           className="layout-header__logo"
         />
@@ -102,7 +110,7 @@ function LayoutHeader() {
         <div
           onClick={() => {
             localStorage.removeItem("token");
-            toast.success("شما با موفقیت از بازی خارج شدید.");
+            toast.success(t`شما با موفقیت از بازی خارج شدید.`);
             navigate("/login");
           }}
           className={classnames(

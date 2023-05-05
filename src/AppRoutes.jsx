@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import RAndD from "./pages/RAndD";
@@ -53,21 +54,21 @@ const AppRouter = () => {
         window?.location.reload();
       }
       if (data.type === "GAME_PAUSED") {
-        toast.warning(data.message || "بازی فعلا متوقف شده!", {
+        toast.warning(data.message || t`بازی فعلا متوقف شده!`, {
           position: "bottom-center",
         });
         setIsGamePaused(true);
       }
 
       if (data.type === "UPDATE_BALANCE") {
-        toast.warning(data.message || "بازی فعلا متوقف شده!", {
+        toast.warning(data.message || t`بازی فعلا متوقف شده!`, {
           position: "bottom-center",
         });
         updateBalance();
       }
 
       if (data.type === "GAME_RESUMED") {
-        toast.warning(data.message || "ادامه بازی شروع شد!", {
+        toast.warning(data.message || t`ادامه بازی شروع شد!`, {
           position: "bottom-center",
         });
         setIsGamePaused(false);

@@ -8,41 +8,44 @@ import Region from "./components/Region";
 import RegionsMap from "./components/RegionsMap";
 import "./style.scss";
 import MyCountDown from "../../components/CountDown/MyCountDown";
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro";
+
 
 const REGIONS = [
   {
-    title: "منطقه یک",
-    resources: "Glass, Copper, Cobalt, Chips, Processors",
+    title: t`منطقه یک`,
+    resources: t`Glass, Copper, Cobalt, Chips, Processors`,
   },
   {
-    title: "منطقه دو",
-    resources: "Copper, Aluminum, Cobalt, Chips, Processors",
+    title: t`منطقه دو`,
+    resources: t`Copper, Aluminum, Cobalt, Chips, Processors`,
   },
   {
-    title: "منطقه سه",
-    resources: "Lithium, Copper, Cobalt, Silicon, Speaker, Vibration Motor",
+    title: t`منطقه سه`,
+    resources: t`Lithium, Copper, Cobalt, Silicon, Speaker, Vibration Motor`,
   },
   {
-    title: "منطقه چهار",
-    resources: "Plastic, Glass, Lithium, Aluminum, Chips, Ports",
+    title: t`منطقه چهار`,
+    resources: t`Plastic, Glass, Lithium, Aluminum, Chips, Ports`,
   },
   {
-    title: "منطقه پنج",
-    resources: "Plastic, Lithium, Copper, Microphone, Vibration Motor",
+    title: t`منطقه پنج`,
+    resources: t`Plastic, Lithium, Copper, Microphone, Vibration Motor`,
   },
   {
-    title: "منطقه شش",
+    title: t`منطقه شش`,
     resources:
-      "Plastic, Glass, Silicon, Microphone, Chips, Speaker, Vibration Motor",
+      t`Plastic, Glass, Silicon, Microphone, Chips, Speaker, Vibration Motor`,
   },
   {
-    title: "منطقه هفت",
-    resources: "Plastic, Lithium, Cobalt, Silicon, Ports, Processors",
+    title: t`منطقه هفت`,
+    resources: t`Plastic, Lithium, Cobalt, Silicon, Ports, Processors`,
   },
   {
-    title: "منطقه هشت",
+    title: t`منطقه هشت`,
     resources:
-      "Plastic, Aluminum, Cobalt, Microphone, Chips, Ports, Vibration Motor",
+      t`Plastic, Aluminum, Cobalt, Microphone, Chips, Ports, Vibration Motor`,
   },
 ];
 
@@ -148,7 +151,7 @@ function ChooseRegion() {
 
   const handleCountDownComplete = () => {
     if (initialRemainedTimeState) {
-      toast.success("مرحله انتخاب زمین پایان یافت.");
+      toast.success(t`مرحله انتخاب زمین پایان یافت.`);
       navigate("/");
     }
   }
@@ -162,23 +165,28 @@ function ChooseRegion() {
   return (
     <div className="choose-region">
       <Helmet>
-        <title>انتخاب منطقه</title>
+        <title>
+    {t`انتخاب منطقه`}
+
+        </title>
       </Helmet>
       <div className="choose-region__container">
         <h1 className="choose-region__title">
-          سلام، به گیمین ۲۰۲۲ خوش اومدین!
+        <Trans>  سلام، به گیمین ۲۰۲۲ خوش اومدین!</Trans>
         </h1>
         <div className="choose-region__description-time-wrapper">
           <p className="choose-region__description">
-            اولین قدم در شروع این بازی، انتخاب منطقه‌ایه که می‌خواید کارخونه‌ی
+           <Trans>
+           اولین قدم در شروع این بازی، انتخاب منطقه‌ایه که می‌خواید کارخونه‌ی
             خودتون رو توش بسازین. هر کدوم از این منطقه‌ها، مشخصاتی دارن که تو
             روند بازی موثره پس تو انتخابتون دقت کنین و با استراتژی تصمیم بگیرین
             :)
+           </Trans>
           </p>
 
           <div className="choose-region__time">
             <div className="choose-region__balance-title">
-              دارایی پس از خرید زمین
+              <Trans>دارایی پس از خرید زمین</Trans>
             </div>
             <div className="choose-region__balance-value">
               {formatPrice(balance - (prices[selectedRegion] || 0))}
@@ -187,7 +195,9 @@ function ChooseRegion() {
               <MyCountDown timeInSeconds={initialRemainedTimeState} onComplete={handleCountDownComplete} onTick={handleCountDownTick} />
             </div>
             <div className="choose-region__time-title">
-              تا پایان انتخاب منطقه
+
+<Trans>تا پایان انتخاب منطقه
+</Trans>
             </div>
           </div>
         </div>

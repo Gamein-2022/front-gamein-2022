@@ -4,7 +4,8 @@ import InQueueItem from "../InQueueItem";
 import "./style.scss";
 import { getStorageQueue } from "../../../../apis/storage";
 import GameinLoading from "../../../GameinLoading";
-
+import { Trans } from '@lingui/macro';
+import { t } from "@lingui/macro";
 function InQueue() {
   const [loading, setLoading] = useState(true);
   const [inQueueProducts, setInQueueProducts] = useState([]);
@@ -45,7 +46,7 @@ function InQueue() {
             />
           ))}
           {inQueueProducts.length <= 0 && (
-            <div className="in-queue__empty">صف انبارت خالیه!</div>
+            <div className="in-queue__empty"><Trans>صف انبارت خالیه!</Trans></div>
           )}
         </>
       )}

@@ -7,6 +7,8 @@ import RightTable from "../../components/RightTable";
 import Map from "../Map";
 
 import "./style.scss";
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro";
 
 function Home() {
   const [buildings, setBuildings] = useState([]);
@@ -40,7 +42,10 @@ function Home() {
   return (
     <div className="home">
       <Helmet>
-        <title>کارخانه من</title>
+        <title>
+{t`کارخانه من
+`}          
+        </title>
       </Helmet>
       {buildingsLoaded && (
         <Map buildings={buildings} updateBuildings={updateBuildings} />

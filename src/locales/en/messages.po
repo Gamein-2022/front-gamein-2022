@@ -1,0 +1,830 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2023-05-04 18:30+0430\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/components/LeftTable/components/Line/NotInitialed.jsx:83
+msgid "(این تنظیمات فقط یک بار انجام میشه و غیر قابل تغییره)"
+msgstr ""
+
+#: src/components/LeftTable/components/InQueueItem/index.jsx:59
+msgid "{0, plural, one {# عدد {1} از صف انبار حذف شد.} other {# عدد {2} از صف انبار حذف شد.}}"
+msgstr ""
+
+#: src/components/RightTable/components/Shop/index.jsx:163
+msgid "{0, plural, one {جی‌کوین} other {جی‌کوین}}"
+msgstr "{0, plural, one {G-coin other {G-coins}"
+
+#: src/components/RightTable/components/TradeFinal/index.jsx:113
+msgid "{0, plural, one {عدد} other {عدد}}"
+msgstr ""
+
+#: src/components/LeftTable/components/InQueueItem/index.jsx:38
+msgid "{amount, plural, one {# عدد {0} به انبار اضافه شد.} other {# عدد {1} به انبار اضافه شد.}}"
+msgstr ""
+
+#: src/components/LeftTable/components/Line/InProgress.jsx:41
+msgid "{count, plural, one {# عدد {0} به انبار اضافه شد.} other {# عدد {1} به انبار اضافه شد.}}"
+msgstr "{count, plural, one {# instace of {0} added to Storage.} other {# instaces of {1} added to Storage.}}"
+
+#: src/components/LeftTable/components/Line/InProgress.jsx:106
+msgid "{lineTypeString} {0} انجام شد!"
+msgstr ""
+
+#: src/pages/NotFound/index.jsx:10
+msgid "۴۰۴ - صفحه مورد نظر پیدا نشد"
+msgstr ""
+
+#: src/pages/NotFound/index.jsx:12
+msgid "۴۰۴ - صفحه مورد نظر پیدا نشد."
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:22
+msgid "Copper, Aluminum, Cobalt, Chips, Processors"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:18
+msgid "Glass, Copper, Cobalt, Chips, Processors"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:26
+msgid "Lithium, Copper, Cobalt, Silicon, Speaker, Vibration Motor"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:48
+msgid "Plastic, Aluminum, Cobalt, Microphone, Chips, Ports, Vibration Motor"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:30
+msgid "Plastic, Glass, Lithium, Aluminum, Chips, Ports"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:39
+msgid "Plastic, Glass, Silicon, Microphone, Chips, Speaker, Vibration Motor"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:43
+msgid "Plastic, Lithium, Cobalt, Silicon, Ports, Processors"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:34
+msgid "Plastic, Lithium, Copper, Microphone, Vibration Motor"
+msgstr ""
+
+#: src/components/LeftTable/components/Line/InProgress.jsx:135
+msgid "آیا مطمئن هستید می‌خواهید {lineTypeString} را لغو کنید"
+msgstr ""
+
+#: src/components/LeftTable/components/InStorage/index.jsx:191
+msgid "آیا مطمئن هستید می‌خواهید انبار را ارتقا دهید؟"
+msgstr ""
+
+#: src/components/MiddleTable/index.jsx:42
+msgid "اخبار"
+msgstr ""
+
+#: src/AppRoutes.jsx:71
+msgid "ادامه بازی شروع شد!"
+msgstr ""
+
+#: src/components/LeftTable/components/InStorage/index.jsx:100
+msgid "ارتقای انبار"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:446
+msgid "ارسال با هواپیما در {0} ثانیه با هزینه {1}"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:436
+msgid "از منطقه"
+msgstr ""
+
+#: src/pages/Dashboard/index.jsx:64
+msgid "اسم تیم شما:"
+msgstr ""
+
+#: src/pages/Login/index.jsx:63
+msgid "اطلاعات به درستی وارد نشده است."
+msgstr "input is bad"
+
+#: src/components/MiddleTable/index.jsx:63
+msgid "اطلاعیه‌ها"
+msgstr ""
+
+#: src/components/LeftTable/components/InStorage/index.jsx:52
+msgid "انبار با موفقیت ارتقا یافت."
+msgstr ""
+
+#: src/components/RightTable/components/TradeFinal/index.jsx:72
+msgid "انتخاب کن"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:169
+msgid "انتخاب منطقه"
+msgstr ""
+
+#: src/components/ResearchAndDevelopPanel/index.jsx:166
+msgid "انصراف"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:179
+msgid "اولین قدم در شروع این بازی، انتخاب منطقه‌ایه که می‌خواید کارخونه‌ی خودتون رو توش بسازین. هر کدوم از این منطقه‌ها، مشخصاتی دارن که تو روند بازی موثره پس تو انتخابتون دقت کنین و با استراتژی تصمیم بگیرین :)"
+msgstr ""
+
+#: src/pages/Dashboard/index.jsx:88
+msgid "ایمیل شما:"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:485
+msgid "اینجا می‌تونی با تعیین نوع حمل و نقل و بعد از حساب کردن هزینه کل، خریدن رو کامل کنی !"
+msgstr ""
+
+#: src/components/RightTable/components/TradeFinal/index.jsx:62
+msgid "اینجا می‌تونی محصولات نهایی رو به بازار جهانی عرضه کنی. برای این کار، محصول، تعداد و قیمت مورد نظرت رو مشخص کن."
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:497
+#: src/components/RightTable/components/Shop/index.jsx:209
+msgid "با چه وسیله‌ای ارسال بشه؟"
+msgstr ""
+
+#: src/pages/Login/index.jsx:121
+msgid "با حمایت"
+msgstr ""
+
+#: src/pages/Login/index.jsx:55
+msgid "با موفقیت وارد شدید."
+msgstr "good!"
+
+#: src/components/LeftTable/components/InStorage/index.jsx:207
+#: src/components/LeftTable/components/Line/InProgress.jsx:142
+#: src/components/RightTable/components/Orders/index.jsx:584
+msgid "بازگشت"
+msgstr ""
+
+#: src/components/Layout/index.jsx:64
+msgid "بازی فعلا متوقف شده است"
+msgstr ""
+
+#: src/AppRoutes.jsx:57
+#: src/AppRoutes.jsx:64
+msgid "بازی فعلا متوقف شده!"
+msgstr ""
+
+#: src/components/LeftTable/components/Line/index.jsx:30
+#: src/components/LeftTable/index.jsx:81
+msgid "بازیافت"
+msgstr ""
+
+#: src/components/LeftTable/components/Line/InProgress.jsx:109
+msgid "باشه"
+msgstr ""
+
+#: src/components/RightTable/components/OffersSent/index.jsx:125
+#: src/components/RightTable/components/OrderCard/index.jsx:93
+#: src/components/RightTable/components/Orders/index.jsx:325
+#: src/components/RightTable/components/Orders/index.jsx:389
+msgid "بایگانی"
+msgstr ""
+
+#: src/components/LeftTable/components/Line/index.jsx:43
+msgid "برای {lineTypeString} کالا،‌ خط {lineTypeString}ت رو پیش راه‌اندازی کن!"
+msgstr ""
+
+#: src/components/LeftTable/components/Line/index.jsx:80
+msgid "برای {lineTypeString} کالا،‌ خط {lineTypeString}ت رو راه‌اندازی کن!"
+msgstr ""
+
+#: src/components/RightTable/components/ShopBuildings/index.jsx:48
+msgid "برای بهره‌برداری از این زمین اول یه سوله بخر."
+msgstr ""
+
+#: src/components/ResearchAndDevelopPanel/index.jsx:218
+msgid "برای مشاهده‌ی توضیحات هر کدام از فناوری‌ها، روی شکل آن کلیک کنید."
+msgstr ""
+
+#: src/components/LeftTable/components/InStorage/index.jsx:201
+#: src/components/LeftTable/components/Line/InProgress.jsx:139
+msgid "بله"
+msgstr ""
+
+#: src/components/RightTable/components/OffersSent/index.jsx:55
+msgid "پیشنهاد با موفقیت بایگانی شد."
+msgstr ""
+
+#: src/components/RightTable/components/OffersSent/index.jsx:42
+msgid "پیشنهاد با موفقیت حذف شد."
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:212
+msgid "پیشنهاد با موفقیت رد شد."
+msgstr ""
+
+#: src/components/RightTable/components/Deals/index.jsx:20
+msgid "پیشنهاد‌های فرستاده‌شده"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:316
+msgid "پیگیری"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:199
+msgid "تا پایان انتخاب منطقه"
+msgstr ""
+
+#: src/pages/History/index.jsx:10
+msgid "تاریخچه"
+msgstr ""
+
+#: src/components/RightTable/components/Shop/index.jsx:274
+msgid "تایید خرید"
+msgstr ""
+
+#: src/components/RightTable/index.jsx:70
+msgid "تجارت"
+msgstr ""
+
+#: src/components/LayoutHeader/index.jsx:51
+#: src/pages/RAndD/index.jsx:51
+msgid "تحقیق و توسعه"
+msgstr ""
+
+#: src/pages/Dashboard/index.jsx:37
+msgid "تراکنش‌ها"
+msgstr ""
+
+#: src/components/RightTable/components/TradeFinal/index.jsx:100
+msgid "تعداد"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:492
+msgid "تعداد {0} واحد"
+msgstr ""
+
+#: src/components/LeftTable/components/InQueueItem/index.jsx:92
+#: src/components/LeftTable/components/InRouteItem/index.jsx:45
+msgid "تعداد:"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:483
+#: src/components/RightTable/components/Orders/index.jsx:581
+msgid "تکمیل خرید"
+msgstr ""
+
+#: src/components/LeftTable/components/Line/index.jsx:27
+#: src/components/LeftTable/components/Line/NotInitialed.jsx:25
+msgid "تولید"
+msgstr "Production"
+
+#: src/components/LeftTable/index.jsx:49
+msgid "تولید و مونتاژ"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:557
+#: src/components/RightTable/components/Shop/index.jsx:260
+msgid "جمع کل:"
+msgstr ""
+
+#: src/components/LeftTable/components/InStorage/index.jsx:194
+msgid "جی‌کوین"
+msgstr ""
+
+#: src/components/RightTable/components/Shop/index.jsx:198
+msgid "چند واحد می‌خوای بخری؟"
+msgstr ""
+
+#: src/components/RightTable/components/TradeFinal/index.jsx:79
+msgid "حداقل قیمت:"
+msgstr ""
+
+#: src/components/RightTable/components/TradeFinal/index.jsx:86
+msgid "حداکثر قیمت:"
+msgstr ""
+
+#: src/components/RightTable/components/OffersSent/index.jsx:117
+#: src/components/RightTable/components/OrderCard/index.jsx:89
+#: src/components/RightTable/components/Orders/index.jsx:310
+#: src/components/RightTable/components/Orders/index.jsx:397
+msgid "حذف"
+msgstr ""
+
+#: src/components/TansportEmptyState/index.jsx:11
+msgid "حمل‌و‌نقل درون منطقه‌ای"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:474
+#: src/components/RightTable/components/Shop/index.jsx:172
+#: src/components/RightTable/components/ShopBuildings/index.jsx:108
+msgid "خرید"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:488
+msgid "خرید {0} از منطقه {1}"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:163
+msgid "خرید با موفقیت نهایی شد."
+msgstr ""
+
+#: src/components/RightTable/components/OffersSent/index.jsx:95
+#: src/components/RightTable/components/OrderCard/index.jsx:29
+#: src/components/RightTable/components/Orders/index.jsx:279
+msgid "خریداری شده"
+msgstr ""
+
+#: src/components/LeftTable/components/Line/InProgress.jsx:67
+msgid "خط {lineTypeString} با موفقیت لغو شد."
+msgstr ""
+
+#: src/components/LeftTable/components/Line/NotInitialed.jsx:44
+msgid "خط {stringType} با موفقیت راه‌اندازی شد."
+msgstr ""
+
+#: src/components/ResearchAndDevelopPanel/index.jsx:161
+#: src/components/ResearchAndDevelopPanel/index.jsx:202
+msgid "خطایی در درخواست شما روی داد!"
+msgstr ""
+
+#: src/components/ResearchAndDevelopPanel/index.jsx:44
+#: src/pages/RAndD/index.jsx:30
+msgid "خطایی در دریافت اطلاعات روی داد!"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:189
+msgid "دارایی پس از خرید زمین"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:568
+#: src/components/RightTable/components/Shop/index.jsx:267
+msgid "دارایی پس از خرید:"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:565
+#: src/components/RightTable/components/Shop/index.jsx:264
+msgid "دارایی فعلی:"
+msgstr ""
+
+#: src/components/LayoutHeader/index.jsx:65
+#: src/pages/Dashboard/index.jsx:23
+#: src/pages/Dashboard/index.jsx:28
+msgid "داشبورد"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:519
+#: src/components/RightTable/components/Orders/index.jsx:538
+#: src/components/RightTable/components/Shop/index.jsx:228
+#: src/components/RightTable/components/Shop/index.jsx:245
+msgid "در {0} ثانیه"
+msgstr ""
+
+#: src/components/RightTable/components/OffersSent/index.jsx:91
+#: src/components/RightTable/components/Orders/index.jsx:277
+msgid "در انتظار {0}"
+msgstr ""
+
+#: src/components/RightTable/components/OrderCard/index.jsx:33
+#: src/components/RightTable/components/Orders/index.jsx:361
+msgid "در انتظار خریدار"
+msgstr ""
+
+#: src/components/RightTable/components/OrderCard/index.jsx:30
+msgid "در انتظار فروشنده"
+msgstr ""
+
+#: src/components/LeftTable/components/Line/InProgress.jsx:115
+msgid "در حال {lineTypeString} {0}"
+msgstr ""
+
+#: src/components/ResearchAndDevelopPanel/index.jsx:103
+msgid "در حال تحقیق و توسعه"
+msgstr ""
+
+#: src/pages/Support/index.jsx:38
+msgid "درخت محصولات"
+msgstr ""
+
+#: src/components/LeftTable/components/Line/index.jsx:89
+msgid "راه‌اندازی"
+msgstr ""
+
+#: src/pages/Guide/index.jsx:10
+#: src/pages/Support/index.jsx:19
+#: src/pages/Support/index.jsx:27
+msgid "راهنما"
+msgstr ""
+
+#: src/pages/Support/index.jsx:48
+msgid "راهنمای بازی"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:462
+msgid "رد کردن"
+msgstr ""
+
+#: src/pages/NotFound/index.jsx:13
+msgid "رفتن به خانه"
+msgstr ""
+
+#: src/pages/Login/index.jsx:49
+msgid "رمز عبور نمی‌تواند خالی باشد."
+msgstr "empty password"
+
+#: src/components/RightTable/components/TradeFinal/index.jsx:57
+msgid "زمان باقیمانده تا خرید بعدی گیمین:"
+msgstr ""
+
+#: src/components/LeftTable/components/InQueueItem/index.jsx:108
+#: src/components/LeftTable/components/InRouteItem/index.jsx:50
+msgid "زمان باقیمانده:"
+msgstr ""
+
+#: src/components/ResearchAndDevelopPanel/index.jsx:174
+msgid "زمان مورد نیاز:"
+msgstr ""
+
+#: src/components/RightTable/components/ShopBuildings/index.jsx:31
+msgid "ساختمان با موفقیت خریداری شد."
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:78
+#: src/components/RightTable/components/Orders/index.jsx:94
+msgid "سفارش با موفقیت بایگانی شد."
+msgstr ""
+
+#: src/components/RightTable/components/OrderCard/index.jsx:40
+#: src/components/RightTable/components/Orders/index.jsx:110
+#: src/components/RightTable/components/Orders/index.jsx:126
+msgid "سفارش با موفقیت حذف شد."
+msgstr ""
+
+#: src/components/RightTable/components/TradeFinal/index.jsx:46
+msgid "سفارش فروش به گیمین با موفقیت ثبت شد."
+msgstr ""
+
+#: src/components/RightTable/components/Deals/index.jsx:28
+msgid "سفارش‌ها"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:175
+msgid "سلام، به گیمین ۲۰۲۲ خوش اومدین!"
+msgstr ""
+
+#: src/components/LayoutHeader/index.jsx:113
+msgid "شما با موفقیت از بازی خارج شدید."
+msgstr ""
+
+#: src/components/RightTable/components/OffersSent/index.jsx:70
+msgid "شما هیچ پیشنهاد فرستاده‌شده‌ای ندارید."
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:248
+msgid "شما هیچ سفارش فعالی ندارید."
+msgstr ""
+
+#: src/pages/Dashboard/index.jsx:80
+msgid "شماره شما:"
+msgstr ""
+
+#: src/pages/Login/index.jsx:103
+msgid "شماره موبایل یا ایمیل"
+msgstr "Phone number or email"
+
+#: src/pages/Login/index.jsx:61
+msgid "شماره موبایل یا ایمیل به درستی وارد نشده است."
+msgstr "Wrong email or phone number"
+
+#: src/components/LeftTable/components/InQueue/index.jsx:49
+msgid "صف انبارت خالیه!"
+msgstr ""
+
+#: src/components/LeftTable/components/InQueueItem/index.jsx:98
+msgid "ظرفیت انبار برای این محموله کافی است."
+msgstr ""
+
+#: src/components/LeftTable/components/InQueueItem/index.jsx:103
+msgid "ظرفیت انبار برای این محموله کافی نیست!"
+msgstr ""
+
+#: src/components/NumberInput/index.jsx:71
+msgid "عدد واردشده باید مضرب {step} باشد."
+msgstr ""
+
+#: src/pages/Dashboard/index.jsx:48
+msgid "عملکرد تیم"
+msgstr ""
+
+#: src/components/RightTable/components/OrderCard/index.jsx:32
+msgid "فروخته شده"
+msgstr ""
+
+#: src/components/RightTable/components/OffersSent/index.jsx:96
+#: src/components/RightTable/components/Orders/index.jsx:280
+#: src/components/RightTable/components/Orders/index.jsx:361
+msgid "فروخته‌شده"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:182
+msgid "فروش با موفقیت نهایی شد."
+msgstr ""
+
+#: src/components/RightTable/index.jsx:54
+msgid "فروشگاه گیمین"
+msgstr ""
+
+#: src/components/LeftTable/components/InStorage/index.jsx:69
+msgid "فضای خالی"
+msgstr ""
+
+#: src/components/LeftTable/components/InStorage/index.jsx:104
+msgid "فضای کل انبار:"
+msgstr ""
+
+#: src/components/RightTable/components/TradeFinal/index.jsx:93
+msgid "قیمت پیشنهادی"
+msgstr ""
+
+#: src/components/RightTable/components/Shop/index.jsx:163
+msgid "قیمت هر واحد:"
+msgstr ""
+
+#: src/components/RightTable/components/OffersSent/index.jsx:110
+#: src/components/RightTable/components/OrderCard/index.jsx:83
+#: src/components/RightTable/components/Orders/index.jsx:302
+#: src/components/RightTable/components/Orders/index.jsx:381
+#: src/components/RightTable/components/Orders/index.jsx:439
+msgid "قیمت واحد:"
+msgstr ""
+
+#: src/components/LayoutHeader/index.jsx:36
+#: src/pages/Home/index.jsx:46
+msgid "کارخانه من"
+msgstr ""
+
+#: src/components/ResearchAndDevelopPanel/index.jsx:97
+msgid "کارخانه‌ی شما به این فناوری مجهز شده است."
+msgstr ""
+
+#: src/components/TansportEmptyState/index.jsx:14
+msgid "کالا بلافاصله پس از خرید وارد انبار شما می‌شود."
+msgstr ""
+
+#: src/components/LeftTable/components/InStorage/index.jsx:70
+msgid "کالای بلوکه فروش"
+msgstr ""
+
+#: src/components/LeftTable/components/InStorage/index.jsx:68
+msgid "کالای در حال تولید"
+msgstr ""
+
+#: src/components/LeftTable/components/InStorage/index.jsx:67
+msgid "کالای موجود"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:536
+#: src/components/RightTable/components/Shop/index.jsx:243
+msgid "کشتی"
+msgstr ""
+
+#: src/pages/Login/index.jsx:109
+msgid "کلمه عبور"
+msgstr "Password"
+
+#: src/components/Layout/index.jsx:80
+#: src/pages/Login/index.jsx:88
+msgid "لطفا دوباره تلاش کنید."
+msgstr "Try again!"
+
+#: src/components/LeftTable/components/Line/InProgress.jsx:126
+msgid "لغو {lineTypeString}"
+msgstr ""
+
+#: src/components/RightTable/components/Shop/index.jsx:77
+msgid "ماده اولیه با موفقیت خریداری شد."
+msgstr ""
+
+#: src/components/RightTable/components/TradeFinal/index.jsx:94
+msgid "مثلا ۱۰۰۰"
+msgstr ""
+
+#: src/components/RightTable/components/TradeFinal/index.jsx:101
+msgid "مثلا ۵۰۰"
+msgstr ""
+
+#: src/components/RightTable/components/TradeFinal/index.jsx:65
+msgid "محصول"
+msgstr ""
+
+#: src/components/RightTable/components/Trade/index.jsx:20
+msgid "محصولات میانی"
+msgstr ""
+
+#: src/components/RightTable/components/Trade/index.jsx:28
+msgid "محصولات نهایی"
+msgstr ""
+
+#: src/components/LeftTable/index.jsx:65
+msgid "مدیریت انبار"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:154
+msgid "مرحله انتخاب زمین پایان یافت."
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:417
+msgid "مشاهده خریدارها"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:416
+msgid "مشاهده فروشنده‌ها"
+msgstr ""
+
+#: src/components/RightTable/components/Shop/index.jsx:84
+#: src/components/RightTable/components/TradeFinal/index.jsx:50
+#: src/pages/Login/index.jsx:65
+msgid "مشکلی در سامانه رخ داده است."
+msgstr "Something is wrong!"
+
+#: src/components/Layout/index.jsx:79
+#: src/pages/Login/index.jsx:87
+msgid "مشکلی در سامانه رخ داده!"
+msgstr "Something is wrong!"
+
+#: src/components/LeftTable/components/InQueueItem/index.jsx:48
+#: src/components/LeftTable/components/InQueueItem/index.jsx:68
+#: src/components/LeftTable/components/InStorage/index.jsx:60
+#: src/components/LeftTable/components/Line/InProgress.jsx:73
+#: src/components/LeftTable/components/Line/NotInitialed.jsx:56
+#: src/components/RightTable/components/OffersSent/index.jsx:61
+#: src/components/RightTable/components/Orders/index.jsx:84
+#: src/components/RightTable/components/Orders/index.jsx:100
+#: src/components/RightTable/components/Orders/index.jsx:116
+#: src/components/RightTable/components/Orders/index.jsx:132
+#: src/components/RightTable/components/Orders/index.jsx:150
+#: src/components/RightTable/components/Orders/index.jsx:170
+#: src/components/RightTable/components/Orders/index.jsx:189
+#: src/components/RightTable/components/Orders/index.jsx:218
+#: src/components/RightTable/components/ShopBuildings/index.jsx:39
+msgid "مشکلی در سامانه رخ داده‌است."
+msgstr ""
+
+#: src/components/RightTable/index.jsx:90
+msgid "معاملات"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:383
+msgid "مقدار فروخته‌شده:"
+msgstr ""
+
+#: src/pages/Dashboard/index.jsx:75
+msgid "منطقه"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:33
+msgid "منطقه پنج"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:29
+msgid "منطقه چهار"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:21
+msgid "منطقه دو"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:25
+msgid "منطقه سه"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:37
+msgid "منطقه شش"
+msgstr ""
+
+#: src/pages/Dashboard/index.jsx:72
+msgid "منطقه شما:"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:46
+msgid "منطقه هشت"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:42
+msgid "منطقه هفت"
+msgstr ""
+
+#: src/pages/ChooseRegion/index.jsx:17
+msgid "منطقه یک"
+msgstr "Region 1"
+
+#: src/components/RightTable/components/Shop/index.jsx:195
+msgid "مواد اولیه از نزدیکترین منطقه به شما خریداری می‌شن."
+msgstr ""
+
+#: src/components/RightTable/components/Shop/index.jsx:123
+msgid "موجود در سایر مناطق"
+msgstr ""
+
+#: src/components/RightTable/components/Shop/index.jsx:97
+msgid "موجود در منطقه من"
+msgstr ""
+
+#: src/components/RightTable/components/TradeFinal/index.jsx:108
+msgid "موجودی انبار:"
+msgstr ""
+
+#: src/components/ResearchAndDevelopPanel/index.jsx:186
+msgid "موجودی بعد از سرمایه‌گذاری:"
+msgstr ""
+
+#: src/components/RightTable/components/ShopBuildings/index.jsx:85
+msgid "موجودی پس از سرمایه‌گذاری:"
+msgstr ""
+
+#: src/components/ResearchAndDevelopPanel/index.jsx:184
+#: src/components/RightTable/components/ShopBuildings/index.jsx:83
+msgid "موجودی فعلی:"
+msgstr ""
+
+#: src/components/LeftTable/components/Line/index.jsx:29
+#: src/components/LeftTable/components/Line/NotInitialed.jsx:25
+msgid "مونتاژ"
+msgstr "Assembly"
+
+#: src/components/LeftTable/components/Line/NotInitialed.jsx:80
+msgid "می‌خوای این خط {stringType}، برای {stringType} کدوم دسته از محصولات استفاده بشه؟"
+msgstr "Which group of product you want for {stringType} in this {stringType}Line? "
+
+#: src/pages/Login/index.jsx:44
+msgid "نام کاربری یا ایمیل نمی‌تواند خالی باشد."
+msgstr "user name or email cannot be empty"
+
+#: src/pages/Dashboard/index.jsx:58
+msgid "نقشه منطقه‌ها"
+msgstr ""
+
+#: src/components/LeftTable/components/InStorage/index.jsx:193
+msgid "هزینه ارتقای انبار:"
+msgstr ""
+
+#: src/components/RightTable/components/Shop/index.jsx:257
+msgid "هزینه حمل و نقل:"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:554
+msgid "هزینه حمل و نقل: {0}"
+msgstr ""
+
+#: src/components/RightTable/components/Shop/index.jsx:254
+msgid "هزینه خرید کالاها:"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:548
+msgid "هزینه خرید کالاها: {0}"
+msgstr ""
+
+#: src/components/ResearchAndDevelopPanel/index.jsx:181
+msgid "هزینه سرمایه‌گذاری:"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:424
+msgid "هنوز هیچ {0} پیدا نشده!"
+msgstr ""
+
+#: src/components/LeftTable/components/InStorage/index.jsx:182
+msgid "هنوز هیچ کالایی تو انبار نداری!"
+msgstr ""
+
+#: src/components/RightTable/components/Orders/index.jsx:517
+#: src/components/RightTable/components/Shop/index.jsx:226
+msgid "هواپیما"
+msgstr ""
+
+#: src/components/LeftTable/components/InRoute/index.jsx:35
+msgid "هیچ کالایی در مسیر نیست."
+msgstr ""
+
+#: src/pages/Login/index.jsx:78
+#: src/pages/Login/index.jsx:113
+msgid "ورود"
+msgstr "Login"
+
+#: src/components/LeftTable/components/InQueueItem/index.jsx:116
+msgid "ورود به انبار"
+msgstr ""
+
+#: src/components/RightTable/components/Shop/index.jsx:159
+msgid "یک ماده را انتخاب کنید."
+msgstr ""
+
+#: src/components/RightTable/components/ShopBuildings/index.jsx:98
+msgid "یه ساختمون انتخاب کن."
+msgstr ""

@@ -3,7 +3,8 @@ import { getStorageInRoute } from "../../../../apis/storage";
 import GameinLoading from "../../../GameinLoading";
 
 import InRouteItem from "../InRouteItem";
-
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro"
 import "./style.scss";
 
 function InRoute() {
@@ -31,7 +32,7 @@ function InRoute() {
             <InRouteItem item={item} key={item?.id} />
           ))}
           {inRouteProducts.length <= 0 && (
-            <div className="in-route__empty">هیچ کالایی در مسیر نیست.</div>
+            <div className="in-route__empty"><Trans>هیچ کالایی در مسیر نیست.</Trans></div>
           )}{" "}
         </>
       )}

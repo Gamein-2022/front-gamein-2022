@@ -32,7 +32,8 @@ import {
 import { formatPrice } from "../../../../utils/formatters";
 import { FormatPaintRounded } from "@mui/icons-material";
 import TransportEmptyState from "../../../TansportEmptyState";
-
+import { Trans } from '@lingui/macro';
+import { t } from "@lingui/macro";
 function Orders() {
   const [orders, setOrders] = useState([]);
   const [finalOrders, setFinalOrders] = useState([]);
@@ -74,13 +75,13 @@ function Orders() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("سفارش با موفقیت بایگانی شد.");
+        toast.success(t`سفارش با موفقیت بایگانی شد.`);
         updateOrders();
       })
       .catch((error) => {
         console.log(error);
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
@@ -90,13 +91,13 @@ function Orders() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("سفارش با موفقیت بایگانی شد.");
+        toast.success(t`سفارش با موفقیت بایگانی شد.`);
         updateOrders();
       })
       .catch((error) => {
         console.log(error);
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
@@ -106,13 +107,13 @@ function Orders() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("سفارش با موفقیت حذف شد.");
+        toast.success(t`سفارش با موفقیت حذف شد.`);
         updateOrders();
       })
       .catch((error) => {
         console.log(error);
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
@@ -122,13 +123,13 @@ function Orders() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("سفارش با موفقیت حذف شد.");
+        toast.success(t`سفارش با موفقیت حذف شد.`);
         updateOrders();
       })
       .catch((error) => {
         console.log(error);
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
@@ -146,7 +147,7 @@ function Orders() {
       .catch((error) => {
         console.log(error);
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message ||t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
@@ -159,14 +160,14 @@ function Orders() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("خرید با موفقیت نهایی شد.");
+        toast.success(t`خرید با موفقیت نهایی شد.`);
         setOrderTrackingModalOpen(false);
         updateOrders();
       })
       .catch((error) => {
         console.log(error);
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
@@ -178,14 +179,14 @@ function Orders() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("فروش با موفقیت نهایی شد.");
+        toast.success(t`فروش با موفقیت نهایی شد.`);
         setOrderTrackingModalOpen(false);
         updateOrders();
       })
       .catch((error) => {
         console.log(error);
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
@@ -208,13 +209,13 @@ function Orders() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("پیشنهاد با موفقیت رد شد.");
+        toast.success(t`پیشنهاد با موفقیت رد شد.`);
         updateOrderOffers(offer);
       })
       .catch((error) => {
         console.log(error);
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
@@ -244,7 +245,7 @@ function Orders() {
     <>
       <div className="offers-sent">
         {orders?.length <= 0 && (
-          <div className="offers-sent__empty">شما هیچ سفارش فعالی ندارید.</div>
+          <div className="offers-sent__empty"><Trans>شما هیچ سفارش فعالی ندارید.</Trans></div>
         )}
         {orders?.map(
           ({
@@ -273,10 +274,10 @@ function Orders() {
                     <CheckIcon fontSize="small" />
                   )}
                   {isWaiting
-                    ? `در انتظار ${orderType === "BUY" ? "فروشنده" : "خریدار"}`
+                    ? t`در انتظار ${orderType === "BUY" ? t`فروشنده` : t`خریدار`}`
                     : orderType === "BUY"
-                    ? "خریداری شده"
-                    : "فروخته‌شده"}
+                    ? t`خریداری شده`
+                    : t`فروخته‌شده`}
                 </div>
                 <div className="order-card__body">
                   <div className="order-card__right">
@@ -293,9 +294,12 @@ function Orders() {
                     <div className="order-card__name">{productName}</div>
                   </div>
                   <div className="order-card__left">
-                    <div className="order-card__count">{quantity} واحد</div>
+                    <div className="order-card__count">           {plural(quantity, {
+  one: `# واحد`,
+  other: `# واحد`
+})} </div>
                     <div className="order-card__unit-price">
-                      قیمت واحد: {formatPrice(unitPrice)}
+                     <Trans> قیمت واحد:</Trans> {formatPrice(unitPrice)}
                     </div>
                     {isWaiting && (
                       <div className="order-card__btns">
@@ -303,13 +307,13 @@ function Orders() {
                           className="order-card__btn-error"
                           onClick={() => handleDeleteOrder(id)}
                         >
-                          حذف
+                          <Trans>حذف</Trans>
                         </Button>
                         <Button
                           className="order-card__btn-success"
                           onClick={() => handleTrackOrder(id)}
                         >
-                          پیگیری
+                          <Trans>پیگیری</Trans>
                         </Button>
                       </div>
                     )}
@@ -318,7 +322,7 @@ function Orders() {
                         className="order-card__btn-success"
                         onClick={() => handleArchiveOrder(id)}
                       >
-                        بایگانی
+                        <Trans>بایگانی</Trans>
                       </Button>
                     )}
                   </div>
@@ -354,7 +358,7 @@ function Orders() {
                   ) : (
                     <CheckIcon fontSize="small" />
                   )}
-                  {soldQuantity <= 0 ? "در انتظار خریدار" : "فروخته‌شده"}
+                  {soldQuantity <= 0 ? t`در انتظار خریدار` :t`فروخته‌شده`}
                 </div>
                 <div className="order-card__body">
                   <div className="order-card__right">
@@ -374,15 +378,15 @@ function Orders() {
                   <div className="order-card__left">
                     <div className="order-card__count">{quantity} واحد</div>
                     <div className="order-card__unit-price">
-                      قیمت واحد: {formatPrice(unitPrice)}
+                      <Trans>قیمت واحد:</Trans> {formatPrice(unitPrice)}
                     </div>
-                    <div>مقدار فروخته‌شده: {soldQuantity}</div>
+                    <div><Trans>مقدار فروخته‌شده:</Trans> {soldQuantity}</div>
                     {closed && (
                       <Button
                         className="order-card__btn-success"
                         onClick={() => handleArchiveFinalOrder(id)}
                       >
-                        بایگانی
+                        <Trans>بایگانی</Trans>
                       </Button>
                     )}
                     {!closed && (
@@ -390,7 +394,7 @@ function Orders() {
                         className="order-card__btn-error"
                         onClick={() => handleDeleteFinalOrder(id)}
                       >
-                        حذف
+                        <Trans>حذف</Trans>
                       </Button>
                     )}
                   </div>
@@ -409,17 +413,17 @@ function Orders() {
           {!selectedOffer && selectedOrder && (
             <div>
               {selectedOrder?.orderType === "BUY"
-                ? "مشاهده فروشنده‌ها"
-                : "مشاهده خریدارها"}
+                ? t`مشاهده فروشنده‌ها`
+                : t`مشاهده خریدارها`}
             </div>
           )}
           {offers.length === 0 && (
             <div className="order-tracking__no-offers">
               <img src={noOfferImg} alt="no offer found" />
               <div>
-                هنوز هیچ{" "}
+               <Trans> هنوز هیچ{" "}
                 {selectedOrder?.orderType === "BUY" ? "فروشنده‌ای" : "خریداری"}{" "}
-                پیدا نشده!
+                پیدا نشده!</Trans>
               </div>
             </div>
           )}
@@ -429,18 +433,18 @@ function Orders() {
               <div className="order-offer">
                 <div className="order-offer__header">
                   <div className="order-offer__region">
-                    از منطقه {offer.region}
+                    <Trans>از منطقه </Trans>{offer.region}
                   </div>
                   <div className="order-offer__price">
-                    قیمت واحد: {formatPrice(offer.order.unitPrice)}
+                    <Trans>قیمت واحد: </Trans>{formatPrice(offer.order.unitPrice)}
                   </div>
                 </div>
                 <div className="order-offer__body">
                   {offer.distance > 0 ? (
                     <div>
                       <div>
-                        ارسال با هواپیما در {offer.planeDuration * 8} ثانیه با
-                        هزینه {offer.planePrice}
+                     <Trans> ارسال با هواپیما در {offer.planeDuration * 8} ثانیه با
+                        هزینه {offer.planePrice}</Trans>
                       </div>
                       <div>
                         ارسال با کشتی در {offer.shipDuration * 8} ثانیه با هزینه{" "}
@@ -455,7 +459,7 @@ function Orders() {
                       onClick={() => handleDeclineOffer(offer)}
                       className="order-card__btn-error"
                     >
-                      رد کردن
+                      <Trans>رد کردن</Trans>
                     </Button>
                     <Button
                       onClick={() => {
@@ -467,7 +471,7 @@ function Orders() {
                       }}
                       className="order-card__btn-success"
                     >
-                      {selectedOrder?.orderType === "BUY" ? "خرید" : "فروش"}
+                      {selectedOrder?.orderType === "BUY" ? t`خرید` : `فروش`}
                     </Button>
                   </div>
                 </div>
@@ -476,22 +480,21 @@ function Orders() {
           {selectedOffer && (
             <div className="order-offer-final">
               <div className="order-offer-final__top">
-                <div className="order-offer-final__title">تکمیل خرید</div>
+                <div className="order-offer-final__title"><Trans>تکمیل خرید</Trans></div>
                 <div className="order-offer-final__description">
-                  اینجا می‌تونی با تعیین نوع حمل و نقل و بعد از حساب کردن هزینه
-                  کل، خریدت رو کامل کنی!
+             <Trans>اینجا می‌تونی با تعیین نوع حمل و نقل و بعد از حساب کردن هزینه کل، خریدن رو کامل کنی !</Trans>
                 </div>
                 <div className="order-offer-final__region-info">
-                  خرید {selectedOffer.order.productName} از منطقه{" "}
-                  {selectedOffer.region}
+                  <Trans>خرید {selectedOffer.order.productName} از منطقه{" "}
+                  {selectedOffer.region}</Trans>
                 </div>
                 <div className="order-offer-final__count">
-                  تعداد {selectedOffer.order.quantity} واحد
+                 <Trans> تعداد {selectedOffer.order.quantity} واحد</Trans>
                 </div>
                 {selectedOffer.distance > 0 ? (
                   <>
                     <div className="shop-modal__transport-name">
-                      با چه وسیله‌ای ارسال بشه؟
+                    <Trans>  با چه وسیله‌ای ارسال بشه؟</Trans>
                     </div>
                     <div className="shop-modal__transport-list">
                       <div
@@ -511,9 +514,9 @@ function Orders() {
                           alt="airplane"
                         />
                         <div className="shop-modal__transport-text">
-                          هواپیما
+                          <Trans>هواپیما</Trans>
                           <br />
-                          در {selectedOffer.planeDuration} ثانیه
+                        <Trans>  در {selectedOffer.planeDuration} ثانیه</Trans>
                         </div>
                       </div>
                       <div
@@ -530,9 +533,9 @@ function Orders() {
                           alt="airplane"
                         />
                         <div className="shop-modal__transport-text">
-                          کشتی
+                         <Trans> کشتی</Trans>
                           <br />
-                          در {selectedOffer.shipDuration} ثانیه
+                          <Trans>در {selectedOffer.shipDuration} ثانیه</Trans>
                         </div>
                       </div>
                     </div>
@@ -542,16 +545,16 @@ function Orders() {
                 )}
               </div>
               <div className="shop-modal__summary-text">
-                هزینه خرید کالاها:{" "}
+                <Trans>هزینه خرید کالاها:{" "}
                 {formatPrice(
                   selectedOffer.order.quantity * selectedOffer.order.unitPrice
-                )}
+                )}</Trans>
               </div>
               <div className="shop-modal__summary-text">
-                هزینه حمل و نقل: {formatPrice(transportCost)}
+               <Trans> هزینه حمل و نقل: {formatPrice(transportCost)}</Trans>
               </div>
               <div className="shop-modal__summary-text">
-                جمع کل:{" "}
+              <Trans>  جمع کل:</Trans>{" "}
                 {formatPrice(
                   selectedOffer.order.quantity * selectedOffer.order.unitPrice +
                     transportCost
@@ -559,10 +562,10 @@ function Orders() {
               </div>
               <div className="shop-modal__seperator"></div>
               <div className="shop-modal__summary-text">
-                دارایی فعلی: {formatPrice(balance)}
+              <Trans>  دارایی فعلی:</Trans> {formatPrice(balance)}
               </div>
               <div className="shop-modal__summary-text">
-                دارایی پس از خرید:{" "}
+              <Trans>  دارایی پس از خرید:</Trans>{" "}
                 {formatPrice(
                   balance -
                     (selectedOffer.order.quantity *
@@ -575,10 +578,10 @@ function Orders() {
                   className="order-offer-final__finalize-btn"
                   onClick={handleAcceptOffer}
                 >
-                  تکمیل خرید
+                  <Trans>تکمیل خرید</Trans>
                 </Button>
                 <Button onClick={() => setSelectedOffer(null)} type="secondary">
-                  بازگشت
+                  <Trans>بازگشت</Trans>
                 </Button>
               </div>
             </div>

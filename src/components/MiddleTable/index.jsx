@@ -9,7 +9,8 @@ import News from "./components/News";
 import Announcments from "./components/Announcments";
 import { MIDDLE_TABLE_TABS } from "../../constants/tabs";
 import { middleTableOpen, middleTableTab } from "../../store/tabs";
-
+import { Trans } from '@lingui/macro';
+import { t } from "@lingui/macro";
 import "./style.scss";
 
 function MiddleTable() {
@@ -38,8 +39,8 @@ function MiddleTable() {
           }}
         >
           <img className="middle-table__logo" src={newsLogo} alt="news" />
-          اخبار
-        </div>
+<Trans>اخبار
+</Trans>        </div>
         <div
           className={classNames("middle-table__header-item", {
             "middle-table__header-item--active":
@@ -59,7 +60,7 @@ function MiddleTable() {
             src={announcementLogo}
             alt="announcments"
           />
-          اطلاعیه‌ها
+          <Trans>اطلاعیه‌ها</Trans>
         </div>
       </div>
       <div className="middle-table__body">

@@ -6,6 +6,18 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/main.scss";
 import { RecoilRoot } from "recoil";
+import { i18n } from '@lingui/core'
+import { I18nProvider } from '@lingui/react'
+
+//@ts-ignore
+import { messages as enMessages } from './locales/en/messages'
+//@ts-ignore
+import { messages as faMessages } from './locales/fa/messages'
+i18n.load({
+  en: enMessages,
+  fa: faMessages,
+})
+i18n.activate('en')
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -14,8 +26,10 @@ const root = ReactDOM.createRoot(
 root.render(
   // <React.StrictMode>
   <RecoilRoot>
+    <I18nProvider i18n={i18n}>
     <AppRouter />
     <ToastContainer theme="dark" position="top-center" />
+  </I18nProvider>
   </RecoilRoot>
   // </React.StrictMode>
 );

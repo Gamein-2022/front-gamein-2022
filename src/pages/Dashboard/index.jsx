@@ -7,7 +7,8 @@ import MyPerformance from "./components/MyPerformance";
 import Transactions from "./components/Transactions";
 import RegionsMap from "./components/RegionsMap";
 import "./style.scss";
-
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro";
 const DASHBOARD_TABS = {
   transctions: "transctions",
   myPerformance: "my-performance",
@@ -19,12 +20,12 @@ function Dashboard() {
   return (
     <>
       <Helmet>
-        <title>داشبورد</title>
+        <title>{t`داشبورد`}</title>
       </Helmet>
       <div className="dashboard">
         <div className="dashboard__right">
           <div className="dashboard__right-top">
-            <div className="dashboard__right-top-header">داشبورد</div>
+            <div className="dashboard__right-top-header"><Trans>داشبورد</Trans></div>
             <div
               className={classNames("dashboard__right-top-item", {
                 "dashboard__right-top-item--active":
@@ -33,8 +34,9 @@ function Dashboard() {
               onClick={() => setActiveTab(DASHBOARD_TABS.transctions)}
               style={{ zIndex: 3 }}
             >
-              تراکنش‌ها
-            </div>
+<Trans>
+تراکنش‌ها
+  </Trans>            </div>
             <div
               className={classNames("dashboard__right-top-item", {
                 "dashboard__right-top-item--active":
@@ -43,7 +45,7 @@ function Dashboard() {
               onClick={() => setActiveTab(DASHBOARD_TABS.myPerformance)}
               style={{ zIndex: 2 }}
             >
-              عملکرد تیم
+              <Trans>عملکرد تیم</Trans>
             </div>
             <div
               className={classNames("dashboard__right-top-item", {
@@ -53,13 +55,13 @@ function Dashboard() {
               onClick={() => setActiveTab(DASHBOARD_TABS.regionsMap)}
               style={{ zIndex: 1 }}
             >
-              نقشه منطقه‌ها
+              <Trans>نقشه منطقه‌ها</Trans>
             </div>
           </div>
           <div className="dashboard__right-bottom">
             <div className="dashboard__right-bottom-item">
               <div className="dashboard__right-bottom-item-title">
-                اسم تیم شما:
+                <Trans>اسم تیم شما:</Trans>
               </div>
               <div className="dashboard__right-bottom-item-value">
                 {teamInfo?.teamName || ""}
@@ -67,15 +69,15 @@ function Dashboard() {
             </div>
             <div className="dashboard__right-bottom-item">
               <div className="dashboard__right-bottom-item-title">
-                منطقه شما:
+               <Trans> منطقه شما:</Trans>
               </div>
               <div className="dashboard__right-bottom-item-value">
-                منطقه {teamInfo?.region}
+                <Trans>منطقه </Trans>{teamInfo?.region}
               </div>
             </div>
             <div className="dashboard__right-bottom-item">
               <div className="dashboard__right-bottom-item-title">
-                شماره شما:
+                <Trans>شماره شما:</Trans>
               </div>
               <div className="dashboard__right-bottom-item-value">
                 {teamInfo?.phone}
@@ -83,7 +85,7 @@ function Dashboard() {
             </div>
             <div className="dashboard__right-bottom-item">
               <div className="dashboard__right-bottom-item-title">
-                ایمیل شما:
+                <Trans>ایمیل شما:</Trans>
               </div>
               <div className="dashboard__right-bottom-item-value">
                 {teamInfo?.email}

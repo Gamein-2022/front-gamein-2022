@@ -4,7 +4,8 @@ import ResearchAndDevelopTree from "../../components/ResearchAndDevelopTree";
 import ResearchAndDevelopPanel from "../../components/ResearchAndDevelopPanel";
 import { getResearches } from "../../apis/research";
 import { toast } from "react-toastify";
-
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro";
 import "./style.scss";
 import { getTime } from "../../apis/time";
 
@@ -26,7 +27,7 @@ const ResearchAndDevelopPage = () => {
         })
         .catch((err) => {
           toast.error(
-            err?.response?.data?.message || "خطایی در دریافت اطلاعات روی داد!"
+            err?.response?.data?.message || t`خطایی در دریافت اطلاعات روی داد!`
           );
         })
         .finally(() => {
@@ -46,7 +47,10 @@ const ResearchAndDevelopPage = () => {
   return (
     <div className="research-and-develop-main-container">
       <Helmet>
-        <title>تحقیق و توسعه</title>
+        <title>
+{t`تحقیق و توسعه
+`}
+        </title>
       </Helmet>
       <ResearchAndDevelopPanel refresh={() => setRefresh(true)} />
       <ResearchAndDevelopTree era={era} technologies={researches} />

@@ -4,7 +4,8 @@ import Helmet from "react-helmet";
 import ProductsBOM from "./components/ProductsBOM";
 import GameGuide from "./components/GameGuide";
 import "./style.scss";
-
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro";
 const SUPPORT_TABS = {
   productsBOM: "products-bom",
   gameGuide: "game-guide",
@@ -14,12 +15,18 @@ function Support() {
   return (
     <>
       <Helmet>
-        <title>راهنما</title>
+        <title>
+          {t`راهنما`}
+
+        </title>
       </Helmet>
       <div className="support">
         <div className="support__right">
           <div className="support__right-top">
-            <div className="support__right-top-header">راهنما</div>
+            <div className="support__right-top-header">
+<Trans>راهنما
+</Trans>
+              </div>
             <div
               className={classNames("support__right-top-item", {
                 "support__right-top-item--active":
@@ -28,7 +35,7 @@ function Support() {
               onClick={() => setActiveTab(SUPPORT_TABS.productsBOM)}
               style={{ zIndex: 4 }}
             >
-              درخت محصولات
+             <Trans> درخت محصولات</Trans>
             </div>
             <div
               className={classNames("support__right-top-item", {
@@ -38,7 +45,7 @@ function Support() {
               onClick={() => setActiveTab(SUPPORT_TABS.gameGuide)}
               style={{ zIndex: 3 }}
             >
-              راهنمای بازی
+             <Trans> راهنمای بازی</Trans>
             </div>
           </div>
         </div>

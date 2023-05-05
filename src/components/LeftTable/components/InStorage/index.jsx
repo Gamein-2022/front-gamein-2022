@@ -5,7 +5,8 @@ import { getStorageInfo, upgradeStorage } from "../../../../apis/storage";
 import StorageItem from "../StorageItem";
 
 import storageEmpty from "../../../../assets/empty_states/storage_empty.svg";
-
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro";
 import "./style.scss";
 import GameinLoading from "../../../GameinLoading";
 import { formatPrice } from "../../../../utils/formatters";
@@ -48,7 +49,7 @@ function InStorage() {
     upgradeStorage()
       .then((res) => res.data)
       .then((data) => {
-        toast.success("انبار با موفقیت ارتقا یافت.");
+        toast.success(t`انبار با موفقیت ارتقا یافت.`);
         setUpgradeStorageModalOpen(false);
         updateStorageInfo();
         updateBalance();
@@ -56,17 +57,17 @@ function InStorage() {
       .catch((error) => {
         console.log(error);
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
 
   const options = {
     labels: [
-      "کالای موجود",
-      "کالای در حال تولید",
-      "فضای خالی",
-      "کالای بلوکه فروش",
+      t`کالای موجود`,
+      t`کالای در حال تولید`,
+      t`فضای خالی`,
+      t`کالای بلوکه فروش`,
     ],
     legend: {
       fontFamily: "kalameh",
@@ -96,11 +97,11 @@ function InStorage() {
                   className="in-storage__upgrade-storage-btn"
                   onClick={() => setUpgradeStorageModalOpen(true)}
                 >
-                  ارتقای انبار
-                </Button>
+<Trans>                  ارتقای انبار
+</Trans>                </Button>
               )}
               <div className="in-storage__space">
-                فضای کل انبار: {formatPrice(storageInfo?.storageSpace)}
+               <Trans> فضای کل انبار:</Trans> {formatPrice(storageInfo?.storageSpace)}
               </div>
               <div className="in-storage__chart">
                 <Chart type="pie" options={options} series={series} />
@@ -178,7 +179,7 @@ function InStorage() {
           ) : (
             <div className="in-storage__empty">
               <img src={storageEmpty} alt="empty storage" />
-              <p>هنوز هیچ کالایی تو انبار نداری!</p>
+              <p><Trans>هنوز هیچ کالایی تو انبار نداری!</Trans></p>
             </div>
           )}
         </>
@@ -187,23 +188,23 @@ function InStorage() {
         open={upgradeStorageModalOpen}
         onClose={() => setUpgradeStorageModalOpen(false)}
       >
-        <div>آیا مطمئن هستید می‌خواهید انبار را ارتقا دهید؟</div>
+        <div><Trans>آیا مطمئن هستید می‌خواهید انبار را ارتقا دهید؟</Trans></div>
         <div>
-          هزینه ارتقای انبار: {formatPrice(storageInfo?.storageUpgradeCost)}{" "}
-          جی‌کوین
+          <Trans>هزینه ارتقای انبار:</Trans> {formatPrice(storageInfo?.storageUpgradeCost)}{" "}
+          <Trans>جی‌کوین</Trans>
         </div>
         <div className="extend-ground__btns">
           <Button
             className="extend-ground__btn-yes"
             onClick={handleUpgradeStorage}
           >
-            بله
+           <Trans>بله</Trans>
           </Button>
           <Button
             onClick={() => setUpgradeStorageModalOpen(false)}
             type="error"
           >
-            بازگشت
+          <Trans>بازگشت</Trans>
           </Button>
         </div>
       </Modal>

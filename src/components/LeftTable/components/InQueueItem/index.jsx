@@ -3,7 +3,8 @@ import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import Button from "../../../Button";
-
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro"
 import sampleImg from "../../../../assets/icons/copper.png";
 
 import { collectShipping, removeInQueueItem } from "../../../../apis/storage";
@@ -32,14 +33,19 @@ function InQueueItem({ item, updateInQueueProducts }) {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
+        const amount=item?.amount;
         toast.success(
-          `${item?.amount} عدد ${item?.product?.name} به انبار اضافه شد.`
+plural(amount, {
+  one: `# عدد ${item?.product?.name} به انبار اضافه شد.`,
+  other: `# عدد ${item?.product?.name} به انبار اضافه شد.`
+})
+
         );
         updateInQueueProducts();
       })
       .catch((error) => {
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
@@ -50,13 +56,16 @@ function InQueueItem({ item, updateInQueueProducts }) {
       .then((data) => {
         console.log(data);
         toast.success(
-          `${item?.amount} عدد ${item?.product?.name} از صف انبار حذف شد.`
+          plural(item?.amount, {
+            one: `# عدد ${item?.product?.name} از صف انبار حذف شد.`,
+            other: `# عدد ${item?.product?.name} از صف انبار حذف شد.`
+          })
         );
         updateInQueueProducts();
       })
       .catch((error) => {
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
@@ -80,23 +89,23 @@ function InQueueItem({ item, updateInQueueProducts }) {
         />
         <div className="in-queue-item__header-left">
           <div>{item?.product?.name}</div>
-          <div>تعداد: {item?.amount}</div>
+          <div><Trans>تعداد:</Trans> {item?.amount}</div>
         </div>
       </div>
       {true ? (
         <div className="in-queue-item__status in-queue-item__status-success">
           <CheckCircleRoundedIcon />
-          ظرفیت انبار برای این محموله کافی است.
+         <Trans> ظرفیت انبار برای این محموله کافی است.</Trans>
         </div>
       ) : (
         <div className="in-queue-item__status in-queue-item__status-error">
           <CancelRoundedIcon />
-          ظرفیت انبار برای این محموله کافی نیست!
-        </div>
+<Trans>ظرفیت انبار برای این محموله کافی نیست!
+</Trans>        </div>
       )}
       <div className="in-queue-item__footer">
         <div className="in-queue-item__time">
-          زمان باقیمانده: <MyCountDown timeInSeconds={remainedTime} onComplete={handleCountDownCompleted}/>
+        <Trans>زمان باقیمانده:</Trans> <MyCountDown timeInSeconds={remainedTime} onComplete={handleCountDownCompleted}/>
         </div>
         <div className="in-queue-item__actions">
           <Button
@@ -104,8 +113,8 @@ function InQueueItem({ item, updateInQueueProducts }) {
             className="in-queue-item__enter-storage"
             disabled={remainedTime <= 0}
           >
-            ورود به انبار
-          </Button>
+<Trans>ورود به انبار
+</Trans>          </Button>
           <Button className="in-queue-item__delete" onClick={handleDelete}>
             <DeleteForeverOutlinedIcon />
           </Button>

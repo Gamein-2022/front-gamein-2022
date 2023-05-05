@@ -19,7 +19,8 @@ import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 import NumberInput from "../../../NumberInput";
 import TransportEmptyState from "../../../TansportEmptyState";
 import Button from "../../../Button";
-
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro";
 function Shop() {
   const [data, setData] = useState(null);
   const [selectedMaterial, setSelectedMaterial] = useState(null);
@@ -73,14 +74,14 @@ function Shop() {
     })
       .then((res) => res.data)
       .then((data) => {
-        toast.success("ماده اولیه با موفقیت خریداری شد.");
+        toast.success(t`ماده اولیه با موفقیت خریداری شد.`);
         setOpen(false);
         setCount(0);
         updateBalance();
       })
       .catch((error) => {
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده است.`
         );
         console.log(error);
       });
@@ -92,7 +93,9 @@ function Shop() {
         <div className="shop-initial__materials-list">
           {data?.myRegion?.length > 0 && (
             <>
-              <div>موجود در منطقه من</div>
+              <div>
+<Trans> موجود در منطقه من
+</Trans>                </div>
               <div className="shop-initial__list">
                 {data?.myRegion?.map((material) => (
                   <div
@@ -117,7 +120,7 @@ function Shop() {
           )}
           {data?.otherRegions?.length > 0 && (
             <>
-              <div>موجود در سایر مناطق</div>
+              <div><Trans>موجود در سایر مناطق</Trans></div>
               <div className="shop-initial__list">
                 {data?.otherRegions?.map((material) => (
                   <div
@@ -153,17 +156,20 @@ function Shop() {
           )}
         </div>
         <div className="shop-initial__buy">
-          {!selectedMaterial && <div>یک ماده را انتخاب کنید.</div>}
+          {!selectedMaterial && <div><Trans>یک ماده را انتخاب کنید.</Trans></div>}
           {selectedMaterial && (
             <>
               <div className="shop-initial__preview-price">
-                قیمت هر واحد: {formatPrice(selectedMaterial?.price)} جی‌کوین
+                <Trans>قیمت هر واحد:</Trans> {formatPrice(selectedMaterial?.price)}  {plural(selectedMaterial?.price, {
+  one: `جی‌کوین`,
+  other: `جی‌کوین`
+})}
               </div>
               <Button
                 onClick={() => setOpen(true)}
                 className="shop-initial__preview-btn-buy"
               >
-                خرید
+                <Trans>خرید</Trans>
               </Button>
             </>
           )}
@@ -186,9 +192,11 @@ function Shop() {
           {selectedMaterial?.name || "Copper"}
         </div>
         <div className="shop-modal__help-text">
-          مواد اولیه از نزدیکترین منطقه به شما خریداری می‌شن.
+         <Trans> مواد اولیه از نزدیکترین منطقه به شما خریداری می‌شن.</Trans>
         </div>
-        <div className="shop-modal__unit">چند واحد می‌خوای بخری؟</div>
+        <div className="shop-modal__unit">
+        <Trans>  چند واحد می‌خوای بخری؟</Trans>
+          </div>
         <NumberInput
           value={count}
           onChange={(value) => setCount(value)}
@@ -198,7 +206,7 @@ function Shop() {
         {selectedMaterial?.distance > 0 ? (
           <>
             <div className="shop-modal__transport-name">
-              با چه وسیله‌ای ارسال بشه؟
+              <Trans>با چه وسیله‌ای ارسال بشه؟</Trans>
             </div>
             <div className="shop-modal__transport-list">
               <div
@@ -215,9 +223,9 @@ function Shop() {
                   alt="airplane"
                 />
                 <div className="shop-modal__transport-text">
-                  هواپیما
+                 <Trans> هواپیما</Trans>
                   <br />
-                  در {selectedMaterial?.planeDuration * 8} ثانیه
+                  <Trans>در {selectedMaterial?.planeDuration * 8} ثانیه</Trans>
                 </div>
               </div>
               <div
@@ -232,9 +240,9 @@ function Shop() {
                   alt="airplane"
                 />
                 <div className="shop-modal__transport-text">
-                  کشتی
+                 <Trans> کشتی</Trans>
                   <br />
-                  در {selectedMaterial?.shipDuration * 8} ثانیه
+                  <Trans>در {selectedMaterial?.shipDuration * 8} ثانیه</Trans>
                 </div>
               </div>
             </div>
@@ -243,27 +251,27 @@ function Shop() {
           <TransportEmptyState />
         )}
         <div className="shop-modal__summary-text">
-          هزینه خرید کالاها: {formatPrice(productCost)}
+         <Trans> هزینه خرید کالاها:</Trans> {formatPrice(productCost)}
         </div>
         <div className="shop-modal__summary-text">
-          هزینه حمل و نقل: {formatPrice(transportCost)}
+         <Trans> هزینه حمل و نقل:</Trans> {formatPrice(transportCost)}
         </div>
         <div className="shop-modal__summary-text">
-          جمع کل: {formatPrice(totalCost)}
+         <Trans> جمع کل:</Trans> {formatPrice(totalCost)}
         </div>
         <div className="shop-modal__seperator"></div>
         <div className="shop-modal__summary-text">
-          دارایی فعلی: {formatPrice(balance)}{" "}
+         <Trans>دارایی فعلی:</Trans> {formatPrice(balance)}{" "}
         </div>
         <div className="shop-modal__summary-text">
-          دارایی پس از خرید: {formatPrice(balance - totalCost)}
+         <Trans> دارایی پس از خرید:</Trans> {formatPrice(balance - totalCost)}
         </div>
         <button
           onClick={handleBuyRawMaterial}
           className="shop-modal__confirm-buy-btn"
           disabled={!count || count === "0"}
         >
-          تایید خرید
+          <Trans>تایید خرید</Trans>
         </button>
       </Modal>
     </>

@@ -7,6 +7,8 @@ import NotInitialed from "./NotInitialed";
 import Off from "./Off";
 import InProgress from "./InProgress";
 import { GROUPS } from "../../../../constants/groups";
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro"
 
 function Line({
   status,
@@ -22,10 +24,10 @@ function Line({
 
   const lineTypeString =
     type === "PRODUCTION"
-      ? "تولید"
+      ? t`تولید`
       : type === "ASSEMBLY"
-      ? "مونتاژ"
-      : "بازیافت";
+      ? t`مونتاژ`
+      : t`بازیافت`;
   console.log("group: ", group);
 
   return (
@@ -38,8 +40,9 @@ function Line({
           </div>
           <div className="line__body">
             <div>
-              برای {lineTypeString} کالا،‌ خط {lineTypeString}ت رو پیش
-              راه‌اندازی کن!
+              <Trans>برای {lineTypeString} کالا،‌ خط {lineTypeString}ت رو پیش
+              راه‌اندازی کن!</Trans>
+              
             </div>
             <Button
               type="info"
@@ -74,8 +77,8 @@ function Line({
           </div>
           <div className="line__body">
             <div>
-              برای {lineTypeString} کالا،‌ خط {lineTypeString}ت رو راه‌اندازی
-              کن!
+            <Trans>برای {lineTypeString} کالا،‌ خط {lineTypeString}ت رو 
+              راه‌اندازی کن!</Trans>
             </div>
             <Button
               type="info"
@@ -83,8 +86,8 @@ function Line({
                 setSetupLineModelOpen(true);
               }}
             >
-              راه‌اندازی
-            </Button>
+<Trans>راه‌اندازی
+</Trans>            </Button>
           </div>
           {setupLineModelOpen && (
             <Off

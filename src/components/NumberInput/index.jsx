@@ -2,7 +2,8 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 
 import Button from "../Button";
-
+import { Trans } from '@lingui/macro';
+import { t } from "@lingui/macro";
 import "./style.scss";
 
 function NumberInput({
@@ -67,7 +68,7 @@ function NumberInput({
         </Button>
       </div>
       {hasErrorState && (
-        <div className="number-input__error">{`عدد واردشده باید مضرب ${step} باشد.`}</div>
+        <div className="number-input__error">{t`عدد واردشده باید مضرب ${step} باشد.`}</div>
       )}
     </div>
   );

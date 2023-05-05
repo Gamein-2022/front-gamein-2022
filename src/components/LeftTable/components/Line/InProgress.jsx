@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { GROUPS } from "../../../../constants/groups";
 import MyCountDown from "../../../CountDown/MyCountDown";
 import Modal from "../../../Modal";
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro"
 
 function InProgress({
   lineTypeString,
@@ -35,7 +37,12 @@ function InProgress({
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success(`${count} عدد ${product?.name} به انبار اضافه شد.`);
+        toast.success(
+          plural(count, {
+            one: `# عدد ${product?.name} به انبار اضافه شد.`,
+            other: `# عدد ${product?.name} به انبار اضافه شد.`
+          })
+          );
         updateLines();
       })
       .catch((error) => {
@@ -57,13 +64,13 @@ function InProgress({
     cancelLine({ lineId })
       .then((res) => res.data)
       .then((data) => {
-        toast.success(`${lineTypeString} با موفقیت لغو شد.`);
+        toast.success(t`خط ${lineTypeString} با موفقیت لغو شد.`);
         setCancelLineModalOpen(false);
         updateLines();
       })
       .catch((error) => {
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
@@ -96,16 +103,16 @@ function InProgress({
         {currentTimeInMilliSec >= endTimeInMilliSec ? (
           <div className="line__body">
             <div>
-              {lineTypeString} {product?.name} انجام شد!
+             <Trans> {lineTypeString} {product?.name} انجام شد!</Trans>
             </div>
             <Button onClick={handleCollect} type="info-reverse">
-              باشه
+             <Trans> باشه</Trans>
             </Button>
           </div>
         ) : (
           <div className="line__body">
             <div>
-              در حال {lineTypeString} {product?.name}
+              <Trans>در حال {lineTypeString} {product?.name}</Trans>
             </div>
             <MyCountDown
               timeInSeconds={remainedTime}
@@ -116,7 +123,7 @@ function InProgress({
               onClick={() => setCancelLineModalOpen(true)}
               type={"warning"}
             >
-              لغو {lineTypeString}
+             <Trans> لغو {lineTypeString}</Trans>
             </Button>
           </div>
         )}
@@ -125,13 +132,14 @@ function InProgress({
         open={cancelLineModalOpen}
         onClose={() => setCancelLineModalOpen(false)}
       >
-        <div>آیا مطمئن هستید می‌خواهید {lineTypeString} را لغو کنید</div>
+        <div><Trans>آیا مطمئن هستید می‌خواهید {lineTypeString} را لغو کنید</Trans></div>
         <div className="extend-ground__btns">
           <Button className="extend-ground__btn-yes" onClick={handleCancelLine}>
-            بله
+           
+           <Trans>بله</Trans>
           </Button>
           <Button onClick={() => setCancelLineModalOpen(false)} type="error">
-            بازگشت
+        <Trans>بازگشت</Trans>
           </Button>
         </div>
       </Modal>

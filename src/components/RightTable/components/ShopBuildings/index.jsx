@@ -9,7 +9,8 @@ import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 import { formatPrice } from "../../../../utils/formatters";
 import { useRecoilValue } from "recoil";
 import { balanceState } from "../../../../store/team-info";
-
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro";
 function ShopBuildings({
   ground,
   updateBuildings,
@@ -27,7 +28,7 @@ function ShopBuildings({
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("ساختمان با موفقیت خریداری شد.");
+        toast.success(t`ساختمان با موفقیت خریداری شد.`);
         updateBuildings();
         updateGroundInfo();
         updateBalance();
@@ -35,7 +36,7 @@ function ShopBuildings({
       .catch((error) => {
         console.log(error);
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
@@ -44,7 +45,7 @@ function ShopBuildings({
     <div className="shop-buildings">
       <div className="shop-buildings__list">
         <div className="shop-buildings__list-description">
-          برای بهره‌برداری از این زمین اول یه سوله بخر.
+         <Trans> برای بهره‌برداری از این زمین اول یه سوله بخر.</Trans>
         </div>
         {buildings?.map((building) => (
           <div
@@ -79,9 +80,9 @@ function ShopBuildings({
       <div className="shop-buildings__buy">
         {selectedBuilding && (
           <div className="shop-buildings__buy-summary">
-            <div>موجودی فعلی: {formatPrice(balance)}</div>
+            <div><Trans>موجودی فعلی:</Trans> {formatPrice(balance)}</div>
             <div>
-              موجودی پس از سرمایه‌گذاری:{" "}
+             <Trans> موجودی پس از سرمایه‌گذاری:</Trans>{" "}
               {formatPrice(balance - selectedBuilding?.price)}
             </div>
           </div>
@@ -94,7 +95,7 @@ function ShopBuildings({
               alt="choose building"
             />
             <div className="shop-buildings__buy-description">
-              یه ساختمون انتخاب کن.
+           <Trans>   یه ساختمون انتخاب کن.</Trans>
             </div>
           </div>
         )}
@@ -104,7 +105,7 @@ function ShopBuildings({
             className="shop-buildings__buy-btn"
             onClick={handleBuyBuilding}
           >
-            خرید
+           <Trans> خرید</Trans>
           </button>
         )}
       </div>

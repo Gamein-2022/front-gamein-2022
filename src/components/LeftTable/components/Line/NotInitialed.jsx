@@ -15,12 +15,14 @@ import {
 
 import sampleImg from "../../../../assets/icons/copper.png";
 import { GROUPS } from "../../../../constants/groups";
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro"
 
 function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
   const [availableProducts, setAvailableProducts] = useState([]);
   const [selectedProduct, setselectedProduct] = useState();
 
-  const stringType = modalType === "PRODUCTION" ? "تولید" : "مونتاژ";
+  const stringType = modalType === "PRODUCTION" ? t`تولید` :t`مونتاژ`;
 
   useEffect(() => {
     getLineGroups({ t: modalType === "PRODUCTION" ? 0 : 1 })
@@ -39,7 +41,7 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success(`خط ${stringType} با موفقیت راه‌اندازی شد.`);
+        toast.success(t`خط ${stringType} با موفقیت راه‌اندازی شد.`);
         updateLines();
         onClose();
       })
@@ -51,7 +53,7 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
           updateLines();
         } else {
           toast.error(
-            error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+            error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
           );
         }
       });
@@ -75,11 +77,11 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
       >
         <div className="init-line-modal">
           <p className="init-line-modal__description">
-            می‌خوای این خط {stringType}، برای {stringType} کدوم دسته از محصولات
-            استفاده بشه؟
+           <Trans> می‌خوای این خط {stringType}، برای {stringType} کدوم دسته از محصولات
+            استفاده بشه؟</Trans>
             <br />
-            (این تنظیمات فقط یک بار انجام میشه و غیر قابل تغییره)
-          </p>
+<Trans>            (این تنظیمات فقط یک بار انجام میشه و غیر قابل تغییره)
+</Trans>          </p>
           <select
             onChange={(e) => {
               setselectedProduct(

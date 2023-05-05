@@ -11,7 +11,8 @@ import "./style.scss";
 import { toast } from "react-toastify";
 import { formatPrice } from "../../../../utils/formatters";
 import { getProductIcon } from "../../../../utils/icons";
-
+import { Trans } from '@lingui/macro';
+import { t,plural } from "@lingui/macro";
 function OffersSent() {
   const [sentOffers, setSentOffers] = useState([]);
 
@@ -38,7 +39,7 @@ function OffersSent() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("پیشنهاد با موفقیت حذف شد.");
+        toast.success(t`پیشنهاد با موفقیت حذف شد.`);
         updateSentOffers();
       })
       .catch((error) => {
@@ -51,13 +52,13 @@ function OffersSent() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("پیشنهاد با موفقیت بایگانی شد.");
+        toast.success(t`پیشنهاد با موفقیت بایگانی شد.`);
         updateSentOffers();
       })
       .catch((error) => {
         console.log(error);
         toast.error(
-          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+          error?.response?.data?.message || t`مشکلی در سامانه رخ داده‌است.`
         );
       });
   };
@@ -66,7 +67,7 @@ function OffersSent() {
     <div className="offers-sent">
       {sentOffers?.length <= 0 && (
         <div className="offers-sent__empty">
-          شما هیچ پیشنهاد فرستاده‌شده‌ای ندارید.
+         <Trans> شما هیچ پیشنهاد فرستاده‌شده‌ای ندارید.</Trans>
         </div>
       )}
       {sentOffers.map(({ acceptDate, declined, cancelled, order, id }) => {
@@ -87,12 +88,12 @@ function OffersSent() {
                 <CheckIcon fontSize="small" />
               )}
               {isWaiting
-                ? `در انتظار ${
-                    order?.orderType === "SELL" ? "فروشنده" : "خریدار"
+                ? t`در انتظار ${
+                    order?.orderType === "SELL" ? t`فروشنده` : t`خریدار`
                   }`
                 : order?.orderType === "SELL"
-                ? "خریداری شده"
-                : "فروخته‌شده"}
+                ? t`خریداری شده`
+                : t`فروخته‌شده`}
             </div>
             <div className="order-card__body">
               <div className="order-card__right">
@@ -106,14 +107,14 @@ function OffersSent() {
               <div className="order-card__left">
                 <div className="order-card__count">{order?.quantity} واحد</div>
                 <div className="order-card__unit-price">
-                  قیمت واحد: {formatPrice(order?.unitPrice)}
+                 <Trans> قیمت واحد:</Trans> {formatPrice(order?.unitPrice)}
                 </div>
                 {isWaiting && (
                   <button
                     className="order-card__action-btn"
                     onClick={() => handleDeleteOffer(id)}
                   >
-                    حذف
+                   <Trans> حذف</Trans>
                   </button>
                 )}
                 {!isWaiting && (
@@ -121,7 +122,7 @@ function OffersSent() {
                     className="order-card__action-btn"
                     onClick={() => handleArchiveOffer(id)}
                   >
-                    بایگانی
+                   <Trans> بایگانی</Trans>
                   </button>
                 )}
               </div>

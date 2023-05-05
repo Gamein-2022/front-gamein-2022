@@ -12,7 +12,8 @@ import {
   RAW_MATERIALS,
 } from "../../../../constants/materials";
 import { formatPrice } from "../../../../utils/formatters";
-
+import { Trans } from '@lingui/macro';
+import { t } from "@lingui/macro";
 function OrderCard({
   quantity,
   unitPrice,
@@ -25,18 +26,18 @@ function OrderCard({
   const state =
     orderType === "BUY"
       ? acceptDate
-        ? "خریداری شده"
-        : "در انتظار فروشنده"
+        ? t`خریداری شده`
+        : t`در انتظار فروشنده`
       : acceptDate
-      ? "فروخته شده"
-      : "در انتظار خریدار";
+      ? t`فروخته شده`
+      : t`در انتظار خریدار`;
 
   const handleDeleteOrder = () => {
     cancelOrder(id)
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("سفارش با موفقیت حذف شد.");
+        toast.success(t`سفارش با موفقیت حذف شد.`);
       })
       .catch((error) => {
         console.log(error);
@@ -72,18 +73,24 @@ function OrderCard({
           <div className="order-card__name">{productName}</div>
         </div>
         <div className="order-card__left">
-          <div className="order-card__count">{quantity} واحد</div>
-          <div className="order-card__unit-price">قیمت واحد: {formatPrice(unitPrice)}</div>
+          <div className="order-card__count">
+
+            {plural(quantity, {
+  one: `# واحد`,
+  other: `# واحد`
+})}
+</div>
+          <div className="order-card__unit-price"><Trans>قیمت واحد:</Trans> {formatPrice(unitPrice)}</div>
           {color === "warning" && (
             <button
               className="order-card__action-btn"
               onClick={handleDeleteOrder}
             >
-              حذف
+              <Trans>حذف</Trans>
             </button>
           )}
           {color === "success" && (
-            <button className="order-card__action-btn">بایگانی</button>
+            <button className="order-card__action-btn"><Trans>بایگانی</Trans></button>
           )}
         </div>
       </div>
