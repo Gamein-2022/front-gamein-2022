@@ -342,7 +342,7 @@ function Orders() {
             return (
               <div
                 className={classNames("order-card", {
-                  "order-card--warning": soldQuantity <= 0,
+                  "order-card--warning": !closed,
                 })}
               >
                 <div className="order-card__title">
@@ -351,7 +351,7 @@ function Orders() {
                   ) : (
                     <CheckIcon fontSize="small" />
                   )}
-                  {soldQuantity <= 0 ? "در انتظار خریدار" : "فروخته‌شده"}
+                  {!closed ? "در انتظار خریدار" : "فروخته‌شده"}
                 </div>
                 <div className="order-card__body">
                   <div className="order-card__right">
@@ -436,11 +436,11 @@ function Orders() {
                   {offer.distance > 0 ? (
                     <div>
                       <div>
-                        ارسال با هواپیما در {offer.planeDuration * 8} ثانیه با
+                        ارسال با هواپیما در {offer.planeDuration} ثانیه با
                         هزینه {offer.planePrice}
                       </div>
                       <div>
-                        ارسال با کشتی در {offer.shipDuration * 8} ثانیه با هزینه{" "}
+                        ارسال با کشتی در {offer.shipDuration} ثانیه با هزینه{" "}
                         {offer.shipPrice}
                       </div>
                     </div>
