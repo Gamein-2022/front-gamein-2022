@@ -17,7 +17,7 @@ function InProgress({
   product,
   group,
 }) {
-  const [currentTimeInMilliSec, setCurrentTimeInSec] = useState(
+  const [currentTimeInMilliSec, setCurrentTimeInMilliSec] = useState(
     new Date(currentTime).getTime()
   );
   const startTimeInMilliSec = new Date(startTime).getTime();
@@ -42,6 +42,14 @@ function InProgress({
         updateLines();
       });
   };
+
+  const handleCountDownTick = () => {
+    setCurrentTimeInMilliSec(currentTimeInMilliSec + 1000)
+  }
+
+  const handleCountDownComplete = () => {
+    setCurrentTimeInMilliSec(endTimeInMilliSec)
+  }
 
   return (
     <>
@@ -79,7 +87,7 @@ function InProgress({
             <div>
               در حال {lineTypeString} {product?.name}
             </div>
-            <MyCountDown timeInSeconds={remainedTime}/>
+            <MyCountDown timeInSeconds={remainedTime} onComplete={handleCountDownComplete} onTick={handleCountDownTick}/>
           </div>
         )}
       </div>
