@@ -26,16 +26,24 @@ function TradeFinal() {
       .catch((error) => {
         console.log(error);
       });
+
+      setFinalNextTime();
   }, []);
 
-  const handleCountDownComplete = () => {
+  const setFinalNextTime = () => {
     getFinalNextTime()
-      .then((res) => res.data)
-      .then((data) => {
-        const current = data?.result?.nextTime;
-        setRemainedTime((new Date(current) - new Date()) / 1000);
-      })
-      .catch((error) => console.log(error));
+    .then((res) => res.data)
+    .then((data) => {
+      const current = data?.result?.nextTime;
+      setRemainedTime((new Date(current) - new Date()) / 1000);
+    })
+    .catch((error) => console.log(error));
+  }
+
+  const handleCountDownComplete = () => {
+    if (remainedTime >= 0) {
+      setFinalNextTime();
+    }
   }
 
   const handleSellFinalProduct = () => {
@@ -55,7 +63,7 @@ function TradeFinal() {
     <div className="trade-final">
       <div>زمان باقیمانده تا خرید بعدی گیمین: </div>
       <div className="trade-final__remained-time">
-        <MyCountDown timeInSeconds={remainedTime} onComplete={handleCountDownComplete}/>
+        <MyCountDown timeInSeconds={remainedTime} onComplete={handleCountDownComplete} />
       </div>
       <p>
         اینجا می‌تونی محصولات نهایی رو به بازار جهانی عرضه کنی. برای این کار،
