@@ -469,7 +469,7 @@ function TradeIntermediate() {
           <>
             <div>
               خرید {selectedOrder?.product?.name} از منطقه{" "}
-              {selectedOrder.region + 1}
+              {selectedOrder.region}
             </div>
             <div>تعداد {selectedOrder.quantity} واحد</div>
             {shippingInfo.distannce > 0 ? (

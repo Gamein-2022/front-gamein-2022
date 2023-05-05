@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { GROUPS } from "../../../../constants/groups";
 import MyCountDown from "../../../CountDown/MyCountDown";
 import Modal from "../../../Modal";
+import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 
 function InProgress({
   lineTypeString,
@@ -21,6 +22,7 @@ function InProgress({
   const [currentTimeInMilliSec, setCurrentTimeInMilliSec] = useState(
     new Date(currentTime).getTime()
   );
+  const updateBalance = useUpdateBalance();
   const [cancelLineModalOpen, setCancelLineModalOpen] = useState(false);
   const startTimeInMilliSec = new Date(startTime).getTime();
   const endTimeInMilliSec = new Date(endTime).getTime();
@@ -60,6 +62,7 @@ function InProgress({
         toast.success(`${lineTypeString} با موفقیت لغو شد.`);
         setCancelLineModalOpen(false);
         updateLines();
+        updateBalance();
       })
       .catch((error) => {
         toast.error(
