@@ -1,5 +1,7 @@
 .in-queue {
   padding-bottom: 32px;
+  height: calc(100% - 48px);
+  overflow-y: auto;
 
   &__empty {
     padding: 16px;
