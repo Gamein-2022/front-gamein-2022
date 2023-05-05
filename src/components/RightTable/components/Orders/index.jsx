@@ -222,13 +222,23 @@ function Orders() {
   const transportCost =
     transport === "ship"
       ? selectedOffer?.shipPrice +
-        (selectedOffer?.shipPrice / 100) *
-          Math.sqrt(selectedOffer?.order?.quantity * selectedOffer?.unitVolume * selectedOffer?.distance)
+        Math.floor(
+          (selectedOffer?.shipPrice / 100) *
+            Math.sqrt(
+              selectedOffer?.order?.quantity *
+                selectedOffer?.unitVolume *
+                selectedOffer?.distance
+            )
+        )
       : selectedOffer?.planePrice +
-        (selectedOffer?.planePrice / 100) *
-          Math.sqrt(
-            selectedOffer?.order?.quantity * selectedOffer?.unitVolume * selectedOffer?.distance
-          );
+        Math.floor(
+          (selectedOffer?.planePrice / 100) *
+            Math.sqrt(
+              selectedOffer?.order?.quantity *
+                selectedOffer?.unitVolume *
+                selectedOffer?.distance
+            )
+        );
 
   return (
     <>
@@ -426,7 +436,7 @@ function Orders() {
                   </div>
                 </div>
                 <div className="order-offer__body">
-                  {offer.planeDuration !== 0 ? (
+                  {offer.distance > 0 ? (
                     <div>
                       <div>
                         ارسال با هواپیما در {offer.planeDuration * 8} ثانیه با
@@ -478,7 +488,7 @@ function Orders() {
                 <div className="order-offer-final__count">
                   تعداد {selectedOffer.order.quantity} واحد
                 </div>
-                {selectedOffer.planeDuration !== 0 ? (
+                {selectedOffer.distance > 0 ? (
                   <>
                     <div className="shop-modal__transport-name">
                       با چه وسیله‌ای ارسال بشه؟

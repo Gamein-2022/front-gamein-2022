@@ -70,15 +70,23 @@ function Off({
   const transportCost =
     transport === "ship"
       ? selectedMaterial?.shipPrice +
-        (selectedMaterial?.shipPrice / 100) *
-          Math.sqrt(
-            count * selectedMaterial?.unitVolume * selectedMaterial?.distance || 0
-          )
+        Math.floor(
+          (selectedMaterial?.shipPrice / 100) *
+            Math.sqrt(
+              count *
+                selectedMaterial?.unitVolume *
+                selectedMaterial?.distance || 0
+            )
+        )
       : selectedMaterial?.planePrice +
-        (selectedMaterial?.planePrice / 100) *
-          Math.sqrt(
-            count * selectedMaterial?.unitVolume * selectedMaterial?.distance || 0
-          );
+        Math.floor(
+          (selectedMaterial?.planePrice / 100) *
+            Math.sqrt(
+              count *
+                selectedMaterial?.unitVolume *
+                selectedMaterial?.distance || 0
+            )
+        );
 
   const productCost = count * selectedMaterial?.price || 0;
 
@@ -407,7 +415,7 @@ function Off({
           className="shop-modal__input"
           placeholder="مثلا ۵۰۰"
         />
-        {selectedMaterial?.planeDuration !== 0 ? (
+        {selectedMaterial?.distance > 0 ? (
           <>
             <div className="shop-modal__transport-name">
               با چه وسیله‌ای ارسال بشه؟

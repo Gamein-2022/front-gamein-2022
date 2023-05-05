@@ -472,7 +472,7 @@ function TradeIntermediate() {
               {selectedOrder.region + 1}
             </div>
             <div>تعداد {selectedOrder.quantity} واحد</div>
-            {shippingInfo.planeDuration !== 0 ? (
+            {shippingInfo.distannce > 0 ? (
               <>
                 <div className="shop-modal__transport-name">
                   با چه وسیله‌ای ارسال بشه؟

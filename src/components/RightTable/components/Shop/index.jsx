@@ -33,15 +33,19 @@ function Shop() {
   const transportCost =
     transport === "ship"
       ? selectedMaterial?.shipPrice +
-        (selectedMaterial?.shipPrice / 100) *
-          Math.sqrt(
-            count * selectedMaterial?.unitVolume * selectedMaterial?.distance
-          )
+        Math.floor(
+          (selectedMaterial?.shipPrice / 100) *
+            Math.sqrt(
+              count * selectedMaterial?.unitVolume * selectedMaterial?.distance
+            )
+        )
       : selectedMaterial?.planePrice +
-        (selectedMaterial?.planePrice / 100) *
-          Math.sqrt(
-            count * selectedMaterial?.unitVolume * selectedMaterial?.distance
-          );
+        Math.floor(
+          (selectedMaterial?.planePrice / 100) *
+            Math.sqrt(
+              count * selectedMaterial?.unitVolume * selectedMaterial?.distance
+            )
+        );
 
   const productCost = count * selectedMaterial?.price || 0;
 
@@ -191,7 +195,7 @@ function Shop() {
           min={0}
           className="shop-modal__input"
         />
-        {selectedMaterial?.planeDuration !== 0 ? (
+        {selectedMaterial?.distance > 0 ? (
           <>
             <div className="shop-modal__transport-name">
               با چه وسیله‌ای ارسال بشه؟

@@ -40,7 +40,7 @@ let SHOW_ITEMS = [];
 const GLOW = [
   "recycling_facility",
   // "dock",
-  // "dock_boat",
+  "dock_boat",
   "gamein_store",
   "inventory",
   "transactions_office",
@@ -135,6 +135,10 @@ function Map({ buildings, updateBuildings }) {
         setLeftTableActiveTab(LEFT_TABLE_TABS.recycle);
         setLeftTableOpen(true);
       });
+    document.getElementById("dock_boat")?.addEventListener("click", () => {
+      setRightTableActiveTab(RIGHT_TABLE_TABS.trade);
+      setRightTableOpen(true);
+    });
 
     document.getElementById("ali_heidari")?.addEventListener("click", () => {
       setMiddleTableActiveTab(MIDDLE_TABLE_TABS.news);
