@@ -95,6 +95,14 @@ function StorageItem({ item, storageSpace, updateStorageInfo }) {
               {formatPrice(item.sellableAmount)} عدد
             </div>
           </div>
+          <div className="storage-item__expansion-item">
+            <div className="storage-item__expansion-name">
+              کالاهای بلوکه‌شده
+            </div>
+            <div className="storage-item__expansion-percent">
+              {formatPrice(item.blockedAmount)} عدد
+            </div>
+          </div>
         </div>
       )}
       <Modal open={deleteModalOpen} onClose={onClose}>
