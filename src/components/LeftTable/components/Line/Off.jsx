@@ -266,26 +266,26 @@ function Off({
                             </td>
                             {req.product.level <= 0 && (
                               <td className="setup-line-modal__storage-icon">
-                                {(req.product.level === 0 &&
+                                {((req.product.level === 0 &&
                                   req.inStorage <
                                     req.numberPerOne * quantity) ||
-                                  (req.product.level == -1 &&
+                                  (req.product.level === -1 &&
                                     req.inStorage <
-                                      quantity / req.numberPerOne && (
-                                      <Button
-                                        onClick={() => {
-                                          setBuyModalOpen(true);
-                                          setSelectedMaterial(req.product);
-                                          setCount(
-                                            req.numberPerOne * quantity -
-                                              req.inStorage
-                                          );
-                                        }}
-                                        className="setup-line-modal__table-buy-btn"
-                                      >
-                                        خرید
-                                      </Button>
-                                    ))}
+                                      quantity / req.numberPerOne)) && (
+                                  <Button
+                                    onClick={() => {
+                                      setBuyModalOpen(true);
+                                      setSelectedMaterial(req.product);
+                                      setCount(
+                                        req.numberPerOne * quantity -
+                                          req.inStorage
+                                      );
+                                    }}
+                                    className="setup-line-modal__table-buy-btn"
+                                  >
+                                    خرید
+                                  </Button>
+                                )}
                               </td>
                             )}
                           </tr>
