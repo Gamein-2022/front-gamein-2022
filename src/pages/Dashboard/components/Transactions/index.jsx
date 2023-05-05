@@ -18,11 +18,11 @@ const LOG_TYPES = [
 function Transactions() {
   const [loading, setLoading] = useState(true);
   const [rows, setRows] = useState([]);
-  const [activeType, setActiveType] = useState(LOG_TYPES[0].type);
+  const [activeType, setActiveType] = useState(LOG_TYPES[0]);
 
   useEffect(() => {
     setLoading(true);
-    getLogs(activeType)
+    getLogs(activeType.type)
       .then((res) => res.data)
       .then((data) => {
         setRows(data?.logs);
@@ -39,9 +39,9 @@ function Transactions() {
         {LOG_TYPES.map((type) => (
           <div
             key={type.type}
-            onClick={() => setActiveType(type.type)}
+            onClick={() => setActiveType(type)}
             className={classNames("logs__chip", {
-              "logs__chip--active": activeType === type.type,
+              "logs__chip--active": activeType.type === type.type,
             })}
           >
             {type.name}
@@ -66,9 +66,9 @@ function Transactions() {
                   <tr>
                     <td>{row?.productName}</td>
                     <td>{formatPrice(row?.count)}</td>
-                    <td className={row?.isGreen ? "logs__green" : "logs__red"}>
+                    <td className={activeType?.isGreen ? "logs__green" : "logs__red"}>
                       {formatPrice(row?.totalCost)}
-                      {row?.isGreen ? "+" : "-"}
+                      {activeType?.isGreen ? "+" : "-"}
                     </td>
                     <td>{`${row?.date[0]}/${String(row?.date[1]).padStart(
                       2,
