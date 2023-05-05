@@ -255,6 +255,7 @@ function Orders() {
             unitPrice,
             orderType,
             quantity,
+            offerCount,
           }) => {
             if (cancelled) {
               return null;
@@ -277,6 +278,7 @@ function Orders() {
                     : orderType === "BUY"
                     ? "خریداری شده"
                     : "فروخته‌شده"}
+                  {isWaiting && <div className="order-card__offer-count">{offerCount}</div>}
                 </div>
                 <div className="order-card__body">
                   <div className="order-card__right">

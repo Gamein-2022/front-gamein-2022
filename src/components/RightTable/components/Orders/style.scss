@@ -4,6 +4,20 @@
   margin: 8px;
   overflow: hidden;
 
+  &__offer-count {
+    border-radius: 16px;
+    color: #fff;
+    background-color: #c72f21;
+    margin-right: 8px;
+    font-size: 12px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+  }
+
   &__title {
     background-color: #009054;
     border-bottom: 1px solid #8d8d8d;
