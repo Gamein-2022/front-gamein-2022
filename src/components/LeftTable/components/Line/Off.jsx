@@ -13,6 +13,7 @@ import airplaneDisableImg from "../../../../assets/airplane-disable.png";
 import gameinShopModalTitle from "../../../../assets/modals/gamein_shop_modal_title.svg";
 import setupProductionLineModalTitle from "../../../../assets/modals/setup_production_line_modal_title.svg";
 import setupAssemblyLineModalTitle from "../../../../assets/modals/setup_assembly_line_modal_title.svg";
+import setupRecycleLineModalTitle from "../../../../assets/modals/recycle_modal_title.svg";
 import {
   getLineAvailableProducts,
   startLine,
@@ -151,9 +152,6 @@ function Off({
       });
   };
 
-  console.log("HHHHHHHHHHHHHH");
-  console.log(product);
-
   return (
     <>
       <Modal
@@ -165,6 +163,8 @@ function Off({
             src={
               modalType === "PRODUCTION"
                 ? setupProductionLineModalTitle
+                : modalType === "RECYCLE"
+                ? setupRecycleLineModalTitle
                 : setupAssemblyLineModalTitle
             }
             alt="setup line"
@@ -252,7 +252,12 @@ function Off({
                             <td
                               style={{
                                 color:
-                                  req.inStorage >= req.numberPerOne * quantity
+                                  (req.product.level >= 0 &&
+                                    req.inStorage >=
+                                      req.numberPerOne * quantity) ||
+                                  (req.product.level === -1 &&
+                                    req.inStorage >=
+                                      quantity / req.numberPerOne)
                                     ? "#009054"
                                     : "#D63F26",
                               }}
@@ -261,22 +266,26 @@ function Off({
                             </td>
                             {req.product.level <= 0 && (
                               <td className="setup-line-modal__storage-icon">
-                                {req.inStorage <
-                                  req.numberPerOne * quantity && (
-                                  <Button
-                                    onClick={() => {
-                                      setBuyModalOpen(true);
-                                      setSelectedMaterial(req.product);
-                                      setCount(
-                                        req.numberPerOne * quantity -
-                                          req.inStorage
-                                      );
-                                    }}
-                                    className="setup-line-modal__table-buy-btn"
-                                  >
-                                    خرید
-                                  </Button>
-                                )}
+                                {(req.product.level === 0 &&
+                                  req.inStorage <
+                                    req.numberPerOne * quantity) ||
+                                  (req.product.level == -1 &&
+                                    req.inStorage <
+                                      quantity / req.numberPerOne && (
+                                      <Button
+                                        onClick={() => {
+                                          setBuyModalOpen(true);
+                                          setSelectedMaterial(req.product);
+                                          setCount(
+                                            req.numberPerOne * quantity -
+                                              req.inStorage
+                                          );
+                                        }}
+                                        className="setup-line-modal__table-buy-btn"
+                                      >
+                                        خرید
+                                      </Button>
+                                    ))}
                               </td>
                             )}
                           </tr>
