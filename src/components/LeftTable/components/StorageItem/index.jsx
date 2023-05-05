@@ -87,6 +87,14 @@ function StorageItem({ item, storageSpace, updateStorageInfo }) {
               {formatPrice(item.manufacturingAmount)} عدد
             </div>
           </div>
+          <div className="storage-item__expansion-item">
+            <div className="storage-item__expansion-name">
+              کالاهای قابل فروش
+            </div>
+            <div className="storage-item__expansion-percent">
+              {formatPrice(item.sellableAmount)} عدد
+            </div>
+          </div>
         </div>
       )}
       <Modal open={deleteModalOpen} onClose={onClose}>
