@@ -215,7 +215,7 @@ function Off({
                 <div style={{ marginLeft: 8 }}>تعداد:</div>
                 <NumberInput
                   step={
-                    product.product.level === 0
+                    product?.product?.level === 0
                       ? product.requirements[0].numberPerOne
                       : 1
                   }
