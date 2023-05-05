@@ -6,6 +6,7 @@ import {
 } from "../constants/materials";
 
 export function getProductIcon(name) {
+  console.log(name)
   return (
     RAW_MATERIALS[name]?.icon ||
     INTERMEDIATE_MATERIALS_LEVEL_ONE[name]?.icon ||

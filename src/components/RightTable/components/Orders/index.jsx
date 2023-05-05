@@ -30,8 +30,8 @@ import {
   RAW_MATERIALS,
 } from "../../../../constants/materials";
 import { formatPrice } from "../../../../utils/formatters";
-import { FormatPaintRounded } from "@mui/icons-material";
 import TransportEmptyState from "../../../TansportEmptyState";
+import { getProductIcon } from "../../../../utils/icons";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -251,7 +251,7 @@ function Orders() {
             acceptDate,
             cancelled,
             id,
-            productName,
+            product,
             unitPrice,
             orderType,
             quantity,
@@ -282,17 +282,12 @@ function Orders() {
                   <div className="order-card__right">
                     <img
                       className="order-card__img"
-                      src={
-                        RAW_MATERIALS[productName]?.icon ||
-                        INTERMEDIATE_MATERIALS_LEVEL_ONE[productName]?.icon ||
-                        INTERMEDIATE_MATERIALS_LEVEL_TWO[productName]?.icon ||
-                        sampleImg
-                      }
+                      src={getProductIcon(product?.name)}
                       alt="order card"
                     />
-                    <div className="order-card__name">{productName}</div>
                   </div>
                   <div className="order-card__left">
+                    <div className="order-card__name">{product.name}</div>
                     <div className="order-card__count">{quantity} واحد</div>
                     <div className="order-card__unit-price">
                       قیمت واحد: {formatPrice(unitPrice)}
