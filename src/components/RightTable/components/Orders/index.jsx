@@ -346,7 +346,7 @@ function Orders() {
                 })}
               >
                 <div className="order-card__title">
-                  {soldQuantity <= 0 ? (
+                  {!closed ? (
                     <AccessTimeIcon fontSize="small" />
                   ) : (
                     <CheckIcon fontSize="small" />
