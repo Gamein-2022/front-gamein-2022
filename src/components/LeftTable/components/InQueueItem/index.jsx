@@ -18,7 +18,7 @@ import {
 import MyCountDown from "../../../CountDown/MyCountDown";
 
 function InQueueItem({ item, updateInQueueProducts }) {
-  const [remainedTime, setRemainedTime] = useState(0);
+  const [remainedTime, setRemainedTime] = useState();
 
   useEffect(() => {
     const ariveTime = new Date(item.arrivalTime).getTime();
@@ -83,7 +83,7 @@ function InQueueItem({ item, updateInQueueProducts }) {
           <div>تعداد: {item?.amount}</div>
         </div>
       </div>
-      {true ? (
+      {item?.collectable ? (
         <div className="in-queue-item__status in-queue-item__status-success">
           <CheckCircleRoundedIcon />
           ظرفیت انبار برای این محموله کافی است.
@@ -102,7 +102,7 @@ function InQueueItem({ item, updateInQueueProducts }) {
           <Button
             onClick={() => handleCollect(item)}
             className="in-queue-item__enter-storage"
-            disabled={remainedTime <= 0}
+            disabled={remainedTime <= 0 || !item?.collectable}
           >
             ورود به انبار
           </Button>

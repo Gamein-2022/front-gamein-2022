@@ -112,7 +112,7 @@ function StorageItem({ item, storageSpace, updateStorageInfo }) {
           value={deleteCount}
           onChange={(value) => setDeleteCount(value)}
         />
-        <div>ظرفیت آزاد شونده: {deleteCount * item?.product?.unitVolume}</div>
+        <div>ظرفیت آزاد شونده: {formatPrice(deleteCount * item?.product?.unitVolume)}</div>
         <div className="storage-item__modal-btns">
           <Button
             onClick={handleDeleteFromStorage}

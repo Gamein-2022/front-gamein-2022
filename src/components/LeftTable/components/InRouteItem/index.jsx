@@ -7,6 +7,7 @@ import {
 } from "../../../../constants/materials";
 import "./style.scss";
 import MyCountDown from "../../../CountDown/MyCountDown";
+import { formatPrice } from "../../../../utils/formatters";
 
 function InRouteItem({ item }) {
   const [remainedTime, setRemainedTime] = useState();
@@ -41,7 +42,7 @@ function InRouteItem({ item }) {
         />
         <div className="in-route-item__header-left">
           <div>{item?.product?.name}</div>
-          <div>تعداد: {item?.amount}</div>
+          <div>تعداد: {formatPrice(item?.amount)}</div>
         </div>
       </div>
       <div className="in-route-item__footer">
