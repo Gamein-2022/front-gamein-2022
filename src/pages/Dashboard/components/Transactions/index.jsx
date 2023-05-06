@@ -57,7 +57,7 @@ function Transactions() {
                 <tr>
                   <th>نام کالا</th>
                   <th>تعداد</th>
-                  <th>هزینه</th>
+                  <th>{activeType?.isGreen ? "درآمد" : "هزینه"}</th>
                   <th>تاریخ</th>
                 </tr>
               </thead>
@@ -66,7 +66,11 @@ function Transactions() {
                   <tr>
                     <td>{row?.productName}</td>
                     <td>{formatPrice(row?.count)}</td>
-                    <td className={activeType?.isGreen ? "logs__green" : "logs__red"}>
+                    <td
+                      className={
+                        activeType?.isGreen ? "logs__green" : "logs__red"
+                      }
+                    >
                       {formatPrice(row?.totalCost)}
                       {activeType?.isGreen ? "+" : "-"}
                     </td>
