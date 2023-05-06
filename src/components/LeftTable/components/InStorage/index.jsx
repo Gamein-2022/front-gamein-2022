@@ -14,7 +14,7 @@ import Modal from "../../../Modal";
 import { toast } from "react-toastify";
 import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 
-function InStorage() {
+function InStorage({ updateBuildings }) {
   const [loading, setLoading] = useState(true);
   const [storageInfo, setStorageInfo] = useState([]);
   const [upgradeStorageModalOpen, setUpgradeStorageModalOpen] = useState(false);
@@ -51,6 +51,7 @@ function InStorage() {
         toast.success("انبار با موفقیت ارتقا یافت.");
         setUpgradeStorageModalOpen(false);
         updateStorageInfo();
+        updateBuildings();
         updateBalance();
       })
       .catch((error) => {
@@ -83,7 +84,8 @@ function InStorage() {
     storageInfo?.manufacturingPercent
   ).toFixed(3);
   const emptyPercent = +parseFloat(storageInfo?.emptyPercent).toFixed(3);
-  const blockedPercent = +parseFloat(storageInfo?.blockedPercent).toFixed(3) || 0;
+  const blockedPercent =
+    +parseFloat(storageInfo?.blockedPercent).toFixed(3) || 0;
   const series = loading
     ? []
     : [inStoragePercent, manufacturingPercent, emptyPercent, blockedPercent];
@@ -93,16 +95,16 @@ function InStorage() {
       {loading && <GameinLoading size={32} />}
       {!loading && (
         <>
+          {!storageInfo?.storageUpgraded && (
+            <Button
+              className="in-storage__upgrade-storage-btn"
+              onClick={() => setUpgradeStorageModalOpen(true)}
+            >
+              ارتقای انبار
+            </Button>
+          )}
           {storageInfo?.products?.length > 0 ? (
             <>
-              {!storageInfo?.storageUpgraded && (
-                <Button
-                  className="in-storage__upgrade-storage-btn"
-                  onClick={() => setUpgradeStorageModalOpen(true)}
-                >
-                  ارتقای انبار
-                </Button>
-              )}
               <div className="in-storage__space">
                 فضای کل انبار: {formatPrice(storageInfo?.storageSpace)}
               </div>

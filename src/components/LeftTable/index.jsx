@@ -81,11 +81,15 @@ function LeftTable({ updateBuildings }) {
         </div>
       </div>
       <div className="left-table__body">
-        {tab === LEFT_TABLE_TABS.storage && <Storage />}
+        {tab === LEFT_TABLE_TABS.storage && (
+          <Storage updateBuildings={updateBuildings} />
+        )}
         {tab === LEFT_TABLE_TABS.productionAndAssembly && (
           <ProductionAndAssembly updateBuildings={updateBuildings} />
         )}
-        {tab === LEFT_TABLE_TABS.recycle && <Recycle updateBuildings={updateBuildings} />}
+        {tab === LEFT_TABLE_TABS.recycle && (
+          <Recycle updateBuildings={updateBuildings} />
+        )}
       </div>
       <div className="left-table__close-icon" onClick={() => setOpen(false)}>
         <ExpandCircleDownIcon fontSize="large" />

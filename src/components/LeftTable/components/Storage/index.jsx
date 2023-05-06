@@ -5,7 +5,7 @@ import InStorage from "../InStorage";
 import InQueue from "../InQueue";
 import InRoute from "../InRoute";
 
-function Storage() {
+function Storage({ updateBuildings }) {
   const [activeTab, setActiveTab] = useState("in-storage");
 
   return (
@@ -36,7 +36,9 @@ function Storage() {
           در مسیر
         </div>
       </div>
-      {activeTab === "in-storage" && <InStorage />}
+      {activeTab === "in-storage" && (
+        <InStorage updateBuildings={updateBuildings} />
+      )}
       {activeTab === "in-queue" && <InQueue />}
       {activeTab === "in-route" && <InRoute />}
     </div>

@@ -247,6 +247,19 @@ function Map({ buildings, updateBuildings }) {
         (item) => item !== "ground_3_unfinished_building"
       );
     }
+    if (buildings?.storageUpgraded) {
+      HIDDEN_ITEMS.push("inventory_building_level_1");
+      SHOW_ITEMS.push("inventory_building_level_2")
+      HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+        (item) => item !== "inventory_building_level_2"
+      );
+    }else {
+      HIDDEN_ITEMS.push("inventory_building_level_2");
+      SHOW_ITEMS.push("inventory_building_level_1")
+      HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+        (item) => item !== "inventory_building_level_1"
+      );
+    }
 
     buildings?.buildings.forEach((building, index) => {
       const ground = index;
