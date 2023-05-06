@@ -6,7 +6,7 @@
 
   &__top {
     height: calc(100% - 72px);
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   &__filters {
