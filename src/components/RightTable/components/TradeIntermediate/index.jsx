@@ -204,6 +204,27 @@ function TradeIntermediate() {
       });
   };
 
+  const transportCost =
+    transport === "ship"
+      ? shippingInfo?.shipBasePrice +
+        shippingInfo?.shipVariablePrice *
+          Math.floor(
+            Math.sqrt(
+              selectedOrder?.quantity *
+                selectedOrder?.product?.unitVolume *
+                shippingInfo?.distance
+            )
+          )
+      : shippingInfo?.planeBasePrice +
+        shippingInfo?.planeVariablePrice *
+          Math.floor(
+            Math.sqrt(
+              selectedOrder?.quantity *
+                selectedOrder?.product?.unitVolume *
+                shippingInfo?.distance
+            )
+          );
+
   return (
     <>
       <div className="trade-filter">
@@ -472,7 +493,7 @@ function TradeIntermediate() {
               {selectedOrder.region}
             </div>
             <div>تعداد {selectedOrder.quantity} واحد</div>
-            {shippingInfo.distannce > 0 ? (
+            {shippingInfo.distance > 0 ? (
               <>
                 <div className="shop-modal__transport-name">
                   با چه وسیله‌ای ارسال بشه؟
@@ -496,7 +517,7 @@ function TradeIntermediate() {
                     <div className="shop-modal__transport-text">
                       هواپیما
                       <br />
-                      در {shippingInfo.planeDuration * 8} ثانیه
+                      در {shippingInfo.planeDuration} ثانیه
                     </div>
                   </div>
                   <div
@@ -513,7 +534,7 @@ function TradeIntermediate() {
                     <div className="shop-modal__transport-text">
                       کشتی
                       <br />
-                      در {shippingInfo.shipDuration * 8} ثانیه
+                      در {shippingInfo.shipDuration} ثانیه
                     </div>
                   </div>
                 </div>
@@ -526,20 +547,12 @@ function TradeIntermediate() {
               {formatPrice(selectedOrder.quantity * selectedOrder.unitPrice)}
             </div>
             <div className="shop-modal__summary-text">
-              هزینه حمل و نقل:{" "}
-              {formatPrice(
-                transport === "airplane"
-                  ? shippingInfo.planePrice
-                  : shippingInfo.shipPrice
-              )}
+              هزینه حمل و نقل: {formatPrice(transportCost)}
             </div>
             <div className="shop-modal__summary-text">
               جمع کل:{" "}
               {formatPrice(
-                selectedOrder.quantity * selectedOrder.unitPrice +
-                  (transport === "airplane"
-                    ? shippingInfo.planePrice
-                    : shippingInfo.shipPrice)
+                selectedOrder.quantity * selectedOrder.unitPrice + transportCost
               )}
             </div>
             <div className="shop-modal__seperator"></div>
@@ -551,9 +564,7 @@ function TradeIntermediate() {
               {formatPrice(
                 shippingInfo.balance -
                   (selectedOrder.quantity * selectedOrder.unitPrice +
-                    (transport === "airplane"
-                      ? shippingInfo.planePrice
-                      : shippingInfo.shipPrice))
+                    transportCost)
               )}
             </div>
             <div>
