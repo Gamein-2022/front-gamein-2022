@@ -54,6 +54,7 @@ function Recycle({ updateBuildings }) {
         toast.success("ساختمان با موفقیت ارتقا یافت.");
         updateGroundInfo();
         setUpgradeBuildingModalOpen(false);
+        updateBuildings();
       })
       .catch((error) => {
         toast.error(

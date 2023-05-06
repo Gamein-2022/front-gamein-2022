@@ -22,7 +22,8 @@ import { ReactComponent as MapImage } from "./gamein_map.svg";
 import "./style.scss";
 
 let HIDDEN_ITEMS = [
-  "recycling_facility_building",
+  "recycling_facility_building_level_1",
+  "recycling_facility_building_level_2",
   "ground_3_assembly_facility",
   "ground_2_assembly_facility",
   "ground_1_assembly_facility",
@@ -107,6 +108,58 @@ function Map({ buildings, updateBuildings }) {
         setMiddleTableOpen(false);
       }
     });
+    document.getElementById("trees_front").addEventListener("click", (e) => {
+      let closeAllTabs = true;
+      GLOW.forEach((item) => {
+        if (e.target === document.getElementById(item)) {
+          closeAllTabs = false;
+        }
+      });
+      if (closeAllTabs) {
+        setRightTableOpen(false);
+        setLeftTableOpen(false);
+        setMiddleTableOpen(false);
+      }
+    });
+    document.getElementById("trees_back").addEventListener("click", (e) => {
+      let closeAllTabs = true;
+      GLOW.forEach((item) => {
+        if (e.target === document.getElementById(item)) {
+          closeAllTabs = false;
+        }
+      });
+      if (closeAllTabs) {
+        setRightTableOpen(false);
+        setLeftTableOpen(false);
+        setMiddleTableOpen(false);
+      }
+    });
+    document.getElementById("roads").addEventListener("click", (e) => {
+      let closeAllTabs = true;
+      GLOW.forEach((item) => {
+        if (e.target === document.getElementById(item)) {
+          closeAllTabs = false;
+        }
+      });
+      if (closeAllTabs) {
+        setRightTableOpen(false);
+        setLeftTableOpen(false);
+        setMiddleTableOpen(false);
+      }
+    });
+    document.getElementById("sea").addEventListener("click", (e) => {
+      let closeAllTabs = true;
+      GLOW.forEach((item) => {
+        if (e.target === document.getElementById(item)) {
+          closeAllTabs = false;
+        }
+      });
+      if (closeAllTabs) {
+        setRightTableOpen(false);
+        setLeftTableOpen(false);
+        setMiddleTableOpen(false);
+      }
+    });
 
     document.getElementById("ground_1")?.addEventListener("click", () => {
       setLeftTableActiveTab(LEFT_TABLE_TABS.productionAndAssembly);
@@ -130,7 +183,7 @@ function Map({ buildings, updateBuildings }) {
         setLeftTableOpen(true);
       });
     document
-      .getElementById("recycling_facility_building")
+      .getElementById("recycling_facility")
       ?.addEventListener("click", () => {
         setLeftTableActiveTab(LEFT_TABLE_TABS.recycle);
         setLeftTableOpen(true);
@@ -170,7 +223,8 @@ function Map({ buildings, updateBuildings }) {
     });
 
     HIDDEN_ITEMS = [
-      "recycling_facility_building",
+      "recycling_facility_building_level_1",
+      "recycling_facility_building_level_2",
       "ground_3_assembly_facility",
       "ground_2_assembly_facility",
       "ground_1_assembly_facility",
@@ -194,28 +248,87 @@ function Map({ buildings, updateBuildings }) {
       );
     }
 
-    const hasRecycleFactory =
-      buildings?.buildings?.filter((item) => item?.type === "RECYCLE_FACTORY")
-        .length > 0;
-    if (hasRecycleFactory) {
-      HIDDEN_ITEMS.push("recycling_facility_unfinished_building");
-      SHOW_ITEMS.push("recycling_facility_building");
-    }
     buildings?.buildings.forEach((building, index) => {
       const ground = index;
       if (building) {
-        if (ground === 1) {
+        if (ground === 0) {
+          HIDDEN_ITEMS.push("recycling_facility_unfinished_building");
+          SHOW_ITEMS.push("recycling_facility_building");
+          if (building?.upgraded) {
+            HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+              (item) => item !== "recycling_facility_building_level_2"
+            );
+            HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+              (item) => item !== "recycling_facility_building_level_1"
+            );
+            SHOW_ITEMS.push("recycling_facility_building_level_1");
+            SHOW_ITEMS.push("recycling_facility_building_level_2");
+          } else {
+            HIDDEN_ITEMS.push("recycling_facility_building_level_2");
+            HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+              (item) => item !== "recycling_facility_building_level_1"
+            );
+            SHOW_ITEMS = SHOW_ITEMS.filter(
+              (item) => item !== "recycling_facility_building_level_2"
+            );
+            SHOW_ITEMS.push("recycling_facility_building_level_1");
+          }
+        } else if (ground === 1) {
           if (building?.type === "PRODUCTION_FACTORY") {
             SHOW_ITEMS.push("ground_1_production_facility");
+            if (building?.upgraded) {
+              HIDDEN_ITEMS.push("ground_1_production_facility_door_3_closer");
+              SHOW_ITEMS = SHOW_ITEMS.filter(
+                (item) => item !== "ground_1_production_facility_door_3_closer"
+              );
+            } else {
+              SHOW_ITEMS.push("ground_1_production_facility_door_3_closer");
+              HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+                (item) => item !== "ground_1_production_facility_door_3_closer"
+              );
+            }
           } else if (building?.type === "ASSEMBLY_FACTORY") {
             SHOW_ITEMS.push("ground_1_assembly_facility");
+            if (building?.upgraded) {
+              HIDDEN_ITEMS.push("ground_1_assembly_facility_door_4_closer");
+              SHOW_ITEMS = SHOW_ITEMS.filter(
+                (item) => item !== "ground_1_assembly_facility_door_4_closer"
+              );
+            } else {
+              SHOW_ITEMS.push("ground_1_assembly_facility_door_4_closer");
+              HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+                (item) => item !== "ground_1_assembly_facility_door_4_closer"
+              );
+            }
           }
           HIDDEN_ITEMS.push("ground_1_unfinished_building");
         } else if (ground === 2) {
           if (building?.type === "PRODUCTION_FACTORY") {
             SHOW_ITEMS.push("ground_2_production_facility");
+            if (building?.upgraded) {
+              HIDDEN_ITEMS.push("ground_2_production_facility_door_3_closer");
+              SHOW_ITEMS = SHOW_ITEMS.filter(
+                (item) => item !== "ground_2_production_facility_door_3_closer"
+              );
+            } else {
+              SHOW_ITEMS.push("ground_2_production_facility_door_3_closer");
+              HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+                (item) => item !== "ground_2_production_facility_door_3_closer"
+              );
+            }
           } else if (building?.type === "ASSEMBLY_FACTORY") {
             SHOW_ITEMS.push("ground_2_assembly_facility");
+            if (building?.upgraded) {
+              HIDDEN_ITEMS.push("ground_2_assembly_facility_door_4_closer");
+              SHOW_ITEMS = SHOW_ITEMS.filter(
+                (item) => item !== "ground_2_assembly_facility_door_4_closer"
+              );
+            } else {
+              SHOW_ITEMS.push("ground_2_assembly_facility_door_4_closer");
+              HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+                (item) => item !== "ground_2_assembly_facility_door_4_closer"
+              );
+            }
           }
           HIDDEN_ITEMS.push("ground_2_unfinished_building");
         } else if (ground === 3) {
@@ -228,10 +341,30 @@ function Map({ buildings, updateBuildings }) {
           SHOW_ITEMS.push("ground_3_asphalt");
           if (building?.type === "PRODUCTION_FACTORY") {
             SHOW_ITEMS.push("ground_3_production_facility");
+            if (building?.upgraded) {
+              HIDDEN_ITEMS.push("ground_3_production_facility_door_3_closer");
+              SHOW_ITEMS = SHOW_ITEMS.filter(
+                (item) => item !== "ground_3_production_facility_door_3_closer"
+              );
+            } else {
+              SHOW_ITEMS.push("ground_3_production_facility_door_3_closer");
+              HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+                (item) => item !== "ground_3_production_facility_door_3_closer"
+              );
+            }
           } else if (building?.type === "ASSEMBLY_FACTORY") {
             SHOW_ITEMS.push("ground_3_assembly_facility");
-          } else {
-            SHOW_ITEMS.push("ground_3_inventory");
+            if (building?.upgraded) {
+              HIDDEN_ITEMS.push("ground_3_assembly_facility_door_4_closer");
+              SHOW_ITEMS = SHOW_ITEMS.filter(
+                (item) => item !== "ground_3_assembly_facility_door_4_closer"
+              );
+            } else {
+              SHOW_ITEMS.push("ground_3_assembly_facility_door_4_closer");
+              HIDDEN_ITEMS = HIDDEN_ITEMS.filter(
+                (item) => item !== "ground_3_assembly_facility_door_4_closer"
+              );
+            }
           }
         }
       } else {

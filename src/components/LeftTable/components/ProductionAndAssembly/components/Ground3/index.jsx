@@ -79,6 +79,7 @@ function Ground3({ updateBuildings }) {
       .then((data) => {
         toast.success("ساختمان با موفقیت ارتقا یافت.");
         updateGroundInfo();
+        updateBuildings();
         setUpgradeBuildingModalOpen(false);
       })
       .catch((error) => {
