@@ -90,7 +90,7 @@ function ChooseRegion() {
       });
 
     ws.current = new WebSocket(
-      "ws://api-gamein.dariahamrah.ir/websocket/region"
+      "wss://api-gamein.dariahamrah.ir/websocket/region"
     );
 
     ws.current.onopen = function (event) {

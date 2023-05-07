@@ -24,7 +24,7 @@ const AppRouter = () => {
 
   useEffect(() => {
     ws.current = new WebSocket(
-      "ws://api-gamein.dariahamrah.ir/websocket/notify"
+      "wss://api-gamein.dariahamrah.ir/websocket/notify"
     );
 
     ws.current.onopen = function (event) {
