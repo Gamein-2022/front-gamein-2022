@@ -34,7 +34,7 @@ jobs:
               docker push registry.dariasystem.com/gamein/front:dev
               
   deploy-front:
-    #needs: check-code
+    needs: build-front
     runs-on: [app]
     steps:
       - uses: actions/checkout@master
@@ -48,6 +48,7 @@ jobs:
               docker-compose ps
               
   deploy-front-1:
+    needs: build-front
     runs-on: [app-1]
     steps:
       - uses: actions/checkout@master
