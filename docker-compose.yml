@@ -6,10 +6,19 @@ networks:
 
 services:
   front:
-    image: front
+    image: registry.dariasystem.com/gamein/front:dev
     container_name: front
     restart: always
     ports:
       - 3000:80
     networks:
-      - gamein   
+      - gamein 
+      
+  front-1:
+    image: registry.dariasystem.com/gamein/front:dev
+    container_name: front-1
+    restart: always
+    ports:
+      - 3000:80
+    networks:
+      - gamein  
