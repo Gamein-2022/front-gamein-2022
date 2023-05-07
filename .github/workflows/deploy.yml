@@ -57,6 +57,6 @@ jobs:
               docker login   -u daria -p 7HlUyiSD  https://registry.dariasystem.com
               docker pull registry.dariasystem.com/gamein/front:dev
               docker rm -f front-1      
-              docker-compose up -d front-1
+              docker compose up -d front-1
               sleep 5
-              docker-compose ps
+              docker compose ps
