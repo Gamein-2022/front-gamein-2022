@@ -63,6 +63,7 @@ function Ground3({ updateBuildings }) {
         setUpdateRegionModalOpenState(false);
         toast.success("زمین گسترش یافت.");
         updateBuildings();
+        updateGroundInfo();
         updateBalance();
       })
       .catch((error) => {
