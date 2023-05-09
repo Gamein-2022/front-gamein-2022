@@ -55,8 +55,8 @@ function Transactions() {
             <table className="logs__table">
               <thead>
                 <tr>
-                  <th>نام کالا</th>
-                  <th>تعداد</th>
+                  {activeType.name !== "هزینه انبارداری" && <th>نام کالا</th>}
+                  {activeType.name !== "هزینه انبارداری" && <th>تعداد</th>}
                   <th>{activeType?.isGreen ? "درآمد" : "هزینه"}</th>
                   <th>تاریخ</th>
                 </tr>
@@ -64,8 +64,12 @@ function Transactions() {
               <tbody>
                 {rows.map((row) => (
                   <tr>
-                    <td>{row?.productName}</td>
-                    <td>{formatPrice(row?.count)}</td>
+                    {activeType.name !== "هزینه انبارداری" && (
+                      <td>{row?.productName}</td>
+                    )}
+                    {activeType.name !== "هزینه انبارداری" && (
+                      <td>{formatPrice(row?.count)}</td>
+                    )}
                     <td
                       className={
                         activeType?.isGreen ? "logs__green" : "logs__red"
