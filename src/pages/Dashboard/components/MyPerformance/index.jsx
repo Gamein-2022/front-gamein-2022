@@ -23,12 +23,12 @@ function MyPerformance() {
             {formatPrice(performanceInfo?.teamWealth)}
           </div>
         </div>
-        <div className="my-performance__item">
+        {/* <div className="my-performance__item">
           <div className="my-performance__item-title">امتیاز برند شما</div>
           <div className="my-performance__item-value">
             {performanceInfo?.brand}
           </div>
-        </div>
+        </div> */}
         {performanceInfo?.rank >= 0 && (
           <div className="my-performance__item">
             <div className="my-performance__item-title">
