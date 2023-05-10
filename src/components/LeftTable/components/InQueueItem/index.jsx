@@ -16,9 +16,12 @@ import {
   RAW_MATERIALS,
 } from "../../../../constants/materials";
 import MyCountDown from "../../../CountDown/MyCountDown";
+import { getProductIcon } from "../../../../utils/icons";
+import { formatPrice } from "../../../../utils/formatters";
 
 function InQueueItem({ item, updateInQueueProducts }) {
   const [remainedTime, setRemainedTime] = useState();
+  const [actionLoading, setActionLoading] = useState(false);
 
   useEffect(() => {
     const ariveTime = new Date(item.arrivalTime).getTime();
@@ -28,6 +31,7 @@ function InQueueItem({ item, updateInQueueProducts }) {
   }, []);
 
   const handleCollect = (item) => {
+    setActionLoading(true);
     collectShipping({ id: item.id })
       .then((res) => res.data)
       .then((data) => {
@@ -41,10 +45,14 @@ function InQueueItem({ item, updateInQueueProducts }) {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
   const handleDelete = () => {
+    setActionLoading(true);
     removeInQueueItem({ id: item.id })
       .then((res) => res.data)
       .then((data) => {
@@ -58,29 +66,27 @@ function InQueueItem({ item, updateInQueueProducts }) {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
   const handleCountDownCompleted = () => {
-    setRemainedTime(0)
-  }
+    setRemainedTime(0);
+  };
 
   return (
     <div className="in-queue-item">
       <div className="in-queue-item__header">
         <img
           className="in-queue-item__img"
-          src={
-            RAW_MATERIALS[item?.product?.name]?.icon ||
-            INTERMEDIATE_MATERIALS_LEVEL_ONE[item?.product?.name]?.icon ||
-            INTERMEDIATE_MATERIALS_LEVEL_TWO[item?.product?.name]?.icon ||
-            sampleImg
-          }
+          src={getProductIcon(item?.product?.name)}
           alt="product"
         />
         <div className="in-queue-item__header-left">
-          <div>{item?.product?.name}</div>
-          <div>تعداد: {item?.amount}</div>
+          <div>{item?.product?.prettyName || item?.product?.name}</div>
+          <div>تعداد: {formatPrice(item?.amount)}</div>
         </div>
       </div>
       {item?.collectable ? (
@@ -96,17 +102,25 @@ function InQueueItem({ item, updateInQueueProducts }) {
       )}
       <div className="in-queue-item__footer">
         <div className="in-queue-item__time">
-          زمان باقیمانده: <MyCountDown timeInSeconds={remainedTime} onComplete={handleCountDownCompleted}/>
+          زمان باقیمانده:{" "}
+          <MyCountDown
+            timeInSeconds={remainedTime}
+            onComplete={handleCountDownCompleted}
+          />
         </div>
         <div className="in-queue-item__actions">
           <Button
             onClick={() => handleCollect(item)}
             className="in-queue-item__enter-storage"
-            disabled={remainedTime <= 0 || !item?.collectable}
+            disabled={actionLoading || remainedTime <= 0 || !item?.collectable}
           >
             ورود به انبار
           </Button>
-          <Button className="in-queue-item__delete" onClick={handleDelete}>
+          <Button
+            disabled={actionLoading}
+            className="in-queue-item__delete"
+            onClick={handleDelete}
+          >
             <DeleteForeverOutlinedIcon />
           </Button>
         </div>

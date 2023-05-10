@@ -9,6 +9,7 @@ import NumberInput from "../../../NumberInput";
 import { getFinalNextTime } from "../../../../apis/orders";
 import MyCountDown from "../../../CountDown/MyCountDown";
 import GameinLoading from "../../../GameinLoading";
+import sellFinal from "../../../../assets/sell-final.svg";
 
 function TradeFinal() {
   const [quantity, setQuantity] = useState(0);
@@ -75,6 +76,11 @@ function TradeFinal() {
       {pageLoading && <GameinLoading size={32} />}
       {!pageLoading && (
         <>
+          <img
+            style={{ width: "60%", margin: "0 auto 8px", borderRadius: 8 }}
+            src={sellFinal}
+            alt="trade final"
+          />
           <p>
             اینجا می‌تونی محصولات نهایی رو به بازار جهانی عرضه کنی. برای این
             کار، محصول، تعداد و قیمت مورد نظرت رو مشخص کن.
@@ -89,9 +95,11 @@ function TradeFinal() {
             />
           </div>
           {finalProducts?.length <= 0 && (
-            <div style={{ textAlign: "center", margin: "16px 0" }}>
-              شما هیچ محصول نهایی برای فروش ندارید.
-            </div>
+            <>
+              <div style={{ textAlign: "center", margin: "16px 0" }}>
+                شما هیچ محصول نهایی برای فروش ندارید.
+              </div>
+            </>
           )}
           {finalProducts?.length > 0 && (
             <>

@@ -41,6 +41,7 @@ import { buyFromGamein } from "../../../../apis/trade";
 import NumberInput from "../../../NumberInput";
 import TransportEmptyState from "../../../TansportEmptyState";
 import GameinLoading from "../../../GameinLoading";
+import { getProductIcon } from "../../../../utils/icons";
 
 function Off({
   open,
@@ -60,7 +61,7 @@ function Off({
   const [transport, setTransport] = useState("airplane");
   const [selectedMaterial, setSelectedMaterial] = useState({});
 
-  const [pageLoading, setPageLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -100,7 +101,6 @@ function Off({
   const totalCost = transportCost + productCost || 0;
 
   useEffect(() => {
-    setPageLoading(true);
     getLineAvailableProducts({ id: lineId })
       .then((res) => res.data)
       .then((data) => {
@@ -215,7 +215,7 @@ function Off({
                       <option>{item?.product?.name}</option>
                     ))}
                   </select>
-                  {product?.product?.name && (
+                  {modalType !== "RECYCLE" && product?.product?.name && (
                     <img
                       className="setup-line-modal__img"
                       src={
@@ -253,8 +253,8 @@ function Off({
                     <>
                       <div className="setup-line-modal__storage-description">
                         برای {modalType === "PRODUCTION" ? "تولید" : "مونتاژ"}{" "}
-                        {quantity} عدد {product?.name} به مواد اولیه‌ی زیر نیاز
-                        دارید:
+                        {quantity} عدد {product?.prettyName || product?.name} به
+                        مواد اولیه‌ی زیر نیاز دارید:
                       </div>
                       <div className="setup-line-modal__storage-table">
                         <table>
@@ -268,7 +268,9 @@ function Off({
                           <tbody>
                             {product?.requirements.map((req) => (
                               <tr>
-                                <td>{req.product.name}</td>
+                                <td>
+                                  {req.product.prettyName || req.product.name}
+                                </td>
                                 <td>
                                   {req.product.level === -1
                                     ? (quantity / req.numberPerOne).toFixed(2)
@@ -451,11 +453,11 @@ function Off({
       >
         <img
           className="shop-modal__img"
-          src={RAW_MATERIALS[selectedMaterial?.name]?.icon || sampleImg}
-          alt="selected material"
+          src={getProductIcon(selectedMaterial?.name)}
+          alt={selectedMaterial?.name}
         />
         <div className="shop-modal__name">
-          {selectedMaterial?.name || "Copper"}
+          {selectedMaterial?.prettyName || selectedMaterial?.name}
         </div>
         <div className="shop-modal__help-text">
           مواد اولیه از نزدیکترین منطقه به شما خریداری می‌شن.

@@ -6,7 +6,8 @@ import { getStorageQueue } from "../../../../apis/storage";
 import GameinLoading from "../../../GameinLoading";
 
 function InQueue() {
-  const [loading, setLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState(false);
   const [inQueueProducts, setInQueueProducts] = useState([]);
   useEffect(() => {
     getStorageQueue()
@@ -18,10 +19,11 @@ function InQueue() {
       .catch((error) => {
         console.log(error);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setPageLoading(false));
   }, []);
 
   const updateInQueueProducts = () => {
+    setPageLoading(true);
     getStorageQueue()
       .then((res) => res.data)
       .then((data) => {
@@ -30,13 +32,16 @@ function InQueue() {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setPageLoading(false);
       });
   };
 
   return (
     <div className="in-queue">
-      {loading && <GameinLoading size={32} />}
-      {!loading && (
+      {pageLoading && <GameinLoading size={32} />}
+      {!pageLoading && (
         <>
           {inQueueProducts.map((item) => (
             <InQueueItem

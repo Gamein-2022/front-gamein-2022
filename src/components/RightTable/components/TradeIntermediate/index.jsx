@@ -25,6 +25,7 @@ import { formatPrice, isEmpty } from "../../../../utils/formatters";
 import NumberInput from "../../../NumberInput";
 import { getProductIcon } from "../../../../utils/icons";
 import TransportEmptyState from "../../../TansportEmptyState";
+import GameinLoading from "../../../GameinLoading";
 
 function TradeIntermediate() {
   const [activeTab, setActiveTab] = useState("buy");
@@ -33,6 +34,8 @@ function TradeIntermediate() {
   const [buyOfferModalOpen, setBuyOfferModalOpen] = useState(false);
   const [intermediateMaterials, setIntermediateMaterials] = useState([]);
   const [selectedMaterial, setSelectedMaterial] = useState();
+  const [pageLoading, setPageLoading] = useState(true);
+  const [ordersLoading, setOrdersLoading] = useState(false);
 
   const [buyCount, setBuyCount] = useState(0);
   const [buyCountError, setBuyCountError] = useState(false);
@@ -98,10 +101,14 @@ function TradeIntermediate() {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setPageLoading(false);
       });
   }, []);
 
   useEffect(() => {
+    setOrdersLoading(true);
     getOrders()
       .then((res) => res.data)
       .then((data) => {
@@ -112,10 +119,14 @@ function TradeIntermediate() {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setOrdersLoading(false);
       });
   }, []);
 
   const updateOrders = () => {
+    setOrdersLoading(true);
     getOrders()
       .then((res) => res.data)
       .then((data) => {
@@ -125,6 +136,9 @@ function TradeIntermediate() {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setOrdersLoading(false);
       });
   };
 
@@ -232,57 +246,69 @@ function TradeIntermediate() {
       <div className="trade-filter">
         <div className="trade-filter__top">
           <div className="trade-filter__filters">
-            <select
-              onChange={(e) => {
-                setSelectedMaterial(e.target.value);
-                setBuyOrders(
-                  data
-                    .filter((item) => item.orderType === "SELL")
-                    .filter((item) => item?.product?.name === e.target.value)
-                );
-                setSellOrders(
-                  data
-                    .filter((item) => item.orderType === "BUY")
-                    .filter((item) => item?.product?.name === e.target.value)
-                );
-              }}
-              value={selectedMaterial}
-              className="trade-filter__select"
-            >
-              <option disabled selected>
-                انتخاب کالا
-              </option>
-              {intermediateMaterials.map((material) => (
-                <option value={material.name}>{material.prettyName}</option>
-              ))}
-            </select>
-            <div className="trade-filter__tabs">
-              <div
-                onClick={() => setActiveTab("buy")}
-                className={classNames(
-                  "trade-filter__tab trade-filter__tab-buy",
-                  {
-                    "trade-filter__tab-buy--active": activeTab === "buy",
-                  }
-                )}
-              >
-                خرید
-              </div>
-              <div
-                onClick={() => setActiveTab("sell")}
-                className={classNames(
-                  "trade-filter__tab trade-filter__tab-sell",
-                  {
-                    "trade-filter__tab-sell--active": activeTab === "sell",
-                  }
-                )}
-              >
-                فروش
-              </div>
-            </div>
-            <Button onClick={handleSearch} className="trade-filter__search-btn">
-              بروزرسانی
-            </Button>
+            {pageLoading && <GameinLoading size={32} />}
+            {!pageLoading && (
+              <>
+                <select
+                  onChange={(e) => {
+                    setSelectedMaterial(e.target.value);
+                    setBuyOrders(
+                      data
+                        .filter((item) => item.orderType === "SELL")
+                        .filter(
+                          (item) => item?.product?.name === e.target.value
+                        )
+                    );
+                    setSellOrders(
+                      data
+                        .filter((item) => item.orderType === "BUY")
+                        .filter(
+                          (item) => item?.product?.name === e.target.value
+                        )
+                    );
+                  }}
+                  value={selectedMaterial}
+                  className="trade-filter__select"
+                >
+                  <option disabled selected>
+                    انتخاب کالا
+                  </option>
+                  {intermediateMaterials.map((material) => (
+                    <option value={material.name}>{material.prettyName}</option>
+                  ))}
+                </select>
+                <div className="trade-filter__tabs">
+                  <div
+                    onClick={() => setActiveTab("buy")}
+                    className={classNames(
+                      "trade-filter__tab trade-filter__tab-buy",
+                      {
+                        "trade-filter__tab-buy--active": activeTab === "buy",
+                      }
+                    )}
+                  >
+                    خرید
+                  </div>
+                  <div
+                    onClick={() => setActiveTab("sell")}
+                    className={classNames(
+                      "trade-filter__tab trade-filter__tab-sell",
+                      {
+                        "trade-filter__tab-sell--active": activeTab === "sell",
+                      }
+                    )}
+                  >
+                    فروش
+                  </div>
+                </div>
+                <Button
+                  onClick={handleSearch}
+                  className="trade-filter__search-btn"
+                >
+                  بروزرسانی
+                </Button>
+              </>
+            )}
           </div>
           {currentOrders.length > 0 && (
             <div className="trade-filter__table-wrapper">

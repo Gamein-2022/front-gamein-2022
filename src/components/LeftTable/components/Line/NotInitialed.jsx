@@ -20,13 +20,12 @@ import GameinLoading from "../../../GameinLoading";
 function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
   const [availableProducts, setAvailableProducts] = useState([]);
   const [selectedProduct, setselectedProduct] = useState();
-  const [pageLoading, setPageLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
 
   const stringType = modalType === "PRODUCTION" ? "تولید" : "مونتاژ";
 
   useEffect(() => {
-    setPageLoading(true);
     getLineGroups({ t: modalType === "PRODUCTION" ? 0 : 1 })
       .then((res) => res.data)
       .then((data) => {

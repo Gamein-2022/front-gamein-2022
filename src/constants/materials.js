@@ -75,294 +75,299 @@ import gtab1 from "../assets/materials/level_4/gtab_1.svg";
 import gtab2 from "../assets/materials/level_4/gtab_2.svg";
 import gtab3 from "../assets/materials/level_4/gtab_3.svg";
 import gwatch from "../assets/materials/level_4/gwatch.svg";
+import discardedPhone from "../assets/materials/level_4/discarded_phone.svg";
 
 export const RAW_MATERIALS = {
-  "aluminium": {
+  aluminium: {
     name: "aluminium",
     icon: aluminium,
   },
-  "chips": {
+  chips: {
     name: "chips",
     icon: chips,
   },
-  "cobalt": {
+  cobalt: {
     name: "cobalt",
     icon: cobalt,
   },
-  "copper": {
+  copper: {
     name: "copper",
     icon: copper,
   },
-  "glass": {
+  glass: {
     name: "glass",
     icon: glass,
   },
-  "lithium": {
+  lithium: {
     name: "lithium",
     icon: lithium,
   },
-  "microphone": {
+  microphone: {
     name: "microphone",
     icon: microphone,
   },
-  "plastic": {
+  plastic: {
     name: "plastic",
     icon: plastic,
   },
-  "ports": {
+  ports: {
     name: "ports",
     icon: ports,
   },
-  "processors": {
+  processors: {
     name: "processors",
     icon: processors,
   },
-  "silicon": {
+  silicon: {
     name: "silicon",
     icon: silicon,
   },
-  "speaker": {
+  speaker: {
     name: "speaker",
     icon: speaker,
   },
-  "vibrationMotor": {
+  vibrationMotor: {
     name: "vibrationMotor",
     icon: vibrationMotor,
   },
 };
 
 export const INTERMEDIATE_MATERIALS_LEVEL_ONE = {
-  "advancedDisplay": {
+  advancedDisplay: {
     name: "advancedDisplay",
     icon: advancedDisplay,
   },
-  "camera": {
+  camera: {
     name: "camera",
     icon: camera,
   },
-  "cpu": {
+  cpu: {
     name: "cpu",
     icon: cpu,
   },
-  "displayWithKeypad": {
+  displayWithKeypad: {
     name: "displayWithKeypad",
     icon: displayWithKeypad,
   },
-  "fitnessTrackers": {
+  fitnessTrackers: {
     name: "fitnessTrackers",
     icon: fitnessTrackers,
   },
-  "foldableDisplay": {
+  foldableDisplay: {
     name: "foldableDisplay",
     icon: foldableDisplay,
   },
-  "gpu": {
+  gpu: {
     name: "gpu",
     icon: gpu,
   },
-  "healthMonitors": {
+  healthMonitors: {
     name: "healthMonitors",
     icon: healthMonitors,
   },
-  "modem2g": {
+  modem2g: {
     name: "modem2g",
     icon: modem2g,
   },
-  "modem3g": {
+  modem3g: {
     name: "modem3g",
     icon: modem3g,
   },
-  "modem4g": {
+  modem4g: {
     name: "modem4g",
     icon: modem4g,
   },
-  "modem5g": {
+  modem5g: {
     name: "modem5g",
     icon: modem5g,
   },
-  "multiCamera": {
+  multiCamera: {
     name: "multiCamera",
     icon: multiCamera,
   },
-  "phoneBattery": {
+  phoneBattery: {
     name: "phoneBattery",
     icon: phoneBattery,
   },
-  "phoneFrame": {
+  phoneFrame: {
     name: "phoneFrame",
     icon: phoneFrame,
   },
-  "phoneFrameWithKeypad": {
+  phoneFrameWithKeypad: {
     name: "phoneFrameWithKeypad",
     icon: phoneFrameKeypad,
   },
-  "ramAndStorage": {
+  ramAndStorage: {
     name: "ramAndStorage",
     icon: ramAndStorage,
   },
-  "storage": {
+  storage: {
     name: "storage",
     icon: storage,
   },
-  "tabletBattery": {
+  tabletBattery: {
     name: "tabletBattery",
     icon: tabletBattery,
   },
-  "tabletFrame": {
+  tabletFrame: {
     name: "tabletFrame",
     icon: tabletFrame,
   },
-  "touchDisplay": {
+  touchDisplay: {
     name: "touchDisplay",
     icon: touchDisplay,
   },
-  "watchBand": {
+  watchBand: {
     name: "watchBand",
     icon: watchBand,
   },
-  "watchBattery": {
+  watchBattery: {
     name: "watchBattery",
     icon: watchBattery,
   },
-  "watchDisplay": {
+  watchDisplay: {
     name: "watchDisplay",
     icon: watchDisplay,
   },
-  "watchFrame": {
+  watchFrame: {
     name: "watchFrame",
     icon: watchFrame,
   },
 };
 
 export const INTERMEDIATE_MATERIALS_LEVEL_TWO = {
-  "communication2g": {
+  communication2g: {
     name: "communication2g",
     icon: communication2g,
   },
-  "communication3g": {
+  communication3g: {
     name: "communication3g",
     icon: communication3g,
   },
-  "communication4g": {
+  communication4g: {
     name: "communication4g",
     icon: communication4g,
   },
-  "communication5g": {
+  communication5g: {
     name: "communication5g",
     icon: communication5g,
   },
-  "mediaMultiCamera": {
+  mediaMultiCamera: {
     name: "mediaMultiCamera",
     icon: mediaMultiCamera,
   },
-  "mediaNoCamera": {
+  mediaNoCamera: {
     name: "mediaNoCamera",
     icon: mediaNoCamera,
   },
-  "mediaSingleCamera": {
+  mediaSingleCamera: {
     name: "mediaSingleCamera",
     icon: mediaSingleCamera,
   },
-  "phoneBody1": {
+  phoneBody1: {
     name: "phoneBody1",
     icon: phoneBody1,
   },
-  "phoneBody2": {
+  phoneBody2: {
     name: "phoneBody2",
     icon: phoneBody2,
   },
-  "phoneBody3": {
+  phoneBody3: {
     name: "phoneBody3",
     icon: phoneBody3,
   },
-  "phoneBody4": {
+  phoneBody4: {
     name: "phoneBody4",
     icon: phoneBody4,
   },
-  "quantumComputation": {
+  quantumComputation: {
     name: "quantumComputation",
     icon: quantumComputation,
   },
-  "socAndMemory": {
+  socAndMemory: {
     name: "socAndMemory",
     icon: socAndMemory,
   },
-  "tabletBody1": {
+  tabletBody1: {
     name: "tabletBody1",
     icon: tabletBody1,
   },
-  "tabletBody2": {
+  tabletBody2: {
     name: "tabletBody2",
     icon: tabletBody2,
   },
-  "watchExternal": {
+  watchExternal: {
     name: "watchExternal",
     icon: watchExternal,
   },
-  "watchInternal": {
+  watchInternal: {
     name: "watchInternal",
     icon: watchInternal,
   },
-  "watchSensors": {
+  watchSensors: {
     name: "watchSensors",
     icon: watchSensors,
   },
 };
 
 export const FINAL_MATERIALS = {
-  "gphone1": {
+  gphone1: {
     name: "gphone1",
     icon: gphone1,
   },
-  "gphone2": {
+  secondhandphone: {
+    name: "secondHandPhone",
+    icon: discardedPhone,
+  },
+  gphone2: {
     name: "gphone2",
     icon: gphone2,
   },
-  "gphone3": {
+  gphone3: {
     name: "gphone3",
     icon: gphone3,
   },
-  "gphone4": {
+  gphone4: {
     name: "gphone4",
     icon: gphone4,
   },
-  "gphone5": {
+  gphone5: {
     name: "gphone5",
     icon: gphone5,
   },
-  "gphone6": {
+  gphone6: {
     name: "gphone6",
     icon: gphone6,
   },
-  "gphone7": {
+  gphone7: {
     name: "gphone7",
     icon: gphone7,
   },
-  "gphone8": {
+  gphone8: {
     name: "gphone8",
     icon: gphone8,
   },
-  "gphone9": {
+  gphone9: {
     name: "gphone9",
     icon: gphone9,
   },
-  "gphoneX": {
+  gphoneX: {
     name: "gphoneX",
     icon: gphoneX,
   },
-  "gtab1": {
+  gtab1: {
     name: "gtab1",
     icon: gtab1,
   },
-  "gtab2": {
+  gtab2: {
     name: "gtab2",
     icon: gtab2,
   },
-  "gtab3": {
+  gtab3: {
     name: "gtab3",
     icon: gtab3,
   },
-  "gwatch": {
+  gwatch: {
     name: "gwatch",
     icon: gwatch,
   },
