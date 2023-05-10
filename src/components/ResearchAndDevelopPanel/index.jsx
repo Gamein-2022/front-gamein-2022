@@ -13,8 +13,71 @@ import rAndDEmpty from "../../assets/r-and-d-empty.svg";
 
 import styles from "./style.module.scss";
 
-import jsonData from "./data.json";
 import { formatPrice } from "../../utils/formatters";
+
+import touchScreen from "../../assets/r_and_d_images/touch-screen.png";
+import foldableScreen from "../../assets/r_and_d_images/foldable-screen.png";
+import advancedDisplay from "../../assets/r_and_d_images/advanced-display.png";
+import ThreeG from "../../assets/r_and_d_images/3G.png";
+import FourG from "../../assets/r_and_d_images/4G.png";
+import FiveG from "../../assets/r_and_d_images/5G.png";
+import basicSocMemory from "../../assets/r_and_d_images/basic-soc-memory.png";
+import quantumComputation from "../../assets/r_and_d_images/quantum-computation.png";
+import camera from "../../assets/r_and_d_images/camera.png";
+import multiCamera from "../../assets/r_and_d_images/multi-camera.png";
+import assembly1 from "../../assets/r_and_d_images/assembly-1.png";
+import assembly2 from "../../assets/r_and_d_images/assembly-2.png";
+import assembly3 from "../../assets/r_and_d_images/assembly-3.png";
+import assembly4 from "../../assets/r_and_d_images/assembly-4.png";
+
+import touchScreenInfo from "../../assets/r_and_d_images/touch-screen-info.svg";
+import foldableScreenInfo from "../../assets/r_and_d_images/foldable-screen-info.svg";
+import advancedDisplayInfo from "../../assets/r_and_d_images/advanced-display-info.svg";
+import ThreeGInfo from "../../assets/r_and_d_images/3G-info.svg";
+import FourGInfo from "../../assets/r_and_d_images/4G-info.svg";
+import FiveGInfo from "../../assets/r_and_d_images/5G-info.svg";
+import basicSocMemoryInfo from "../../assets/r_and_d_images/basic-soc-memory-info.svg";
+import quantumComputationInfo from "../../assets/r_and_d_images/quantum-computation-info.svg";
+import cameraInfo from "../../assets/r_and_d_images/camera-info.svg";
+import multiCameraInfo from "../../assets/r_and_d_images/multi-camera-info.svg";
+import assembly1Info from "../../assets/r_and_d_images/assembly-1-info.svg";
+import assembly2Info from "../../assets/r_and_d_images/assembly-2-info.svg";
+import assembly3Info from "../../assets/r_and_d_images/assembly-3-info.svg";
+import assembly4Info from "../../assets/r_and_d_images/assembly-4-info.svg";
+
+const mainImages = {
+  "touch-screen": touchScreen,
+  "foldable-screen": foldableScreen,
+  "advanced-display": advancedDisplay,
+  "3G": ThreeG,
+  "4G": FourG,
+  "5G": FiveG,
+  "basic-soc-memory": basicSocMemory,
+  "quantum-computation": quantumComputation,
+  camera: camera,
+  "multi-camera": multiCamera,
+  "assembly-1": assembly1,
+  "assembly-2": assembly2,
+  "assembly-3": assembly3,
+  "assembly-4": assembly4,
+};
+
+const infoImages = {
+  "touch-screen": touchScreenInfo,
+  "foldable-screen": foldableScreenInfo,
+  "advanced-display": advancedDisplayInfo,
+  "3G": ThreeGInfo,
+  "4G": FourGInfo,
+  "5G": FiveGInfo,
+  "basic-soc-memory": basicSocMemoryInfo,
+  "quantum-computation": quantumComputationInfo,
+  camera: cameraInfo,
+  "multi-camera": multiCameraInfo,
+  "assembly-1": assembly1Info,
+  "assembly-2": assembly2Info,
+  "assembly-3": assembly3Info,
+  "assembly-4": assembly4Info,
+};
 
 const ResearchAndDevelopPanel = ({ refresh }) => {
   const data = useRecoilValue(dataState);
@@ -30,9 +93,12 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
             balance: res.data.result.balance,
             endTime: res.data.result.endTime,
             beginTime: res.data.result.beginTime,
+            timeDiff:
+              new Date(res.data.result.currentTime).getTime() - Date.now(),
             done:
               res.data.result?.endTime &&
-              Date.now() > new Date(res.data.result?.endTime).getTime(),
+              new Date(res.data.result.currentTime).getTime() >
+                new Date(res.data.result?.endTime).getTime(),
             duration: res.data.result.duration / 1000,
           });
         })
@@ -61,7 +127,12 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
     if (info?.endTime && info?.beginTime && info?.done === false) {
       id = setTimeout(() => {
         setRemainingTime(
-          Math.floor((new Date(info?.endTime).getTime() - Date.now()) / 1000)
+          Math.floor(
+            (new Date(info?.endTime).getTime() -
+              Date.now() -
+              (info?.timeDiff || 0)) /
+              1000
+          )
         );
       }, 1000);
     }
@@ -76,12 +147,21 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
           <div>
             <img
               className={styles["subject-image"]}
-              src="/touch-screen.png"
+              src={mainImages[data.value]}
               alt=""
             />
 
             <div className={styles["title"]}>{data?.title}</div>
-            <div className={styles["desc"]}>{jsonData[data.value]?.desc}</div>
+            <div className={styles["desc"]}>
+              با سرمایه‌گذاری بر روی این فناوری، امکان تولید محصولات زیر را
+              خواهید داشت:
+            </div>
+
+            <img
+              className={styles["subject-image"]}
+              src={infoImages[data.value]}
+              alt=""
+            />
           </div>
 
           <div>
@@ -165,7 +245,7 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
                   </button>
                 </>
               )
-            ) : (
+            ) : info?.price !== -1 ? (
               <>
                 <div className={styles["info"]} dir="rtl">
                   <div className={styles["invest-cost"]}>
@@ -193,7 +273,6 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
                         setRefreshSelf(true);
                       })
                       .catch((err) => {
-                        console.log(err);
                         toast.error(
                           err?.response?.data?.message ||
                             "خطایی در درخواست شما روی داد!"
@@ -204,6 +283,8 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
                   سرمایه‌گذاری
                 </button>
               </>
+            ) : (
+              <div>شما امکان این تحقیق و توسعه را ندارید!</div>
             )}
           </div>
         </>
