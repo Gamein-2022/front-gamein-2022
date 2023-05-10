@@ -20,6 +20,7 @@ const Layout = () => {
   const setBalance = useSetRecoilState(balanceState);
   const setInfo = useSetRecoilState(infoState);
   const [isGamePaused, setIsGamePaused] = useRecoilState(isGamePausedState);
+  const [isGameLoading, setIsGameLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -29,6 +30,13 @@ const Layout = () => {
       .then((data) => {
         if (data.remainingTime > 0) {
           navigate("/choose-region");
+          return;
+        }
+        if (data.remainingTime >= -10 && data.remainingTime <= 0) {
+          setIsGameLoading(true);
+          setTimeout(() => {
+            window.location.reload();
+          }, (10 + data.remainingTime + 2) * 1000);
         }
       });
     getInfo()
@@ -52,8 +60,6 @@ const Layout = () => {
       });
   }, []);
 
-  console.log(isGamePaused);
-
   return (
     <>
       {isGamePaused && (
@@ -64,24 +70,34 @@ const Layout = () => {
       )}
       {!isGamePaused && (
         <>
-          {loading && (
-            <div className="layout-loader">
-              <ScaleLoader color="#000" />
+          {isGameLoading && (
+            <div className="game-paused">
+              <GameinLoading size={100} duration={"2s"} />
+              <div>در حال انتقال به صفحه بازی...</div>
             </div>
           )}
-          {!loading && hasError && (
-            <div className="layout-error">
-              <div> مشکلی در سامانه رخ داده!</div>
-              لطفا دوباره تلاش کنید.
-            </div>
-          )}
-          {!loading && !hasError && (
-            <div className="layout">
-              <LayoutHeader />
-              <div className="layout-body">
-                <Outlet />
-              </div>
-            </div>
+          {!isGameLoading && (
+            <>
+              {loading && (
+                <div className="layout-loader">
+                  <ScaleLoader color="#000" />
+                </div>
+              )}
+              {!loading && hasError && (
+                <div className="layout-error">
+                  <div> مشکلی در سامانه رخ داده!</div>
+                  لطفا دوباره تلاش کنید.
+                </div>
+              )}
+              {!loading && !hasError && (
+                <div className="layout">
+                  <LayoutHeader />
+                  <div className="layout-body">
+                    <Outlet />
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </>
       )}
