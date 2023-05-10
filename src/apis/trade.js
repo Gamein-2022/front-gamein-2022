@@ -42,6 +42,20 @@ export function getOrders() {
   return AxiosInstance.get("/market/order");
 }
 
+export function getSellOrders(productId) {
+  if (productId) {
+    return AxiosInstance.get(`/market/order?type=SELL&product=${productId}`);
+  }
+  return AxiosInstance.get("/market/order?type=SELL");
+}
+
+export function getBuyOrders(productId) {
+  if (productId) {
+    return AxiosInstance.get(`/market/order?type=BUY&product=${productId}`);
+  }
+  return AxiosInstance.get("/market/order?type=BUY");
+}
+
 export function sendOffer({ orderId, shippingMethod }) {
   return AxiosInstance.post("/market/offer", {
     orderId,

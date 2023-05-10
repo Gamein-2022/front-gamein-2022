@@ -2,8 +2,9 @@ import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
+  getBuyOrders,
+  getSellOrders,
   getIntermediateMaterials,
-  getOrders,
   sendOffer,
   submitBuyOrder,
   submitSellOrder,
@@ -16,7 +17,6 @@ import cargoImg from "../../../../assets/cargo.png";
 import cargoDisableImg from "../../../../assets/cargo-disable.png";
 import airplaneImg from "../../../../assets/airplane.png";
 import airplaneDisableImg from "../../../../assets/airplane-disable.png";
-import sampleImg from "../../../../assets/icons/copper.png";
 
 import "./style.scss";
 import { getOrderShippingInfo } from "../../../../apis/orders";
@@ -52,7 +52,6 @@ function TradeIntermediate() {
   const [transport, setTransport] = useState("airplane");
   const [shippingInfo, setShippingInfo] = useState();
   const [selectedOrder, setSelectedOrder] = useState();
-  const [data, setData] = useState();
 
   const handleSubmitBuyOrder = () => {
     const productId = intermediateMaterials.find(
@@ -63,7 +62,7 @@ function TradeIntermediate() {
       .then((data) => {
         toast.success("سفارش خرید با موفقیت ثبت شد.");
         setBuyOrderModalOpen(false);
-        updateOrders();
+        handleSearch();
       })
       .catch((error) => {
         console.log(error);
@@ -82,7 +81,7 @@ function TradeIntermediate() {
       .then((data) => {
         toast.success("سفارش فروش با موفقیت ثبت شد.");
         setSellOrderModalOpen(false);
-        updateOrders();
+        handleSearch();
       })
       .catch((error) => {
         console.log(error);
@@ -107,40 +106,45 @@ function TradeIntermediate() {
       });
   }, []);
 
-  useEffect(() => {
+  const handleSearch = () => {
+    if (!selectedMaterial) {
+      return;
+    }
     setOrdersLoading(true);
-    getOrders()
-      .then((res) => res.data)
-      .then((data) => {
-        console.log(data.result);
-        setData(data.result);
-        setBuyOrders(data.result.filter((item) => item.orderType === "SELL"));
-        setSellOrders(data.result.filter((item) => item.orderType === "BUY"));
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setOrdersLoading(false);
-      });
-  }, []);
-
-  const updateOrders = () => {
-    setOrdersLoading(true);
-    getOrders()
-      .then((res) => res.data)
-      .then((data) => {
-        console.log(data.result);
-        setBuyOrders(data.result.filter((item) => item.orderType === "SELL"));
-        setSellOrders(data.result.filter((item) => item.orderType === "BUY"));
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setOrdersLoading(false);
-      });
+    if (activeTab === "sell") {
+      getBuyOrders(
+        intermediateMaterials.find((item) => item.name === selectedMaterial)?.id
+      )
+        .then((res) => res.data)
+        .then((data) => {
+          setSellOrders(data.result);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setOrdersLoading(false);
+        });
+    } else {
+      getSellOrders(
+        intermediateMaterials.find((item) => item.name === selectedMaterial)?.id
+      )
+        .then((res) => res.data)
+        .then((data) => {
+          setBuyOrders(data.result);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setOrdersLoading(false);
+        });
+    }
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, []);
 
   const currentOrders = activeTab === "buy" ? buyOrders : sellOrders;
 
@@ -190,34 +194,6 @@ function TradeIntermediate() {
       });
   };
 
-  const handleSearch = () => {
-    getOrders()
-      .then((res) => res.data)
-      .then((data) => {
-        console.log(data.result);
-        setData(data.result);
-        setBuyOrders(
-          data.result
-            .filter((item) => item.orderType === "SELL")
-            .filter(
-              (item) =>
-                !selectedMaterial || item?.product?.name === selectedMaterial
-            )
-        );
-        setSellOrders(
-          data.result
-            .filter((item) => item.orderType === "BUY")
-            .filter(
-              (item) =>
-                !selectedMaterial || item?.product?.name === selectedMaterial
-            )
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   const transportCost =
     shippingInfo?.distance > 0
       ? transport === "ship"
@@ -241,6 +217,10 @@ function TradeIntermediate() {
             )
       : shippingInfo?.shipBasePrice;
 
+  useEffect(() => {
+    handleSearch();
+  }, [selectedMaterial, activeTab]);
+
   return (
     <>
       <div className="trade-filter">
@@ -252,20 +232,6 @@ function TradeIntermediate() {
                 <select
                   onChange={(e) => {
                     setSelectedMaterial(e.target.value);
-                    setBuyOrders(
-                      data
-                        .filter((item) => item.orderType === "SELL")
-                        .filter(
-                          (item) => item?.product?.name === e.target.value
-                        )
-                    );
-                    setSellOrders(
-                      data
-                        .filter((item) => item.orderType === "BUY")
-                        .filter(
-                          (item) => item?.product?.name === e.target.value
-                        )
-                    );
                   }}
                   value={selectedMaterial}
                   className="trade-filter__select"
@@ -304,63 +270,80 @@ function TradeIntermediate() {
                 <Button
                   onClick={handleSearch}
                   className="trade-filter__search-btn"
+                  disabled={ordersLoading}
                 >
                   بروزرسانی
                 </Button>
               </>
             )}
           </div>
-          {currentOrders.length > 0 && (
-            <div className="trade-filter__table-wrapper">
-              <table className="trade-filter__table">
-                <thead>
-                  <tr>
-                    <td>کالا</td>
-                    <td>تعداد</td>
-                    <td>قیمت واحد</td>
-                    <td>منطقه</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentOrders.map((row) => (
+
+          <>
+            {ordersLoading && <GameinLoading size={16} />}
+            {!selectedMaterial && (
+              <div style={{ textAlign: "center", margin: 16 }}>
+                ابتدا یک کالا انتخاب کنید.
+              </div>
+            )}
+            {!ordersLoading &&
+              selectedMaterial &&
+              currentOrders?.length <= 0 && (
+                <div style={{ textAlign: "center", margin: 16 }}>
+                  هیچ سفارشی پیدا نشد!
+                </div>
+              )}
+            {currentOrders?.length > 0 && (
+              <div className="trade-filter__table-wrapper">
+                <table className="trade-filter__table">
+                  <thead>
                     <tr>
-                      <td className="trade-filter__table-row-img-wrapper">
-                        <Tooltip title={row?.product?.prettyName}>
-                          <img
-                            className="trade-filter__table-row-img"
-                            src={getProductIcon(row?.product?.name)}
-                            alt=""
-                          />
-                        </Tooltip>
-                      </td>
-                      <td>{row.quantity}</td>
-                      <td>{formatPrice(row.unitPrice)}</td>
-                      <td>{row.region}</td>
-                      <td>
-                        {activeTab === "buy" && (
-                          <button
-                            className="trade-filter__buy-btn"
-                            onClick={() => handleBuyOfferModal(row)}
-                          >
-                            خرید
-                          </button>
-                        )}
-                        {activeTab === "sell" && (
-                          <button
-                            className="trade-filter__sell-btn"
-                            onClick={() => handleSendSellOffer(row.id)}
-                          >
-                            فروش
-                          </button>
-                        )}
-                      </td>
+                      <td>کالا</td>
+                      <td>تعداد</td>
+                      <td>قیمت واحد</td>
+                      <td>منطقه</td>
+                      <td></td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                  </thead>
+                  <tbody>
+                    {currentOrders.map((row) => (
+                      <tr>
+                        <td className="trade-filter__table-row-img-wrapper">
+                          <Tooltip title={row?.product?.prettyName}>
+                            <img
+                              className="trade-filter__table-row-img"
+                              src={getProductIcon(row?.product?.name)}
+                              alt=""
+                            />
+                          </Tooltip>
+                        </td>
+                        <td>{row.quantity}</td>
+                        <td>{formatPrice(row.unitPrice)}</td>
+                        <td>{row.region}</td>
+                        <td>
+                          {activeTab === "buy" && (
+                            <button
+                              className="trade-filter__buy-btn"
+                              onClick={() => handleBuyOfferModal(row)}
+                            >
+                              خرید
+                            </button>
+                          )}
+                          {activeTab === "sell" && (
+                            <button
+                              className="trade-filter__sell-btn"
+                              onClick={() => handleSendSellOffer(row.id)}
+                            >
+                              فروش
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </>
         </div>
         <div className="trade-filter__create-order">
           {activeTab === "buy" && (
