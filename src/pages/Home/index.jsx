@@ -8,28 +8,29 @@ import Map from "../Map";
 
 import "./style.scss";
 
-function Home() {
+function Home({ parentRef }) {
   const [buildings, setBuildings] = useState([]);
   const [buildingsLoaded, setBuildingsLoaded] = useState(false);
 
-  useEffect(() => {
+  const updateBuildings = () => {
     getTeamBuildings()
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        setBuildingsLoaded(true);
         setBuildings(data?.result || []);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  };
 
-  const updateBuildings = useCallback(() => {
+  useEffect(() => {
+    parentRef.current.updateBuildings = updateBuildings;
     getTeamBuildings()
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
+        setBuildingsLoaded(true);
         setBuildings(data?.result || []);
       })
       .catch((error) => {

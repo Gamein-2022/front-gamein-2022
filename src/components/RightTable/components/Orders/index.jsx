@@ -32,6 +32,7 @@ import {
 import { formatPrice } from "../../../../utils/formatters";
 import TransportEmptyState from "../../../TansportEmptyState";
 import { getProductIcon } from "../../../../utils/icons";
+import GameinLoading from "../../../GameinLoading";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -42,6 +43,8 @@ function Orders() {
   const [transport, setTransport] = useState("airplane");
   const [balance, setBalance] = useState();
   const [selectedOrder, setSelectedOrder] = useState();
+  const [pageLoading, setPageLoading] = useState(true);
+  const [trackLoading, setTrackLoading] = useState(false);
 
   useEffect(() => {
     getOrdersHistory()
@@ -53,10 +56,14 @@ function Orders() {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setPageLoading(false);
       });
   }, []);
 
   const updateOrders = () => {
+    setPageLoading(true);
     getOrdersHistory()
       .then((res) => res.data)
       .then((data) => {
@@ -66,6 +73,9 @@ function Orders() {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setPageLoading(false);
       });
   };
 
@@ -134,6 +144,7 @@ function Orders() {
   };
 
   const handleTrackOrder = (id) => {
+    setTrackLoading(true);
     setOrderTrackingModalOpen(true);
     setSelectedOrder(orders.find((item) => item.id === id));
     getOrderOffers({ id })
@@ -148,6 +159,9 @@ function Orders() {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setTrackLoading(false);
       });
   };
 
@@ -219,9 +233,6 @@ function Orders() {
       });
   };
 
-  console.log("*****************");
-  console.log(selectedOffer);
-
   const transportCost =
     selectedOffer?.distance > 0
       ? transport === "ship"
@@ -247,344 +258,366 @@ function Orders() {
   return (
     <>
       <div className="offers-sent">
-        {orders?.length <= 0 && (
-          <div className="offers-sent__empty">شما هیچ سفارش فعالی ندارید.</div>
-        )}
-        {orders?.map(
-          ({
-            acceptDate,
-            cancelled,
-            id,
-            product,
-            unitPrice,
-            orderType,
-            quantity,
-            offerCount,
-          }) => {
-            if (cancelled) {
-              return null;
-            }
-            const isWaiting = !acceptDate;
-            return (
-              <div
-                className={classNames("order-card", {
-                  "order-card--warning": isWaiting,
-                })}
-              >
-                <div className="order-card__title">
-                  {isWaiting ? (
-                    <AccessTimeIcon fontSize="small" />
-                  ) : (
-                    <CheckIcon fontSize="small" />
-                  )}
-                  {isWaiting
-                    ? `در انتظار ${orderType === "BUY" ? "فروشنده" : "خریدار"}`
-                    : orderType === "BUY"
-                    ? "خریداری شده"
-                    : "فروخته‌شده"}
-                  {isWaiting && (
-                    <div className="order-card__offer-count">{offerCount}</div>
-                  )}
-                </div>
-                <div className="order-card__body">
-                  <div className="order-card__right">
-                    <img
-                      className="order-card__img"
-                      src={getProductIcon(product?.name)}
-                      alt="order card"
-                    />
-                  </div>
-                  <div className="order-card__left">
-                    <div className="order-card__name">{product.name}</div>
-                    <div className="order-card__count">{quantity} واحد</div>
-                    <div className="order-card__unit-price">
-                      قیمت واحد: {formatPrice(unitPrice)}
+        {pageLoading && <GameinLoading size={32} />}
+        {!pageLoading && (
+          <>
+            {orders?.length <= 0 && (
+              <div className="offers-sent__empty">
+                شما هیچ سفارش فعالی ندارید.
+              </div>
+            )}
+            {orders?.map(
+              ({
+                acceptDate,
+                cancelled,
+                id,
+                product,
+                unitPrice,
+                orderType,
+                quantity,
+                offerCount,
+              }) => {
+                if (cancelled) {
+                  return null;
+                }
+                const isWaiting = !acceptDate;
+                return (
+                  <div
+                    className={classNames("order-card", {
+                      "order-card--warning": isWaiting,
+                    })}
+                  >
+                    <div className="order-card__title">
+                      {isWaiting ? (
+                        <AccessTimeIcon fontSize="small" />
+                      ) : (
+                        <CheckIcon fontSize="small" />
+                      )}
+                      {isWaiting
+                        ? `در انتظار ${
+                            orderType === "BUY" ? "فروشنده" : "خریدار"
+                          }`
+                        : orderType === "BUY"
+                        ? "خریداری شده"
+                        : "فروخته‌شده"}
+                      {isWaiting && (
+                        <div className="order-card__offer-count">
+                          {offerCount}
+                        </div>
+                      )}
                     </div>
-                    {isWaiting && (
-                      <div className="order-card__btns">
-                        <Button
-                          className="order-card__btn-error"
-                          onClick={() => handleDeleteOrder(id)}
-                        >
-                          حذف
-                        </Button>
-                        <Button
-                          className="order-card__btn-success"
-                          onClick={() => handleTrackOrder(id)}
-                        >
-                          پیگیری
-                        </Button>
+                    <div className="order-card__body">
+                      <div className="order-card__right">
+                        <img
+                          className="order-card__img"
+                          src={getProductIcon(product?.name)}
+                          alt="order card"
+                        />
                       </div>
-                    )}
-                    {!isWaiting && (
-                      <Button
-                        className="order-card__btn-success"
-                        onClick={() => handleArchiveOrder(id)}
-                      >
-                        بایگانی
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          }
-        )}
-        {finalOrders?.map(
-          ({
-            acceptDate,
-            cancelled,
-            id,
-            product,
-            unitPrice,
-            orderType,
-            quantity,
-            soldQuantity,
-            closed,
-          }) => {
-            if (cancelled) {
-              return null;
-            }
-            return (
-              <div
-                className={classNames("order-card", {
-                  "order-card--warning": !closed,
-                })}
-              >
-                <div className="order-card__title">
-                  {!closed ? (
-                    <AccessTimeIcon fontSize="small" />
-                  ) : (
-                    <CheckIcon fontSize="small" />
-                  )}
-                  {!closed ? "در انتظار خریدار" : "فروخته‌شده"}
-                </div>
-                <div className="order-card__body">
-                  <div className="order-card__right">
-                    <img
-                      className="order-card__img"
-                      src={
-                        RAW_MATERIALS[product?.name]?.icon ||
-                        INTERMEDIATE_MATERIALS_LEVEL_ONE[product?.name]?.icon ||
-                        INTERMEDIATE_MATERIALS_LEVEL_TWO[product?.name]?.icon ||
-                        FINAL_MATERIALS[product?.name]?.icon ||
-                        sampleImg
-                      }
-                      alt="order card"
-                    />
-                    <div className="order-card__name">{product?.name}</div>
-                  </div>
-                  <div className="order-card__left">
-                    <div className="order-card__count">{quantity} واحد</div>
-                    <div className="order-card__unit-price">
-                      قیمت واحد: {formatPrice(unitPrice)}
+                      <div className="order-card__left">
+                        <div className="order-card__name">
+                          {product?.prettyName || product.name}
+                        </div>
+                        <div className="order-card__count">
+                          {formatPrice(quantity)} واحد
+                        </div>
+                        <div className="order-card__unit-price">
+                          قیمت واحد: {formatPrice(unitPrice)}
+                        </div>
+                        {isWaiting && (
+                          <div className="order-card__btns">
+                            <Button
+                              className="order-card__btn-error"
+                              onClick={() => handleDeleteOrder(id)}
+                            >
+                              حذف
+                            </Button>
+                            <Button
+                              className="order-card__btn-success"
+                              onClick={() => handleTrackOrder(id)}
+                            >
+                              پیگیری
+                            </Button>
+                          </div>
+                        )}
+                        {!isWaiting && (
+                          <Button
+                            className="order-card__btn-success"
+                            onClick={() => handleArchiveOrder(id)}
+                          >
+                            بایگانی
+                          </Button>
+                        )}
+                      </div>
                     </div>
-                    <div>مقدار فروخته‌شده: {soldQuantity}</div>
-                    {closed && (
-                      <Button
-                        className="order-card__btn-success"
-                        onClick={() => handleArchiveFinalOrder(id)}
-                      >
-                        بایگانی
-                      </Button>
-                    )}
-                    {!closed && (
-                      <Button
-                        className="order-card__btn-error"
-                        onClick={() => handleDeleteFinalOrder(id)}
-                      >
-                        حذف
-                      </Button>
-                    )}
                   </div>
-                </div>
-              </div>
-            );
-          }
+                );
+              }
+            )}
+            {finalOrders?.map(
+              ({
+                acceptDate,
+                cancelled,
+                id,
+                product,
+                unitPrice,
+                orderType,
+                quantity,
+                soldQuantity,
+                closed,
+              }) => {
+                if (cancelled) {
+                  return null;
+                }
+                return (
+                  <div
+                    className={classNames("order-card", {
+                      "order-card--warning": !closed,
+                    })}
+                  >
+                    <div className="order-card__title">
+                      {!closed ? (
+                        <AccessTimeIcon fontSize="small" />
+                      ) : (
+                        <CheckIcon fontSize="small" />
+                      )}
+                      {!closed ? "در انتظار خریدار" : "فروخته‌شده"}
+                    </div>
+                    <div className="order-card__body">
+                      <div className="order-card__right">
+                        <img
+                          className="order-card__img"
+                          src={
+                            RAW_MATERIALS[product?.name]?.icon ||
+                            INTERMEDIATE_MATERIALS_LEVEL_ONE[product?.name]
+                              ?.icon ||
+                            INTERMEDIATE_MATERIALS_LEVEL_TWO[product?.name]
+                              ?.icon ||
+                            FINAL_MATERIALS[product?.name]?.icon ||
+                            sampleImg
+                          }
+                          alt="order card"
+                        />
+                        <div className="order-card__name">{product?.name}</div>
+                      </div>
+                      <div className="order-card__left">
+                        <div className="order-card__count">{quantity} واحد</div>
+                        <div className="order-card__unit-price">
+                          قیمت واحد: {formatPrice(unitPrice)}
+                        </div>
+                        <div>مقدار فروخته‌شده: {soldQuantity}</div>
+                        {closed && (
+                          <Button
+                            className="order-card__btn-success"
+                            onClick={() => handleArchiveFinalOrder(id)}
+                          >
+                            بایگانی
+                          </Button>
+                        )}
+                        {!closed && (
+                          <Button
+                            className="order-card__btn-error"
+                            onClick={() => handleDeleteFinalOrder(id)}
+                          >
+                            حذف
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+            )}
+          </>
         )}
       </div>
       <Modal
         open={orderTrackingModalOpen}
-        onClose={() => setOrderTrackingModalOpen(false)}
+        onClose={() => {
+          setOrderTrackingModalOpen(false);
+          setSelectedOffer(null);
+        }}
         title={<img src={tradeModalTitle} alt="trade" />}
       >
         <div className="order-tracking">
-          {!selectedOffer && selectedOrder && (
-            <div>
-              {selectedOrder?.orderType === "BUY"
-                ? "مشاهده فروشنده‌ها"
-                : "مشاهده خریدارها"}
-            </div>
-          )}
-          {offers.length === 0 && (
-            <div className="order-tracking__no-offers">
-              <img src={noOfferImg} alt="no offer found" />
-              <div>
-                هنوز هیچ{" "}
-                {selectedOrder?.orderType === "BUY" ? "فروشنده‌ای" : "خریداری"}{" "}
-                پیدا نشده!
-              </div>
-            </div>
-          )}
-          {offers.length > 0 &&
-            !selectedOffer &&
-            offers.map((offer) => (
-              <div className="order-offer">
-                <div className="order-offer__header">
-                  <div className="order-offer__region">
-                    از منطقه {offer.region}
-                  </div>
-                  <div className="order-offer__price">
-                    قیمت واحد: {formatPrice(offer.order.unitPrice)}
+          {trackLoading && <GameinLoading size={32} />}
+          {!trackLoading && (
+            <>
+              {!selectedOffer && selectedOrder && (
+                <div>
+                  {selectedOrder?.orderType === "BUY"
+                    ? "مشاهده فروشنده‌ها"
+                    : "مشاهده خریدارها"}
+                </div>
+              )}
+              {offers.length === 0 && (
+                <div className="order-tracking__no-offers">
+                  <img src={noOfferImg} alt="no offer found" />
+                  <div>
+                    هنوز هیچ{" "}
+                    {selectedOrder?.orderType === "BUY"
+                      ? "فروشنده‌ای"
+                      : "خریداری"}{" "}
+                    پیدا نشده!
                   </div>
                 </div>
-                <div className="order-offer__body">
-                  {offer.distance > 0 ? (
-                    <div>
-                      <div>
-                        ارسال با هواپیما در {offer.planeDuration} ثانیه با هزینه{" "}
-                        {offer.planePrice}
+              )}
+              {offers.length > 0 &&
+                !selectedOffer &&
+                offers.map((offer) => (
+                  <div className="order-offer">
+                    <div className="order-offer__header">
+                      <div className="order-offer__region">
+                        از منطقه {offer.region}
                       </div>
-                      <div>
-                        ارسال با کشتی در {offer.shipDuration} ثانیه با هزینه{" "}
-                        {offer.shipPrice}
+                      <div className="order-offer__price">
+                        قیمت واحد: {formatPrice(offer?.order?.unitPrice)}
                       </div>
                     </div>
-                  ) : (
-                    <TransportEmptyState />
-                  )}
-                  <div className="order-card__btns">
+                    <div className="order-offer__body">
+                      <div></div>
+                      <div className="order-card__btns">
+                        <Button
+                          onClick={() => handleDeclineOffer(offer)}
+                          className="order-card__btn-error"
+                        >
+                          رد کردن
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            if (selectedOrder?.orderType === "BUY") {
+                              setSelectedOffer(offer);
+                            } else {
+                              handleAcceptSelltOffer(offer?.id);
+                            }
+                          }}
+                          className="order-card__btn-success"
+                        >
+                          {selectedOrder?.orderType === "BUY" ? "خرید" : "فروش"}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              {selectedOffer && (
+                <div className="order-offer-final">
+                  <div className="order-offer-final__top">
+                    <div className="order-offer-final__title">تکمیل خرید</div>
+                    <div className="order-offer-final__description">
+                      اینجا می‌تونی با تعیین نوع حمل و نقل و بعد از حساب کردن
+                      هزینه کل، خریدت رو کامل کنی!
+                    </div>
+                    <div className="order-offer-final__region-info">
+                      خرید {selectedOffer.order.productName} از منطقه{" "}
+                      {selectedOffer.region}
+                    </div>
+                    <div className="order-offer-final__count">
+                      تعداد {selectedOffer.order.quantity} واحد
+                    </div>
+                    {selectedOffer.distance > 0 ? (
+                      <>
+                        <div className="shop-modal__transport-name">
+                          با چه وسیله‌ای ارسال بشه؟
+                        </div>
+                        <div className="shop-modal__transport-list">
+                          <div
+                            className={classNames("shop-modal__transport", {
+                              "shop-modal__transport--active":
+                                transport === "airplane",
+                            })}
+                            onClick={() => setTransport("airplane")}
+                          >
+                            <img
+                              className="shop-modal__transport-img"
+                              src={
+                                transport === "airplane"
+                                  ? airplaneImg
+                                  : airplaneDisableImg
+                              }
+                              alt="airplane"
+                            />
+                            <div className="shop-modal__transport-text">
+                              هواپیما
+                              <br />
+                              در {selectedOffer.planeDuration} ثانیه
+                            </div>
+                          </div>
+                          <div
+                            className={classNames("shop-modal__transport", {
+                              "shop-modal__transport--active":
+                                transport === "ship",
+                            })}
+                            onClick={() => setTransport("ship")}
+                          >
+                            <img
+                              className="shop-modal__transport-img"
+                              src={
+                                transport === "ship"
+                                  ? cargoImg
+                                  : cargoDisableImg
+                              }
+                              alt="airplane"
+                            />
+                            <div className="shop-modal__transport-text">
+                              کشتی
+                              <br />
+                              در {selectedOffer.shipDuration} ثانیه
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <TransportEmptyState />
+                    )}
+                  </div>
+                  <div className="shop-modal__summary-text">
+                    هزینه خرید کالاها:{" "}
+                    {formatPrice(
+                      selectedOffer.order.quantity *
+                        selectedOffer.order.unitPrice
+                    )}
+                  </div>
+                  <div className="shop-modal__summary-text">
+                    هزینه حمل و نقل: {formatPrice(transportCost)}
+                  </div>
+                  <div className="shop-modal__summary-text">
+                    جمع کل:{" "}
+                    {formatPrice(
+                      selectedOffer.order.quantity *
+                        selectedOffer.order.unitPrice +
+                        transportCost
+                    )}
+                  </div>
+                  <div className="shop-modal__seperator"></div>
+                  <div className="shop-modal__summary-text">
+                    دارایی فعلی: {formatPrice(balance)}
+                  </div>
+                  <div className="shop-modal__summary-text">
+                    دارایی پس از خرید:{" "}
+                    {formatPrice(
+                      balance -
+                        (selectedOffer.order.quantity *
+                          selectedOffer.order.unitPrice +
+                          transportCost)
+                    )}
+                  </div>
+                  <div className="order-offer-final__action-btns">
                     <Button
-                      onClick={() => handleDeclineOffer(offer)}
-                      className="order-card__btn-error"
+                      className="order-offer-final__finalize-btn"
+                      onClick={handleAcceptOffer}
                     >
-                      رد کردن
+                      تکمیل خرید
                     </Button>
                     <Button
-                      onClick={() => {
-                        if (selectedOrder?.orderType === "BUY") {
-                          setSelectedOffer(offer);
-                        } else {
-                          handleAcceptSelltOffer(offer.id);
-                        }
-                      }}
-                      className="order-card__btn-success"
+                      onClick={() => setSelectedOffer(null)}
+                      type="secondary"
                     >
-                      {selectedOrder?.orderType === "BUY" ? "خرید" : "فروش"}
+                      بازگشت
                     </Button>
                   </div>
                 </div>
-              </div>
-            ))}
-          {selectedOffer && (
-            <div className="order-offer-final">
-              <div className="order-offer-final__top">
-                <div className="order-offer-final__title">تکمیل خرید</div>
-                <div className="order-offer-final__description">
-                  اینجا می‌تونی با تعیین نوع حمل و نقل و بعد از حساب کردن هزینه
-                  کل، خریدت رو کامل کنی!
-                </div>
-                <div className="order-offer-final__region-info">
-                  خرید {selectedOffer.order.productName} از منطقه{" "}
-                  {selectedOffer.region}
-                </div>
-                <div className="order-offer-final__count">
-                  تعداد {selectedOffer.order.quantity} واحد
-                </div>
-                {selectedOffer.distance > 0 ? (
-                  <>
-                    <div className="shop-modal__transport-name">
-                      با چه وسیله‌ای ارسال بشه؟
-                    </div>
-                    <div className="shop-modal__transport-list">
-                      <div
-                        className={classNames("shop-modal__transport", {
-                          "shop-modal__transport--active":
-                            transport === "airplane",
-                        })}
-                        onClick={() => setTransport("airplane")}
-                      >
-                        <img
-                          className="shop-modal__transport-img"
-                          src={
-                            transport === "airplane"
-                              ? airplaneImg
-                              : airplaneDisableImg
-                          }
-                          alt="airplane"
-                        />
-                        <div className="shop-modal__transport-text">
-                          هواپیما
-                          <br />
-                          در {selectedOffer.planeDuration} ثانیه
-                        </div>
-                      </div>
-                      <div
-                        className={classNames("shop-modal__transport", {
-                          "shop-modal__transport--active": transport === "ship",
-                        })}
-                        onClick={() => setTransport("ship")}
-                      >
-                        <img
-                          className="shop-modal__transport-img"
-                          src={
-                            transport === "ship" ? cargoImg : cargoDisableImg
-                          }
-                          alt="airplane"
-                        />
-                        <div className="shop-modal__transport-text">
-                          کشتی
-                          <br />
-                          در {selectedOffer.shipDuration} ثانیه
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <TransportEmptyState />
-                )}
-              </div>
-              <div className="shop-modal__summary-text">
-                هزینه خرید کالاها:{" "}
-                {formatPrice(
-                  selectedOffer.order.quantity * selectedOffer.order.unitPrice
-                )}
-              </div>
-              <div className="shop-modal__summary-text">
-                هزینه حمل و نقل: {formatPrice(transportCost)}
-              </div>
-              <div className="shop-modal__summary-text">
-                جمع کل:{" "}
-                {formatPrice(
-                  selectedOffer.order.quantity * selectedOffer.order.unitPrice +
-                    transportCost
-                )}
-              </div>
-              <div className="shop-modal__seperator"></div>
-              <div className="shop-modal__summary-text">
-                دارایی فعلی: {formatPrice(balance)}
-              </div>
-              <div className="shop-modal__summary-text">
-                دارایی پس از خرید:{" "}
-                {formatPrice(
-                  balance -
-                    (selectedOffer.order.quantity *
-                      selectedOffer.order.unitPrice +
-                      transportCost)
-                )}
-              </div>
-              <div className="order-offer-final__action-btns">
-                <Button
-                  className="order-offer-final__finalize-btn"
-                  onClick={handleAcceptOffer}
-                >
-                  تکمیل خرید
-                </Button>
-                <Button onClick={() => setSelectedOffer(null)} type="secondary">
-                  بازگشت
-                </Button>
-              </div>
-            </div>
+              )}
+            </>
           )}
         </div>
       </Modal>

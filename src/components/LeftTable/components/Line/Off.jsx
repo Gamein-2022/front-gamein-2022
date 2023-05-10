@@ -303,9 +303,9 @@ function Off({
                                         onClick={() => {
                                           setBuyModalOpen(true);
                                           setSelectedMaterial(req.product);
-                                          setCount(
+                                          setCount(req.product.level === 0 ?
                                             req.numberPerOne * quantity -
-                                              req.inStorage
+                                              req.inStorage : quantity / req.numberPerOne - req.inStorage
                                           );
                                         }}
                                         className="setup-line-modal__table-buy-btn"

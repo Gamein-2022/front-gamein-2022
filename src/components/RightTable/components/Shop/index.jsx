@@ -19,6 +19,7 @@ import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 import NumberInput from "../../../NumberInput";
 import TransportEmptyState from "../../../TansportEmptyState";
 import Button from "../../../Button";
+import GameinLoading from "../../../GameinLoading";
 
 function Shop() {
   const [data, setData] = useState(null);
@@ -27,6 +28,7 @@ function Shop() {
   const [open, setOpen] = useState(false);
   const [transport, setTransport] = useState("airplane");
   const [actionLoading, setActionLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
 
   const balance = useRecoilValue(balanceState);
   const updateBalance = useUpdateBalance();
@@ -65,6 +67,9 @@ function Shop() {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setPageLoading(false);
       });
   }, []);
 
@@ -99,85 +104,91 @@ function Shop() {
   return (
     <>
       <div className="shop-initial">
-        <div className="shop-initial__materials-list">
-          {data?.myRegion?.length > 0 && (
-            <>
-              <div>موجود در منطقه من</div>
-              <div className="shop-initial__list">
-                {data?.myRegion?.map((material) => (
-                  <div
-                    onClick={() => setSelectedMaterial(material)}
-                    className={classNames("shop-initial__material", {
-                      "shop-initial__material--active":
-                        material.name === selectedMaterial?.name,
-                    })}
-                  >
-                    <img
-                      className="shop-initial__material-img"
-                      src={RAW_MATERIALS[material.name]?.icon || sampleImg}
-                      alt={material.name}
-                    />
-                    <div className="shop-initial__material-name">
-                      {material.prettyName}
-                    </div>
+        {pageLoading && <GameinLoading size={32} />}
+        {!pageLoading && (
+          <>
+            <div className="shop-initial__materials-list">
+              {data?.myRegion?.length > 0 && (
+                <>
+                  <div>موجود در منطقه من</div>
+                  <div className="shop-initial__list">
+                    {data?.myRegion?.map((material) => (
+                      <div
+                        onClick={() => setSelectedMaterial(material)}
+                        className={classNames("shop-initial__material", {
+                          "shop-initial__material--active":
+                            material.name === selectedMaterial?.name,
+                        })}
+                      >
+                        <img
+                          className="shop-initial__material-img"
+                          src={RAW_MATERIALS[material.name]?.icon || sampleImg}
+                          alt={material.name}
+                        />
+                        <div className="shop-initial__material-name">
+                          {material.prettyName}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </>
-          )}
-          {data?.otherRegions?.length > 0 && (
-            <>
-              <div>موجود در سایر مناطق</div>
-              <div className="shop-initial__list">
-                {data?.otherRegions?.map((material) => (
-                  <div
-                    onClick={() => setSelectedMaterial(material)}
-                    className={classNames("shop-initial__material", {
-                      "shop-initial__material--active":
-                        material.name === selectedMaterial?.name,
-                    })}
-                  >
-                    <img
-                      className="shop-initial__material-img"
-                      src={RAW_MATERIALS[material.name]?.icon || sampleImg}
-                      alt={material.name}
-                    />
-                    <div className="shop-initial__material-name">
-                      {material.prettyName}
-                    </div>
+                </>
+              )}
+              {data?.otherRegions?.length > 0 && (
+                <>
+                  <div>موجود در سایر مناطق</div>
+                  <div className="shop-initial__list">
+                    {data?.otherRegions?.map((material) => (
+                      <div
+                        onClick={() => setSelectedMaterial(material)}
+                        className={classNames("shop-initial__material", {
+                          "shop-initial__material--active":
+                            material.name === selectedMaterial?.name,
+                        })}
+                      >
+                        <img
+                          className="shop-initial__material-img"
+                          src={RAW_MATERIALS[material.name]?.icon || sampleImg}
+                          alt={material.name}
+                        />
+                        <div className="shop-initial__material-name">
+                          {material.prettyName}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </>
-          )}
-          {selectedMaterial && (
-            <div className="shop-initial__preview">
-              <img
-                className="shop-initial__preview-img"
-                src={
-                  RAW_MATERIALS_TREES[selectedMaterial?.name]?.icon || sampleImg
-                }
-                alt="selected material"
-              />
+                </>
+              )}
+              {selectedMaterial && (
+                <div className="shop-initial__preview">
+                  <img
+                    className="shop-initial__preview-img"
+                    src={
+                      RAW_MATERIALS_TREES[selectedMaterial?.name]?.icon ||
+                      sampleImg
+                    }
+                    alt="selected material"
+                  />
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <div className="shop-initial__buy">
-          {!selectedMaterial && <div>یک ماده را انتخاب کنید.</div>}
-          {selectedMaterial && (
-            <>
-              <div className="shop-initial__preview-price">
-                قیمت هر واحد: {formatPrice(selectedMaterial?.price)} جی‌کوین
-              </div>
-              <Button
-                onClick={() => setOpen(true)}
-                className="shop-initial__preview-btn-buy"
-              >
-                خرید
-              </Button>
-            </>
-          )}
-        </div>
+            <div className="shop-initial__buy">
+              {!selectedMaterial && <div>یک ماده را انتخاب کنید.</div>}
+              {selectedMaterial && (
+                <>
+                  <div className="shop-initial__preview-price">
+                    قیمت هر واحد: {formatPrice(selectedMaterial?.price)} جی‌کوین
+                  </div>
+                  <Button
+                    onClick={() => setOpen(true)}
+                    className="shop-initial__preview-btn-buy"
+                  >
+                    خرید
+                  </Button>
+                </>
+              )}
+            </div>
+          </>
+        )}
       </div>
       <Modal
         open={open}

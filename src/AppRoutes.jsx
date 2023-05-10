@@ -20,7 +20,8 @@ import useUpdateBalance from "./hooks/useUpdateBalance";
 const AppRouter = () => {
   const ws = useRef();
   const [isGamePaused, setIsGamePaused] = useRecoilState(isGamePausedState);
-  const updateBalance = useUpdateBalance()
+  const updateBalance = useUpdateBalance();
+  const parentRef = useRef({});
 
   useEffect(() => {
     ws.current = new WebSocket(
@@ -28,7 +29,6 @@ const AppRouter = () => {
     );
 
     ws.current.onopen = function (event) {
-      console.log("connecting to ws....");
       ws.current?.send(
         JSON.stringify({
           event: "SET_TEAM_ID",
@@ -39,7 +39,6 @@ const AppRouter = () => {
 
     ws.current.onmessage = function (event) {
       const data = JSON.parse(event.data);
-      console.log("recieved: ", data);
       if (data.type === "SUCCESS") {
         toast.success(data.message, { position: "bottom-center" });
       }
@@ -48,6 +47,9 @@ const AppRouter = () => {
       }
       if (data.type === "ERROR") {
         toast.error(data.message, { position: "bottom-center" });
+      }
+      if (data.type === "UPDATE_MAP") {
+        parentRef.current?.updateBuildings?.();
       }
       if (data.type === "REFRESH") {
         window?.location.reload();
@@ -81,7 +83,7 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/choose-region" element={<ChooseRegion />} />
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route index element={<Home parentRef={parentRef} />} />
           <Route path="r-and-d" element={<RAndD />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="history" element={<History />} />

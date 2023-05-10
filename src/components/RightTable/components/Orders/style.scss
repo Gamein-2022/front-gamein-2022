@@ -116,11 +116,26 @@
   }
 }
 
+.order-card--error {
+  .order-card {
+    &__title {
+      background-color: #c72f21;
+      color: #fff;
+    }
+
+    &__action-btn {
+      background-color: #009054;
+    }
+  }
+}
+
 .order-tracking {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   &__no-offers {
     display: flex;

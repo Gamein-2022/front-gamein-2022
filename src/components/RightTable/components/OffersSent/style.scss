@@ -6,6 +6,7 @@
 .offers-sent {
   height: calc(100% - 48px);
   overflow-y: scroll;
+  padding-bottom: 32px;
   
   &__empty {
     text-align: center;

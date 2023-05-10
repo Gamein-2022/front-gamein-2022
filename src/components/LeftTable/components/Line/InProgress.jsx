@@ -119,7 +119,7 @@ function InProgress({
         ) : (
           <div className="line__body">
             <div>
-              در حال {lineTypeString} {product?.name}
+              در حال {lineTypeString} {product?.prettyName || product?.name}
             </div>
             <MyCountDown
               timeInSeconds={remainedTime}
