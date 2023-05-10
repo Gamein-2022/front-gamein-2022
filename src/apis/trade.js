@@ -17,7 +17,7 @@ export function buyFromGamein({ productId, quantity, shippingMethod }) {
     productId,
     quantity,
     shippingMethod,
-  });
+  }, {baseURL: "http://192.168.24.94:8080"});
 }
 
 export function submitBuyOrder({ productId, quantity, price }) {
