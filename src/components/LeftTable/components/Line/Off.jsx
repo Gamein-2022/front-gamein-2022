@@ -119,6 +119,7 @@ function Off({
     if (!count || !selectedMaterial) {
       return;
     }
+    setActionLoading(true);
     buyFromGamein({
       productId: selectedMaterial?.id,
       quantity: count,
@@ -136,6 +137,9 @@ function Off({
           error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
         );
         console.log(error);
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -530,7 +534,9 @@ function Off({
         <button
           onClick={handleBuyRawMaterial}
           className="shop-modal__confirm-buy-btn"
-          disabled={!count || count === "0"}
+          disabled={
+            !count || count === "0" || Number(count) <= 0 || actionLoading
+          }
         >
           تایید خرید
         </button>
