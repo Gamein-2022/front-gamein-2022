@@ -36,7 +36,7 @@ const Layout = () => {
           setIsGameLoading(true);
           setTimeout(() => {
             window.location.reload();
-          }, (10 + data.remainingTime + 2) * 1000);
+          }, (10 + data.remainingTime + 2 > 0) * 1000);
         }
       });
     getInfo()

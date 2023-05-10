@@ -52,7 +52,7 @@ function Login() {
       .then((res) => {
         toast.success("با موفقیت وارد شدید.");
         localStorage.setItem("token", res.data.token);
-        navigate("/choose-region", { replace: true });
+        window.location.href = "/choose-region";
       })
       .catch((error) => {
         if (error.response?.status === 404) {
