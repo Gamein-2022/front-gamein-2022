@@ -41,6 +41,10 @@
     height: 64px;
   }
 
+  &__material-name {
+    text-align: center;
+  }
+
   &__buy {
     display: flex;
     flex-direction: column;

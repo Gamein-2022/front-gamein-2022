@@ -118,7 +118,7 @@ function Shop() {
                       alt={material.name}
                     />
                     <div className="shop-initial__material-name">
-                      {material.name}
+                      {material.prettyName}
                     </div>
                   </div>
                 ))}
@@ -143,7 +143,7 @@ function Shop() {
                       alt={material.name}
                     />
                     <div className="shop-initial__material-name">
-                      {material.name}
+                      {material.prettyName}
                     </div>
                   </div>
                 ))}
@@ -193,7 +193,7 @@ function Shop() {
           alt="selected material"
         />
         <div className="shop-modal__name">
-          {selectedMaterial?.name || "Copper"}
+          {selectedMaterial?.prettyName || ""}
         </div>
         <div className="shop-modal__help-text">
           مواد اولیه از نزدیکترین منطقه به شما خریداری می‌شن.

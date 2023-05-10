@@ -253,7 +253,7 @@ function TradeIntermediate() {
                 انتخاب کالا
               </option>
               {intermediateMaterials.map((material) => (
-                <option value={material.name}>{material.name}</option>
+                <option value={material.name}>{material.prettyName}</option>
               ))}
             </select>
             <div className="trade-filter__tabs">
@@ -300,7 +300,7 @@ function TradeIntermediate() {
                   {currentOrders.map((row) => (
                     <tr>
                       <td className="trade-filter__table-row-img-wrapper">
-                        <Tooltip title={row?.product?.name}>
+                        <Tooltip title={row?.product?.prettyName}>
                           <img
                             className="trade-filter__table-row-img"
                             src={getProductIcon(row?.product?.name)}
@@ -375,7 +375,8 @@ function TradeIntermediate() {
           alt={selectedMaterial}
         />
         <div className="submit-order-modal__product-name">
-          {selectedMaterial}
+          {intermediateMaterials.find((item) => item?.name === selectedMaterial)
+            ?.prettyName || selectedMaterial}
         </div>
         <NumberInput
           label={"چند واحد می‌خوای بخری؟"}
@@ -434,7 +435,8 @@ function TradeIntermediate() {
           alt={selectedMaterial}
         />
         <div className="submit-order-modal__product-name">
-          {selectedMaterial}
+          {intermediateMaterials.find((item) => item?.name === selectedMaterial)
+            ?.prettyName || selectedMaterial}
         </div>
         <NumberInput
           label={"چند واحد می‌خوای بفروشی؟"}
@@ -490,9 +492,16 @@ function TradeIntermediate() {
         <div className="submit-order-modal__title">ثبت پیشنهاد خرید</div>
         {shippingInfo && selectedOrder && (
           <>
+            <img
+              className="submit-order-modal__img"
+              src={getProductIcon(selectedOrder?.product?.name)}
+              alt={selectedOrder?.product?.name}
+            />
             <div>
-              خرید {selectedOrder?.product?.name} از منطقه{" "}
-              {selectedOrder.region}
+              خرید{" "}
+              {selectedOrder?.product?.prettyName ||
+                selectedOrder?.product?.name}{" "}
+              از منطقه {selectedOrder.region}
             </div>
             <div>تعداد {selectedOrder.quantity} واحد</div>
             {shippingInfo.distance > 0 ? (

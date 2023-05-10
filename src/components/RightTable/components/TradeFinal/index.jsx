@@ -105,7 +105,9 @@ function TradeFinal() {
                   انتخاب کن
                 </option>
                 {finalProducts.map((item) => (
-                  <option value={item.product.id}>{item.product.name}</option>
+                  <option value={item?.product?.id}>
+                    {item?.product?.prettyName || item?.product?.name}
+                  </option>
                 ))}
               </select>
               <div>
