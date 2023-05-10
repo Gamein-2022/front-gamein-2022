@@ -219,26 +219,31 @@ function Orders() {
       });
   };
 
+  console.log("*****************");
+  console.log(selectedOffer);
+
   const transportCost =
-    transport === "ship"
-      ? selectedOffer?.shipPrice +
-        selectedOffer?.shipVariablePrice *
-          Math.floor(
-            Math.sqrt(
-              selectedOffer?.order?.quantity *
-                selectedOffer?.unitVolume *
-                selectedOffer?.distance
+    selectedOffer?.distance > 0
+      ? transport === "ship"
+        ? selectedOffer?.shipBasePrice +
+          selectedOffer?.shipVarPrice *
+            Math.floor(
+              Math.sqrt(
+                selectedOffer?.order?.quantity *
+                  selectedOffer?.order?.product?.unitVolume *
+                  selectedOffer?.distance
+              )
             )
-          )
-      : selectedOffer?.planePrice +
-        selectedOffer?.planeVariablePrice *
-          Math.floor(
-            Math.sqrt(
-              selectedOffer?.order?.quantity *
-                selectedOffer?.unitVolume *
-                selectedOffer?.distance
+        : selectedOffer?.planeBasePrice +
+          selectedOffer?.planeVarPrice *
+            Math.floor(
+              Math.sqrt(
+                selectedOffer?.order?.quantity *
+                  selectedOffer?.order?.product?.unitVolume *
+                  selectedOffer?.distance
+              )
             )
-          );
+      : selectedOffer?.shipBasePrice;
   return (
     <>
       <div className="offers-sent">

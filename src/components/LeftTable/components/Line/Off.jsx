@@ -69,25 +69,27 @@ function Off({
   const balance = useRecoilValue(balanceState);
 
   const transportCost =
-    transport === "ship"
-      ? selectedMaterial?.shipPrice +
-        selectedMaterial?.shipVariablePrice *
-          Math.floor(
-            Math.sqrt(
-              count *
-                selectedMaterial?.unitVolume *
-                selectedMaterial?.distance || 0
+    selectedMaterial?.distance > 0
+      ? transport === "ship"
+        ? selectedMaterial?.shipPrice +
+          selectedMaterial?.shipVariablePrice *
+            Math.floor(
+              Math.sqrt(
+                count *
+                  selectedMaterial?.unitVolume *
+                  selectedMaterial?.distance || 0
+              )
             )
-          )
-      : selectedMaterial?.planePrice +
-        selectedMaterial?.planeVariablePrice *
-          Math.floor(
-            Math.sqrt(
-              count *
-                selectedMaterial?.unitVolume *
-                selectedMaterial?.distance || 0
+        : selectedMaterial?.planePrice +
+          selectedMaterial?.planeVariablePrice *
+            Math.floor(
+              Math.sqrt(
+                count *
+                  selectedMaterial?.unitVolume *
+                  selectedMaterial?.distance || 0
+              )
             )
-          );
+      : selectedMaterial?.shipPrice;
 
   const productCost = count * selectedMaterial?.minPrice || 0;
 

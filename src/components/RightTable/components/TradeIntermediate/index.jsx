@@ -205,25 +205,27 @@ function TradeIntermediate() {
   };
 
   const transportCost =
-    transport === "ship"
-      ? shippingInfo?.shipBasePrice +
-        shippingInfo?.shipVariablePrice *
-          Math.floor(
-            Math.sqrt(
-              selectedOrder?.quantity *
-                selectedOrder?.product?.unitVolume *
-                shippingInfo?.distance
+    shippingInfo?.distance > 0
+      ? transport === "ship"
+        ? shippingInfo?.shipBasePrice +
+          shippingInfo?.shipVariablePrice *
+            Math.floor(
+              Math.sqrt(
+                selectedOrder?.quantity *
+                  selectedOrder?.product?.unitVolume *
+                  shippingInfo?.distance
+              )
             )
-          )
-      : shippingInfo?.planeBasePrice +
-        shippingInfo?.planeVariablePrice *
-          Math.floor(
-            Math.sqrt(
-              selectedOrder?.quantity *
-                selectedOrder?.product?.unitVolume *
-                shippingInfo?.distance
+        : shippingInfo?.planeBasePrice +
+          shippingInfo?.planeVariablePrice *
+            Math.floor(
+              Math.sqrt(
+                selectedOrder?.quantity *
+                  selectedOrder?.product?.unitVolume *
+                  shippingInfo?.distance
+              )
             )
-          );
+      : shippingInfo?.shipBasePrice;
 
   return (
     <>

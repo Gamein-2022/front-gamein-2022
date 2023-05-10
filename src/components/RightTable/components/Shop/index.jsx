@@ -26,26 +26,33 @@ function Shop() {
   const [count, setCount] = useState(0);
   const [open, setOpen] = useState(false);
   const [transport, setTransport] = useState("airplane");
+  const [actionLoading, setActionLoading] = useState(false);
 
   const balance = useRecoilValue(balanceState);
   const updateBalance = useUpdateBalance();
 
   const transportCost =
-    transport === "ship"
-      ? selectedMaterial?.shipPrice +
-        selectedMaterial?.shipVariablePrice *
-          Math.floor(
-            Math.sqrt(
-              count * selectedMaterial?.unitVolume * selectedMaterial?.distance
+    (selectedMaterial?.distance > 0
+      ? transport === "ship"
+        ? selectedMaterial?.shipPrice +
+          selectedMaterial?.shipVariablePrice *
+            Math.floor(
+              Math.sqrt(
+                count *
+                  selectedMaterial?.unitVolume *
+                  selectedMaterial?.distance
+              )
             )
-          )
-      : selectedMaterial?.planePrice +
-        selectedMaterial?.planeVariablePrice *
-          Math.floor(
-            Math.sqrt(
-              count * selectedMaterial?.unitVolume * selectedMaterial?.distance
+        : selectedMaterial?.planePrice +
+          selectedMaterial?.planeVariablePrice *
+            Math.floor(
+              Math.sqrt(
+                count *
+                  selectedMaterial?.unitVolume *
+                  selectedMaterial?.distance
+              )
             )
-          );
+      : selectedMaterial?.shipPrice) || 0;
   const productCost = count * selectedMaterial?.price || 0;
 
   const totalCost = transportCost + productCost || 0;
@@ -65,6 +72,7 @@ function Shop() {
     if (!count || !selectedMaterial) {
       return;
     }
+    setActionLoading(true);
     buyFromGamein({
       productId: selectedMaterial?.id,
       quantity: count,
@@ -82,6 +90,9 @@ function Shop() {
           error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
         );
         console.log(error);
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -260,7 +271,9 @@ function Shop() {
         <button
           onClick={handleBuyRawMaterial}
           className="shop-modal__confirm-buy-btn"
-          disabled={!count || count === "0"}
+          disabled={
+            actionLoading || !count || count === "0" || Number(count) <= 0
+          }
         >
           تایید خرید
         </button>
