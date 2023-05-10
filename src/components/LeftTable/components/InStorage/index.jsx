@@ -18,6 +18,7 @@ function InStorage({ updateBuildings }) {
   const [loading, setLoading] = useState(true);
   const [storageInfo, setStorageInfo] = useState([]);
   const [upgradeStorageModalOpen, setUpgradeStorageModalOpen] = useState(false);
+  const [actionLoading, setActionLoading] = useState(false);
   const updateBalance = useUpdateBalance();
 
   useEffect(() => {
@@ -45,6 +46,7 @@ function InStorage({ updateBuildings }) {
       });
   };
   const handleUpgradeStorage = () => {
+    setActionLoading(true);
     upgradeStorage()
       .then((res) => res.data)
       .then((data) => {
@@ -59,6 +61,9 @@ function InStorage({ updateBuildings }) {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -145,12 +150,14 @@ function InStorage({ updateBuildings }) {
           <Button
             className="extend-ground__btn-yes"
             onClick={handleUpgradeStorage}
+            disabled={actionLoading}
           >
             بله
           </Button>
           <Button
             onClick={() => setUpgradeStorageModalOpen(false)}
             type="error"
+            disabled={actionLoading}
           >
             بازگشت
           </Button>

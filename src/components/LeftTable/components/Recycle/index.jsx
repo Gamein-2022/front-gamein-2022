@@ -21,6 +21,7 @@ function Recycle({ updateBuildings }) {
   const [upgradeBuildingModalOpen, setUpgradeBuildingModalOpen] =
     useState(false);
   const [deleteBuildingModalOpen, setDeleteBuildingModalOpen] = useState(false);
+  const [actionLoading, setActionLoading] = useState(false);
 
   useEffect(() => {
     getGroundInfo(0)
@@ -48,6 +49,7 @@ function Recycle({ updateBuildings }) {
   };
 
   const handleUpgradeBuilding = () => {
+    setActionLoading(true);
     upgradeBuilding(data?.building?.id)
       .then((res) => res.data)
       .then((data) => {
@@ -60,10 +62,14 @@ function Recycle({ updateBuildings }) {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
   const handleDeleteBuilding = () => {
+    setActionLoading(true);
     deleteBuilding(0)
       .then((res) => res.data)
       .then((data) => {
@@ -76,6 +82,9 @@ function Recycle({ updateBuildings }) {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -154,12 +163,14 @@ function Recycle({ updateBuildings }) {
           <Button
             className="extend-ground__btn-yes"
             onClick={handleUpgradeBuilding}
+            disabled={actionLoading}
           >
             بله
           </Button>
           <Button
             onClick={() => setUpgradeBuildingModalOpen(false)}
             type="error"
+            disabled={actionLoading}
           >
             بازگشت
           </Button>
@@ -174,12 +185,14 @@ function Recycle({ updateBuildings }) {
           <Button
             className="extend-ground__btn-yes"
             onClick={handleDeleteBuilding}
+            disabled={actionLoading}
           >
             بله
           </Button>
           <Button
             onClick={() => setDeleteBuildingModalOpen(false)}
             type="error"
+            disabled={actionLoading}
           >
             بازگشت
           </Button>

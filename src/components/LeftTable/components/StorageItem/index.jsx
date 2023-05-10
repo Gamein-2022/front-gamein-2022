@@ -14,6 +14,7 @@ function StorageItem({ item, storageSpace, updateStorageInfo }) {
   const [open, setOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteCount, setDeleteCount] = useState(0);
+  const [actionLoading, setActionLoading] = useState(false);
 
   const onClose = () => {
     setDeleteModalOpen(false);
@@ -21,6 +22,7 @@ function StorageItem({ item, storageSpace, updateStorageInfo }) {
   };
 
   const handleDeleteFromStorage = () => {
+    setActionLoading(true);
     removeFromStorage({ productId: item?.product?.id, quantity: deleteCount })
       .then((res) => res.data)
       .then((data) => {
@@ -34,6 +36,9 @@ function StorageItem({ item, storageSpace, updateStorageInfo }) {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -112,15 +117,19 @@ function StorageItem({ item, storageSpace, updateStorageInfo }) {
           value={deleteCount}
           onChange={(value) => setDeleteCount(value)}
         />
-        <div>ظرفیت آزاد شونده: {formatPrice(deleteCount * item?.product?.unitVolume)}</div>
+        <div>
+          ظرفیت آزاد شونده:{" "}
+          {formatPrice(deleteCount * item?.product?.unitVolume)}
+        </div>
         <div className="storage-item__modal-btns">
           <Button
             onClick={handleDeleteFromStorage}
             className="storage-item__modal-delete"
+            disabled={actionLoading}
           >
             حذف از انبار
           </Button>
-          <Button type="error" onClick={onClose}>
+          <Button type="error" onClick={onClose} disabled={actionLoading}>
             بازگشت
           </Button>
         </div>

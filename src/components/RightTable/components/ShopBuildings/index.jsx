@@ -17,12 +17,14 @@ function ShopBuildings({
   updateGroundInfo,
 }) {
   const [selectedBuilding, setSelectedBuilding] = useState(null);
+  const [actionLoading, setActionLoading] = useState(false);
 
   const balance = useRecoilValue(balanceState);
 
   const updateBalance = useUpdateBalance();
 
   const handleBuyBuilding = () => {
+    setActionLoading(true);
     createBuilding({ type: selectedBuilding?.type, ground })
       .then((res) => res.data)
       .then((data) => {
@@ -37,6 +39,9 @@ function ShopBuildings({
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -100,7 +105,7 @@ function ShopBuildings({
         )}
         {selectedBuilding && (
           <button
-            disabled={!selectedBuilding}
+            disabled={!selectedBuilding || actionLoading}
             className="shop-buildings__buy-btn"
             onClick={handleBuyBuilding}
           >

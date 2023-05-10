@@ -1,5 +1,7 @@
 .in-route {
   padding-bottom: 32px;
+  overflow-y: auto;
+  height: calc(100% - 48px);
 
   &__empty {
     padding: 16px;

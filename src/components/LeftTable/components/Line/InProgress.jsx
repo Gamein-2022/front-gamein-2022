@@ -22,6 +22,7 @@ function InProgress({
   const [currentTimeInMilliSec, setCurrentTimeInMilliSec] = useState(
     new Date(currentTime).getTime()
   );
+  const [actionLoading, setActionLoading] = useState(false);
   const updateBalance = useUpdateBalance();
   const [cancelLineModalOpen, setCancelLineModalOpen] = useState(false);
   const startTimeInMilliSec = new Date(startTime).getTime();
@@ -33,6 +34,7 @@ function InProgress({
   const remainedTime = (endTimeInMilliSec - currentTimeInMilliSec) / 1000;
 
   const handleCollect = () => {
+    setActionLoading(true);
     collectLine({ lineId })
       .then((res) => res.data)
       .then((data) => {
@@ -44,6 +46,7 @@ function InProgress({
         console.log(error);
         toast.error(error?.response?.data?.message);
         updateLines();
+        setActionLoading(false);
       });
   };
 
@@ -56,6 +59,7 @@ function InProgress({
   };
 
   const handleCancelLine = () => {
+    setActionLoading(true);
     cancelLine({ lineId })
       .then((res) => res.data)
       .then((data) => {
@@ -68,6 +72,9 @@ function InProgress({
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -101,7 +108,11 @@ function InProgress({
             <div>
               {lineTypeString} {product?.name} انجام شد!
             </div>
-            <Button onClick={handleCollect} type="info-reverse">
+            <Button
+              onClick={handleCollect}
+              disabled={actionLoading}
+              type="info-reverse"
+            >
               باشه
             </Button>
           </div>
@@ -130,10 +141,18 @@ function InProgress({
       >
         <div>آیا مطمئن هستید می‌خواهید {lineTypeString} را لغو کنید</div>
         <div className="extend-ground__btns">
-          <Button className="extend-ground__btn-yes" onClick={handleCancelLine}>
+          <Button
+            disabled={actionLoading}
+            className="extend-ground__btn-yes"
+            onClick={handleCancelLine}
+          >
             بله
           </Button>
-          <Button onClick={() => setCancelLineModalOpen(false)} type="error">
+          <Button
+            disabled={actionLoading}
+            onClick={() => setCancelLineModalOpen(false)}
+            type="error"
+          >
             بازگشت
           </Button>
         </div>

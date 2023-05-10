@@ -15,14 +15,18 @@ import {
 
 import sampleImg from "../../../../assets/icons/copper.png";
 import { GROUPS } from "../../../../constants/groups";
+import GameinLoading from "../../../GameinLoading";
 
 function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
   const [availableProducts, setAvailableProducts] = useState([]);
   const [selectedProduct, setselectedProduct] = useState();
+  const [pageLoading, setPageLoading] = useState(false);
+  const [actionLoading, setActionLoading] = useState(false);
 
   const stringType = modalType === "PRODUCTION" ? "تولید" : "مونتاژ";
 
   useEffect(() => {
+    setPageLoading(true);
     getLineGroups({ t: modalType === "PRODUCTION" ? 0 : 1 })
       .then((res) => res.data)
       .then((data) => {
@@ -31,10 +35,14 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setPageLoading(false);
       });
   }, []);
 
   const handleSubmit = () => {
+    setActionLoading(true);
     initLine({ group: selectedProduct?.name, lineId })
       .then((res) => res.data)
       .then((data) => {
@@ -54,6 +62,9 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
             error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
           );
         }
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -74,53 +85,67 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
         }
       >
         <div className="init-line-modal">
-          <p className="init-line-modal__description">
-            می‌خوای این خط {stringType}، برای {stringType} کدوم دسته از محصولات
-            استفاده بشه؟
-            <br />
-            (این تنظیمات فقط یک بار انجام میشه و غیر قابل تغییره)
-          </p>
-          <select
-            onChange={(e) => {
-              setselectedProduct(
-                availableProducts.find((item) => item?.name === e.target.value)
-              );
-            }}
-            value={selectedProduct?.id}
-            className="trade-filter__select"
-          >
-            <option disabled selected>
-              انتخاب
-            </option>
-            {availableProducts.map((product) => (
-              <option value={product.name}>{GROUPS[product.name] || product.name}</option>
-            ))}
-          </select>
-          {selectedProduct && (
-            <div className="init-line-modal__available-products">
-              <div className="init-line-modal__available-products-title">
-                محصولات قابل {stringType} در این دسته:
-              </div>
-              <div className="init-line-modal__product-list">
-                {selectedProduct?.products?.map((product) => (
-                  <img
-                    className="init-line-modal__product-img"
-                    src={
-                      RAW_MATERIALS[product?.name]?.icon ||
-                      INTERMEDIATE_MATERIALS_LEVEL_ONE[product?.name]?.icon ||
-                      INTERMEDIATE_MATERIALS_LEVEL_TWO[product?.name]?.icon ||
-                      FINAL_MATERIALS[product?.name]?.icon ||
-                      sampleImg
-                    }
-                    alt=""
-                  />
+          {pageLoading && <GameinLoading size={32} />}
+          {!pageLoading && (
+            <>
+              <p className="init-line-modal__description">
+                می‌خوای این خط {stringType}، برای {stringType} کدوم دسته از
+                محصولات استفاده بشه؟
+                <br />
+                (این تنظیمات فقط یک بار انجام میشه و غیر قابل تغییره)
+              </p>
+              <select
+                onChange={(e) => {
+                  setselectedProduct(
+                    availableProducts.find(
+                      (item) => item?.name === e.target.value
+                    )
+                  );
+                }}
+                value={selectedProduct?.id}
+                className="trade-filter__select"
+              >
+                <option disabled selected>
+                  انتخاب
+                </option>
+                {availableProducts.map((product) => (
+                  <option value={product.name}>
+                    {GROUPS[product.name] || product.name}
+                  </option>
                 ))}
-              </div>
-            </div>
+              </select>
+              {selectedProduct && (
+                <div className="init-line-modal__available-products">
+                  <div className="init-line-modal__available-products-title">
+                    محصولات قابل {stringType} در این دسته:
+                  </div>
+                  <div className="init-line-modal__product-list">
+                    {selectedProduct?.products?.map((product) => (
+                      <img
+                        className="init-line-modal__product-img"
+                        src={
+                          RAW_MATERIALS[product?.name]?.icon ||
+                          INTERMEDIATE_MATERIALS_LEVEL_ONE[product?.name]
+                            ?.icon ||
+                          INTERMEDIATE_MATERIALS_LEVEL_TWO[product?.name]
+                            ?.icon ||
+                          FINAL_MATERIALS[product?.name]?.icon ||
+                          sampleImg
+                        }
+                        alt=""
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+              <Button
+                disabled={!selectedProduct || actionLoading}
+                onClick={handleSubmit}
+              >
+                تایید
+              </Button>
+            </>
           )}
-          <Button disabled={!selectedProduct} onClick={handleSubmit}>
-            تایید
-          </Button>
         </div>
       </Modal>
     </>

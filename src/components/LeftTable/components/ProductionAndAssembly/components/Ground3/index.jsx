@@ -24,6 +24,7 @@ function Ground3({ updateBuildings }) {
   const [upgradeBuildingModalOpen, setUpgradeBuildingModalOpen] =
     useState(false);
   const [deleteBuildingModalOpen, setDeleteBuildingModalOpen] = useState(false);
+  const [actionLoading, setActionLoading] = useState(false);
 
   const updateBalance = useUpdateBalance();
 
@@ -56,6 +57,7 @@ function Ground3({ updateBuildings }) {
   };
 
   const handleUpgradeRegion = () => {
+    setActionLoading(true);
     upgradeRegion()
       .then((res) => res.data)
       .then((data) => {
@@ -63,6 +65,7 @@ function Ground3({ updateBuildings }) {
         setUpdateRegionModalOpenState(false);
         toast.success("زمین گسترش یافت.");
         updateBuildings();
+        updateGroundInfo();
         updateBalance();
       })
       .catch((error) => {
@@ -70,10 +73,14 @@ function Ground3({ updateBuildings }) {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
   const handleUpgradeBuilding = () => {
+    setActionLoading(true);
     upgradeBuilding(data?.building?.id)
       .then((res) => res.data)
       .then((data) => {
@@ -86,10 +93,14 @@ function Ground3({ updateBuildings }) {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
   const handleDeleteBuilding = () => {
+    setActionLoading(true);
     deleteBuilding(3)
       .then((res) => res.data)
       .then((data) => {
@@ -102,6 +113,9 @@ function Ground3({ updateBuildings }) {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -161,12 +175,14 @@ function Ground3({ updateBuildings }) {
                   <Button
                     className="extend-ground__btn-yes"
                     onClick={handleUpgradeRegion}
+                    disabled={actionLoading}
                   >
                     بله
                   </Button>
                   <Button
                     onClick={() => setUpdateRegionModalOpenState(false)}
                     type="error"
+                    disabled={actionLoading}
                   >
                     بازگشت
                   </Button>
@@ -226,12 +242,14 @@ function Ground3({ updateBuildings }) {
           <Button
             className="extend-ground__btn-yes"
             onClick={handleUpgradeBuilding}
+            disabled={actionLoading}
           >
             بله
           </Button>
           <Button
             onClick={() => setUpgradeBuildingModalOpen(false)}
             type="error"
+            disabled={actionLoading}
           >
             بازگشت
           </Button>
@@ -246,12 +264,14 @@ function Ground3({ updateBuildings }) {
           <Button
             className="extend-ground__btn-yes"
             onClick={handleDeleteBuilding}
+            disabled={actionLoading}
           >
             بله
           </Button>
           <Button
             onClick={() => setDeleteBuildingModalOpen(false)}
             type="error"
+            disabled={actionLoading}
           >
             بازگشت
           </Button>

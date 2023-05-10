@@ -135,7 +135,7 @@ function TradeIntermediate() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("سفارش فروش با موفقیت فرستاده شد.");
+        toast.success("پیشنهاد فروش با موفقیت فرستاده شد.");
       })
       .catch((error) => {
         console.log(error);
@@ -205,25 +205,27 @@ function TradeIntermediate() {
   };
 
   const transportCost =
-    transport === "ship"
-      ? shippingInfo?.shipBasePrice +
-        shippingInfo?.shipVariablePrice *
-          Math.floor(
-            Math.sqrt(
-              selectedOrder?.quantity *
-                selectedOrder?.product?.unitVolume *
-                shippingInfo?.distance
+    shippingInfo?.distance > 0
+      ? transport === "ship"
+        ? shippingInfo?.shipBasePrice +
+          shippingInfo?.shipVariablePrice *
+            Math.floor(
+              Math.sqrt(
+                selectedOrder?.quantity *
+                  selectedOrder?.product?.unitVolume *
+                  shippingInfo?.distance
+              )
             )
-          )
-      : shippingInfo?.planeBasePrice +
-        shippingInfo?.planeVariablePrice *
-          Math.floor(
-            Math.sqrt(
-              selectedOrder?.quantity *
-                selectedOrder?.product?.unitVolume *
-                shippingInfo?.distance
+        : shippingInfo?.planeBasePrice +
+          shippingInfo?.planeVariablePrice *
+            Math.floor(
+              Math.sqrt(
+                selectedOrder?.quantity *
+                  selectedOrder?.product?.unitVolume *
+                  shippingInfo?.distance
+              )
             )
-          );
+      : shippingInfo?.shipBasePrice;
 
   return (
     <>

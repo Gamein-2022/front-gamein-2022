@@ -8,6 +8,7 @@ import { formatPrice } from "../../../../utils/formatters";
 import NumberInput from "../../../NumberInput";
 import { getFinalNextTime } from "../../../../apis/orders";
 import MyCountDown from "../../../CountDown/MyCountDown";
+import GameinLoading from "../../../GameinLoading";
 
 function TradeFinal() {
   const [quantity, setQuantity] = useState(0);
@@ -15,6 +16,8 @@ function TradeFinal() {
   const [finalProducts, setFinalProducts] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState();
   const [remainedTime, setRemainedTime] = useState();
+  const [pageLoading, setPageLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState(false);
 
   useEffect(() => {
     getFinalProducts()
@@ -25,6 +28,9 @@ function TradeFinal() {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setPageLoading(false);
       });
 
     setFinalNextTime();
@@ -34,8 +40,9 @@ function TradeFinal() {
     getFinalNextTime()
       .then((res) => res.data)
       .then((data) => {
-        const current = data?.result?.nextTime;
-        setRemainedTime((new Date(current) - new Date()) / 1000);
+        const nextTime = data?.result?.nextTime;
+        const current = data?.result?.currentTime;
+        setRemainedTime((new Date(nextTime) - new Date(current)) / 1000);
       })
       .catch((error) => console.log(error));
   };
@@ -47,6 +54,7 @@ function TradeFinal() {
   };
 
   const handleSellFinalProduct = () => {
+    setActionLoading(true);
     sellToGamein({ productId: selectedProductId, quantity, price })
       .then((res) => res.data)
       .then((_) => {
@@ -56,81 +64,101 @@ function TradeFinal() {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
   return (
     <div className="trade-final">
-      <div>زمان باقیمانده تا خرید بعدی گیمین: </div>
-      <div className="trade-final__remained-time">
-        <MyCountDown
-          timeInSeconds={remainedTime}
-          onComplete={handleCountDownComplete}
-        />
-      </div>
-      <p>
-        اینجا می‌تونی محصولات نهایی رو به بازار جهانی عرضه کنی. برای این کار،
-        محصول، تعداد و قیمت مورد نظرت رو مشخص کن.
-      </p>
-      <div>محصول</div>
-      <select
-        value={selectedProductId}
-        onChange={(e) => setSelectedProductId(e.target.value)}
-        className="trade-filter__select trade-final__select"
-      >
-        <option disabled selected>
-          انتخاب کن
-        </option>
-        {finalProducts.map((item) => (
-          <option value={item.product.id}>{item.product.name}</option>
-        ))}
-      </select>
-      <div>
-        حداقل قیمت:{" "}
-        {formatPrice(
-          finalProducts.find((item) => item.product.id == selectedProductId)
-            ?.product?.minPrice || 0
-        )}
-      </div>
-      <div>
-        حداکثر قیمت:{" "}
-        {formatPrice(
-          finalProducts.find((item) => item.product.id == selectedProductId)
-            ?.product?.maxPrice || 0
-        )}
-      </div>
-      <NumberInput
-        label={"قیمت پیشنهادی"}
-        placeholder="مثلا ۱۰۰۰"
-        min={0}
-        value={price}
-        onChange={(value) => setPrice(value)}
-      />
-      <NumberInput
-        label={"تعداد"}
-        placeholder="مثلا ۵۰۰"
-        min={0}
-        step={1}
-        value={quantity}
-        onChange={(value) => setQuantity(value)}
-      />
-      <div>
-        موجودی انبار:{" "}
-        {
-          finalProducts.find((item) => item.product.id == selectedProductId)
-            ?.inStorage
-        }{" "}
-        عدد
-      </div>
-      {/* <div>
-        <img src={coinImg} alt="coin" />
-        درآمد حاصل از فروش: {123456}
-      </div>
-      <div>
-        <ErrorOutlineOutlinedIcon />
-        متن خطای مربوط به جور نبودن تعداد با تقاضای بازار D:
-      </div> */}
-      <Button onClick={handleSellFinalProduct}>فروش به بازار</Button>
+      {pageLoading && <GameinLoading size={32} />}
+      {!pageLoading && (
+        <>
+          <p>
+            اینجا می‌تونی محصولات نهایی رو به بازار جهانی عرضه کنی. برای این
+            کار، محصول، تعداد و قیمت مورد نظرت رو مشخص کن.
+          </p>
+          <div style={{ marginTop: 16 }}>
+            زمان باقیمانده تا خرید بعدی گیمین:{" "}
+          </div>
+          <div className="trade-final__remained-time">
+            <MyCountDown
+              timeInSeconds={remainedTime}
+              onComplete={handleCountDownComplete}
+            />
+          </div>
+          {finalProducts?.length <= 0 && (
+            <div style={{ textAlign: "center", margin: "16px 0" }}>
+              شما هیچ محصول نهایی برای فروش ندارید.
+            </div>
+          )}
+          {finalProducts?.length > 0 && (
+            <>
+              <div>محصول</div>
+              <select
+                value={selectedProductId}
+                onChange={(e) => setSelectedProductId(e.target.value)}
+                className="trade-filter__select trade-final__select"
+              >
+                <option disabled selected>
+                  انتخاب کن
+                </option>
+                {finalProducts.map((item) => (
+                  <option value={item.product.id}>{item.product.name}</option>
+                ))}
+              </select>
+              <div>
+                حداقل قیمت:{" "}
+                {formatPrice(
+                  finalProducts.find(
+                    (item) => item.product.id == selectedProductId
+                  )?.product?.minPrice || 0
+                )}
+              </div>
+              <div>
+                حداکثر قیمت:{" "}
+                {formatPrice(
+                  finalProducts.find(
+                    (item) => item.product.id == selectedProductId
+                  )?.product?.maxPrice || 0
+                )}
+              </div>
+              <NumberInput
+                label={"قیمت پیشنهادی"}
+                placeholder="مثلا ۱۰۰۰"
+                min={0}
+                value={price}
+                onChange={(value) => setPrice(value)}
+              />
+              <NumberInput
+                label={"تعداد"}
+                placeholder="مثلا ۵۰۰"
+                min={0}
+                step={1}
+                value={quantity}
+                onChange={(value) => setQuantity(value)}
+              />
+            </>
+          )}
+          {selectedProductId && (
+            <div>
+              موجودی انبار:{" "}
+              {
+                finalProducts.find(
+                  (item) => item.product.id == selectedProductId
+                )?.inStorage
+              }{" "}
+              عدد
+            </div>
+          )}
+          {finalProducts?.length > 0 && (
+            <Button disabled={actionLoading} onClick={handleSellFinalProduct}>
+              فروش به بازار
+            </Button>
+          )}
+        </>
+      )}
     </div>
   );
 }

@@ -40,6 +40,7 @@ import { balanceState } from "../../../../store/team-info";
 import { buyFromGamein } from "../../../../apis/trade";
 import NumberInput from "../../../NumberInput";
 import TransportEmptyState from "../../../TansportEmptyState";
+import GameinLoading from "../../../GameinLoading";
 
 function Off({
   open,
@@ -59,6 +60,9 @@ function Off({
   const [transport, setTransport] = useState("airplane");
   const [selectedMaterial, setSelectedMaterial] = useState({});
 
+  const [pageLoading, setPageLoading] = useState(false);
+  const [actionLoading, setActionLoading] = useState(false);
+
   const navigate = useNavigate();
   const updateBalance = useUpdateBalance();
 
@@ -69,31 +73,34 @@ function Off({
   const balance = useRecoilValue(balanceState);
 
   const transportCost =
-    transport === "ship"
-      ? selectedMaterial?.shipPrice +
-        selectedMaterial?.shipVariablePrice *
-          Math.floor(
-            Math.sqrt(
-              count *
-                selectedMaterial?.unitVolume *
-                selectedMaterial?.distance || 0
+    selectedMaterial?.distance > 0
+      ? transport === "ship"
+        ? selectedMaterial?.shipPrice +
+          selectedMaterial?.shipVariablePrice *
+            Math.floor(
+              Math.sqrt(
+                count *
+                  selectedMaterial?.unitVolume *
+                  selectedMaterial?.distance || 0
+              )
             )
-          )
-      : selectedMaterial?.planePrice +
-        selectedMaterial?.planeVariablePrice *
-          Math.floor(
-            Math.sqrt(
-              count *
-                selectedMaterial?.unitVolume *
-                selectedMaterial?.distance || 0
+        : selectedMaterial?.planePrice +
+          selectedMaterial?.planeVariablePrice *
+            Math.floor(
+              Math.sqrt(
+                count *
+                  selectedMaterial?.unitVolume *
+                  selectedMaterial?.distance || 0
+              )
             )
-          );
+      : selectedMaterial?.shipPrice;
 
-  const productCost = count * selectedMaterial?.price || 0;
+  const productCost = count * selectedMaterial?.minPrice || 0;
 
   const totalCost = transportCost + productCost || 0;
 
   useEffect(() => {
+    setPageLoading(true);
     getLineAvailableProducts({ id: lineId })
       .then((res) => res.data)
       .then((data) => {
@@ -102,6 +109,9 @@ function Off({
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setPageLoading(false);
       });
   }, []);
 
@@ -109,6 +119,7 @@ function Off({
     if (!count || !selectedMaterial) {
       return;
     }
+    setActionLoading(true);
     buyFromGamein({
       productId: selectedMaterial?.id,
       quantity: count,
@@ -126,10 +137,14 @@ function Off({
           error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
         );
         console.log(error);
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
   const handleSubmit = () => {
+    setActionLoading(true);
     startLine({ lineId, count: quantity, productId: product?.product?.id })
       .then((res) => res.data)
       .then((data) => {
@@ -149,6 +164,9 @@ function Off({
           toast.error(error?.response?.data?.message);
           updateLines();
         }
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -172,242 +190,255 @@ function Off({
         }
       >
         <div className="setup-line-modal__wrapper">
-          <div className="setup-line-modal__body">
-            <div className="setup-line-modal__column">
-              <div className="setup-line-modal__column-title">انتخاب کالا</div>
-              <select
-                className="trade-filter__select setup-line-modal__choose-product"
-                onChange={(e) =>
-                  setProduct(
-                    info.find((item) => item.product.name === e.target.value)
-                  )
-                }
-              >
-                <option disabled selected>
-                  انتخاب کالا
-                </option>
-                {info?.map((item) => (
-                  <option>{item?.product?.name}</option>
-                ))}
-              </select>
-              {product?.product?.name && (
-                <img
-                  className="setup-line-modal__img"
-                  src={
-                    INTERMEDIATE_MATERIALS_LEVEL_ONE_TREES[
-                      product?.product?.name
-                    ]?.icon ||
-                    INTERMEDIATE_MATERIALS_LEVEL_TWO_TREES[
-                      product?.product?.name
-                    ]?.icon ||
-                    FINAL_MATERIALS_TREES[product?.product?.name]?.icon ||
-                    sampleImg
-                  }
-                  alt="sample"
-                />
-              )}
-            </div>
-            <div className="setup-line-modal__column">
-              <div className="setup-line-modal__column-title">
-                بررسی موجودی انبار
-              </div>
-              <div style={{ display: "flex" }}>
-                <div style={{ marginLeft: 8 }}>تعداد:</div>
-                <NumberInput
-                  step={
-                    product?.product?.level === 0
-                      ? product.requirements[0].numberPerOne
-                      : 1
-                  }
-                  wrapperClassName="setup-line-modal__quantity"
-                  value={quantity}
-                  onChange={(value) => setQuantity(value)}
-                />
-              </div>
-              {quantity > 0 && product && (
-                <>
-                  <div className="setup-line-modal__storage-description">
-                    برای {modalType === "PRODUCTION" ? "تولید" : "مونتاژ"}{" "}
-                    {quantity} عدد {product?.name} به مواد اولیه‌ی زیر نیاز
-                    دارید:
+          {pageLoading && <GameinLoading size={32} />}
+          {!pageLoading && (
+            <>
+              <div className="setup-line-modal__body">
+                <div className="setup-line-modal__column">
+                  <div className="setup-line-modal__column-title">
+                    انتخاب کالا
                   </div>
-                  <div className="setup-line-modal__storage-table">
-                    <table>
-                      <thead>
-                        <tr>
-                          <td>نام</td>
-                          <td>تعداد</td>
-                          <td>موجودی انبار</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {product?.requirements.map((req) => (
-                          <tr>
-                            <td>{req.product.name}</td>
-                            <td>
-                              {req.product.level === -1
-                                ? (quantity / req.numberPerOne).toFixed(2)
-                                : req.numberPerOne * quantity}
-                            </td>
-                            <td
-                              style={{
-                                color:
-                                  (req.product.level >= 0 &&
-                                    req.inStorage >=
-                                      req.numberPerOne * quantity) ||
-                                  (req.product.level === -1 &&
-                                    req.inStorage >=
-                                      quantity / req.numberPerOne)
-                                    ? "#009054"
-                                    : "#D63F26",
-                              }}
-                            >
-                              {req.inStorage}
-                            </td>
-                            {req.product.level <= 0 && (
-                              <td className="setup-line-modal__storage-icon">
-                                {((req.product.level === 0 &&
-                                  req.inStorage <
-                                    req.numberPerOne * quantity) ||
-                                  (req.product.level === -1 &&
-                                    req.inStorage <
-                                      quantity / req.numberPerOne)) && (
-                                  <Button
-                                    onClick={() => {
-                                      setBuyModalOpen(true);
-                                      setSelectedMaterial(req.product);
-                                      setCount(
-                                        req.numberPerOne * quantity -
-                                          req.inStorage
-                                      );
-                                    }}
-                                    className="setup-line-modal__table-buy-btn"
-                                  >
-                                    خرید
-                                  </Button>
-                                )}
-                              </td>
-                            )}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </>
-              )}
-            </div>
-            <div className="setup-line-modal__column">
-              <div className="setup-line-modal__column-title">
-                تایید و شروع {lineTypeString}
-              </div>
-              <div className="setup-line-modal__confirm-header">
-                <div className="setup-line-modal__confirm-title">
-                  نرخ {lineTypeString}:{" "}
-                </div>
-                <div className="setup-line-modal__confirm-value">
-                  {((product?.product?.productionRate * 60) / 8 || 0).toFixed(
-                    0
-                  )}{" "}
-                  کالا در دقیقه
-                </div>
-                <div className="setup-line-modal__confirm-title">
-                  مدت زمان مورد نیاز:{" "}
-                </div>
-                <div className="setup-line-modal__confirm-value">
-                  {(quantity / (product?.product?.productionRate || 1)).toFixed(
-                    2
-                  ) * 8 || 0}{" "}
-                  ثانیه
-                </div>
-                <div className="setup-line-modal__confirm-title">
-                  هزینه {lineTypeString}:
-                </div>
-                <div className="setup-line-modal__confirm-value">
-                  {formatPrice(
-                    product?.basePrice + product?.product?.price * quantity || 0
-                  )}{" "}
-                  {"جی‌کوین"}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="setup-line-modal__footer">
-            <div className="setup-line-modal__column">
-              {product && !product.hasRAndDRequirement && (
-                <div className="setup-line-modal__r-and-d-warning">
-                  <div className="setup-line-modal__r-and-d-warning-top">
-                    <ErrorOutlineOutlinedIcon />
-                    کارخانه‌ی شما فناوری لازم را برای {lineTypeString} این کالا
-                    ندارد. برای اضافه کردن این فناوری، به بخش تحقیق و توسعه
-                    بروید.
-                  </div>
-                  <Button
-                    onClick={() => navigate("/r-and-d")}
-                    className="setup-line-modal__r-and-d-warning-btn"
+                  <select
+                    className="trade-filter__select setup-line-modal__choose-product"
+                    onChange={(e) =>
+                      setProduct(
+                        info.find(
+                          (item) => item.product.name === e.target.value
+                        )
+                      )
+                    }
                   >
-                    تحقیق و توسعه
-                  </Button>
-                </div>
-              )}
-            </div>
-
-            <div className="setup-line-modal__column">
-              {modalType !== "PRODUCTION" && (
-                <div className="setup-line-modal__storage-warning">
-                  <div className="setup-line-modal__storage-warning-top">
-                    <ErrorOutlineOutlinedIcon />
-                    {modalType === "PRODUCTION"
-                      ? "موجودی برخی مواد اولیه در انبار شما کافی نیست. برای تامین آنها، به فروشگاه گیمین بروید."
-                      : "موجودی برخی کالاها در انبار شما کافی نیست. برای تامین آنها، به بخش تجارت رفته و از تیم‌های دیگر بخرید."}
-                  </div>
-                  <Button
-                    onClick={() => {
-                      onClose();
-                      setRightOpen(true);
-                      if (modalType === "PRODUCTION") {
-                        setRightTab(RIGHT_TABLE_TABS.shop);
-                        setShopTab(SHOP_INNER_TABS.rawMaterials);
-                      } else {
-                        setRightTab(RIGHT_TABLE_TABS.deals);
+                    <option disabled selected>
+                      انتخاب کالا
+                    </option>
+                    {info?.map((item) => (
+                      <option>{item?.product?.name}</option>
+                    ))}
+                  </select>
+                  {product?.product?.name && (
+                    <img
+                      className="setup-line-modal__img"
+                      src={
+                        INTERMEDIATE_MATERIALS_LEVEL_ONE_TREES[
+                          product?.product?.name
+                        ]?.icon ||
+                        INTERMEDIATE_MATERIALS_LEVEL_TWO_TREES[
+                          product?.product?.name
+                        ]?.icon ||
+                        FINAL_MATERIALS_TREES[product?.product?.name]?.icon ||
+                        sampleImg
                       }
-                    }}
-                    className="setup-line-modal__storage-warning-btn"
-                  >
-                    {modalType === "PRODUCTION"
-                      ? "خرید از فروشگاه گیمین"
-                      : "تجارت با تیم‌های دیگر"}
-                  </Button>
+                      alt="sample"
+                    />
+                  )}
                 </div>
-              )}
-            </div>
-            <div className="setup-line-modal__column">
-              <div className="setup-line-modal__confirm-footer">
-                <div>
-                  دارایی فعلی:{" "}
-                  {formatPrice(product?.balance || info?.[0]?.balance || 0)}{" "}
-                  {"جی‌کوین"}
+                <div className="setup-line-modal__column">
+                  <div className="setup-line-modal__column-title">
+                    بررسی موجودی انبار
+                  </div>
+                  <div style={{ display: "flex" }}>
+                    <div style={{ marginLeft: 8 }}>تعداد:</div>
+                    <NumberInput
+                      step={
+                        product?.product?.level === 0
+                          ? product.requirements[0].numberPerOne
+                          : 1
+                      }
+                      wrapperClassName="setup-line-modal__quantity"
+                      value={quantity}
+                      onChange={(value) => setQuantity(value)}
+                    />
+                  </div>
+                  {quantity > 0 && product && (
+                    <>
+                      <div className="setup-line-modal__storage-description">
+                        برای {modalType === "PRODUCTION" ? "تولید" : "مونتاژ"}{" "}
+                        {quantity} عدد {product?.name} به مواد اولیه‌ی زیر نیاز
+                        دارید:
+                      </div>
+                      <div className="setup-line-modal__storage-table">
+                        <table>
+                          <thead>
+                            <tr>
+                              <td>نام</td>
+                              <td>تعداد</td>
+                              <td>موجودی انبار</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {product?.requirements.map((req) => (
+                              <tr>
+                                <td>{req.product.name}</td>
+                                <td>
+                                  {req.product.level === -1
+                                    ? (quantity / req.numberPerOne).toFixed(2)
+                                    : req.numberPerOne * quantity}
+                                </td>
+                                <td
+                                  style={{
+                                    color:
+                                      (req.product.level >= 0 &&
+                                        req.inStorage >=
+                                          req.numberPerOne * quantity) ||
+                                      (req.product.level === -1 &&
+                                        req.inStorage >=
+                                          quantity / req.numberPerOne)
+                                        ? "#009054"
+                                        : "#D63F26",
+                                  }}
+                                >
+                                  {req.inStorage}
+                                </td>
+                                {req.product.level <= 0 && (
+                                  <td className="setup-line-modal__storage-icon">
+                                    {((req.product.level === 0 &&
+                                      req.inStorage <
+                                        req.numberPerOne * quantity) ||
+                                      (req.product.level === -1 &&
+                                        req.inStorage <
+                                          quantity / req.numberPerOne)) && (
+                                      <Button
+                                        onClick={() => {
+                                          setBuyModalOpen(true);
+                                          setSelectedMaterial(req.product);
+                                          setCount(
+                                            req.numberPerOne * quantity -
+                                              req.inStorage
+                                          );
+                                        }}
+                                        className="setup-line-modal__table-buy-btn"
+                                      >
+                                        خرید
+                                      </Button>
+                                    )}
+                                  </td>
+                                )}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </>
+                  )}
                 </div>
-                <div>
-                  دارایی پس از {lineTypeString}:{" "}
-                  {formatPrice(
-                    product?.balance -
-                      (product?.basePrice +
-                        product?.product?.price * quantity) || 0
-                  )}{" "}
-                  {"جی‌کوین"}
+                <div className="setup-line-modal__column">
+                  <div className="setup-line-modal__column-title">
+                    تایید و شروع {lineTypeString}
+                  </div>
+                  <div className="setup-line-modal__confirm-header">
+                    <div className="setup-line-modal__confirm-title">
+                      نرخ {lineTypeString}:{" "}
+                    </div>
+                    <div className="setup-line-modal__confirm-value">
+                      {(
+                        (product?.product?.productionRate * 60) / 8 || 0
+                      ).toFixed(0)}{" "}
+                      کالا در دقیقه
+                    </div>
+                    <div className="setup-line-modal__confirm-title">
+                      مدت زمان مورد نیاز:{" "}
+                    </div>
+                    <div className="setup-line-modal__confirm-value">
+                      {(
+                        quantity / (product?.product?.productionRate || 1)
+                      ).toFixed(2) * 8 || 0}{" "}
+                      ثانیه
+                    </div>
+                    <div className="setup-line-modal__confirm-title">
+                      هزینه {lineTypeString}:
+                    </div>
+                    <div className="setup-line-modal__confirm-value">
+                      {formatPrice(
+                        product?.basePrice +
+                          product?.product?.price * quantity || 0
+                      )}{" "}
+                      {"جی‌کوین"}
+                    </div>
+                  </div>
                 </div>
-                <Button
-                  disabled={
-                    quantity == 0 || !product || !product.hasRAndDRequirement
-                  }
-                  onClick={handleSubmit}
-                  className="setup-line-modal__confirm-btn"
-                >
-                  شروع {lineTypeString}
-                </Button>
               </div>
-            </div>
-          </div>
+              <div className="setup-line-modal__footer">
+                <div className="setup-line-modal__column">
+                  {product && !product.hasRAndDRequirement && (
+                    <div className="setup-line-modal__r-and-d-warning">
+                      <div className="setup-line-modal__r-and-d-warning-top">
+                        <ErrorOutlineOutlinedIcon />
+                        کارخانه‌ی شما فناوری لازم را برای {lineTypeString} این
+                        کالا ندارد. برای اضافه کردن این فناوری، به بخش تحقیق و
+                        توسعه بروید.
+                      </div>
+                      <Button
+                        onClick={() => navigate("/r-and-d")}
+                        className="setup-line-modal__r-and-d-warning-btn"
+                      >
+                        تحقیق و توسعه
+                      </Button>
+                    </div>
+                  )}
+                </div>
+
+                <div className="setup-line-modal__column">
+                  {modalType !== "PRODUCTION" && (
+                    <div className="setup-line-modal__storage-warning">
+                      <div className="setup-line-modal__storage-warning-top">
+                        <ErrorOutlineOutlinedIcon />
+                        {modalType === "PRODUCTION"
+                          ? "موجودی برخی مواد اولیه در انبار شما کافی نیست. برای تامین آنها، به فروشگاه گیمین بروید."
+                          : "موجودی برخی کالاها در انبار شما کافی نیست. برای تامین آنها، به بخش تجارت رفته و از تیم‌های دیگر بخرید."}
+                      </div>
+                      <Button
+                        onClick={() => {
+                          onClose();
+                          setRightOpen(true);
+                          if (modalType === "PRODUCTION") {
+                            setRightTab(RIGHT_TABLE_TABS.shop);
+                            setShopTab(SHOP_INNER_TABS.rawMaterials);
+                          } else {
+                            setRightTab(RIGHT_TABLE_TABS.deals);
+                          }
+                        }}
+                        className="setup-line-modal__storage-warning-btn"
+                      >
+                        {modalType === "PRODUCTION"
+                          ? "خرید از فروشگاه گیمین"
+                          : "تجارت با تیم‌های دیگر"}
+                      </Button>
+                    </div>
+                  )}
+                </div>
+                <div className="setup-line-modal__column">
+                  <div className="setup-line-modal__confirm-footer">
+                    <div>
+                      دارایی فعلی:{" "}
+                      {formatPrice(product?.balance || info?.[0]?.balance || 0)}{" "}
+                      {"جی‌کوین"}
+                    </div>
+                    <div>
+                      دارایی پس از {lineTypeString}:{" "}
+                      {formatPrice(
+                        product?.balance -
+                          (product?.basePrice +
+                            product?.product?.price * quantity) || 0
+                      )}{" "}
+                      {"جی‌کوین"}
+                    </div>
+                    <Button
+                      disabled={
+                        quantity == 0 ||
+                        !product ||
+                        !product.hasRAndDRequirement ||
+                        actionLoading
+                      }
+                      onClick={handleSubmit}
+                      className="setup-line-modal__confirm-btn"
+                    >
+                      شروع {lineTypeString}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </Modal>
       <Modal
@@ -503,7 +534,9 @@ function Off({
         <button
           onClick={handleBuyRawMaterial}
           className="shop-modal__confirm-buy-btn"
-          disabled={!count || count === "0"}
+          disabled={
+            !count || count === "0" || Number(count) <= 0 || actionLoading
+          }
         >
           تایید خرید
         </button>
