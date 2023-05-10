@@ -135,7 +135,7 @@ function TradeIntermediate() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        toast.success("سفارش فروش با موفقیت فرستاده شد.");
+        toast.success("پیشنهاد فروش با موفقیت فرستاده شد.");
       })
       .catch((error) => {
         console.log(error);
