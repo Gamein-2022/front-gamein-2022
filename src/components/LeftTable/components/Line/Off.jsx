@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
 import Modal from "../../../Modal";
 import Button from "../../../Button";
 
@@ -35,7 +33,6 @@ import {
 import { RIGHT_TABLE_TABS, SHOP_INNER_TABS } from "../../../../constants/tabs";
 import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 import classNames from "classnames";
-import { RAW_MATERIALS } from "../../../../constants/materials";
 import { balanceState } from "../../../../store/team-info";
 import { buyFromGamein } from "../../../../apis/trade";
 import NumberInput from "../../../NumberInput";
@@ -241,7 +238,7 @@ function Off({
                     <NumberInput
                       step={
                         product?.product?.level === 0
-                          ? product.requirements[0].numberPerOne
+                          ? product?.requirements?.[0]?.numberPerOne
                           : 1
                       }
                       wrapperClassName="setup-line-modal__quantity"
@@ -269,46 +266,47 @@ function Off({
                             {product?.requirements.map((req) => (
                               <tr>
                                 <td>
-                                  {req.product.prettyName || req.product.name}
+                                  {req?.product?.prettyName ||
+                                    req?.product?.name}
                                 </td>
                                 <td>
-                                  {req.product.level === -1
-                                    ? (quantity / req.numberPerOne).toFixed(2)
-                                    : req.numberPerOne * quantity}
+                                  {req?.product?.level === -1
+                                    ? (quantity / req?.numberPerOne).toFixed(2)
+                                    : req?.numberPerOne * quantity}
                                 </td>
                                 <td
                                   style={{
                                     color:
-                                      (req.product.level >= 0 &&
-                                        req.inStorage >=
-                                          req.numberPerOne * quantity) ||
-                                      (req.product.level === -1 &&
-                                        req.inStorage >=
-                                          quantity / req.numberPerOne)
+                                      (req?.product?.level >= 0 &&
+                                        req?.inStorage >=
+                                          req?.numberPerOne * quantity) ||
+                                      (req?.product?.level === -1 &&
+                                        req?.inStorage >=
+                                          quantity / req?.numberPerOne)
                                         ? "#009054"
                                         : "#D63F26",
                                   }}
                                 >
-                                  {req.inStorage}
+                                  {req?.inStorage}
                                 </td>
-                                {req.product.level <= 0 && (
+                                {req?.product?.level <= 0 && (
                                   <td className="setup-line-modal__storage-icon">
-                                    {((req.product.level === 0 &&
-                                      req.inStorage <
-                                        req.numberPerOne * quantity) ||
-                                      (req.product.level === -1 &&
-                                        req.inStorage <
-                                          quantity / req.numberPerOne)) && (
+                                    {((req?.product?.level === 0 &&
+                                      req?.inStorage <
+                                        req?.numberPerOne * quantity) ||
+                                      (req?.product?.level === -1 &&
+                                        req?.inStorage <
+                                          quantity / req?.numberPerOne)) && (
                                       <Button
                                         onClick={() => {
                                           setBuyModalOpen(true);
-                                          setSelectedMaterial(req.product);
+                                          setSelectedMaterial(req?.product);
                                           setCount(
-                                            req.product.level === 0
-                                              ? req.numberPerOne * quantity -
-                                                  req.inStorage
-                                              : quantity / req.numberPerOne -
-                                                  req.inStorage
+                                            req?.product?.level === 0
+                                              ? req?.numberPerOne * quantity -
+                                                  req?.inStorage
+                                              : quantity / req?.numberPerOne -
+                                                  req?.inStorage
                                           );
                                         }}
                                         className="setup-line-modal__table-buy-btn"
@@ -358,9 +356,11 @@ function Off({
                     <div className="setup-line-modal__confirm-value">
                       {formatPrice(
                         product?.product?.level == 0
-                          ? product?.basePrice +
-                              (product?.product?.price * quantity) /
-                                (product?.requirements[0]?.numberPerOne || 1)
+                          ? Number(
+                              product?.basePrice +
+                                (product?.product?.price * quantity) /
+                                  (product?.requirements[0]?.numberPerOne || 1)
+                            )
                           : product?.basePrice +
                               product?.product?.price * quantity || 0
                       )}{" "}
@@ -390,7 +390,7 @@ function Off({
                 </div>
 
                 <div className="setup-line-modal__column">
-                  {modalType !== "PRODUCTION" && (
+                  {modalType !== "PRODUCTION" && modalType !== "RECYCLE" && (
                     <div className="setup-line-modal__storage-warning">
                       <div className="setup-line-modal__storage-warning-top">
                         <ErrorOutlineOutlinedIcon />
@@ -429,8 +429,15 @@ function Off({
                       دارایی پس از {lineTypeString}:{" "}
                       {formatPrice(
                         product?.balance -
-                          (product?.basePrice +
-                            product?.product?.price * quantity) || 0
+                          (product?.product?.level == 0
+                            ? Number(
+                                product?.basePrice +
+                                  (product?.product?.price * quantity) /
+                                    (product?.requirements?.[0]?.numberPerOne ||
+                                      1)
+                              )
+                            : product?.basePrice +
+                                product?.product?.price * quantity || 0)
                       )}{" "}
                       {"جی‌کوین"}
                     </div>
