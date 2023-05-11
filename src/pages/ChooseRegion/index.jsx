@@ -167,7 +167,15 @@ function ChooseRegion() {
   return (
     <>
       {pageLoading && (
-        <div style={{ width: "100vw", height: "100vh" }}>
+        <div
+          style={{
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <GameinLoading size={32} />
         </div>
       )}

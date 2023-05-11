@@ -15,7 +15,7 @@ function Announcments() {
     getAnnnouncements()
       .then((res) => res.data)
       .then((data) => {
-        setAnnouncments(data?.result);
+        setAnnouncments(data?.result?.reverse());
       })
       .catch((error) => {
         toast.error(
@@ -31,7 +31,7 @@ function Announcments() {
     getAnnnouncements()
       .then((res) => res.data)
       .then((data) => {
-        setAnnouncments(data?.result);
+        setAnnouncments(data?.result?.reverse());
       })
       .catch((error) => {
         console.log(error);

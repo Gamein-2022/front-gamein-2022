@@ -15,7 +15,7 @@ function News() {
     getNews()
       .then((res) => res.data)
       .then((data) => {
-        setNews(data?.result);
+        setNews(data?.result?.reverse());
       })
       .catch((error) => {
         toast.error(
@@ -30,7 +30,7 @@ function News() {
     getNews()
       .then((res) => res.data)
       .then((data) => {
-        setNews(data?.result);
+        setNews(data?.result?.reverse());
       })
       .catch((error) => {
         console.log(error);
