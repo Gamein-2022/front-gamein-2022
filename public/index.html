@@ -41,31 +41,32 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-0667SZNP24"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-0667SZNP24");
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-0667SZNP24"></script> -->
+  <!-- <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-0667SZNP24");
 
-      const googleExceptionHandler = (fatal) => (data) => {
-        gtag("event", "exception", {
-          description: data,
-          fatal: fatal,
-        });
-      };
+    const googleExceptionHandler = (fatal) => (data) => {
+      gtag('event', 'exception', {
+        'description': data,
+        'fatal': fatal
+      });
+    } 
 
-      console.error = googleExceptionHandler(true);
-      console.warn = googleExceptionHandler(false);
-      console.log = googleExceptionHandler(false);
-    </script>
+     console.error = googleExceptionHandler(true);
+     console.warn = googleExceptionHandler(false);
+     console.log = googleExceptionHandler(false); -->
+
+    <!-- </script> -->
     <!---start GOFTINO code--->
     <script type="text/javascript">
+      console.log = () => {};
+      console.error = () => {};
+      console.warn = () => {};
       !(function () {
         var i = "PQe4yM",
           a = window,
