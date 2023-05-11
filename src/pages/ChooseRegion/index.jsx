@@ -8,6 +8,7 @@ import Region from "./components/Region";
 import RegionsMap from "./components/RegionsMap";
 import "./style.scss";
 import MyCountDown from "../../components/CountDown/MyCountDown";
+import GameinLoading from "../../components/GameinLoading";
 
 const REGIONS = [
   {
@@ -63,6 +64,7 @@ function ChooseRegion() {
   const [populations, setPopulations] = useState([]);
   const selectedRegion = regionsState.findIndex((item) => item === "selected");
   const [initialRemainedTimeState, setInitialRemainedTimeState] = useState();
+  const [pageLoading, setPageLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -87,6 +89,9 @@ function ChooseRegion() {
         if (error?.response?.status === 401) {
           navigate("/login");
         }
+      })
+      .finally(() => {
+        setPageLoading(false);
       });
 
     ws.current = new WebSocket(
@@ -151,69 +156,85 @@ function ChooseRegion() {
       toast.success("مرحله انتخاب زمین پایان یافت.");
       navigate("/");
     }
-  }
+  };
 
   const handleCountDownTick = () => {
     if (initialRemainedTimeState) {
-      setInitialRemainedTimeState(initialRemainedTimeState - 1)
+      setInitialRemainedTimeState(initialRemainedTimeState - 1);
     }
-  }
+  };
 
   return (
-    <div className="choose-region">
-      <Helmet>
-        <title>انتخاب منطقه</title>
-      </Helmet>
-      <div className="choose-region__container">
-        <h1 className="choose-region__title">
-          سلام، به گیمین ۲۰۲۲ خوش اومدین!
-        </h1>
-        <div className="choose-region__description-time-wrapper">
-          <p className="choose-region__description">
-            اولین قدم در شروع این بازی، انتخاب منطقه‌ایه که می‌خواید کارخونه‌ی
-            خودتون رو توش بسازین. هر کدوم از این منطقه‌ها، مشخصاتی دارن که تو
-            روند بازی موثره پس تو انتخابتون دقت کنین و با استراتژی تصمیم بگیرین
-            :)
-          </p>
-
-          <div className="choose-region__time">
-            <div className="choose-region__balance-title">
-              دارایی پس از خرید زمین
-            </div>
-            <div className="choose-region__balance-value">
-              {formatPrice(balance - (prices[selectedRegion] || 0))}
-            </div>
-            <div key={initialRemainedTimeState} className="choose-region__time-value">
-              <MyCountDown timeInSeconds={initialRemainedTimeState} onComplete={handleCountDownComplete} onTick={handleCountDownTick} />
-            </div>
-            <div className="choose-region__time-title">
-              تا پایان انتخاب منطقه
-            </div>
-          </div>
+    <>
+      {pageLoading && (
+        <div style={{ width: "100vw", height: "100vh" }}>
+          <GameinLoading size={32} />
         </div>
+      )}
+      {!pageLoading && (
+        <div className="choose-region">
+          <Helmet>
+            <title>انتخاب منطقه</title>
+          </Helmet>
+          <div className="choose-region__container">
+            <h1 className="choose-region__title">
+              سلام، به گیمین ۲۰۲۲ خوش اومدین!
+            </h1>
+            <div className="choose-region__description-time-wrapper">
+              <p className="choose-region__description">
+                اولین قدم در شروع این بازی، انتخاب منطقه‌ایه که می‌خواید
+                کارخونه‌ی خودتون رو توش بسازین. هر کدوم از این منطقه‌ها، مشخصاتی
+                دارن که تو روند بازی موثره پس تو انتخابتون دقت کنین و با
+                استراتژی تصمیم بگیرین :)
+              </p>
 
-        <div className="choose-region__regions-wrapper">
-          <div className="choose-region__regions-description">
-            {REGIONS.map((region, index) => (
-              <Region
-                key={index}
-                title={region.title}
-                resources={region.resources}
-                population={populations[index]}
-                price={prices[index]}
-                chosen={index === selectedRegion}
-                onClick={() => updateRegionsState(index, "selected")}
+              <div className="choose-region__time">
+                <div className="choose-region__balance-title">
+                  دارایی پس از خرید زمین
+                </div>
+                <div className="choose-region__balance-value">
+                  {formatPrice(balance - (prices[selectedRegion] || 0))}
+                </div>
+                <div
+                  key={initialRemainedTimeState}
+                  className="choose-region__time-value"
+                >
+                  <MyCountDown
+                    timeInSeconds={initialRemainedTimeState}
+                    onComplete={handleCountDownComplete}
+                    onTick={handleCountDownTick}
+                  />
+                </div>
+                <div className="choose-region__time-title">
+                  تا پایان انتخاب منطقه
+                </div>
+              </div>
+            </div>
+
+            <div className="choose-region__regions-wrapper">
+              <div className="choose-region__regions-description">
+                {REGIONS.map((region, index) => (
+                  <Region
+                    key={index}
+                    title={region.title}
+                    resources={region.resources}
+                    population={populations[index]}
+                    price={prices[index]}
+                    chosen={index === selectedRegion}
+                    onClick={() => updateRegionsState(index, "selected")}
+                  />
+                ))}
+              </div>
+              <RegionsMap
+                regionsState={regionsState}
+                setRegionsState={setRegionsState}
+                updateRegionsState={updateRegionsState}
               />
-            ))}
+            </div>
           </div>
-          <RegionsMap
-            regionsState={regionsState}
-            setRegionsState={setRegionsState}
-            updateRegionsState={updateRegionsState}
-          />
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 
