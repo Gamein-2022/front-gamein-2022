@@ -52,6 +52,7 @@ function Ground3({ updateBuildings }) {
       .then((res) => res.data)
       .then((data) => {
         setData(data?.result);
+        updateBalance();
       })
       .catch((error) => console.log(error))
       .finally(() => {
@@ -69,7 +70,6 @@ function Ground3({ updateBuildings }) {
         toast.success("زمین گسترش یافت.");
         updateBuildings();
         updateGroundInfo();
-        updateBalance();
       })
       .catch((error) => {
         console.log(error);

@@ -15,6 +15,7 @@ import Button from "../../../../../Button";
 import Modal from "../../../../../Modal";
 import { formatPrice } from "../../../../../../utils/formatters";
 import { toast } from "react-toastify";
+import useUpdateBalance from "../../../../../../hooks/useUpdateBalance";
 
 function Ground2({ updateBuildings }) {
   const [data, setData] = useState();
@@ -24,6 +25,7 @@ function Ground2({ updateBuildings }) {
   const [deleteBuildingModalOpen, setDeleteBuildingModalOpen] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
   const [pageError, setPageError] = useState(false);
+  const updateBalance = useUpdateBalance();
 
   useEffect(() => {
     getGroundInfo(2)
@@ -45,6 +47,7 @@ function Ground2({ updateBuildings }) {
       .then((res) => res.data)
       .then((data) => {
         setData(data?.result);
+        updateBalance();
       })
       .catch((error) => console.log(error))
       .finally(() => {
