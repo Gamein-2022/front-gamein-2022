@@ -1,6 +1,6 @@
 import React from "react";
 
-import doc from "../../../../assets/guide/doc.pdf";
+import doc from "../../../../assets/guide/gamein-doc.pdf";
 
 import "./style.scss";
 
