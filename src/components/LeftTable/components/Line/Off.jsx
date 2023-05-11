@@ -249,7 +249,12 @@ function Off({
                   {quantity > 0 && product && (
                     <>
                       <div className="setup-line-modal__storage-description">
-                        برای {modalType === "PRODUCTION" ? "تولید" : "مونتاژ"}{" "}
+                        برای{" "}
+                        {modalType === "PRODUCTION"
+                          ? "تولید"
+                          : modalType === "RECYCLE"
+                          ? "بازیافت"
+                          : "مونتاژ"}{" "}
                         {quantity} عدد {product?.prettyName || product?.name} به
                         مواد اولیه‌ی زیر نیاز دارید:
                       </div>
@@ -360,7 +365,7 @@ function Off({
                               product?.basePrice +
                                 (product?.product?.price * quantity) /
                                   (product?.requirements[0]?.numberPerOne || 1)
-                            )
+                            ).toFixed(0)
                           : product?.basePrice +
                               product?.product?.price * quantity || 0
                       )}{" "}
@@ -428,7 +433,7 @@ function Off({
                     <div>
                       دارایی پس از {lineTypeString}:{" "}
                       {formatPrice(
-                        product?.balance -
+                        (info?.[0]?.balance || 0) -
                           (product?.product?.level == 0
                             ? Number(
                                 product?.basePrice +
