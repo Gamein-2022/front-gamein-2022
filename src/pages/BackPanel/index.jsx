@@ -18,11 +18,15 @@ import Button from "../../components/Button";
 import { formatPrice } from "../../utils/formatters";
 import "./style.scss";
 import BasicInput from "../../components/BasicInput";
+import Modal from "../../components/Modal";
 
 function BackPanel() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
+  const [startGameModalOpen, setStartGameModalOpen] = useState(false);
+  const [stopGameModalOpen, setStopGameModalOpen] = useState(false);
+  const [resumeGameModalOpen, setResumeGameModalOpen] = useState(false);
 
   const [notifText, setNotifText] = useState("");
   const [notifType, setNotifType] = useState("SUCCESS");
@@ -93,6 +97,7 @@ function BackPanel() {
       .then((res) => res.data)
       .then((data) => {
         toast.success("عملیات با موفقیت انجام شد.");
+        setStopGameModalOpen(false);
       })
       .catch((error) => console.log(error));
   };
@@ -103,6 +108,7 @@ function BackPanel() {
       .then((data) => {
         console.log(data);
         toast.success("عملیات با موفقیت انجام شد.");
+        setStartGameModalOpen(false);
       })
       .catch((error) => console.log(error));
   };
@@ -113,6 +119,7 @@ function BackPanel() {
       .then((data) => {
         console.log(data);
         toast.success("عملیات با موفقیت انجام شد.");
+        setResumeGameModalOpen(false);
       })
       .catch((error) => console.log(error));
   };
@@ -279,13 +286,13 @@ function BackPanel() {
             />
             <Button onClick={handleAddTeam}>اضافه‌کردن کاربر به تیم</Button>
           </div>
-          <Button onClick={handleStartOverGame} type="info">
+          <Button onClick={() => setStartGameModalOpen(true)} type="info">
             شروع بازی جدید
           </Button>
-          <Button onClick={handleStopGame} type="error">
+          <Button onClick={() => setStopGameModalOpen(true)} type="error">
             توقف بازی
           </Button>
-          <Button onClick={handleResumeGame} type="success">
+          <Button onClick={() => setResumeGameModalOpen(true)} type="success">
             ادامه بازی
           </Button>
 
@@ -355,6 +362,51 @@ function BackPanel() {
           ))}
         </div>
       </div>
+      <Modal
+        open={startGameModalOpen}
+        onClose={() => setStartGameModalOpen(false)}
+      >
+        <div>آیا مطمئن هستید می‌خواهید بازی را مجدد شروع کنید؟</div>
+        <div className="extend-ground__btns">
+          <Button
+            className="extend-ground__btn-yes"
+            onClick={handleStartOverGame}
+          >
+            بله
+          </Button>
+          <Button onClick={() => setStartGameModalOpen(false)} type="error">
+            بازگشت
+          </Button>
+        </div>
+      </Modal>
+      <Modal
+        open={stopGameModalOpen}
+        onClose={() => setStopGameModalOpen(false)}
+      >
+        <div>آیا مطمئن هستید می‌خواهید بازی را متوقف کنید؟</div>
+        <div className="extend-ground__btns">
+          <Button className="extend-ground__btn-yes" onClick={handleStopGame}>
+            بله
+          </Button>
+          <Button onClick={() => setStopGameModalOpen(false)} type="error">
+            بازگشت
+          </Button>
+        </div>
+      </Modal>
+      <Modal
+        open={resumeGameModalOpen}
+        onClose={() => setResumeGameModalOpen(false)}
+      >
+        <div>آیا مطمئن هستید می‌خواهید ادامه بازی را شروع کنید؟</div>
+        <div className="extend-ground__btns">
+          <Button className="extend-ground__btn-yes" onClick={handleResumeGame}>
+            بله
+          </Button>
+          <Button onClick={() => setResumeGameModalOpen(false)} type="error">
+            بازگشت
+          </Button>
+        </div>
+      </Modal>
     </>
   );
 }
