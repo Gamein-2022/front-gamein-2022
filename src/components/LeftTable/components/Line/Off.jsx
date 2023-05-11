@@ -303,9 +303,12 @@ function Off({
                                         onClick={() => {
                                           setBuyModalOpen(true);
                                           setSelectedMaterial(req.product);
-                                          setCount(req.product.level === 0 ?
-                                            req.numberPerOne * quantity -
-                                              req.inStorage : quantity / req.numberPerOne - req.inStorage
+                                          setCount(
+                                            req.product.level === 0
+                                              ? req.numberPerOne * quantity -
+                                                  req.inStorage
+                                              : quantity / req.numberPerOne -
+                                                  req.inStorage
                                           );
                                         }}
                                         className="setup-line-modal__table-buy-btn"
@@ -332,8 +335,11 @@ function Off({
                       نرخ {lineTypeString}:{" "}
                     </div>
                     <div className="setup-line-modal__confirm-value">
-                      {(
-                        (product?.product?.productionRate * 60) / 8 || 0
+                      {(product?.product?.level == 0
+                        ? (product?.product?.productionRate * 60) /
+                          8 /
+                          (product?.requirements[0]?.numberPerOne || 1)
+                        : (product?.product?.productionRate * 60) / 8 || 0
                       ).toFixed(0)}{" "}
                       کالا در دقیقه
                     </div>
@@ -351,8 +357,12 @@ function Off({
                     </div>
                     <div className="setup-line-modal__confirm-value">
                       {formatPrice(
-                        product?.basePrice +
-                          product?.product?.price * quantity || 0
+                        product?.product?.level == 0
+                          ? product?.basePrice +
+                              (product?.product?.price * quantity) /
+                                (product?.requirements[0]?.numberPerOne || 1)
+                          : product?.basePrice +
+                              product?.product?.price * quantity || 0
                       )}{" "}
                       {"جی‌کوین"}
                     </div>

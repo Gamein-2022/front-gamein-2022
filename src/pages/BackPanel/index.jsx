@@ -9,6 +9,8 @@ import {
   pauseGame,
   registerNewUser,
   resumeGame,
+  sendAnnnouncement,
+  sendNews,
   sendNotification,
   startOverGame,
 } from "../../apis/back-panel";
@@ -33,10 +35,20 @@ function BackPanel() {
 
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [registerPassword, setRegisterPassword] = useState('')
-  const [addTeamPassword, setAddTeamPassword] = useState('')
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [addTeamPassword, setAddTeamPassword] = useState("");
   const [username, setUsername] = useState("");
   const [team, setTeam] = useState("");
+
+  const [newsTitle, setNewsTitle] = useState("");
+  const [newsDescription, setNewsDescription] = useState("");
+  const [newsImage, setNewsImage] = useState("");
+  const [newsDate, setNewsDate] = useState("");
+
+  const [announcementTitle, setAnnouncementTitle] = useState("");
+  const [announcementDescription, setAnnouncementDescription] = useState("");
+  const [announcementImage, setAnnouncementImage] = useState("");
+  const [announcementDate, setAnnouncementDate] = useState("");
 
   useEffect(() => {
     getAdminInfo()
@@ -137,10 +149,98 @@ function BackPanel() {
       });
   };
 
+  const handleSendNews = () => {
+    sendNews({
+      title: newsTitle,
+      description: newsDescription,
+      date: newsDate,
+      image: newsImage,
+    })
+      .then((res) => res.data)
+      .then((data) => {
+        toast.success("خبر اضافه شد.");
+      })
+      .catch((error) => {
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
+  const handleSendAnnouncement = () => {
+    sendAnnnouncement({
+      title: announcementTitle,
+      description: announcementDescription,
+      date: announcementDate,
+      image: announcementImage,
+    })
+      .then((res) => res.data)
+      .then((data) => {
+        toast.success("اطلاعیه اضافه شد.");
+      })
+      .catch((error) => {
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
   return (
     <>
       {!loading && (
         <div className="back-panel">
+          <div className="back-panel__register">
+            <div>ارسال خبر</div>
+            <BasicInput
+              value={newsTitle}
+              onChange={(e) => setNewsTitle(e.target.value)}
+              label="عنوان خبر:"
+            />
+            <BasicInput
+              value={newsDate}
+              onChange={(e) => setNewsDate(e.target.value)}
+              label="تاریخ خبر:"
+            />
+            <div>توضیح خبر:</div>
+            <textarea
+              value={newsDescription}
+              onChange={(e) => setNewsDescription(e.target.value)}
+              type="textarea"
+              style={{ width: "100%" }}
+            />
+            <BasicInput
+              value={newsImage}
+              onChange={(e) => setNewsImage(e.target.value)}
+              label="آدرس تصویر خبر:"
+            />
+            <Button onClick={handleSendNews}>ارسال خبر</Button>
+          </div>
+          <div className="back-panel__register">
+            <div>ارسال اطلاعیه</div>
+            <BasicInput
+              value={announcementTitle}
+              onChange={(e) => setAnnouncementTitle(e.target.value)}
+              label="عنوان اطلاعیه:"
+            />
+            <BasicInput
+              value={announcementDate}
+              onChange={(e) => setAnnouncementDate(e.target.value)}
+              label="تاریخ اطلاعیه:"
+            />
+            <div>توضیح اطلاعیه</div>
+            <textarea
+              value={announcementDescription}
+              onChange={(e) => setAnnouncementDescription(e.target.value)}
+              type="textarea"
+              style={{ width: "100%" }}
+            />
+            <BasicInput
+              value={announcementImage}
+              onChange={(e) => setAnnouncementImage(e.target.value)}
+              label="آدرس تصویر اطلاعیه:"
+            />
+            <Button onClick={handleSendAnnouncement}>ارسال اطلاعیه</Button>
+          </div>
           <div className="back-panel__register">
             <div>ثبت‌نام کاربر جدید</div>
             <BasicInput

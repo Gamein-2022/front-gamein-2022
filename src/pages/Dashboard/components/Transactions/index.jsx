@@ -10,6 +10,7 @@ const LOG_TYPES = [
   { type: "SELL", name: "فروش محصول میانی", isGreen: true },
   { type: "BUY", name: "خرید", isGreen: false },
   { type: "PRODUCTION", name: "تولید", isGreen: false },
+  { type: "RECYCLE", name: "بازیافت", isGreen: false },
   { type: "ASSEMBLY", name: "مونتاژ", isGreen: false },
   { type: "FINAL_SELL", name: "فروش محصول نهایی", isGreen: true },
   { type: "STORAGE_COST", name: "هزینه انبارداری", isGreen: false },

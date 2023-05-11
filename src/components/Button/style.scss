@@ -10,6 +10,10 @@
   border: none;
   cursor: pointer;
 
+  &--blue {
+    background-color: #2798f2;
+  }
+
   &--success {
     background-color: #009054;
   }

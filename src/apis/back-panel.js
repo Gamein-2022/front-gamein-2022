@@ -48,3 +48,31 @@ export function addTeam({ username, password, teamName }) {
     teamName,
   });
 }
+
+export function sendNews({ title, description, image, date }) {
+  return AxiosInstance.post("/dashboard/panel/news", {
+    title,
+    description,
+    image,
+    date,
+    type: "NEWS",
+  });
+}
+
+export function sendAnnnouncement({ title, description, image, date }) {
+  return AxiosInstance.post("/dashboard/panel/news", {
+    title,
+    description,
+    image,
+    date,
+    type: "NOTIFICATION",
+  });
+}
+
+export function getNews() {
+  return AxiosInstance.get("/dashboard/profile/news?type=NEWS");
+}
+
+export function getAnnnouncements() {
+  return AxiosInstance.get("/dashboard/profile/news?type=NOTIFICATION");
+}
