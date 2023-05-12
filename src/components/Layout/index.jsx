@@ -44,9 +44,9 @@ const Layout = () => {
       .then((data) => {
         setBalance(data.balance);
         setInfo(data);
-        if (data?.isGamePaused) {
-          setIsGamePaused(data?.isGamePaused);
-        }
+        // if (data?.isGamePaused) {
+        //   setIsGamePaused(data?.isGamePaused);
+        // }
       })
       .catch((error) => {
         if (error?.response?.status === 401) {
