@@ -13,7 +13,7 @@ import {
   RAW_MATERIALS,
 } from "../../../../constants/materials";
 
-import sampleImg from "../../../../assets/icons/copper.png";
+import sampleImg from "../../../../assets/materials/unkown_material.svg";
 import { GROUPS } from "../../../../constants/groups";
 import GameinLoading from "../../../GameinLoading";
 

@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import CheckIcon from "@mui/icons-material/Check";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import sampleImg from "../../../../assets/icons/copper.png";
+import sampleImg from "../../../../assets/materials/unkown_material.svg";
 import "./style.scss";
 import { cancelOrder } from "../../../../apis/orders";
 import { toast } from "react-toastify";

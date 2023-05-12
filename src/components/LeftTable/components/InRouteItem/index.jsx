@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import sampleImg from "../../../../assets/icons/copper.png";
+import sampleImg from "../../../../assets/materials/unkown_material.svg";
 import {
   INTERMEDIATE_MATERIALS_LEVEL_ONE,
   INTERMEDIATE_MATERIALS_LEVEL_TWO,

@@ -13,10 +13,10 @@ import Button from "../../../Button";
 import Modal from "../../../Modal";
 import tradeModalTitle from "../../../../assets/modals/trade_modal_title.svg";
 
-import cargoImg from "../../../../assets/cargo.png";
-import cargoDisableImg from "../../../../assets/cargo-disable.png";
-import airplaneImg from "../../../../assets/airplane.png";
-import airplaneDisableImg from "../../../../assets/airplane-disable.png";
+import cargoImg from "../../../../assets/cargo.svg";
+import cargoDisableImg from "../../../../assets/cargo-disable.svg";
+import airplaneImg from "../../../../assets/airplane.svg";
+import airplaneDisableImg from "../../../../assets/airplane-disable.svg";
 
 import "./style.scss";
 import { getOrderShippingInfo } from "../../../../apis/orders";

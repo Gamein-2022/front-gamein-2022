@@ -4,10 +4,10 @@ import Modal from "../../../Modal";
 import Button from "../../../Button";
 
 import sampleImg from "../../../../assets/sample_bom.png";
-import cargoImg from "../../../../assets/cargo.png";
-import cargoDisableImg from "../../../../assets/cargo-disable.png";
-import airplaneImg from "../../../../assets/airplane.png";
-import airplaneDisableImg from "../../../../assets/airplane-disable.png";
+import cargoImg from "../../../../assets/cargo.svg";
+import cargoDisableImg from "../../../../assets/cargo-disable.svg";
+import airplaneImg from "../../../../assets/airplane.svg";
+import airplaneDisableImg from "../../../../assets/airplane-disable.svg";
 import gameinShopModalTitle from "../../../../assets/modals/gamein_shop_modal_title.svg";
 import setupProductionLineModalTitle from "../../../../assets/modals/setup_production_line_modal_title.svg";
 import setupAssemblyLineModalTitle from "../../../../assets/modals/setup_assembly_line_modal_title.svg";

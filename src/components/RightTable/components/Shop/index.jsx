@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import { getRawMaterials, buyFromGamein } from "../../../../apis/trade";
-import sampleImg from "../../../../assets/icons/copper.png";
-import cargoImg from "../../../../assets/cargo.png";
-import cargoDisableImg from "../../../../assets/cargo-disable.png";
-import airplaneImg from "../../../../assets/airplane.png";
-import airplaneDisableImg from "../../../../assets/airplane-disable.png";
+import sampleImg from "../../../../assets/materials/unkown_material.svg";
+import cargoImg from "../../../../assets/cargo.svg";
+import cargoDisableImg from "../../../../assets/cargo-disable.svg";
+import airplaneImg from "../../../../assets/airplane.svg";
+import airplaneDisableImg from "../../../../assets/airplane-disable.svg";
 import gameinShopModalTitle from "../../../../assets/modals/gamein_shop_modal_title.svg";
 import "./style.scss";
 import { toast } from "react-toastify";

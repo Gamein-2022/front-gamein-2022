@@ -4,7 +4,7 @@ import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import Button from "../../../Button";
 
-import sampleImg from "../../../../assets/icons/copper.png";
+import sampleImg from "../../../../assets/materials/unkown_material.svg";
 
 import { collectShipping, removeInQueueItem } from "../../../../apis/storage";
 import { toast } from "react-toastify";
