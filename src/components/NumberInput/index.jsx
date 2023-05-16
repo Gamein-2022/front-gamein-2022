@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
+import { convertNumericToLexical } from "../../utils/formatters";
 
 import Button from "../Button";
 
@@ -66,6 +67,7 @@ function NumberInput({
           {step} -
         </Button>
       </div>
+      <div className="number-input__lexical">{convertNumericToLexical(value)}</div>
       {hasErrorState && (
         <div className="number-input__error">{`عدد واردشده باید مضرب ${step} باشد.`}</div>
       )}
