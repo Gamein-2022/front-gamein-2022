@@ -123,7 +123,8 @@ function appendLexicalSuffixes(chunk, chunkIndex, chunks) {
   return suffix ? `${chunk} ${suffix}` : chunk;
 }
 
-export function convertNumericToLexical(number, keepDigits = false) {
+export function convertNumericToLexical(num = 0, keepDigits = false) {
+  const number = num || 0
   const numberStr = number.toString();
   const chunks = chunkByThree(numberStr);
   if (chunks.length === 1 && chunks[0] === "0") {

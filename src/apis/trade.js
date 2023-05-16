@@ -1,19 +1,19 @@
 import AxiosInstance from "./config";
 
 export function getRawMaterials() {
-  return AxiosInstance.get("market/product/raw-materials");
+  return AxiosInstance.get("service/product/raw-materials");
 }
 
 export function getIntermediateMaterials() {
-  return AxiosInstance.get("/market/product/intermediate-products");
+  return AxiosInstance.get("/service/product/intermediate-products");
 }
 
 export function getFinalProducts() {
-  return AxiosInstance.get("/market/product/final-products");
+  return AxiosInstance.get("/service/product/final-products");
 }
 
 export function buyFromGamein({ productId, quantity, shippingMethod }) {
-  return AxiosInstance.post("/market/gamein/buy", {
+  return AxiosInstance.post("/service/gamein/buy", {
     productId,
     quantity,
     shippingMethod,
@@ -21,7 +21,7 @@ export function buyFromGamein({ productId, quantity, shippingMethod }) {
 }
 
 export function submitBuyOrder({ productId, quantity, price }) {
-  return AxiosInstance.post("/market/order", {
+  return AxiosInstance.post("/service/order", {
     orderType: "BUY",
     productId,
     quantity,
@@ -30,7 +30,7 @@ export function submitBuyOrder({ productId, quantity, price }) {
 }
 
 export function submitSellOrder({ productId, quantity, price }) {
-  return AxiosInstance.post("/market/order", {
+  return AxiosInstance.post("/service/order", {
     orderType: "SELL",
     productId,
     quantity,
@@ -39,32 +39,32 @@ export function submitSellOrder({ productId, quantity, price }) {
 }
 
 export function getOrders() {
-  return AxiosInstance.get("/market/order");
+  return AxiosInstance.get("/service/order");
 }
 
 export function getSellOrders(productId) {
   if (productId) {
-    return AxiosInstance.get(`/market/order?type=SELL&product=${productId}`);
+    return AxiosInstance.get(`/service/order?type=SELL&product=${productId}`);
   }
-  return AxiosInstance.get("/market/order?type=SELL");
+  return AxiosInstance.get("/service/order?type=SELL");
 }
 
 export function getBuyOrders(productId) {
   if (productId) {
-    return AxiosInstance.get(`/market/order?type=BUY&product=${productId}`);
+    return AxiosInstance.get(`/service/order?type=BUY&product=${productId}`);
   }
-  return AxiosInstance.get("/market/order?type=BUY");
+  return AxiosInstance.get("/service/order?type=BUY");
 }
 
 export function sendOffer({ orderId, shippingMethod }) {
-  return AxiosInstance.post("/market/offer", {
+  return AxiosInstance.post("/service/offer", {
     orderId,
     shippingMethod,
   });
 }
 
 export function sellToGamein({ productId, quantity, price }) {
-  return AxiosInstance.post("/market/gamein/sell", {
+  return AxiosInstance.post("/service/gamein/sell", {
     productId,
     quantity,
     price,

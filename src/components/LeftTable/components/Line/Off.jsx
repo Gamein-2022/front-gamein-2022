@@ -93,7 +93,7 @@ function Off({
             )
       : selectedMaterial?.shipPrice;
 
-  const productCost = count * selectedMaterial?.minPrice || 0;
+  const productCost = count * selectedMaterial?.price || 0;
 
   const totalCost = transportCost + productCost || 0;
 
