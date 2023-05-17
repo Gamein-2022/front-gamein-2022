@@ -14,6 +14,8 @@ import ChooseRegion from "./pages/ChooseRegion";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 import BackPanel from "./pages/BackPanel";
+import SemiBackPanel from "./pages/SemiBackPanel";
+import LeaderBoard from "./pages/LeaderBoard";
 import { useRecoilState } from "recoil";
 import { isGamePausedState } from "./store/time";
 import useUpdateBalance from "./hooks/useUpdateBalance";
@@ -93,7 +95,9 @@ const AppRouter = () => {
           <Route path="guide" element={<Guide />} />
           <Route path="support" element={<Support />} />
         </Route>
-        <Route path="back-panel" element={<BackPanel />} />
+        <Route path="semi-back-panel" element={<SemiBackPanel />} />
+        <Route path="back-panel-09131863718" element={<BackPanel />} />
+        <Route path="leaderboard" element={<LeaderBoard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

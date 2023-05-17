@@ -1,8 +1,12 @@
-import classNames from "classnames";
 import React, { useEffect, useState } from "react";
+import classNames from "classnames";
+import { toast } from "react-toastify";
 import { getLogs } from "../../../../apis/dashboard";
+import Button from "../../../../components/Button";
 import GameinLoading from "../../../../components/GameinLoading";
 import { formatPrice } from "../../../../utils/formatters";
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
 import "./style.scss";
 
 // default: "DEFAULT",
@@ -20,6 +24,7 @@ function Transactions() {
   const [loading, setLoading] = useState(true);
   const [rows, setRows] = useState([]);
   const [activeType, setActiveType] = useState(LOG_TYPES[0]);
+  const [excelLoading, setExcelLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -33,6 +38,40 @@ function Transactions() {
       })
       .finally(() => setLoading(false));
   }, [activeType]);
+
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileExtension = ".xlsx";
+
+  const exportToCSV = () => {
+    try {
+      setExcelLoading(true);
+      getLogs("DEFAULT")
+        .then((res) => res.data.logs)
+        .then((apiData) => {
+          const formattedData = apiData.map((item) => ({
+            ...item,
+            date: `${item?.date[0]}/${String(item?.date[1]).padStart(
+              2,
+              "0"
+            )}/${String(item?.date[2]).padStart(2, "0")}`,
+          }));
+          const ws = XLSX.utils.json_to_sheet(formattedData);
+          const wb = { Sheets: { logs: ws }, SheetNames: ["logs"] };
+          const excelBuffer = XLSX.write(wb, {
+            bookType: "xlsx",
+            type: "array",
+          });
+          const data = new Blob([excelBuffer], { type: fileType });
+          FileSaver.saveAs(data, "gamein_logs" + fileExtension);
+        })
+        .finally(() => {
+          setExcelLoading(false);
+        });
+    } catch (err) {
+      toast.error("مشکلی در سامانه رخ داده‌است.");
+    }
+  };
 
   return (
     <div className="logs">
@@ -49,6 +88,13 @@ function Transactions() {
           </div>
         ))}
       </div>
+      <Button
+        className="logs__excel-btn"
+        disabled={excelLoading}
+        onClick={exportToCSV}
+      >
+        دانلود اکسل لاگ‌ها
+      </Button>
       {loading && <GameinLoading size={48} />}
       {!loading && (
         <>
