@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import Login from "./pages/Login";
+import ForgetPassword from "./pages/ForgetPassword";
 import Home from "./pages/Home";
 import RAndD from "./pages/RAndD";
 import Dashboard from "./pages/Dashboard";
@@ -50,6 +51,7 @@ const AppRouter = () => {
       }
       if (data.type === "UPDATE_MAP") {
         parentRef.current?.updateBuildings?.();
+        updateBalance();
       }
       if (data.type === "REFRESH") {
         window?.location.reload();
@@ -81,6 +83,7 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/choose-region" element={<ChooseRegion />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Home parentRef={parentRef} />} />

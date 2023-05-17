@@ -10,6 +10,24 @@
   border: none;
   cursor: pointer;
 
+  &--white {
+    border-radius: 12px;
+    background-color: #fff;
+    border: none;
+    color: #d63f26;
+    font-size: 20px;
+    padding: 8px 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e9e9e9;
+    }
+  }
+
   &--blue {
     background-color: #2798f2;
   }
