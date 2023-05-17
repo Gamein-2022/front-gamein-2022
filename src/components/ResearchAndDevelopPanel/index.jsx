@@ -44,6 +44,8 @@ import assembly1Info from "../../assets/r_and_d_images/assembly-1-info.svg";
 import assembly2Info from "../../assets/r_and_d_images/assembly-2-info.svg";
 import assembly3Info from "../../assets/r_and_d_images/assembly-3-info.svg";
 import assembly4Info from "../../assets/r_and_d_images/assembly-4-info.svg";
+import useUpdateBalance from "../../hooks/useUpdateBalance";
+import GameinLoading from "../GameinLoading";
 
 const mainImages = {
   "touch-screen": touchScreen,
@@ -83,9 +85,13 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
   const data = useRecoilValue(dataState);
   const [info, setInfo] = useState(null);
   const [refreshSelf, setRefreshSelf] = useState(true);
+  const updateBalance = useUpdateBalance();
+  const [loadingData, setLoadingData] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (data) {
+      setLoadingData(true);
       getSubjectInfo(data.value)
         .then((res) => {
           setInfo({
@@ -107,6 +113,10 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
           toast.error(
             err?.response?.data?.message || "خطایی در دریافت اطلاعات روی داد!"
           );
+        })
+        .finally(() => {
+          setLoadingData(false);
+          setLoading(false);
         });
       setRefreshSelf(false);
     }
@@ -142,152 +152,180 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
 
   return (
     <div className={styles["container"]}>
-      {data && (
-        <>
-          <div>
-            <img
-              className={styles["subject-image"]}
-              src={mainImages[data.value]}
-              alt=""
-            />
+      {loadingData ? (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <GameinLoading size={32} />
+        </div>
+      ) : (
+        data && (
+          <>
+            <div>
+              <img
+                className={styles["subject-image"]}
+                src={mainImages[data.value]}
+                alt=""
+              />
 
-            <div className={styles["title"]}>{data?.title}</div>
-            <div className={styles["desc"]}>
-              با سرمایه‌گذاری بر روی این فناوری، امکان تولید محصولات زیر را
-              خواهید داشت:
+              <div className={styles["title"]}>{data?.title}</div>
+              <div className={styles["desc"]}>
+                با سرمایه‌گذاری بر روی این فناوری، امکان تولید محصولات زیر را
+                خواهید داشت:
+              </div>
+
+              <img
+                className={styles["subject-image"]}
+                src={infoImages[data.value]}
+                alt=""
+              />
             </div>
 
-            <img
-              className={styles["subject-image"]}
-              src={infoImages[data.value]}
-              alt=""
-            />
-          </div>
-
-          <div>
-            <div className={styles["divider"]}></div>
-            {info?.endTime && info?.beginTime ? (
-              info?.done ? (
-                <div className={styles["done"]} dir="rtl">
-                  <div className={styles["icon-container"]}>
-                    <OkIcon />
+            <div>
+              <div className={styles["divider"]}></div>
+              {info?.endTime && info?.beginTime ? (
+                info?.done ? (
+                  <div className={styles["done"]} dir="rtl">
+                    <div className={styles["icon-container"]}>
+                      <OkIcon />
+                    </div>
+                    <div>کارخانه‌ی شما به این فناوری مجهز شده است.</div>
                   </div>
-                  <div>کارخانه‌ی شما به این فناوری مجهز شده است.</div>
-                </div>
-              ) : (
-                <>
-                  <div className={styles["info"]} dir="rtl">
-                    <div className={styles["percentage"]}>
-                      <div>در حال تحقیق و توسعه</div>
-                      <div>
-                        {remainingTime ? Math.floor(remainingTime / 60) : "00"}:
-                        {remainingTime
-                          ? String(Math.floor(remainingTime % 60)).padStart(
-                              2,
-                              "0"
-                            )
-                          : "00"}
+                ) : (
+                  <>
+                    <div className={styles["info"]} dir="rtl">
+                      <div className={styles["percentage"]}>
+                        <div>در حال تحقیق و توسعه</div>
+                        <div>
+                          {remainingTime
+                            ? Math.floor(remainingTime / 60)
+                            : "00"}
+                          :
+                          {remainingTime
+                            ? String(Math.floor(remainingTime % 60)).padStart(
+                                2,
+                                "0"
+                              )
+                            : "00"}
+                        </div>
+                      </div>
+                      <div className={styles["bar"]}>
+                        <div
+                          className={styles["progress"]}
+                          style={{
+                            width: `${Math.floor(
+                              (1 -
+                                remainingTime /
+                                  ((new Date(info?.endTime).getTime() -
+                                    new Date(info?.beginTime).getTime()) /
+                                    1000)) *
+                                100
+                            )}%`,
+                          }}
+                        ></div>
                       </div>
                     </div>
-                    <div className={styles["bar"]}>
-                      <div
-                        className={styles["progress"]}
-                        style={{
-                          width: `${Math.floor(
-                            (1 -
-                              remainingTime /
-                                ((new Date(info?.endTime).getTime() -
-                                  new Date(info?.beginTime).getTime()) /
-                                  1000)) *
-                              100
-                          )}%`,
-                        }}
-                      ></div>
+                    <button
+                      className={styles["r-and-d-button"]}
+                      disabled={
+                        loading ||
+                        (1 -
+                          remainingTime /
+                            ((new Date(info?.endTime).getTime() -
+                              new Date(info?.beginTime).getTime()) /
+                              1000)) *
+                          100 >=
+                          50
+                      }
+                      onClick={() => {
+                        setLoading(true);
+                        putOffResearch(data?.value)
+                          .then((res) => {
+                            setInfo({
+                              price: res.data.result.price,
+                              balance: res.data.result.balance,
+                              endTime: res.data.result.endTime,
+                              beginTime: res.data.result.beginTime,
+                              done:
+                                res.data.result?.endTime &&
+                                Date.now() >
+                                  new Date(res.data.result?.endTime).getTime(),
+                              duration: res.data.result?.duration / 1000,
+                            });
+                            setRemainingTime(0);
+                            updateBalance();
+                            refresh();
+                          })
+                          .catch((err) => {
+                            toast.error(
+                              err?.response?.data?.message ||
+                                "خطایی در درخواست شما روی داد!"
+                            );
+                          })
+                          .finally(() => {
+                            setLoading(false);
+                          });
+                      }}
+                    >
+                      انصراف
+                    </button>
+                  </>
+                )
+              ) : info?.price !== -1 ? (
+                <>
+                  <div className={styles["info"]} dir="rtl">
+                    <div className={styles["invest-cost"]}>
+                      زمان مورد نیاز:{" "}
+                      {info?.duration ? Math.floor(info?.duration / 60) : "00"}:
+                      {info?.duration
+                        ? String(Math.floor(info?.duration % 60)).padStart(
+                            2,
+                            "0"
+                          )
+                        : "00"}
+                    </div>
+                    <div className={styles["invest-cost"]}>
+                      هزینه سرمایه‌گذاری: {formatPrice(info?.price)}
+                    </div>
+                    <div>موجودی فعلی: {formatPrice(info?.balance)}</div>
+                    <div>
+                      موجودی بعد از سرمایه‌گذاری:{" "}
+                      {formatPrice(info?.balance - info?.price || 0)}
                     </div>
                   </div>
                   <button
                     className={styles["r-and-d-button"]}
-                    disabled={
-                      (1 -
-                        remainingTime /
-                          ((new Date(info?.endTime).getTime() -
-                            new Date(info?.beginTime).getTime()) /
-                            1000)) *
-                        100 >=
-                      50
-                    }
+                    disabled={loading}
                     onClick={() => {
-                      putOffResearch(data?.value)
-                        .then((res) => {
-                          setInfo({
-                            price: res.data.result.price,
-                            balance: res.data.result.balance,
-                            endTime: res.data.result.endTime,
-                            beginTime: res.data.result.beginTime,
-                            done:
-                              res.data.result?.endTime &&
-                              Date.now() >
-                                new Date(res.data.result?.endTime).getTime(),
-                            duration: res.data.result?.duration / 1000,
-                          });
-                          setRemainingTime(0);
+                      setLoading(true);
+                      startResearch(data.value)
+                        .then(() => {
                           refresh();
+                          updateBalance();
+                          setRefreshSelf(true);
                         })
                         .catch((err) => {
                           toast.error(
                             err?.response?.data?.message ||
                               "خطایی در درخواست شما روی داد!"
                           );
-                        });
+                        })
+                        .finally(() => {});
                     }}
                   >
-                    انصراف
+                    سرمایه‌گذاری
                   </button>
                 </>
-              )
-            ) : info?.price !== -1 ? (
-              <>
-                <div className={styles["info"]} dir="rtl">
-                  <div className={styles["invest-cost"]}>
-                    زمان مورد نیاز:{" "}
-                    {info?.duration ? Math.floor(info?.duration / 60) : "00"}:
-                    {info?.duration
-                      ? String(Math.floor(info?.duration % 60)).padStart(2, "0")
-                      : "00"}
-                  </div>
-                  <div className={styles["invest-cost"]}>
-                    هزینه سرمایه‌گذاری: {formatPrice(info?.price)}
-                  </div>
-                  <div>موجودی فعلی: {formatPrice(info?.balance)}</div>
-                  <div>
-                    موجودی بعد از سرمایه‌گذاری:{" "}
-                    {formatPrice(info?.balance - info?.price || 0)}
-                  </div>
-                </div>
-                <button
-                  className={styles["r-and-d-button"]}
-                  onClick={() => {
-                    startResearch(data.value)
-                      .then(() => {
-                        refresh();
-                        setRefreshSelf(true);
-                      })
-                      .catch((err) => {
-                        toast.error(
-                          err?.response?.data?.message ||
-                            "خطایی در درخواست شما روی داد!"
-                        );
-                      });
-                  }}
-                >
-                  سرمایه‌گذاری
-                </button>
-              </>
-            ) : (
-              <div>شما امکان این تحقیق و توسعه را ندارید!</div>
-            )}
-          </div>
-        </>
+              ) : (
+                <div>شما امکان این تحقیق و توسعه را ندارید!</div>
+              )}
+            </div>
+          </>
+        )
       )}
       {!data && (
         <div className={styles["empty"]}>
