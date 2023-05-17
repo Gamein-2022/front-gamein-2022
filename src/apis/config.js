@@ -29,7 +29,7 @@ AxiosInstance.interceptors.response.use(
   (response) => response,
   function (error) {
     const status = error.response ? error.response.status : null;
-    if (status === 401) {
+    if (status === 401 && window.location.pathname !== "/login") {
       window.location.href = "/login";
       localStorage.removeItem("token");
       return;
