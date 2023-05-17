@@ -15,7 +15,7 @@ root.render(
   // <React.StrictMode>
   <RecoilRoot>
     <AppRouter />
-    <ToastContainer theme="dark" position="top-center" />
+    <ToastContainer theme="dark" position="top-center" limit={4} />
   </RecoilRoot>
   // </React.StrictMode>
 );

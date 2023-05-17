@@ -391,7 +391,7 @@ function TradeIntermediate() {
           label={"چند واحد می‌خوای بخری؟"}
           min={0}
           value={buyCount}
-          step={100}
+          step={10}
           onChange={(value) => setBuyCount(value)}
           setHasError={setBuyCountError}
         />
@@ -399,7 +399,7 @@ function TradeIntermediate() {
           label={"هر واحد رو حداکثر با چه قیمتی می‌خوای بخری؟"}
           min={0}
           value={buyPrice}
-          step={100}
+          step={10}
           onChange={(value) => setBuyPrice(value)}
           setHasError={setBuyPriceError}
         />
@@ -450,7 +450,7 @@ function TradeIntermediate() {
         <NumberInput
           label={"چند واحد می‌خوای بفروشی؟"}
           min={0}
-          step={100}
+          step={10}
           value={sellCount}
           onChange={(value) => setSellCount(value)}
           setHasError={setSellCountError}
@@ -458,7 +458,7 @@ function TradeIntermediate() {
         <NumberInput
           label={"هر واحد رو حداقل با چه قیمتی می‌خوای بفروشی؟"}
           min={0}
-          step={100}
+          step={10}
           value={sellPrice}
           onChange={(value) => setSellPrice(value)}
           setHasError={setSellPriceError}

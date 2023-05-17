@@ -161,6 +161,9 @@ function Off({
           toast.error(error?.response?.data?.message);
           updateLines();
         }
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
       })
       .finally(() => {
         setActionLoading(false);
