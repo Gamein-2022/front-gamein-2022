@@ -116,7 +116,6 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
         })
         .finally(() => {
           setLoadingData(false);
-          setLoading(false);
         });
       setRefreshSelf(false);
     }
@@ -314,7 +313,9 @@ const ResearchAndDevelopPanel = ({ refresh }) => {
                               "خطایی در درخواست شما روی داد!"
                           );
                         })
-                        .finally(() => {});
+                        .finally(() => {
+                          setLoading(false);
+                        });
                     }}
                   >
                     سرمایه‌گذاری
