@@ -24,7 +24,7 @@ jobs:
              
              
   build-front:
-    runs-on: [app]
+    runs-on: [app-3]
     steps:
       - uses: actions/checkout@master
       - run: |
