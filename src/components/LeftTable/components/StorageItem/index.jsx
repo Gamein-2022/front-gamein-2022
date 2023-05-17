@@ -9,12 +9,14 @@ import { removeFromStorage } from "../../../../apis/storage";
 import { toast } from "react-toastify";
 import { formatPrice } from "../../../../utils/formatters";
 import NumberInput from "../../../NumberInput";
+import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 
 function StorageItem({ item, storageSpace, updateStorageInfo }) {
   const [open, setOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteCount, setDeleteCount] = useState(0);
   const [actionLoading, setActionLoading] = useState(false);
+  const updateBalance = useUpdateBalance();
 
   const onClose = () => {
     setDeleteModalOpen(false);
@@ -31,6 +33,7 @@ function StorageItem({ item, storageSpace, updateStorageInfo }) {
         );
         onClose();
         updateStorageInfo();
+        updateBalance();
       })
       .catch((error) => {
         toast.error(
