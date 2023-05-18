@@ -239,7 +239,7 @@ function Orders() {
         {pageLoading && <GameinLoading size={32} />}
         {!pageLoading && (
           <>
-            {orders?.length <= 0 && (
+            {orders?.length <= 0 && finalOrders.length <= 0 && (
               <div className="offers-sent__empty">
                 شما هیچ سفارش فعالی ندارید.
               </div>
