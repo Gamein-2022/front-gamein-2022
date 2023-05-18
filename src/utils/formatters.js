@@ -124,18 +124,21 @@ function appendLexicalSuffixes(chunk, chunkIndex, chunks) {
 }
 
 export function convertNumericToLexical(num = 0, keepDigits = false) {
-  const number = num || 0
+  const number = (num < 0 ? -num : num) || 0;
   const numberStr = number.toString();
   const chunks = chunkByThree(numberStr);
   if (chunks.length === 1 && chunks[0] === "0") {
     return digitalLexicalNumbersMap["0"];
   }
   try {
-    return chunks
-      .map((chunk) => convertThreeDigitsToLexicalNumber(chunk, keepDigits))
-      .map(appendLexicalSuffixes)
-      .filter(Boolean)
-      .join(" و ");
+    return (
+      (num < 0 ? "منفی " : "") +
+      chunks
+        .map((chunk) => convertThreeDigitsToLexicalNumber(chunk, keepDigits))
+        .map(appendLexicalSuffixes)
+        .filter(Boolean)
+        .join(" و ")
+    );
   } catch (error) {
     return "...";
   }
