@@ -263,6 +263,9 @@ function Shop() {
           <TransportEmptyState />
         )}
         <div className="shop-modal__summary-text">
+          فضای انبار مورد نیاز: {formatPrice(count * selectedMaterial?.unitVolume || 0)}
+        </div>
+        <div className="shop-modal__summary-text">
           هزینه خرید کالاها: {formatPrice(productCost)}
         </div>
         <div className="shop-modal__summary-text">
