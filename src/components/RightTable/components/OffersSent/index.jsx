@@ -22,11 +22,10 @@ function OffersSent() {
     getSentOffers()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setSentOffers(data?.result);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -38,11 +37,10 @@ function OffersSent() {
     getSentOffers()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setSentOffers(data?.result);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -53,12 +51,11 @@ function OffersSent() {
     cancellOffer({ offerId: id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("پیشنهاد با موفقیت حذف شد.");
         updateSentOffers();
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
 
@@ -66,12 +63,10 @@ function OffersSent() {
     archiveOffer({ id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("پیشنهاد با موفقیت بایگانی شد.");
         updateSentOffers();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );

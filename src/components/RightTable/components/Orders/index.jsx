@@ -46,12 +46,11 @@ function Orders() {
     getOrdersHistory()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data.result);
         setOrders(data.result?.orders || []);
         setFinalOrders(data.result?.finalOrders);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -63,12 +62,11 @@ function Orders() {
     getOrdersHistory()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data.result);
         setOrders(data.result?.orders || []);
         setFinalOrders(data.result?.finalOrders);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -79,12 +77,10 @@ function Orders() {
     archiveOrder({ id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("سفارش با موفقیت بایگانی شد.");
         updateOrders();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -95,12 +91,10 @@ function Orders() {
     archiveFinalOrder({ id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("سفارش با موفقیت بایگانی شد.");
         updateOrders();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -111,13 +105,11 @@ function Orders() {
     cancelOrder({ id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("سفارش با موفقیت حذف شد.");
         updateOrders();
         updateBalance();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -128,12 +120,10 @@ function Orders() {
     cancelFinalOrder({ id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("سفارش با موفقیت حذف شد.");
         updateOrders();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -147,12 +137,10 @@ function Orders() {
     getOrderOffers({ id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setOffers(data.result.offers);
         setBalance(data.result.balance);
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -169,13 +157,11 @@ function Orders() {
     })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("خرید با موفقیت نهایی شد.");
         setOrderTrackingModalOpen(false);
         updateOrders();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -188,13 +174,11 @@ function Orders() {
     })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("فروش با موفقیت نهایی شد.");
         setOrderTrackingModalOpen(false);
         updateOrders();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -205,12 +189,11 @@ function Orders() {
     getOrderOffers({ id: offer.order.id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setOffers(data.result.offers);
         setBalance(data.result.balance);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
 
@@ -218,12 +201,10 @@ function Orders() {
     declineOffer({ offerId: offer.id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("پیشنهاد با موفقیت رد شد.");
         updateOrderOffers(offer);
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );

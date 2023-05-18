@@ -16,11 +16,10 @@ function Home({ parentRef }) {
     getTeamBuildings()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setBuildings(data?.result || []);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
 
@@ -29,12 +28,11 @@ function Home({ parentRef }) {
     getTeamBuildings()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setBuildingsLoaded(true);
         setBuildings(data?.result || []);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   }, []);
 

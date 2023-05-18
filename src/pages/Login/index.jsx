@@ -38,7 +38,6 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!username) {
-      console.log("error");
       toast.error("نام کاربری یا ایمیل نمی‌تواند خالی باشد.");
       return;
     }

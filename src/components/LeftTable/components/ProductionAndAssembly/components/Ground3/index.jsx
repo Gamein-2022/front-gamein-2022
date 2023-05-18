@@ -65,14 +65,12 @@ function Ground3({ updateBuildings }) {
     upgradeRegion()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setUpdateRegionModalOpenState(false);
         toast.success("زمین گسترش یافت.");
         updateBuildings();
         updateGroundInfo();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );

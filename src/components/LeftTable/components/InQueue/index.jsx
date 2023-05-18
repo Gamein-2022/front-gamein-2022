@@ -7,17 +7,17 @@ import GameinLoading from "../../../GameinLoading";
 
 function InQueue() {
   const [pageLoading, setPageLoading] = useState(true);
-  const [actionLoading, setActionLoading] = useState(false);
   const [inQueueProducts, setInQueueProducts] = useState([]);
+  const [pageError, setPageError] = useState(false);
+
   useEffect(() => {
     getStorageQueue()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setInQueueProducts(data?.result);
       })
       .catch((error) => {
-        console.log(error);
+        setPageError(true);
       })
       .finally(() => setPageLoading(false));
   }, []);
@@ -27,11 +27,10 @@ function InQueue() {
     getStorageQueue()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setInQueueProducts(data?.result);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -40,17 +39,22 @@ function InQueue() {
 
   return (
     <div className="in-queue">
-      {pageLoading && <GameinLoading size={32} />}
-      {!pageLoading && (
+      {pageError && <div className="page-error">یه مشکلی پیش اومده!</div>}
+      {!pageError && (
         <>
-          {inQueueProducts.map((item) => (
-            <InQueueItem
-              updateInQueueProducts={updateInQueueProducts}
-              item={item}
-            />
-          ))}
-          {inQueueProducts.length <= 0 && (
-            <div className="in-queue__empty">صف انبارت خالیه!</div>
+          {pageLoading && <GameinLoading size={32} />}
+          {!pageLoading && (
+            <>
+              {inQueueProducts.map((item) => (
+                <InQueueItem
+                  updateInQueueProducts={updateInQueueProducts}
+                  item={item}
+                />
+              ))}
+              {inQueueProducts.length <= 0 && (
+                <div className="in-queue__empty">صف انبارت خالیه!</div>
+              )}
+            </>
           )}
         </>
       )}

@@ -74,7 +74,6 @@ function TradeIntermediate() {
         updateBalance();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
         );
@@ -99,7 +98,6 @@ function TradeIntermediate() {
         handleSearch();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
         );
@@ -113,11 +111,10 @@ function TradeIntermediate() {
     getIntermediateMaterials()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setIntermediateMaterials(data.result);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -138,7 +135,7 @@ function TradeIntermediate() {
           setSellOrders(data.result);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         })
         .finally(() => {
           setOrdersLoading(false);
@@ -152,7 +149,7 @@ function TradeIntermediate() {
           setBuyOrders(data.result);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         })
         .finally(() => {
           setOrdersLoading(false);
@@ -171,11 +168,9 @@ function TradeIntermediate() {
     sendOffer({ orderId: id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("پیشنهاد فروش با موفقیت فرستاده شد.");
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -191,7 +186,6 @@ function TradeIntermediate() {
       .then((res) => res.data)
       .then((data) => {
         setBuyOfferModalOpen(true);
-        console.log(data);
         setShippingInfo(data.result);
       });
   };
@@ -204,7 +198,6 @@ function TradeIntermediate() {
     })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("پیشنهاد خرید با موفقیت ارسال شد.");
         setBuyOfferModalOpen(false);
         setSelectedOrder(null);
@@ -212,7 +205,6 @@ function TradeIntermediate() {
         handleSearch();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );

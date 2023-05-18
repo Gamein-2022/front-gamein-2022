@@ -19,17 +19,17 @@ function InStorage({ updateBuildings }) {
   const [storageInfo, setStorageInfo] = useState([]);
   const [upgradeStorageModalOpen, setUpgradeStorageModalOpen] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
+  const [pageError, setPageError] = useState(false);
   const updateBalance = useUpdateBalance();
 
   useEffect(() => {
     getStorageInfo()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setStorageInfo(data?.result);
       })
       .catch((error) => {
-        console.log(error);
+        setPageError(true);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -38,11 +38,10 @@ function InStorage({ updateBuildings }) {
     getStorageInfo()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setStorageInfo(data?.result);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
   const handleUpgradeStorage = () => {
@@ -57,7 +56,6 @@ function InStorage({ updateBuildings }) {
         updateBalance();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -97,43 +95,48 @@ function InStorage({ updateBuildings }) {
 
   return (
     <div className="in-storage">
-      {loading && <GameinLoading size={32} />}
-      {!loading && (
+      {pageError && <div className="page-error">یه مشکلی پیش اومده!</div>}
+      {!pageError && (
         <>
-          {!storageInfo?.storageUpgraded && (
-            <Button
-              className="in-storage__upgrade-storage-btn"
-              onClick={() => setUpgradeStorageModalOpen(true)}
-            >
-              ارتقای انبار
-            </Button>
-          )}
-          {storageInfo?.products?.length > 0 ? (
+          {loading && <GameinLoading size={32} />}
+          {!loading && (
             <>
-              <div className="in-storage__space">
-                فضای کل انبار: {formatPrice(storageInfo?.storageSpace)}
-              </div>
-              <div className="in-storage__chart">
-                <Chart type="pie" options={options} series={series} />
-              </div>
-              {storageInfo?.products?.length > 0 && (
-                <div className="storage-items">
-                  {storageInfo?.products?.map((item) => (
-                    <StorageItem
-                      updateStorageInfo={updateStorageInfo}
-                      item={item}
-                      key={item?.id}
-                      storageSpace={storageInfo?.storageSpace}
-                    />
-                  ))}
+              {!storageInfo?.storageUpgraded && (
+                <Button
+                  className="in-storage__upgrade-storage-btn"
+                  onClick={() => setUpgradeStorageModalOpen(true)}
+                >
+                  ارتقای انبار
+                </Button>
+              )}
+              {storageInfo?.products?.length > 0 ? (
+                <>
+                  <div className="in-storage__space">
+                    فضای کل انبار: {formatPrice(storageInfo?.storageSpace)}
+                  </div>
+                  <div className="in-storage__chart">
+                    <Chart type="pie" options={options} series={series} />
+                  </div>
+                  {storageInfo?.products?.length > 0 && (
+                    <div className="storage-items">
+                      {storageInfo?.products?.map((item) => (
+                        <StorageItem
+                          updateStorageInfo={updateStorageInfo}
+                          item={item}
+                          key={item?.id}
+                          storageSpace={storageInfo?.storageSpace}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="in-storage__empty">
+                  <img src={storageEmpty} alt="empty storage" />
+                  <p>هنوز هیچ کالایی تو انبار نداری!</p>
                 </div>
               )}
             </>
-          ) : (
-            <div className="in-storage__empty">
-              <img src={storageEmpty} alt="empty storage" />
-              <p>هنوز هیچ کالایی تو انبار نداری!</p>
-            </div>
           )}
         </>
       )}

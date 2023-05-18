@@ -89,7 +89,9 @@ function BackPanel() {
       .then((data) => {
         toast.success("پول به همه بازیکنان اضافه شد.");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error("مشکلی در سامانه رخ داده‌است.");
+      });
   };
 
   const handleStopGame = () => {
@@ -99,29 +101,33 @@ function BackPanel() {
         toast.success("عملیات با موفقیت انجام شد.");
         setStopGameModalOpen(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error("مشکلی در سامانه رخ داده‌است.");
+      });
   };
 
   const handleStartOverGame = () => {
     startOverGame()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("عملیات با موفقیت انجام شد.");
         setStartGameModalOpen(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error("مشکلی در سامانه رخ داده‌است.");
+      });
   };
 
   const handleResumeGame = () => {
     resumeGame()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("عملیات با موفقیت انجام شد.");
         setResumeGameModalOpen(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        toast.error("مشکلی در سامانه رخ داده‌است.");
+      });
   };
 
   const handleRegisterNewUser = () => {

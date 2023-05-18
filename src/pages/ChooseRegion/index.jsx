@@ -33,8 +33,7 @@ const REGIONS = [
   },
   {
     title: "منطقه شش",
-    resources:
-      "Ports, Microphone, Cobalt",
+    resources: "Ports, Microphone, Cobalt",
   },
   {
     title: "منطقه هفت",
@@ -42,8 +41,7 @@ const REGIONS = [
   },
   {
     title: "منطقه هشت",
-    resources:
-      "Plastic, Speaker, Cobalt, Ports",
+    resources: "Plastic, Speaker, Cobalt, Ports",
   },
 ];
 
@@ -99,7 +97,6 @@ function ChooseRegion() {
     );
 
     ws.current.onopen = function (event) {
-      console.log("connecting to ws....");
       ws.current?.send(
         JSON.stringify({
           event: "SET_TEAM_ID",
@@ -110,7 +107,6 @@ function ChooseRegion() {
 
     ws.current.onmessage = function (event) {
       const data = JSON.parse(event.data);
-      console.log("recieved: ", data);
       if (data.event === "UPDATE_INFO") {
         setPrices(data.regionPrice);
         setPopulations(data.regionPopulation);

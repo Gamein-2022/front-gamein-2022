@@ -24,11 +24,10 @@ function TradeFinal() {
     getFinalProducts()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setFinalProducts(data.result);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);

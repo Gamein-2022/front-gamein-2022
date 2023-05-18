@@ -29,11 +29,10 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
     getLineGroups({ t: modalType === "PRODUCTION" ? 0 : 1 })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setAvailableProducts(data?.result);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -45,13 +44,11 @@ function NotInitialed({ modalType, open, onClose, lineId, updateLines }) {
     initLine({ group: selectedProduct?.name, lineId })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success(`خط ${stringType} با موفقیت راه‌اندازی شد.`);
         updateLines();
         onClose();
       })
       .catch((error) => {
-        console.log(error);
         if (error?.response?.status === 404) {
           toast.error(error?.response?.data?.message);
           onClose();

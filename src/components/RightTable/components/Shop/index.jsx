@@ -66,7 +66,7 @@ function Shop() {
         setData(data);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -94,7 +94,6 @@ function Shop() {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
         );
-        console.log(error);
       })
       .finally(() => {
         setActionLoading(false);

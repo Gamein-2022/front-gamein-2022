@@ -28,7 +28,6 @@ function InQueueItem({ item, updateInQueueProducts }) {
     collectShipping({ id: item.id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success(
           `${item?.amount} عدد ${item?.product?.name} به انبار اضافه شد.`
         );
@@ -49,7 +48,6 @@ function InQueueItem({ item, updateInQueueProducts }) {
     removeInQueueItem({ id: item.id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success(
           `${item?.amount} عدد ${item?.product?.name} از صف انبار حذف شد.`
         );

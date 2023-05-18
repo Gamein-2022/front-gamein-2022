@@ -9,30 +9,36 @@ import "./style.scss";
 function InRoute() {
   const [loading, setLoading] = useState(true);
   const [inRouteProducts, setInRouteProducts] = useState([]);
+  const [pageError, setPageError] = useState(false);
+
   useEffect(() => {
     getStorageInRoute()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setInRouteProducts(data?.result);
       })
       .catch((error) => {
-        console.log(error);
+        setPageError(true);
       })
       .finally(() => setLoading(false));
   }, []);
 
   return (
     <div className="in-route">
-      {loading && <GameinLoading size={32} />}
-      {!loading && (
+      {pageError && <div className="page-error">یه مشکلی پیش اومده!</div>}
+      {!pageError && (
         <>
-          {inRouteProducts.map((item) => (
-            <InRouteItem item={item} key={item?.id} />
-          ))}
-          {inRouteProducts.length <= 0 && (
-            <div className="in-route__empty">هیچ کالایی در مسیر نیست.</div>
-          )}{" "}
+          {loading && <GameinLoading size={32} />}
+          {!loading && (
+            <>
+              {inRouteProducts.map((item) => (
+                <InRouteItem item={item} key={item?.id} />
+              ))}
+              {inRouteProducts.length <= 0 && (
+                <div className="in-route__empty">هیچ کالایی در مسیر نیست.</div>
+              )}{" "}
+            </>
+          )}
         </>
       )}
     </div>

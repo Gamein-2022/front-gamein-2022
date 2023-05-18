@@ -101,11 +101,10 @@ function Off({
     getLineAvailableProducts({ id: lineId })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setInfo(data.result);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -133,7 +132,6 @@ function Off({
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
         );
-        console.log(error);
       })
       .finally(() => {
         setActionLoading(false);
@@ -145,14 +143,12 @@ function Off({
     startLine({ lineId, count: quantity, productId: product?.product?.id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success(`خط ${lineTypeString} با موفقیت راه‌اندازی شد.`);
         updateLines();
         onClose();
         updateBalance();
       })
       .catch((error) => {
-        console.log(error);
         if (error?.response?.status === 400) {
           toast.error(error?.response?.data?.message);
           updateLines();
@@ -369,8 +365,8 @@ function Off({
                                 (product?.product?.price * quantity) /
                                   (product?.requirements[0]?.numberPerOne || 1)
                             ).toFixed(0)
-                          : product?.basePrice +
-                              product?.varPrice * quantity || 0
+                          : product?.basePrice + product?.varPrice * quantity ||
+                              0
                       )}{" "}
                       {"جی‌کوین"}
                     </div>

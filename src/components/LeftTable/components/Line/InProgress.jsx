@@ -38,14 +38,14 @@ function InProgress({
     collectLine({ lineId })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success(`${count} عدد ${product?.name} به انبار اضافه شد.`);
         updateLines();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(error?.response?.data?.message);
         updateLines();
+      })
+      .finally(() => {
         setActionLoading(false);
       });
   };
