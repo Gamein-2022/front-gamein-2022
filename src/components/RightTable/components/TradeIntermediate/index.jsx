@@ -68,6 +68,8 @@ function TradeIntermediate() {
       .then((data) => {
         toast.success("سفارش خرید با موفقیت ثبت شد.");
         setBuyOrderModalOpen(false);
+        setBuyCount(0);
+        setBuyPrice(0);
         handleSearch();
         updateBalance();
       })
@@ -92,6 +94,8 @@ function TradeIntermediate() {
       .then((data) => {
         toast.success("سفارش فروش با موفقیت ثبت شد.");
         setSellOrderModalOpen(false);
+        setSellCount(0);
+        setSellPrice(0);
         handleSearch();
       })
       .catch((error) => {
@@ -401,7 +405,11 @@ function TradeIntermediate() {
       <Modal
         title={<img src={tradeModalTitle} alt="trade" />}
         open={buyOrderModalOpen}
-        onClose={() => setBuyOrderModalOpen(false)}
+        onClose={() => {
+          setBuyOrderModalOpen(false);
+          setBuyCount(0);
+          setBuyPrice(0);
+        }}
       >
         <div className="submit-order-modal__title">ثبت سفارش خرید</div>
         <img
@@ -462,7 +470,11 @@ function TradeIntermediate() {
       <Modal
         title={<img src={tradeModalTitle} alt="trade" />}
         open={sellOrderModalOpen}
-        onClose={() => setSellOrderModalOpen(false)}
+        onClose={() => {
+          setSellOrderModalOpen(false);
+          setSellCount(0);
+          setSellPrice(0);
+        }}
       >
         <div className="submit-order-modal__title">ثبت سفارش فروش</div>
         <img
