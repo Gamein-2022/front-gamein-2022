@@ -228,6 +228,7 @@ function BackPanel() {
             <option value="GAME_PAUSED">game paused</option>
             <option value="GAME_RESUMED">game resumed</option>
             <option value="REFRESH">refresh window</option>
+            <option value="UPDATE_BALANCE">update balance</option>
           </select>
           <Button onClick={handleSendNotification}>ارسال نوتیفیکیشن</Button>
 

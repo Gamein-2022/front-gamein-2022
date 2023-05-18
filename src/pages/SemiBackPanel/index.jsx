@@ -5,6 +5,7 @@ import {
   getAdminInfo,
   sendAnnnouncement,
   sendNews,
+  sendNotification,
 } from "../../apis/back-panel";
 import Button from "../../components/Button";
 import "./style.scss";
@@ -24,6 +25,9 @@ function BackPanel() {
   const [announcementDescription, setAnnouncementDescription] = useState("");
   const [announcementImage, setAnnouncementImage] = useState("");
   const [announcementDate, setAnnouncementDate] = useState("2004/12/26");
+
+  const [notifText, setNotifText] = useState("");
+  const [notifType, setNotifType] = useState("SUCCESS");
 
   useEffect(() => {
     getAdminInfo()
@@ -63,6 +67,19 @@ function BackPanel() {
       .then((res) => res.data)
       .then((data) => {
         toast.success("اطلاعیه اضافه شد.");
+      })
+      .catch((error) => {
+        toast.error(
+          error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
+        );
+      });
+  };
+
+  const handleSendNotification = () => {
+    sendNotification({ message: notifText, type: notifType })
+      .then((res) => res.data)
+      .then((data) => {
+        toast.success("عملیات با موفقیت انجام شد.");
       })
       .catch((error) => {
         toast.error(
@@ -127,6 +144,22 @@ function BackPanel() {
             />
             <Button onClick={handleSendAnnouncement}>ارسال اطلاعیه</Button>
           </div>
+          <div>ارسال نوتیفیکیشن</div>
+          <BasicInput
+            value={notifText}
+            onChange={(e) => setNotifText(e.target.value)}
+            label="متن نوتیفیکیشن:"
+          />
+          <div>نوع نوتیفیکیشن:</div>
+          <select onChange={(e) => setNotifType(e.target.value)}>
+            <option value="SUCCESS">success</option>
+            <option value="WARNING">warning</option>
+            <option value="ERROR">error</option>
+            <option value="REFRESH">refresh window</option>
+            <option value="UPDATE_BALANCE">update balance</option>
+          </select>
+          <Button onClick={handleSendNotification}>ارسال نوتیفیکیشن</Button>
+          <div style={{ marginBottom: 64 }}></div>
         </div>
       )}
     </>

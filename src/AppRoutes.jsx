@@ -66,7 +66,7 @@ const AppRouter = () => {
       }
 
       if (data.type === "UPDATE_BALANCE") {
-        toast.warning(data.message || "بازی فعلا متوقف شده!", {
+        toast.warning(data.message || "مقدار پول شما بروزرسانی شد.", {
           position: "bottom-center",
         });
         updateBalance();
