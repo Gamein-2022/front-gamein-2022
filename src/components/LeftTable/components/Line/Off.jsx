@@ -441,7 +441,7 @@ function Off({
                                       1)
                               )
                             : product?.basePrice +
-                                product?.product?.price * quantity || 0)
+                                product?.varPrice * quantity || 0)
                       )}{" "}
                       {"جی‌کوین"}
                     </div>
