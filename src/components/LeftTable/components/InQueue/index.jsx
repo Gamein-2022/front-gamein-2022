@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import InQueueItem from "../InQueueItem";
+import inQueueEmpty from "../../../../assets/empty_states/in-queue-empty.svg";
 
 import "./style.scss";
 import { getStorageQueue } from "../../../../apis/storage";
@@ -52,7 +53,28 @@ function InQueue() {
                 />
               ))}
               {inQueueProducts.length <= 0 && (
-                <div className="in-queue__empty">صف انبارت خالیه!</div>
+                <div
+                style={{
+                  textAlign: "center",
+                  padding: 16,
+                  color: "#8d8d8d",
+                  fontSize: 18,
+                }}
+                className="in-route__empty"
+              >
+                <img
+                  style={{ maxWidth: 180, width: "100%" }}
+                  src={inQueueEmpty}
+                  alt="in route"
+                />
+                <div
+                  style={{
+                    marginTop: 24,
+                  }}
+                >
+                  هیچ کالایی تو مسیر انبار نداری!
+                </div>
+              </div>
               )}
             </>
           )}

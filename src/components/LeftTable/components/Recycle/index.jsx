@@ -8,6 +8,8 @@ import ShopBuildings from "../../../RightTable/components/ShopBuildings";
 import "./style.scss";
 
 import recycleHallImg from "../../../../assets/recycle-hall.svg";
+import recycleEmpty from "../../../../assets/empty_states/recycle-empty.svg";
+import gameinEmpty from "../../../../assets/empty_states/gamein-empty.svg";
 import GameinLoading from "../../../GameinLoading";
 import Line from "../Line";
 import Button from "../../../Button";
@@ -20,12 +22,26 @@ function Recycle({ updateBuildings }) {
     <div
       style={{
         textAlign: "center",
-        margin: 16,
-        direction: "ltr",
-        fontWeight: 600,
+        padding: "32px 16px",
+        color: "#8d8d8d",
+        fontSize: 18,
+        overflowY: "auto",
+        height: "100%",
       }}
     >
-      comming soon...
+      <img style={{width: 32}} src={gameinEmpty} alt="gamein empty" />
+      <div
+        style={{
+          marginBottom: 24,
+        }}
+      >
+        این قسمت در آینده به بازی اضافه میشه :)
+      </div>
+      <img
+        style={{ maxWidth: 180, width: "100%" }}
+        src={recycleEmpty}
+        alt="recycle"
+      />
     </div>
   );
   // const [data, setData] = useState();
