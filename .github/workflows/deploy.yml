@@ -24,7 +24,7 @@ jobs:
              
              
   build-front:
-    runs-on: [app]
+    runs-on: [app-3]
     steps:
       - uses: actions/checkout@master
       - run: |
@@ -47,16 +47,16 @@ jobs:
               sleep 5
               docker-compose ps
               
-  deploy-front-1:
-    needs: build-front
-    runs-on: [app-1]
-    steps:
-      - uses: actions/checkout@master
-      - run: |
-              ls -la
-              docker login   -u daria -p 7HlUyiSD  https://registry.dariasystem.com
-              docker pull registry.dariasystem.com/gamein/front:dev
-              docker rm -f front-1      
-              docker compose up -d front-1
-              sleep 5
-              docker compose ps
+#   deploy-front-1:
+#     needs: build-front
+#     runs-on: [app-1]
+#     steps:
+#       - uses: actions/checkout@master
+#       - run: |
+#               ls -la
+#               docker login   -u daria -p 7HlUyiSD  https://registry.dariasystem.com
+#               docker pull registry.dariasystem.com/gamein/front:dev
+#               docker rm -f front-1      
+#               docker compose up -d front-1
+#               sleep 5
+#               docker compose ps
