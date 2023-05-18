@@ -370,7 +370,7 @@ function Off({
                                   (product?.requirements[0]?.numberPerOne || 1)
                             ).toFixed(0)
                           : product?.basePrice +
-                              product?.product?.price * quantity || 0
+                              product?.varPrice * quantity || 0
                       )}{" "}
                       {"جی‌کوین"}
                     </div>

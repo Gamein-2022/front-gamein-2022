@@ -3,25 +3,18 @@ import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import Button from "../../../Button";
-
-import sampleImg from "../../../../assets/materials/unkown_material.svg";
-
 import { collectShipping, removeInQueueItem } from "../../../../apis/storage";
 import { toast } from "react-toastify";
-
-import "./style.scss";
-import {
-  INTERMEDIATE_MATERIALS_LEVEL_ONE,
-  INTERMEDIATE_MATERIALS_LEVEL_TWO,
-  RAW_MATERIALS,
-} from "../../../../constants/materials";
 import MyCountDown from "../../../CountDown/MyCountDown";
 import { getProductIcon } from "../../../../utils/icons";
 import { formatPrice } from "../../../../utils/formatters";
+import useUpdateBalance from "../../../../hooks/useUpdateBalance";
+import "./style.scss";
 
 function InQueueItem({ item, updateInQueueProducts }) {
   const [remainedTime, setRemainedTime] = useState();
   const [actionLoading, setActionLoading] = useState(false);
+  const updateBalance = useUpdateBalance();
 
   useEffect(() => {
     const ariveTime = new Date(item.arrivalTime).getTime();
@@ -61,6 +54,7 @@ function InQueueItem({ item, updateInQueueProducts }) {
           `${item?.amount} عدد ${item?.product?.name} از صف انبار حذف شد.`
         );
         updateInQueueProducts();
+        updateBalance();
       })
       .catch((error) => {
         toast.error(

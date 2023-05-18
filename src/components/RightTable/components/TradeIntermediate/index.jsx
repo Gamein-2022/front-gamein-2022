@@ -26,6 +26,7 @@ import NumberInput from "../../../NumberInput";
 import { getProductIcon } from "../../../../utils/icons";
 import TransportEmptyState from "../../../TansportEmptyState";
 import GameinLoading from "../../../GameinLoading";
+import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 
 function TradeIntermediate() {
   const [activeTab, setActiveTab] = useState("buy");
@@ -53,7 +54,12 @@ function TradeIntermediate() {
   const [shippingInfo, setShippingInfo] = useState();
   const [selectedOrder, setSelectedOrder] = useState();
 
+  const [actionLoading, setActionLoading] = useState(false);
+
+  const updateBalance = useUpdateBalance();
+
   const handleSubmitBuyOrder = () => {
+    setActionLoading(true);
     const productId = intermediateMaterials.find(
       (item) => item.name === selectedMaterial
     ).id;
@@ -63,16 +69,21 @@ function TradeIntermediate() {
         toast.success("سفارش خرید با موفقیت ثبت شد.");
         setBuyOrderModalOpen(false);
         handleSearch();
+        updateBalance();
       })
       .catch((error) => {
         console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
   const handleSubmitSellOrder = () => {
+    setActionLoading(true);
     const productId = intermediateMaterials.find(
       (item) => item.name === selectedMaterial
     ).id;
@@ -88,6 +99,9 @@ function TradeIntermediate() {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -149,6 +163,7 @@ function TradeIntermediate() {
   const currentOrders = activeTab === "buy" ? buyOrders : sellOrders;
 
   const handleSendSellOffer = (id) => {
+    setActionLoading(true);
     sendOffer({ orderId: id })
       .then((res) => res.data)
       .then((data) => {
@@ -160,6 +175,9 @@ function TradeIntermediate() {
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -175,6 +193,7 @@ function TradeIntermediate() {
   };
 
   const handleSendBuyOffer = () => {
+    setActionLoading(true);
     sendOffer({
       orderId: selectedOrder.id,
       shippingMethod: transport === "airplane" ? "PLANE" : "SHIP",
@@ -185,12 +204,17 @@ function TradeIntermediate() {
         toast.success("پیشنهاد خرید با موفقیت ارسال شد.");
         setBuyOfferModalOpen(false);
         setSelectedOrder(null);
+        updateBalance();
+        handleSearch();
       })
       .catch((error) => {
         console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -321,20 +345,22 @@ function TradeIntermediate() {
                         <td>{row.region}</td>
                         <td>
                           {activeTab === "buy" && (
-                            <button
+                            <Button
                               className="trade-filter__buy-btn"
                               onClick={() => handleBuyOfferModal(row)}
+                              disabled={actionLoading}
                             >
                               خرید
-                            </button>
+                            </Button>
                           )}
                           {activeTab === "sell" && (
-                            <button
+                            <Button
                               className="trade-filter__sell-btn"
                               onClick={() => handleSendSellOffer(row.id)}
+                              disabled={actionLoading}
                             >
                               فروش
-                            </button>
+                            </Button>
                           )}
                         </td>
                       </tr>
@@ -425,7 +451,8 @@ function TradeIntermediate() {
             isEmpty(buyCount) ||
             isEmpty(buyPrice) ||
             buyCount == "0" ||
-            buyPrice == "0"
+            buyPrice == "0" ||
+            actionLoading
           }
           onClick={handleSubmitBuyOrder}
         >
@@ -485,7 +512,8 @@ function TradeIntermediate() {
             isEmpty(sellCount) ||
             isEmpty(sellPrice) ||
             sellCount == "0" ||
-            sellPrice == "0"
+            sellPrice == "0" ||
+            actionLoading
           }
           onClick={handleSubmitSellOrder}
           type={"error"}
