@@ -38,7 +38,6 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!username) {
-      console.log("error");
       toast.error("نام کاربری یا ایمیل نمی‌تواند خالی باشد.");
       return;
     }
@@ -106,6 +105,12 @@ function Login() {
               placeholder="کلمه عبور"
               type="password"
             />
+            <div
+              className="login__forget-password"
+              onClick={() => navigate("/forget-password")}
+            >
+              رمز عبور خود را فراموش کرده‌اید؟
+            </div>
             <button className="login__btn">
               {loading ? <ClipLoader size={24} color="#D63F26" /> : "ورود"}
             </button>

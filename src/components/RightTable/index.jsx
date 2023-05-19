@@ -17,9 +17,6 @@ function RightTable() {
   const [tab, setTab] = useRecoilState(rightTableTab);
   const [open, setOpen] = useRecoilState(rightTableOpen);
 
-  console.log(tab);
-  console.log(open);
-
   const closeRightTable = () => {
     setOpen(false);
   };

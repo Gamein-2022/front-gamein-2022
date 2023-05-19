@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import Login from "./pages/Login";
+import ForgetPassword from "./pages/ForgetPassword";
 import Home from "./pages/Home";
 import RAndD from "./pages/RAndD";
 import Dashboard from "./pages/Dashboard";
@@ -13,6 +14,8 @@ import ChooseRegion from "./pages/ChooseRegion";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 import BackPanel from "./pages/BackPanel";
+import SemiBackPanel from "./pages/SemiBackPanel";
+import LeaderBoard from "./pages/LeaderBoard";
 import { useRecoilState } from "recoil";
 import { isGamePausedState } from "./store/time";
 import useUpdateBalance from "./hooks/useUpdateBalance";
@@ -25,7 +28,7 @@ const AppRouter = () => {
 
   useEffect(() => {
     ws.current = new WebSocket(
-      "wss://api-gamein.dariahamrah.ir/websocket/notify"
+      "wss://api-gamein2022.dariahamrah.ir/websocket/notify"
     );
 
     ws.current.onopen = function (event) {
@@ -50,6 +53,7 @@ const AppRouter = () => {
       }
       if (data.type === "UPDATE_MAP") {
         parentRef.current?.updateBuildings?.();
+        updateBalance();
       }
       if (data.type === "REFRESH") {
         window?.location.reload();
@@ -62,7 +66,7 @@ const AppRouter = () => {
       }
 
       if (data.type === "UPDATE_BALANCE") {
-        toast.warning(data.message || "بازی فعلا متوقف شده!", {
+        toast.warning(data.message || "مقدار پول شما بروزرسانی شد.", {
           position: "bottom-center",
         });
         updateBalance();
@@ -81,6 +85,7 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/choose-region" element={<ChooseRegion />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Home parentRef={parentRef} />} />
@@ -90,7 +95,9 @@ const AppRouter = () => {
           <Route path="guide" element={<Guide />} />
           <Route path="support" element={<Support />} />
         </Route>
-        <Route path="back-panel" element={<BackPanel />} />
+        <Route path="semi-back-panel" element={<SemiBackPanel />} />
+        <Route path="back-panel-09131863718" element={<BackPanel />} />
+        <Route path="leaderboard" element={<LeaderBoard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

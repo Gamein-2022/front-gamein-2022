@@ -28,14 +28,12 @@ function ShopBuildings({
     createBuilding({ type: selectedBuilding?.type, ground })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("ساختمان با موفقیت خریداری شد.");
         updateBuildings();
         updateGroundInfo();
         updateBalance();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );

@@ -13,37 +13,35 @@ import GameinLoading from "../../components/GameinLoading";
 const REGIONS = [
   {
     title: "منطقه یک",
-    resources: "Glass, Copper, Cobalt, Chips, Processors",
+    resources: "Cobalt, Microphone, Glass, Vibration Motor",
   },
   {
     title: "منطقه دو",
-    resources: "Copper, Aluminum, Cobalt, Chips, Processors",
+    resources: "Aluminum, Lithium, Speaker, Processors",
   },
   {
     title: "منطقه سه",
-    resources: "Lithium, Copper, Cobalt, Silicon, Speaker, Vibration Motor",
+    resources: "Silicon, Copper",
   },
   {
     title: "منطقه چهار",
-    resources: "Plastic, Glass, Lithium, Aluminum, Chips, Ports",
+    resources: "Silicon, Aluminum, Copper, Ports",
   },
   {
     title: "منطقه پنج",
-    resources: "Plastic, Lithium, Copper, Microphone, Vibration Motor",
+    resources: "Lithium, Plastic, Processors",
   },
   {
     title: "منطقه شش",
-    resources:
-      "Plastic, Glass, Silicon, Microphone, Chips, Speaker, Vibration Motor",
+    resources: "Ports, Microphone, Cobalt",
   },
   {
     title: "منطقه هفت",
-    resources: "Plastic, Lithium, Cobalt, Silicon, Ports, Processors",
+    resources: "Vibration Motor, Chips, Cobalt",
   },
   {
     title: "منطقه هشت",
-    resources:
-      "Plastic, Aluminum, Cobalt, Microphone, Chips, Ports, Vibration Motor",
+    resources: "Plastic, Speaker, Cobalt, Ports",
   },
 ];
 
@@ -95,11 +93,10 @@ function ChooseRegion() {
       });
 
     ws.current = new WebSocket(
-      "wss://api-gamein.dariahamrah.ir/websocket/region"
+      "wss://api-gamein2022.dariahamrah.ir/websocket/region"
     );
 
     ws.current.onopen = function (event) {
-      console.log("connecting to ws....");
       ws.current?.send(
         JSON.stringify({
           event: "SET_TEAM_ID",
@@ -110,7 +107,6 @@ function ChooseRegion() {
 
     ws.current.onmessage = function (event) {
       const data = JSON.parse(event.data);
-      console.log("recieved: ", data);
       if (data.event === "UPDATE_INFO") {
         setPrices(data.regionPrice);
         setPopulations(data.regionPopulation);

@@ -1,7 +1,10 @@
 import AxiosInstance from "./config";
 
 export function getLogs(type) {
-  return AxiosInstance.get(`/dashboard/team/logs?t=${type}`);
+  if (type) { 
+    return AxiosInstance.get(`/dashboard/team/logs?t=${type}`);
+  }
+  return  AxiosInstance.get("/dashboard/team/logs");
 }
 
 export function getLeaderboard() {

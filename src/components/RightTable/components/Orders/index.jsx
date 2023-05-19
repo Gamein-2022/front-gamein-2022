@@ -2,7 +2,6 @@ import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import sampleImg from "../../../../assets/materials/unkown_material.svg";
 import { toast } from "react-toastify";
 import {
   acceptOffer,
@@ -23,16 +22,11 @@ import airplaneImg from "../../../../assets/airplane.svg";
 import airplaneDisableImg from "../../../../assets/airplane-disable.svg";
 import "./style.scss";
 import { declineOffer } from "../../../../apis/offers";
-import {
-  FINAL_MATERIALS,
-  INTERMEDIATE_MATERIALS_LEVEL_ONE,
-  INTERMEDIATE_MATERIALS_LEVEL_TWO,
-  RAW_MATERIALS,
-} from "../../../../constants/materials";
 import { formatPrice } from "../../../../utils/formatters";
 import TransportEmptyState from "../../../TansportEmptyState";
 import { getProductIcon } from "../../../../utils/icons";
 import GameinLoading from "../../../GameinLoading";
+import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -46,16 +40,17 @@ function Orders() {
   const [pageLoading, setPageLoading] = useState(true);
   const [trackLoading, setTrackLoading] = useState(false);
 
+  const updateBalance = useUpdateBalance();
+
   useEffect(() => {
     getOrdersHistory()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data.result);
         setOrders(data.result?.orders || []);
         setFinalOrders(data.result?.finalOrders);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -67,12 +62,11 @@ function Orders() {
     getOrdersHistory()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data.result);
         setOrders(data.result?.orders || []);
         setFinalOrders(data.result?.finalOrders);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -83,12 +77,10 @@ function Orders() {
     archiveOrder({ id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("سفارش با موفقیت بایگانی شد.");
         updateOrders();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -99,12 +91,10 @@ function Orders() {
     archiveFinalOrder({ id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("سفارش با موفقیت بایگانی شد.");
         updateOrders();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -115,12 +105,11 @@ function Orders() {
     cancelOrder({ id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("سفارش با موفقیت حذف شد.");
         updateOrders();
+        updateBalance();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -131,12 +120,10 @@ function Orders() {
     cancelFinalOrder({ id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("سفارش با موفقیت حذف شد.");
         updateOrders();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -150,12 +137,10 @@ function Orders() {
     getOrderOffers({ id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setOffers(data.result.offers);
         setBalance(data.result.balance);
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -172,13 +157,11 @@ function Orders() {
     })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("خرید با موفقیت نهایی شد.");
         setOrderTrackingModalOpen(false);
         updateOrders();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -191,13 +174,11 @@ function Orders() {
     })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("فروش با موفقیت نهایی شد.");
         setOrderTrackingModalOpen(false);
         updateOrders();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -208,12 +189,11 @@ function Orders() {
     getOrderOffers({ id: offer.order.id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setOffers(data.result.offers);
         setBalance(data.result.balance);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
 
@@ -221,12 +201,10 @@ function Orders() {
     declineOffer({ offerId: offer.id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("پیشنهاد با موفقیت رد شد.");
         updateOrderOffers(offer);
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -261,173 +239,335 @@ function Orders() {
         {pageLoading && <GameinLoading size={32} />}
         {!pageLoading && (
           <>
-            {orders?.length <= 0 && (
+            {orders?.length <= 0 && finalOrders.length <= 0 && (
               <div className="offers-sent__empty">
                 شما هیچ سفارش فعالی ندارید.
               </div>
             )}
-            {orders?.map(
-              ({
-                acceptDate,
-                cancelled,
-                id,
-                product,
-                unitPrice,
-                orderType,
-                quantity,
-                offerCount,
-              }) => {
-                if (cancelled) {
-                  return null;
-                }
-                const isWaiting = !acceptDate;
-                return (
-                  <div
-                    className={classNames("order-card", {
-                      "order-card--warning": isWaiting,
-                    })}
-                  >
-                    <div className="order-card__title">
-                      {isWaiting ? (
-                        <AccessTimeIcon fontSize="small" />
-                      ) : (
-                        <CheckIcon fontSize="small" />
-                      )}
-                      {isWaiting
-                        ? `در انتظار ${
-                            orderType === "BUY" ? "فروشنده" : "خریدار"
-                          }`
-                        : orderType === "BUY"
-                        ? "خریداری شده"
-                        : "فروخته‌شده"}
-                      {isWaiting && (
-                        <div className="order-card__offer-count">
-                          {offerCount}
-                        </div>
-                      )}
-                    </div>
-                    <div className="order-card__body">
-                      <div className="order-card__right">
-                        <img
-                          className="order-card__img"
-                          src={getProductIcon(product?.name)}
-                          alt="order card"
-                        />
-                      </div>
-                      <div className="order-card__left">
-                        <div className="order-card__name">
-                          {product?.prettyName || product.name}
-                        </div>
-                        <div className="order-card__count">
-                          {formatPrice(quantity)} واحد
-                        </div>
-                        <div className="order-card__unit-price">
-                          قیمت واحد: {formatPrice(unitPrice)}
-                        </div>
+            {orders
+              ?.filter((item) => !item?.acceptDate)
+              .map(
+                ({
+                  acceptDate,
+                  cancelled,
+                  id,
+                  product,
+                  unitPrice,
+                  orderType,
+                  quantity,
+                  offerCount,
+                }) => {
+                  if (cancelled) {
+                    return null;
+                  }
+                  const isWaiting = !acceptDate;
+                  return (
+                    <div
+                      className={classNames("order-card", {
+                        "order-card--warning": isWaiting,
+                      })}
+                    >
+                      <div className="order-card__title">
+                        {isWaiting ? (
+                          <AccessTimeIcon fontSize="small" />
+                        ) : (
+                          <CheckIcon fontSize="small" />
+                        )}
+                        {isWaiting
+                          ? `در انتظار ${
+                              orderType === "BUY" ? "فروشنده" : "خریدار"
+                            }`
+                          : orderType === "BUY"
+                          ? "خریداری شده"
+                          : "فروخته‌شده"}
                         {isWaiting && (
-                          <div className="order-card__btns">
+                          <div className="order-card__offer-count">
+                            {offerCount}
+                          </div>
+                        )}
+                      </div>
+                      <div className="order-card__body">
+                        <div className="order-card__right">
+                          <img
+                            className="order-card__img"
+                            src={getProductIcon(product?.name)}
+                            alt="order card"
+                          />
+                        </div>
+                        <div className="order-card__left">
+                          <div className="order-card__name">
+                            {product?.prettyName || product.name}
+                          </div>
+                          <div className="order-card__count">
+                            {formatPrice(quantity)} واحد
+                          </div>
+                          <div className="order-card__unit-price">
+                            قیمت واحد: {formatPrice(unitPrice)}
+                          </div>
+                          {isWaiting && (
+                            <div className="order-card__btns">
+                              <Button
+                                className="order-card__btn-error"
+                                onClick={() => handleDeleteOrder(id)}
+                              >
+                                حذف
+                              </Button>
+                              <Button
+                                className="order-card__btn-success"
+                                onClick={() => handleTrackOrder(id)}
+                              >
+                                پیگیری
+                              </Button>
+                            </div>
+                          )}
+                          {!isWaiting && (
+                            <Button
+                              className="order-card__btn-success"
+                              onClick={() => handleArchiveOrder(id)}
+                            >
+                              بایگانی
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              )}
+            {finalOrders
+              ?.filter((item) => !item?.closed)
+              .map(
+                ({
+                  acceptDate,
+                  cancelled,
+                  id,
+                  product,
+                  unitPrice,
+                  orderType,
+                  quantity,
+                  soldQuantity,
+                  closed,
+                }) => {
+                  if (cancelled) {
+                    return null;
+                  }
+                  return (
+                    <div
+                      className={classNames("order-card", {
+                        "order-card--warning": !closed,
+                      })}
+                    >
+                      <div className="order-card__title">
+                        {!closed ? (
+                          <AccessTimeIcon fontSize="small" />
+                        ) : (
+                          <CheckIcon fontSize="small" />
+                        )}
+                        {!closed ? "در انتظار خریدار" : "فروخته‌شده"}
+                      </div>
+                      <div className="order-card__body">
+                        <div className="order-card__right">
+                          <img
+                            className="order-card__img"
+                            src={getProductIcon(product?.name)}
+                            alt="order card"
+                          />
+                        </div>
+                        <div className="order-card__left">
+                          <div className="order-card__name">
+                            {product?.name}
+                          </div>
+                          <div className="order-card__count">
+                            {quantity} واحد
+                          </div>
+                          <div className="order-card__unit-price">
+                            قیمت واحد: {formatPrice(unitPrice)}
+                          </div>
+                          <div>مقدار فروخته‌شده: {soldQuantity}</div>
+                          {closed && (
+                            <Button
+                              className="order-card__btn-success"
+                              onClick={() => handleArchiveFinalOrder(id)}
+                            >
+                              بایگانی
+                            </Button>
+                          )}
+                          {!closed && (
                             <Button
                               className="order-card__btn-error"
-                              onClick={() => handleDeleteOrder(id)}
+                              onClick={() => handleDeleteFinalOrder(id)}
                             >
                               حذف
                             </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              )}
+            {finalOrders
+              ?.filter((item) => item?.closed)
+              .map(
+                ({
+                  acceptDate,
+                  cancelled,
+                  id,
+                  product,
+                  unitPrice,
+                  orderType,
+                  quantity,
+                  soldQuantity,
+                  closed,
+                }) => {
+                  if (cancelled) {
+                    return null;
+                  }
+                  return (
+                    <div
+                      className={classNames("order-card", {
+                        "order-card--warning": !closed,
+                      })}
+                    >
+                      <div className="order-card__title">
+                        {!closed ? (
+                          <AccessTimeIcon fontSize="small" />
+                        ) : (
+                          <CheckIcon fontSize="small" />
+                        )}
+                        {!closed ? "در انتظار خریدار" : "فروخته‌شده"}
+                      </div>
+                      <div className="order-card__body">
+                        <div className="order-card__right">
+                          <img
+                            className="order-card__img"
+                            src={getProductIcon(product?.name)}
+                            alt="order card"
+                          />
+                        </div>
+                        <div className="order-card__left">
+                          <div className="order-card__name">
+                            {product?.name}
+                          </div>
+                          <div className="order-card__count">
+                            {quantity} واحد
+                          </div>
+                          <div className="order-card__unit-price">
+                            قیمت واحد: {formatPrice(unitPrice)}
+                          </div>
+                          <div>مقدار فروخته‌شده: {soldQuantity}</div>
+                          {closed && (
                             <Button
                               className="order-card__btn-success"
-                              onClick={() => handleTrackOrder(id)}
+                              onClick={() => handleArchiveFinalOrder(id)}
                             >
-                              پیگیری
+                              بایگانی
                             </Button>
+                          )}
+                          {!closed && (
+                            <Button
+                              className="order-card__btn-error"
+                              onClick={() => handleDeleteFinalOrder(id)}
+                            >
+                              حذف
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              )}
+            {orders
+              ?.filter((item) => item?.acceptDate)
+              .map(
+                ({
+                  acceptDate,
+                  cancelled,
+                  id,
+                  product,
+                  unitPrice,
+                  orderType,
+                  quantity,
+                  offerCount,
+                }) => {
+                  if (cancelled) {
+                    return null;
+                  }
+                  const isWaiting = !acceptDate;
+                  return (
+                    <div
+                      className={classNames("order-card", {
+                        "order-card--warning": isWaiting,
+                      })}
+                    >
+                      <div className="order-card__title">
+                        {isWaiting ? (
+                          <AccessTimeIcon fontSize="small" />
+                        ) : (
+                          <CheckIcon fontSize="small" />
+                        )}
+                        {isWaiting
+                          ? `در انتظار ${
+                              orderType === "BUY" ? "فروشنده" : "خریدار"
+                            }`
+                          : orderType === "BUY"
+                          ? "خریداری شده"
+                          : "فروخته‌شده"}
+                        {isWaiting && (
+                          <div className="order-card__offer-count">
+                            {offerCount}
                           </div>
                         )}
-                        {!isWaiting && (
-                          <Button
-                            className="order-card__btn-success"
-                            onClick={() => handleArchiveOrder(id)}
-                          >
-                            بایگانی
-                          </Button>
-                        )}
                       </div>
-                    </div>
-                  </div>
-                );
-              }
-            )}
-            {finalOrders?.map(
-              ({
-                acceptDate,
-                cancelled,
-                id,
-                product,
-                unitPrice,
-                orderType,
-                quantity,
-                soldQuantity,
-                closed,
-              }) => {
-                if (cancelled) {
-                  return null;
-                }
-                return (
-                  <div
-                    className={classNames("order-card", {
-                      "order-card--warning": !closed,
-                    })}
-                  >
-                    <div className="order-card__title">
-                      {!closed ? (
-                        <AccessTimeIcon fontSize="small" />
-                      ) : (
-                        <CheckIcon fontSize="small" />
-                      )}
-                      {!closed ? "در انتظار خریدار" : "فروخته‌شده"}
-                    </div>
-                    <div className="order-card__body">
-                      <div className="order-card__right">
-                        <img
-                          className="order-card__img"
-                          src={
-                            RAW_MATERIALS[product?.name]?.icon ||
-                            INTERMEDIATE_MATERIALS_LEVEL_ONE[product?.name]
-                              ?.icon ||
-                            INTERMEDIATE_MATERIALS_LEVEL_TWO[product?.name]
-                              ?.icon ||
-                            FINAL_MATERIALS[product?.name]?.icon ||
-                            sampleImg
-                          }
-                          alt="order card"
-                        />
-                        <div className="order-card__name">{product?.name}</div>
-                      </div>
-                      <div className="order-card__left">
-                        <div className="order-card__count">{quantity} واحد</div>
-                        <div className="order-card__unit-price">
-                          قیمت واحد: {formatPrice(unitPrice)}
+                      <div className="order-card__body">
+                        <div className="order-card__right">
+                          <img
+                            className="order-card__img"
+                            src={getProductIcon(product?.name)}
+                            alt="order card"
+                          />
                         </div>
-                        <div>مقدار فروخته‌شده: {soldQuantity}</div>
-                        {closed && (
-                          <Button
-                            className="order-card__btn-success"
-                            onClick={() => handleArchiveFinalOrder(id)}
-                          >
-                            بایگانی
-                          </Button>
-                        )}
-                        {!closed && (
-                          <Button
-                            className="order-card__btn-error"
-                            onClick={() => handleDeleteFinalOrder(id)}
-                          >
-                            حذف
-                          </Button>
-                        )}
+                        <div className="order-card__left">
+                          <div className="order-card__name">
+                            {product?.prettyName || product.name}
+                          </div>
+                          <div className="order-card__count">
+                            {formatPrice(quantity)} واحد
+                          </div>
+                          <div className="order-card__unit-price">
+                            قیمت واحد: {formatPrice(unitPrice)}
+                          </div>
+                          {isWaiting && (
+                            <div className="order-card__btns">
+                              <Button
+                                className="order-card__btn-error"
+                                onClick={() => handleDeleteOrder(id)}
+                              >
+                                حذف
+                              </Button>
+                              <Button
+                                className="order-card__btn-success"
+                                onClick={() => handleTrackOrder(id)}
+                              >
+                                پیگیری
+                              </Button>
+                            </div>
+                          )}
+                          {!isWaiting && (
+                            <Button
+                              className="order-card__btn-success"
+                              onClick={() => handleArchiveOrder(id)}
+                            >
+                              بایگانی
+                            </Button>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              }
-            )}
+                  );
+                }
+              )}
           </>
         )}
       </div>

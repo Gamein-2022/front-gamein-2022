@@ -35,11 +35,10 @@ function OrderCard({
     cancelOrder(id)
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("سفارش با موفقیت حذف شد.");
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
 
@@ -73,7 +72,9 @@ function OrderCard({
         </div>
         <div className="order-card__left">
           <div className="order-card__count">{quantity} واحد</div>
-          <div className="order-card__unit-price">قیمت واحد: {formatPrice(unitPrice)}</div>
+          <div className="order-card__unit-price">
+            قیمت واحد: {formatPrice(unitPrice)}
+          </div>
           {color === "warning" && (
             <button
               className="order-card__action-btn"

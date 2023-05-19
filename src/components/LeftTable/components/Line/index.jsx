@@ -26,7 +26,6 @@ function Line({
       : type === "ASSEMBLY"
       ? "مونتاژ"
       : "بازیافت";
-  console.log("group: ", group);
 
   return (
     <>

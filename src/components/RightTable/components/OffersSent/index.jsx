@@ -22,11 +22,10 @@ function OffersSent() {
     getSentOffers()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setSentOffers(data?.result);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -38,11 +37,10 @@ function OffersSent() {
     getSentOffers()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setSentOffers(data?.result);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -53,12 +51,11 @@ function OffersSent() {
     cancellOffer({ offerId: id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("پیشنهاد با موفقیت حذف شد.");
         updateSentOffers();
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
 
@@ -66,12 +63,10 @@ function OffersSent() {
     archiveOffer({ id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("پیشنهاد با موفقیت بایگانی شد.");
         updateSentOffers();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
@@ -88,75 +83,148 @@ function OffersSent() {
               شما هیچ پیشنهاد فرستاده‌شده‌ای ندارید.
             </div>
           )}
-          {sentOffers.map(({ acceptDate, declined, cancelled, order, id }) => {
-            if (cancelled) {
-              return null;
-            }
-            const isWaiting = !acceptDate && !declined;
-            return (
-              <div
-                className={classNames("order-card", {
-                  "order-card--warning": isWaiting,
-                  "order-card--error": declined,
-                })}
-              >
-                <div className="order-card__title">
-                  {declined ? (
-                    <CloseIcon fontSize="small" />
-                  ) : isWaiting ? (
-                    <AccessTimeIcon fontSize="small" />
-                  ) : (
-                    <CheckIcon fontSize="small" />
-                  )}
-                  {declined
-                    ? "رد شده"
-                    : isWaiting
-                    ? `در انتظار ${
-                        order?.orderType === "SELL" ? "فروشنده" : "خریدار"
-                      }`
-                    : order?.orderType === "SELL"
-                    ? "خریداری شده"
-                    : "فروخته‌شده"}
-                </div>
-                <div className="order-card__body">
-                  <div className="order-card__right">
-                    <img
-                      className="order-card__img"
-                      src={getProductIcon(order?.product?.name)}
-                      alt="order card"
-                    />
-                  </div>
-                  <div className="order-card__left">
-                    <div className="order-card__name">
-                      {order?.product?.prettyName || order?.product?.name}
-                    </div>
-                    <div className="order-card__count">
-                      {formatPrice(order?.quantity)} واحد
-                    </div>
-                    <div className="order-card__unit-price">
-                      قیمت واحد: {formatPrice(order?.unitPrice)}
-                    </div>
-                    {isWaiting && (
-                      <button
-                        className="order-card__action-btn"
-                        onClick={() => handleDeleteOffer(id)}
-                      >
-                        حذف
-                      </button>
+          {sentOffers
+            .filter((item) => !item?.acceptDate && !item?.declined)
+            .map(({ acceptDate, declined, cancelled, order, id }) => {
+              if (cancelled) {
+                return null;
+              }
+              const isWaiting = !acceptDate && !declined;
+              return (
+                <div
+                  className={classNames("order-card", {
+                    "order-card--warning": isWaiting,
+                    "order-card--error": declined,
+                  })}
+                >
+                  <div className="order-card__title">
+                    {declined ? (
+                      <CloseIcon fontSize="small" />
+                    ) : isWaiting ? (
+                      <AccessTimeIcon fontSize="small" />
+                    ) : (
+                      <CheckIcon fontSize="small" />
                     )}
-                    {!isWaiting && (
-                      <button
-                        className="order-card__action-btn"
-                        onClick={() => handleArchiveOffer(id)}
-                      >
-                        بایگانی
-                      </button>
-                    )}
+                    {declined
+                      ? "رد شده"
+                      : isWaiting
+                      ? `در انتظار ${
+                          order?.orderType === "SELL" ? "فروشنده" : "خریدار"
+                        }`
+                      : order?.orderType === "SELL"
+                      ? "خریداری شده"
+                      : "فروخته‌شده"}
+                  </div>
+                  <div className="order-card__body">
+                    <div className="order-card__right">
+                      <img
+                        className="order-card__img"
+                        src={getProductIcon(order?.product?.name)}
+                        alt="order card"
+                      />
+                    </div>
+                    <div className="order-card__left">
+                      <div className="order-card__name">
+                        {order?.product?.prettyName || order?.product?.name}
+                      </div>
+                      <div className="order-card__count">
+                        {formatPrice(order?.quantity)} واحد
+                      </div>
+                      <div className="order-card__unit-price">
+                        قیمت واحد: {formatPrice(order?.unitPrice)}
+                      </div>
+                      {isWaiting && (
+                        <button
+                          className="order-card__action-btn"
+                          onClick={() => handleDeleteOffer(id)}
+                        >
+                          حذف
+                        </button>
+                      )}
+                      {!isWaiting && (
+                        <button
+                          className="order-card__action-btn"
+                          onClick={() => handleArchiveOffer(id)}
+                        >
+                          بایگانی
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          {sentOffers
+            .filter((item) => item?.acceptDate || item?.declined)
+            .map(({ acceptDate, declined, cancelled, order, id }) => {
+              if (cancelled) {
+                return null;
+              }
+              const isWaiting = !acceptDate && !declined;
+              return (
+                <div
+                  className={classNames("order-card", {
+                    "order-card--warning": isWaiting,
+                    "order-card--error": declined,
+                  })}
+                >
+                  <div className="order-card__title">
+                    {declined ? (
+                      <CloseIcon fontSize="small" />
+                    ) : isWaiting ? (
+                      <AccessTimeIcon fontSize="small" />
+                    ) : (
+                      <CheckIcon fontSize="small" />
+                    )}
+                    {declined
+                      ? "رد شده"
+                      : isWaiting
+                      ? `در انتظار ${
+                          order?.orderType === "SELL" ? "فروشنده" : "خریدار"
+                        }`
+                      : order?.orderType === "SELL"
+                      ? "خریداری شده"
+                      : "فروخته‌شده"}
+                  </div>
+                  <div className="order-card__body">
+                    <div className="order-card__right">
+                      <img
+                        className="order-card__img"
+                        src={getProductIcon(order?.product?.name)}
+                        alt="order card"
+                      />
+                    </div>
+                    <div className="order-card__left">
+                      <div className="order-card__name">
+                        {order?.product?.prettyName || order?.product?.name}
+                      </div>
+                      <div className="order-card__count">
+                        {formatPrice(order?.quantity)} واحد
+                      </div>
+                      <div className="order-card__unit-price">
+                        قیمت واحد: {formatPrice(order?.unitPrice)}
+                      </div>
+                      {isWaiting && (
+                        <button
+                          className="order-card__action-btn"
+                          onClick={() => handleDeleteOffer(id)}
+                        >
+                          حذف
+                        </button>
+                      )}
+                      {!isWaiting && (
+                        <button
+                          className="order-card__action-btn"
+                          onClick={() => handleArchiveOffer(id)}
+                        >
+                          بایگانی
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
         </>
       )}
     </div>

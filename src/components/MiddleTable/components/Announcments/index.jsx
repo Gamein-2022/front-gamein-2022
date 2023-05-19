@@ -34,7 +34,7 @@ function Announcments() {
         setAnnouncments(data?.result?.reverse());
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);

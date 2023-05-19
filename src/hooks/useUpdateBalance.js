@@ -12,7 +12,7 @@ function useUpdateBalance() {
         setBalance(data.balance);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
 

@@ -26,6 +26,7 @@ import NumberInput from "../../../NumberInput";
 import { getProductIcon } from "../../../../utils/icons";
 import TransportEmptyState from "../../../TansportEmptyState";
 import GameinLoading from "../../../GameinLoading";
+import useUpdateBalance from "../../../../hooks/useUpdateBalance";
 
 function TradeIntermediate() {
   const [activeTab, setActiveTab] = useState("buy");
@@ -53,7 +54,12 @@ function TradeIntermediate() {
   const [shippingInfo, setShippingInfo] = useState();
   const [selectedOrder, setSelectedOrder] = useState();
 
+  const [actionLoading, setActionLoading] = useState(false);
+
+  const updateBalance = useUpdateBalance();
+
   const handleSubmitBuyOrder = () => {
+    setActionLoading(true);
     const productId = intermediateMaterials.find(
       (item) => item.name === selectedMaterial
     ).id;
@@ -62,17 +68,23 @@ function TradeIntermediate() {
       .then((data) => {
         toast.success("سفارش خرید با موفقیت ثبت شد.");
         setBuyOrderModalOpen(false);
+        setBuyCount(0);
+        setBuyPrice(0);
         handleSearch();
+        updateBalance();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
   const handleSubmitSellOrder = () => {
+    setActionLoading(true);
     const productId = intermediateMaterials.find(
       (item) => item.name === selectedMaterial
     ).id;
@@ -81,13 +93,17 @@ function TradeIntermediate() {
       .then((data) => {
         toast.success("سفارش فروش با موفقیت ثبت شد.");
         setSellOrderModalOpen(false);
+        setSellCount(0);
+        setSellPrice(0);
         handleSearch();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -95,11 +111,10 @@ function TradeIntermediate() {
     getIntermediateMaterials()
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         setIntermediateMaterials(data.result);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setPageLoading(false);
@@ -120,7 +135,7 @@ function TradeIntermediate() {
           setSellOrders(data.result);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         })
         .finally(() => {
           setOrdersLoading(false);
@@ -134,7 +149,7 @@ function TradeIntermediate() {
           setBuyOrders(data.result);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         })
         .finally(() => {
           setOrdersLoading(false);
@@ -149,17 +164,19 @@ function TradeIntermediate() {
   const currentOrders = activeTab === "buy" ? buyOrders : sellOrders;
 
   const handleSendSellOffer = (id) => {
+    setActionLoading(true);
     sendOffer({ orderId: id })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("پیشنهاد فروش با موفقیت فرستاده شد.");
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -169,28 +186,31 @@ function TradeIntermediate() {
       .then((res) => res.data)
       .then((data) => {
         setBuyOfferModalOpen(true);
-        console.log(data);
         setShippingInfo(data.result);
       });
   };
 
   const handleSendBuyOffer = () => {
+    setActionLoading(true);
     sendOffer({
       orderId: selectedOrder.id,
       shippingMethod: transport === "airplane" ? "PLANE" : "SHIP",
     })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         toast.success("پیشنهاد خرید با موفقیت ارسال شد.");
         setBuyOfferModalOpen(false);
         setSelectedOrder(null);
+        updateBalance();
+        handleSearch();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           error?.response?.data?.message || "مشکلی در سامانه رخ داده‌است."
         );
+      })
+      .finally(() => {
+        setActionLoading(false);
       });
   };
 
@@ -321,20 +341,22 @@ function TradeIntermediate() {
                         <td>{row.region}</td>
                         <td>
                           {activeTab === "buy" && (
-                            <button
+                            <Button
                               className="trade-filter__buy-btn"
                               onClick={() => handleBuyOfferModal(row)}
+                              disabled={actionLoading}
                             >
                               خرید
-                            </button>
+                            </Button>
                           )}
                           {activeTab === "sell" && (
-                            <button
+                            <Button
                               className="trade-filter__sell-btn"
                               onClick={() => handleSendSellOffer(row.id)}
+                              disabled={actionLoading}
                             >
                               فروش
-                            </button>
+                            </Button>
                           )}
                         </td>
                       </tr>
@@ -375,7 +397,11 @@ function TradeIntermediate() {
       <Modal
         title={<img src={tradeModalTitle} alt="trade" />}
         open={buyOrderModalOpen}
-        onClose={() => setBuyOrderModalOpen(false)}
+        onClose={() => {
+          setBuyOrderModalOpen(false);
+          setBuyCount(0);
+          setBuyPrice(0);
+        }}
       >
         <div className="submit-order-modal__title">ثبت سفارش خرید</div>
         <img
@@ -425,7 +451,8 @@ function TradeIntermediate() {
             isEmpty(buyCount) ||
             isEmpty(buyPrice) ||
             buyCount == "0" ||
-            buyPrice == "0"
+            buyPrice == "0" ||
+            actionLoading
           }
           onClick={handleSubmitBuyOrder}
         >
@@ -435,7 +462,11 @@ function TradeIntermediate() {
       <Modal
         title={<img src={tradeModalTitle} alt="trade" />}
         open={sellOrderModalOpen}
-        onClose={() => setSellOrderModalOpen(false)}
+        onClose={() => {
+          setSellOrderModalOpen(false);
+          setSellCount(0);
+          setSellPrice(0);
+        }}
       >
         <div className="submit-order-modal__title">ثبت سفارش فروش</div>
         <img
@@ -485,7 +516,8 @@ function TradeIntermediate() {
             isEmpty(sellCount) ||
             isEmpty(sellPrice) ||
             sellCount == "0" ||
-            sellPrice == "0"
+            sellPrice == "0" ||
+            actionLoading
           }
           onClick={handleSubmitSellOrder}
           type={"error"}
