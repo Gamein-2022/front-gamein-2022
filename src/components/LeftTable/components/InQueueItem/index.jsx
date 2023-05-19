@@ -19,7 +19,7 @@ function InQueueItem({ item, updateInQueueProducts }) {
   useEffect(() => {
     const ariveTime = new Date(item.arrivalTime).getTime();
     const currentTime = new Date(item.currentTime).getTime();
-    const newTime = 60 - Math.round((currentTime - ariveTime) / 1000);
+    const newTime = 300 - Math.round((currentTime - ariveTime) / 1000);
     setRemainedTime(newTime > 0 ? newTime : 0);
   }, []);
 
