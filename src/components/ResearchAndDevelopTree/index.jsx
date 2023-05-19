@@ -73,10 +73,10 @@ const ResearchAndDevelopTree = ({ era, technologies }) => {
       <div className={styles["chart-container"]}>
         <div className={styles["column"]}>
           <div></div>
-          <div className={styles["year-item"]}>2006 - 2010</div>
-          <div className={styles["year-item"]}>2010 - 2015</div>
-          <div className={styles["year-item"]}>2015 - 2023</div>
-          <div className={styles["year-item"]}>2023 - 2026</div>
+          <div className={styles["year-item"]}>2006 - 2011</div>
+          <div className={styles["year-item"]}>2011 - 2016</div>
+          <div className={styles["year-item"]}>2016 - 2024</div>
+          <div className={styles["year-item"]}>2024 - 2026</div>
         </div>
         <div className={styles["column"]}>
           <div>Body</div>
