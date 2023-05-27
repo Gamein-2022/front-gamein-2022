@@ -315,8 +315,8 @@ export const FINAL_MATERIALS = {
     name: "gphone1",
     icon: gphone1,
   },
-  "stock-phone": {
-    name: "stock-phone",
+  "secondhandphone": {
+    name: "secondhandphone",
     icon: discardedPhone,
   },
   gphone2: {
