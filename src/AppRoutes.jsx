@@ -16,6 +16,7 @@ import Layout from "./components/Layout";
 import BackPanel from "./pages/BackPanel";
 import SemiBackPanel from "./pages/SemiBackPanel";
 import LeaderBoard from "./pages/LeaderBoard";
+import NewLeaderBoard from "./pages/NewLeaderBoard";
 import { useRecoilState } from "recoil";
 import { isGamePausedState } from "./store/time";
 import useUpdateBalance from "./hooks/useUpdateBalance";
@@ -98,6 +99,7 @@ const AppRouter = () => {
         <Route path="semi-back-panel" element={<SemiBackPanel />} />
         <Route path="back-panel-09131863718" element={<BackPanel />} />
         <Route path="leaderboard" element={<LeaderBoard />} />
+        <Route path="new-leaderboard" element={<NewLeaderBoard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

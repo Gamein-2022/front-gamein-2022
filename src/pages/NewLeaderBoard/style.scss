@@ -1,0 +1,187 @@
+.new-leaderboard {
+  width: 100vw;
+  height: calc(100vh - 64px);
+  background-color: #f5f5f5;
+
+  &__container {
+    width: calc(100% - 64px);
+    margin: 32px;
+    height: calc(100% - 64px);
+    background-color: #fff;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+  }
+
+  &__title {
+    padding: 16px;
+    font-size: 24px;
+  }
+
+  &__box-container {
+    width: 100%;
+    height: 50%;
+    display: flex;
+  }
+
+  &__box {
+    width: 50%;
+    height: 100%;
+  }
+
+  &__box-1 {
+    border-bottom: 2px solid #000;
+    border-left: 2px solid #000;
+  }
+
+  &__ranks {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: calc(100% - 96px);
+    padding: 16px;
+  }
+
+  &__rank-1,
+  &__rank-2,
+  &__rank-3 {
+    width: calc(100% / 3 - 32px);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__rank-1 {
+    height: 100%;
+    background: linear-gradient(180deg, #fff1c0 0%, #eeb609 100%);
+  }
+
+  &__rank-2 {
+    height: 80%;
+    background: linear-gradient(360deg, #afbdc5 0%, #eaf1f5 100%);
+  }
+
+  &__rank-3 {
+    height: 80%;
+    background: linear-gradient(180deg, #ffd7d2 0%, #af716a 100%);
+  }
+
+  &__cup-img {
+    width: 100px;
+  }
+
+  &__box-2 {
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 16px;
+  }
+
+  &__badge {
+    height: calc(100% - 32px);
+    width: 25%;
+    border-radius: 16px;
+    margin: 16px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+
+    img {
+      width: 96px;
+      margin: 16px 0;
+    }
+  }
+
+  &__badge-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: space-around;
+  }
+
+  &__badge-title {
+    font-weight: 600;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  &__badge-desc {
+    text-align: center;
+    font-size: 12px;
+  }
+
+  &__badge-team {
+    font-weight: 600;
+  }
+
+  &__badge-1 {
+    background: linear-gradient(180deg, #fae8dd 0%, #c4a087 100%);
+    color: #412312;
+  }
+
+  &__badge-2 {
+    background: linear-gradient(180deg, #ffe0e1 0%, #ffb5b6 100%);
+    color: #be1e2d;
+  }
+
+  &__badge-3 {
+    background: linear-gradient(180deg, #fffabc 0%, #fff46c 100%);
+    color: #f7901e;
+
+    img {
+      width: 110px;
+      position: relative;
+      top: 28px;
+      margin-bottom: 56px;
+    }
+  }
+
+  &__badge-4 {
+    background: linear-gradient(193.01deg, #8deaba 0.49%, #67ad89 99.24%);
+    color: #1e4721;
+  }
+
+  &__box-3 {
+    border-top: 2px solid #000;
+    border-left: 2px solid #000;
+    padding: 16px;
+    display: flex;
+  }
+
+  &__box-4 {
+    border-top: 2px solid #000;
+    border-right: 2px solid #000;
+    padding: 16px;
+    display: flex;
+  }
+
+  &__table-wrapper {
+    padding: 8px;
+    font-weight: 500;
+    text-align: center;
+    width: 50%;
+    height: calc(100% - 32px);
+    margin: 16px;
+    border: 2px solid #8d8d8d;
+    border-radius: 16px;
+  }
+
+  &__table {
+    width: 100%;
+
+    td {
+      padding: 6px;
+    }
+  }
+
+  &__table-title {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 8;
+  }
+}
