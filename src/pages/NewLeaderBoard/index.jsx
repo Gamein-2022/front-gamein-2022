@@ -40,9 +40,51 @@ function NewLeaderBoard() {
     <div className="new-leaderboard">
       <LeaderboardHeader />
       <div className="new-leaderboard__container">
-        <div className="new-leaderboard__box-container">
+        <div className="new-leaderboard__right">
+          <div className="new-leaderboard__box new-leaderboard__box-3">
+            <div className="new-leaderboard__table-wrapper">
+              <div className="new-leaderboard__table-title">
+                تیم‌های اول دهم
+              </div>
+              <table className="new-leaderboard__table">
+                <tr>
+                  <td>رتبه</td>
+                  <td>اسم تیم</td>
+                  <td>دارایی</td>
+                </tr>
+                {leaderboard.slice(0, 10).map((item, index) => (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{item.teamName.slice(0, 10)}</td>
+                    <td>{formatPrice(item.wealth)}</td>
+                  </tr>
+                ))}
+              </table>
+            </div>
+            <div className="new-leaderboard__table-wrapper">
+              <div className="new-leaderboard__table-title">
+                تیم‌های یازدهم تا بیستم
+              </div>
+              <table className="new-leaderboard__table">
+                <tr>
+                  <td>رتبه</td>
+                  <td>اسم تیم</td>
+                  <td>دارایی</td>
+                </tr>
+                {leaderboard.slice(10, 20).map((item, index) => (
+                  <tr>
+                    <td>{index + 11}</td>
+                    <td>{item.teamName.slice(0, 10)}</td>
+                    <td>{formatPrice(item.wealth)}</td>
+                  </tr>
+                ))}
+              </table>
+            </div>
+          </div>
+        </div>
+        <div className="new-leaderboard__left">
           <div className="new-leaderboard__box new-leaderboard__box-1">
-            <h1 className="new-leaderboard__title">جدول رده‌بندی تیم‌ها</h1>
+            <h1 className="new-leaderboard__title">عملکرد تیم‌ها</h1>
             <div className="new-leaderboard__ranks">
               <div className="new-leaderboard__rank-3">
                 <h2 className="new-leaderboard__rank-title">تیم سوم</h2>
@@ -78,6 +120,7 @@ function NewLeaderBoard() {
               </div>
             </div>
           </div>
+
           <div className="new-leaderboard__box new-leaderboard__box-2">
             <div className="new-leaderboard__badge new-leaderboard__badge-1">
               <img src={markopoloImg} alt="" />
@@ -122,96 +165,6 @@ function NewLeaderBoard() {
                 </div>
                 <div className="new-leaderboard__badge-team">به زودی</div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div className="new-leaderboard__box-container">
-          <div className="new-leaderboard__box new-leaderboard__box-3">
-            <div className="new-leaderboard__table-wrapper">
-              <div className="new-leaderboard__table-title">
-                تیم‌های اول تا پنجم
-              </div>
-              <table className="new-leaderboard__table">
-                <tr>
-                  <td>رتبه</td>
-                  <td>اسم تیم</td>
-                  <td>دارایی</td>
-                </tr>
-                {leaderboard
-                  .slice(0, 5)
-                  .map((item, index) => (
-                    <tr>
-                      <td>{index + 1}</td>
-                      <td>{item.teamName.slice(0, 10)}</td>
-                      <td>{formatPrice(item.wealth)}</td>
-                    </tr>
-                  ))}
-              </table>
-            </div>
-            <div className="new-leaderboard__table-wrapper">
-              <div className="new-leaderboard__table-title">
-                تیم‌های ششم تا دهم
-              </div>
-              <table className="new-leaderboard__table">
-                <tr>
-                  <td>رتبه</td>
-                  <td>اسم تیم</td>
-                  <td>دارایی</td>
-                </tr>
-                {leaderboard
-                  .slice(5, 10)
-                  .map((item, index) => (
-                    <tr>
-                      <td>{index + 6}</td>
-                      <td>{item.teamName.slice(0, 10)}</td>
-                      <td>{formatPrice(item.wealth)}</td>
-                    </tr>
-                  ))}
-              </table>
-            </div>
-          </div>
-          <div className="new-leaderboard__box new-leaderboard__box-4">
-            <div className="new-leaderboard__table-wrapper">
-              <div className="new-leaderboard__table-title">
-                تیم‌های یازدهم تا پانزدهم
-              </div>
-              <table className="new-leaderboard__table">
-                <tr>
-                  <td>رتبه</td>
-                  <td>اسم تیم</td>
-                  <td>دارایی</td>
-                </tr>
-                {leaderboard
-                  .slice(10, 15)
-                  .map((item, index) => (
-                    <tr>
-                      <td>{index + 11}</td>
-                      <td>{item.teamName.slice(0, 10)}</td>
-                      <td>{formatPrice(item.wealth)}</td>
-                    </tr>
-                  ))}
-              </table>
-            </div>
-            <div className="new-leaderboard__table-wrapper">
-              <div className="new-leaderboard__table-title">
-                تیم‌های شانزدهم تا بیستم
-              </div>
-              <table className="new-leaderboard__table">
-                <tr>
-                  <td>رتبه</td>
-                  <td>اسم تیم</td>
-                  <td>دارایی</td>
-                </tr>
-                {leaderboard
-                  .slice(15, 20)
-                  .map((item, index) => (
-                    <tr>
-                      <td>{index + 16}</td>
-                      <td>{item.teamName.slice(0, 10)}</td>
-                      <td>{formatPrice(item.wealth)}</td>
-                    </tr>
-                  ))}
-              </table>
             </div>
           </div>
         </div>
