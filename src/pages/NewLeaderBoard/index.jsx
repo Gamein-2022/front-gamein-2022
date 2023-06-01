@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import LeaderboardHeader from './components/LeaderboardHeader';
 import cupLogo from '../../assets/cup.svg';
 import zebelkhanImg from '../../assets/zebelkhan.svg';
@@ -8,8 +8,34 @@ import migmigImg from '../../assets/migmig.svg';
 
 import './style.scss';
 import { formatPrice } from '../../utils/formatters';
+import { useNavigate } from 'react-router-dom';
+import { getAdminInfo, getBackPanelLeaderBoard } from '../../apis/back-panel';
 
 function NewLeaderBoard() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [leaderboard, setLeaderboard] = useState([]);
+
+  useEffect(() => {
+    getAdminInfo()
+      .then((res) => res.data)
+      .then((data) => {
+        getBackPanelLeaderBoard()
+          .then((res) => res.data)
+          .then((data) => {
+            setLeaderboard(data?.topTeams);
+          });
+      })
+      .catch((error) => {
+        navigate('/');
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return null;
+  }
+
   return (
     <div className="new-leaderboard">
       <LeaderboardHeader />
@@ -20,9 +46,11 @@ function NewLeaderBoard() {
             <div className="new-leaderboard__ranks">
               <div className="new-leaderboard__rank-3">
                 <h2 className="new-leaderboard__rank-title">تیم سوم</h2>
-                <div className="new-leaderboard__rank-team">teamname</div>
+                <div className="new-leaderboard__rank-team">
+                  {leaderboard[2]?.teamName}
+                </div>
                 <div className="new-leaderboard__rank-wealth">
-                  {formatPrice(1234567890)}
+                  {formatPrice(leaderboard[2]?.wealth)}
                 </div>
               </div>
               <div className="new-leaderboard__rank-1">
@@ -32,16 +60,20 @@ function NewLeaderBoard() {
                   alt="cup logo"
                 />
                 <h2 className="new-leaderboard__rank-title">تیم اول</h2>
-                <div className="new-leaderboard__rank-team">teamname</div>
+                <div className="new-leaderboard__rank-team">
+                  {leaderboard[0]?.teamName}
+                </div>
                 <div className="new-leaderboard__rank-wealth">
-                  {formatPrice(1234567890)}
+                  {formatPrice(leaderboard[0]?.wealth)}
                 </div>
               </div>
               <div className="new-leaderboard__rank-2">
                 <h2 className="new-leaderboard__rank-title">تیم دوم</h2>
-                <div className="new-leaderboard__rank-team">teamname</div>
+                <div className="new-leaderboard__rank-team">
+                  {leaderboard[1]?.teamName}
+                </div>
                 <div className="new-leaderboard__rank-wealth">
-                  {formatPrice(1234567890)}
+                  {formatPrice(leaderboard[1]?.wealth)}
                 </div>
               </div>
             </div>
@@ -105,13 +137,13 @@ function NewLeaderBoard() {
                   <td>اسم تیم</td>
                   <td>دارایی</td>
                 </tr>
-                {Array(5)
-                  .fill(null)
+                {leaderboard
+                  .slice(0, 5)
                   .map((item, index) => (
                     <tr>
                       <td>{index + 1}</td>
-                      <td>اسم تیم</td>
-                      <td>{formatPrice(1234567890)}</td>
+                      <td>{item.teamName.slice(0, 10)}</td>
+                      <td>{formatPrice(item.wealth)}</td>
                     </tr>
                   ))}
               </table>
@@ -126,13 +158,13 @@ function NewLeaderBoard() {
                   <td>اسم تیم</td>
                   <td>دارایی</td>
                 </tr>
-                {Array(5)
-                  .fill(null)
+                {leaderboard
+                  .slice(5, 10)
                   .map((item, index) => (
                     <tr>
                       <td>{index + 6}</td>
-                      <td>اسم تیم</td>
-                      <td>{formatPrice(1234567890)}</td>
+                      <td>{item.teamName.slice(0, 10)}</td>
+                      <td>{formatPrice(item.wealth)}</td>
                     </tr>
                   ))}
               </table>
@@ -149,13 +181,13 @@ function NewLeaderBoard() {
                   <td>اسم تیم</td>
                   <td>دارایی</td>
                 </tr>
-                {Array(5)
-                  .fill(null)
+                {leaderboard
+                  .slice(10, 15)
                   .map((item, index) => (
                     <tr>
                       <td>{index + 11}</td>
-                      <td>اسم تیم</td>
-                      <td>{formatPrice(1234567890)}</td>
+                      <td>{item.teamName.slice(0, 10)}</td>
+                      <td>{formatPrice(item.wealth)}</td>
                     </tr>
                   ))}
               </table>
@@ -170,13 +202,13 @@ function NewLeaderBoard() {
                   <td>اسم تیم</td>
                   <td>دارایی</td>
                 </tr>
-                {Array(5)
-                  .fill(null)
+                {leaderboard
+                  .slice(15, 20)
                   .map((item, index) => (
                     <tr>
                       <td>{index + 16}</td>
-                      <td>اسم تیم</td>
-                      <td>{formatPrice(1234567890)}</td>
+                      <td>{item.teamName.slice(0, 10)}</td>
+                      <td>{formatPrice(item.wealth)}</td>
                     </tr>
                   ))}
               </table>
