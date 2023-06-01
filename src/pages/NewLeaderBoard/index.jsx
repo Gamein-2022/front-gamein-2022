@@ -19,9 +19,11 @@ function NewLeaderBoard() {
             <h1 className="new-leaderboard__title">جدول رده‌بندی تیم‌ها</h1>
             <div className="new-leaderboard__ranks">
               <div className="new-leaderboard__rank-3">
-                <h2>تیم سوم</h2>
-                <div>teamname</div>
-                <div>{formatPrice(123456789)}</div>
+                <h2 className="new-leaderboard__rank-title">تیم سوم</h2>
+                <div className="new-leaderboard__rank-team">teamname</div>
+                <div className="new-leaderboard__rank-wealth">
+                  {formatPrice(1234567890)}
+                </div>
               </div>
               <div className="new-leaderboard__rank-1">
                 <img
@@ -29,14 +31,18 @@ function NewLeaderBoard() {
                   src={cupLogo}
                   alt="cup logo"
                 />
-                <h2>تیم اول</h2>
-                <div>teamname</div>
-                <div>{formatPrice(123456789)}</div>
+                <h2 className="new-leaderboard__rank-title">تیم اول</h2>
+                <div className="new-leaderboard__rank-team">teamname</div>
+                <div className="new-leaderboard__rank-wealth">
+                  {formatPrice(1234567890)}
+                </div>
               </div>
               <div className="new-leaderboard__rank-2">
-                <h2>تیم دوم</h2>
-                <div>teamname</div>
-                <div>{formatPrice(123456789)}</div>
+                <h2 className="new-leaderboard__rank-title">تیم دوم</h2>
+                <div className="new-leaderboard__rank-team">teamname</div>
+                <div className="new-leaderboard__rank-wealth">
+                  {formatPrice(1234567890)}
+                </div>
               </div>
             </div>
           </div>
@@ -101,11 +107,11 @@ function NewLeaderBoard() {
                 </tr>
                 {Array(5)
                   .fill(null)
-                  .map(() => (
+                  .map((item, index) => (
                     <tr>
-                      <td>رتبه</td>
+                      <td>{index + 1}</td>
                       <td>اسم تیم</td>
-                      <td>دارایی</td>
+                      <td>{formatPrice(1234567890)}</td>
                     </tr>
                   ))}
               </table>
@@ -122,11 +128,11 @@ function NewLeaderBoard() {
                 </tr>
                 {Array(5)
                   .fill(null)
-                  .map(() => (
+                  .map((item, index) => (
                     <tr>
-                      <td>رتبه</td>
+                      <td>{index + 6}</td>
                       <td>اسم تیم</td>
-                      <td>دارایی</td>
+                      <td>{formatPrice(1234567890)}</td>
                     </tr>
                   ))}
               </table>
@@ -145,11 +151,11 @@ function NewLeaderBoard() {
                 </tr>
                 {Array(5)
                   .fill(null)
-                  .map(() => (
+                  .map((item, index) => (
                     <tr>
-                      <td>رتبه</td>
+                      <td>{index + 11}</td>
                       <td>اسم تیم</td>
-                      <td>دارایی</td>
+                      <td>{formatPrice(1234567890)}</td>
                     </tr>
                   ))}
               </table>
@@ -166,11 +172,11 @@ function NewLeaderBoard() {
                 </tr>
                 {Array(5)
                   .fill(null)
-                  .map(() => (
+                  .map((item, index) => (
                     <tr>
-                      <td>رتبه</td>
+                      <td>{index + 16}</td>
                       <td>اسم تیم</td>
-                      <td>دارایی</td>
+                      <td>{formatPrice(1234567890)}</td>
                     </tr>
                   ))}
               </table>

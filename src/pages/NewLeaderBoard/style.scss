@@ -67,6 +67,21 @@
     background: linear-gradient(180deg, #ffd7d2 0%, #af716a 100%);
   }
 
+  &__rank-title {
+    font-weight: 800;
+    font-size: 24px;
+  }
+
+  &__rank-team {
+    font-weight: 800;
+    font-size: 20px;
+  }
+
+  &__rank-wealth {
+    font-size: 20px;
+    font-weight: 800;
+  }
+
   &__cup-img {
     width: 100px;
   }
@@ -77,14 +92,14 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 16px;
+    padding: 4px;
   }
 
   &__badge {
-    height: calc(100% - 32px);
+    height: calc(100% - 16px);
     width: 25%;
     border-radius: 16px;
-    margin: 16px 8px;
+    margin: 0 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -105,18 +120,19 @@
   }
 
   &__badge-title {
-    font-weight: 600;
+    font-weight: 900;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   &__badge-desc {
     text-align: center;
-    font-size: 12px;
+    font-weight: 900;
+    font-size: 14px;
   }
 
   &__badge-team {
-    font-weight: 600;
+    font-weight: 900;
   }
 
   &__badge-1 {
@@ -131,7 +147,7 @@
 
   &__badge-3 {
     background: linear-gradient(180deg, #fffabc 0%, #fff46c 100%);
-    color: #f7901e;
+    color: #a96518;
 
     img {
       width: 110px;
@@ -149,14 +165,14 @@
   &__box-3 {
     border-top: 2px solid #000;
     border-left: 2px solid #000;
-    padding: 16px;
+    padding: 4px;
     display: flex;
   }
 
   &__box-4 {
     border-top: 2px solid #000;
     border-right: 2px solid #000;
-    padding: 16px;
+    padding: 4px;
     display: flex;
   }
 
@@ -175,13 +191,15 @@
     width: 100%;
 
     td {
-      padding: 6px;
+      padding: 4px;
+      font-weight: 900;
+      font-size: 20px;
     }
   }
 
   &__table-title {
-    font-weight: 600;
-    font-size: 18px;
+    font-weight: 800;
+    font-size: 24px;
     margin-bottom: 8;
   }
 }
