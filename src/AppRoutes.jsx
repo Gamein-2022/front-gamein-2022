@@ -42,6 +42,9 @@ const AppRouter = () => {
     };
 
     ws.current.onmessage = function (event) {
+      if (window?.location?.pathname === "/new-leaderboard") {
+        return;
+      }
       const data = JSON.parse(event.data);
       if (data.type === "SUCCESS") {
         toast.success(data.message, { position: "bottom-center" });
