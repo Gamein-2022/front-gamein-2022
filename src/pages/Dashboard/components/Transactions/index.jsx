@@ -17,7 +17,7 @@ const LOG_TYPES = [
   { type: "RECYCLE", name: "بازیافت", isGreen: false },
   { type: "ASSEMBLY", name: "مونتاژ", isGreen: false },
   { type: "FINAL_SELL", name: "فروش محصول نهایی", isGreen: true },
-  { type: "STORAGE_COST", name: "هزینه انبارداری", isGreen: false },
+  // { type: "STORAGE_COST", name: "هزینه انبارداری", isGreen: false },
 ];
 
 function Transactions() {
