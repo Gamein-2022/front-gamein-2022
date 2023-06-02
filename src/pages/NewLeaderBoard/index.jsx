@@ -24,12 +24,21 @@ function NewLeaderBoard() {
           .then((res) => res.data)
           .then((data) => {
             setLeaderboard(data?.topTeams);
-          });
+          })
+          .catch((error) => console.log(error));
       })
       .catch((error) => {
         navigate('/');
       })
       .finally(() => setLoading(false));
+    setInterval(() => {
+      getBackPanelLeaderBoard()
+        .then((res) => res.data)
+        .then((data) => {
+          setLeaderboard(data?.topTeams);
+        })
+        .catch((error) => console.log(error));
+    }, 30000);
   }, []);
 
   if (loading) {
