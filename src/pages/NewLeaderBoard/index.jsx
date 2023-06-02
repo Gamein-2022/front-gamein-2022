@@ -140,7 +140,7 @@ function NewLeaderBoard() {
                 <div className="new-leaderboard__badge-desc">
                   بیشترین حجم کالای مبادله شده در گیمین ۲۰۲۲
                 </div>
-                <div className="new-leaderboard__badge-team">به زودی</div>
+                <div className="new-leaderboard__badge-team">کبیران</div>
               </div>
             </div>
             <div className="new-leaderboard__badge new-leaderboard__badge-2">
@@ -160,7 +160,7 @@ function NewLeaderBoard() {
                 <div className="new-leaderboard__badge-desc">
                   بیشترین ارتقا رتبه در گیمین ۲۰۲۲s
                 </div>
-                <div className="new-leaderboard__badge-team">به زودی</div>
+                <div className="new-leaderboard__badge-team">GWP</div>
               </div>
             </div>
             <div className="new-leaderboard__badge new-leaderboard__badge-4">
